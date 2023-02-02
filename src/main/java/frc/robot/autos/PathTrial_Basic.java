@@ -1,3 +1,8 @@
+/*--------------------------------------------------------* 
+ * 2023 Charged Up
+ * autos/PathTrial_Basic.java 
+--------------------------------------------------------*/
+
 package frc.robot.autos;
 
 import com.pathplanner.lib.PathConstraints;
