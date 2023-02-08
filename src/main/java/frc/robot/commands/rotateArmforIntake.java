@@ -5,6 +5,6 @@
 --------------------------------------------------------*/
 package frc.robot.commands;
 
-public class deployArm {
+public class rotateArmforIntake {
     
 }
