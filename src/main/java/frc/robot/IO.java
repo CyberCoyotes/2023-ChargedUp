@@ -10,7 +10,7 @@ package frc.robot;
 
 public final class IO {
 
-    public final double ARM_POSITION_DEPLOY = 1000; //determined experimentally
+    public final double ARM_POSITION_DEPLOY = 1000; // TODO TBD experimentally
     double ARM_POSITION_INTAKE;
     double ARM_CURRENT_POSITION;
     
