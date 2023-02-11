@@ -19,19 +19,17 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class Vision extends SubsystemBase {
+    
     private final NetworkTable limelight;// Table for the limelight
     private final NetworkTableEntry led_mode;// Table for the limelight
 
     public double tx;
-    // private ArrayList<Double> m_targetList;
-    // private final int MAX_ENTRIES = 50;
     private double ty;
     private double ta;
     private double tv;
     private double tid;
 
     double areaMin = 5; // Smaller number means farther away
-    // double areaMax = 10; // Area increases as robot moves toward
     boolean checkTagID;
     boolean checkArea;
     boolean checkSkew;

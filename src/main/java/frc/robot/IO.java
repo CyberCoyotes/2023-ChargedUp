@@ -9,7 +9,8 @@
 package frc.robot;
 
 public final class IO {
-    double ARM_POSITION_DEPLOY;
+
+    public final double ARM_POSITION_DEPLOY = 1000; //determined experimentally
     double ARM_POSITION_INTAKE;
     double ARM_CURRENT_POSITION;
     
@@ -22,8 +23,15 @@ public final class IO {
     double CLAW_OPEN;
     double CLAW_CLOSED;
 
-
     boolean LED_CONE_LOCK; 
     // double LED_CONE_MISSING;
     double LED_CUBE_LOCK;
+
+    public static final int VISION_LED_OFF = 1;
+    public static final int VISION_LED_ON = 2;
+
+     // Needed for LED
+     public static final class PWMPorts {
+        public static final int kBlinkin = 0;
+    }
 }
