@@ -1,7 +1,10 @@
 /*--------------------------------------------------------* 
  * 
  * 2023 Charged Up
+ * 
  * Blinkin.java
+ * 
+ * Provide visual feedback to drive team and loading station
  *  
 --------------------------------------------------------*/
 package frc.robot.subsystems;
@@ -93,6 +96,7 @@ public class Blinkin extends SubsystemBase {
         set(0.71);
     }
 
+    // Use for feedback that robot aligned for cone deployment
     public void darkGreen() {
         set(0.75);
     }

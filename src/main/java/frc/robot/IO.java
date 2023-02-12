@@ -11,14 +11,11 @@ package frc.robot;
 public final class IO {
 
     public final double ARM_POSITION_DEPLOY = 1000; // TODO TBD experimentally
-    double ARM_POSITION_INTAKE;
+    double ARM_POSITION_INTAKE; // TODO TBD experimentally
     double ARM_CURRENT_POSITION;
     
-    double EXTENSION_POSITION_OUT;
-    double EXENTSION_POSITION_IN;
-
-    double WRIST_POSITION_DEPLOY;
-    double WRIST_POSITION_INTAKE;
+    double EXTENSION_POSITION_OUT; // TODO TBD experimentally
+    double EXENTSION_POSITION_IN; // TODO TBD experimentally
 
     double CLAW_OPEN;
     double CLAW_CLOSED;

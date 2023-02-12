@@ -2,7 +2,11 @@
  * 
  * 2023 Charged Up
  * 
- * Pneumatic 
+ * Pneumatic with a single solenoid that opens and closes the intake claw
+ * 
+ * Documentation reference
+ * https://docs.wpilib.org/en/stable/docs/software/hardware-apis/pneumatics/pneumatics.html
+ * 
 --------------------------------------------------------*/
 
 package frc.robot.subsystems;
@@ -17,12 +21,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ClawSubsystem extends SubsystemBase{
     private final Solenoid m_clawSolenoid =
      new Solenoid(
-      PneumaticsModuleType.CTREPCM, 0);
+      PneumaticsModuleType.CTREPCM, 0); // TODO what is our module type?
     
- public void ClawOpen(){
+ public void clawOpen(){
  // m_clawSolenoid.set(kForward);
  }   
-  public void ClawClose(){
+  public void clawClose(){
    // m_clawSolenoid.set(kReverse);  
   }     
  }
