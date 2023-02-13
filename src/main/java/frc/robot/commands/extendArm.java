@@ -15,8 +15,8 @@ public class extendArm extends CommandBase {
    
     private final ArmExtensionSubsystem m_armExtensionSubsystem;
    
-    public extendArm(ArmExtensionSubsystem subsytem) {
-     m_armExtensionSubsystem = subsytem;
+    public extendArm(ArmExtensionSubsystem subsystem) {
+     m_armExtensionSubsystem = subsystem;
      addRequirements(m_armExtensionSubsystem);
     }
 

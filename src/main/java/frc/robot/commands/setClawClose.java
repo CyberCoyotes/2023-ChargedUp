@@ -12,8 +12,8 @@ public class setClawClose extends CommandBase {
     
     private final ClawSubsystem m_clawSubsystem;
    
-    public setClawClose(ClawSubsystem subsytem) {
-     m_clawSubsystem = subsytem;
+    public setClawClose(ClawSubsystem subsystem) {
+     m_clawSubsystem = subsystem;
      addRequirements(m_clawSubsystem);
     }
 }
