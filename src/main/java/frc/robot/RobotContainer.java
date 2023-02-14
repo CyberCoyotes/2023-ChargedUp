@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.autos.PathTrial_Basic;
 import frc.robot.autos.exampleAuto;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -43,7 +42,6 @@ public class RobotContainer {
     private final Swerve s_Swerve = new Swerve();
 
     /** Path planner testing purposes only */
-    public final PathTrial_Basic m_path1 = new PathTrial_Basic();
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -82,6 +80,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new exampleAuto(s_Swerve);
+
+        return new PathPlannerTesting(s_Swerve).Generate();
     }
 }

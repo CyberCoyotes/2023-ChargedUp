@@ -12,8 +12,8 @@ public class setClawOpen extends CommandBase {
    
     private final ClawSubsystem m_clawSubsystem;
    
-    public setClawOpen(ClawSubsystem subsytem) {
-     m_clawSubsystem = subsytem;
+    public setClawOpen(ClawSubsystem subsystem) {
+     m_clawSubsystem = subsystem;
      addRequirements(m_clawSubsystem);
     }
 }

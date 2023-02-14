@@ -12,8 +12,8 @@ public class rotateArmIntakeSide extends CommandBase {
 
     private final ArmSubsystem m_armSubsystem;
    
-    public rotateArmIntakeSide(ArmSubsystem subsytem) {
-     m_armSubsystem = subsytem;
+    public rotateArmIntakeSide(ArmSubsystem subsystem) {
+     m_armSubsystem = subsystem;
      addRequirements(m_armSubsystem);
     }
 }

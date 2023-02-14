@@ -15,8 +15,8 @@ public class retractArm extends CommandBase {
 
     private final ArmExtensionSubsystem m_armExtensionSubsystem;
    
-    public retractArm(ArmExtensionSubsystem subsytem) {
-     m_armExtensionSubsystem = subsytem;
+    public retractArm(ArmExtensionSubsystem subsystem) {
+     m_armExtensionSubsystem = subsystem;
      addRequirements(m_armExtensionSubsystem);
     }
 }
