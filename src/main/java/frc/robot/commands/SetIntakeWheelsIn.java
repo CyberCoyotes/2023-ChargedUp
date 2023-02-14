@@ -20,7 +20,7 @@ public class SetIntakeWheelsIn extends CommandBase {
     }
  @Override 
  public void execute(){
-//subsystem.startIntake(0);
+    subsystem.startIntake(1);
  }
 
  @Override
