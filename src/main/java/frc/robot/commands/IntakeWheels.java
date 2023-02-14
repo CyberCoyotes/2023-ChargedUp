@@ -6,15 +6,26 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ArmSubsystem;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.subsystems.IntakeWheelsSubsystem;
 
-public class setIntakeWheels extends CommandBase {
+public class IntakeWheels extends CommandBase {
 
     private final IntakeWheelsSubsystem m_intakeWheelsSubsystem;
    
-    public setIntakeWheels(IntakeWheelsSubsystem subsytem) {
-     m_intakeWheelsSubsystem = subsytem;
+    public IntakeWheels(IntakeWheelsSubsystem subsystem) {
+    // super();
+     m_intakeWheelsSubsystem = subsystem;
      addRequirements(m_intakeWheelsSubsystem);
     }
+ @Override 
+ public void execute(){
+//subsystem.startIntake(0);
+ }
+
+ @Override
+public void end(boolean interuppted){
+//subsystem.stopIntake(0);
+}
+   
 }
