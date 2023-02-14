@@ -20,12 +20,12 @@ public class SetIntakeWheelsOut extends CommandBase {
     }
  @Override 
  public void execute(){
-//subsystem.startIntake(0);
- }
+    m_intakeWheelsSubsystem.intakeWheelsReverse();
+ } 
 
  @Override
-public void end(boolean interuppted){
-//subsystem.stopIntake(0);
+public boolean isFinished(){
+    return false;
 }
    
 }

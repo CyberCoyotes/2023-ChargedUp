@@ -16,7 +16,7 @@ public class SetIntakeWheelsIn extends CommandBase {
       // super();
 
       m_intakeWheelsSubsystem = subsystem;
-//      addRequirements(m_intakeWheelsSubsystem);
+      //addRequirements(m_intakeWheelsSubsystem);
       addRequirements(m_intakeWheelsSubsystem);
 
    }
@@ -34,7 +34,7 @@ public class SetIntakeWheelsIn extends CommandBase {
    @Override
    public void end(boolean interuppted) {
       // see above :)
-      subsystem.intakestopIntake(0);
+      m_intakeWheelsSubsystem.intakeWheelsOff();
    }
 
    // Returns true when the command should end.
