@@ -11,11 +11,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 
-public class extendArm extends CommandBase {
+public class SetArmExtend extends CommandBase {
    
     private final ArmExtensionSubsystem m_armExtensionSubsystem;
    
-    public extendArm(ArmExtensionSubsystem subsystem) {
+    public SetArmExtend(ArmExtensionSubsystem subsystem) {
      m_armExtensionSubsystem = subsystem;
      addRequirements(m_armExtensionSubsystem);
     }

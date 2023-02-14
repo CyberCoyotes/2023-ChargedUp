@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.subsystems.IntakeWheelsSubsystem;
 
-public class IntakeWheels extends CommandBase {
+public class SetIntakeWheelsOut extends CommandBase {
 
     private final IntakeWheelsSubsystem m_intakeWheelsSubsystem;
    
-    public IntakeWheels(IntakeWheelsSubsystem subsystem) {
+    public SetIntakeWheelsOut(IntakeWheelsSubsystem subsystem) {
     // super();
      m_intakeWheelsSubsystem = subsystem;
      addRequirements(m_intakeWheelsSubsystem);
