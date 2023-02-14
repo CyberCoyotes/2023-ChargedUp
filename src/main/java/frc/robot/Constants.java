@@ -26,6 +26,8 @@ public final class Constants {
         public static final int pigeonID = 25; // Team3603
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 
+        public static final int ARM_EXTENDER = 27; //Using SRX 
+
         public static final COTSFalconSwerveConstants chosenModule =  //TODO: This must be tuned to specific robot
             COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L2);
 
@@ -179,4 +181,7 @@ public static final PIDController yPIDController = new PIDController(driveKP, 0,
      public static final class PWMPorts {
         public static final int kBlinkin = 0;
     }
-}
+
+    
+
+} // end of class
