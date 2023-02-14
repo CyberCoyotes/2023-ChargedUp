@@ -10,7 +10,10 @@
  * https://docs.wpilib.org/en/stable/docs/software/advanced-controls/introduction/tuning-vertical-arm.html
  *  a combined feedforward-feedback strategy is needed.
  * 
+ * https://www.chiefdelphi.com/t/smoothly-controlling-an-arm/343880/
  * 
+ * Math stuff from 5 yrs ago
+ * https://youtu.be/RLrZzSpHP4E
 --------------------------------------------------------*/
 package frc.robot.subsystems;
 
