@@ -8,8 +8,8 @@
 package frc.robot.subsystems;
 
 import java.util.ArrayList;
-import static frc.robot.IO.VISION_LED_OFF;
-import static frc.robot.IO.VISION_LED_ON;
+import static frc.robot.Constants.VISION_LED_OFF;
+import static frc.robot.Constants.VISION_LED_ON;
 
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
