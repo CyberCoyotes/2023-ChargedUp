@@ -12,20 +12,21 @@ import frc.robot.subsystems.IntakeWheelsSubsystem;
 public class SetIntakeWheelsOut extends CommandBase {
 
     private final IntakeWheelsSubsystem m_intakeWheelsSubsystem;
-   
-    public SetIntakeWheelsOut(IntakeWheelsSubsystem subsystem) {
-    // super();
-     m_intakeWheelsSubsystem = subsystem;
-     addRequirements(m_intakeWheelsSubsystem);
-    }
- @Override 
- public void execute(){
-    m_intakeWheelsSubsystem.intakeWheelsReverse();
- } 
 
- @Override
-public boolean isFinished(){
-    return false;
-}
-   
+    public SetIntakeWheelsOut(IntakeWheelsSubsystem subsystem) {
+        // super();
+        m_intakeWheelsSubsystem = subsystem;
+        addRequirements(m_intakeWheelsSubsystem);
+    }
+
+    @Override
+    public void execute() {
+        m_intakeWheelsSubsystem.intakeWheelsReverse();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
 }
