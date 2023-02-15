@@ -5,19 +5,19 @@
 --------------------------------------------------------*/
 package frc.robot.commands;
 
-import frc.robot.subsystems.IntakeWheelsSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class SetIntakeWheelsIn extends CommandBase {
+public class SetIntakeIn extends CommandBase {
 
-   private final IntakeWheelsSubsystem m_intakeWheelsSubsystem;
+   private final IntakeSubsystem m_intakeSubsystem;
 
-   public SetIntakeWheelsIn(IntakeWheelsSubsystem subsystem) {
+   public SetIntakeIn(IntakeSubsystem subsystem) {
       // super();
 
-      m_intakeWheelsSubsystem = subsystem;
+      m_intakeSubsystem = subsystem;
       //addRequirements(m_intakeWheelsSubsystem);
-      addRequirements(m_intakeWheelsSubsystem);
+      addRequirements(m_intakeSubsystem);
 
    }
 
@@ -28,13 +28,13 @@ public class SetIntakeWheelsIn extends CommandBase {
 
    @Override
    public void execute() {
-      m_intakeWheelsSubsystem.intakeWheelsOn();
+      m_intakeSubsystem.intakeWheelsIn();
    }
 
    @Override
    public void end(boolean interuppted) {
       // see above :)
-      m_intakeWheelsSubsystem.intakeWheelsOff();
+      m_intakeSubsystem.intakeWheelsOff();
    }
 
    // Returns true when the command should end.

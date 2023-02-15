@@ -18,7 +18,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
      * Extends the arm for deployement to level 2 or level 2
      * Should only be used when arm has been rotated for deployment position
      */
-    public void extendArm() {
+    public void setArmExtend() {
 
     }
 
@@ -27,7 +27,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
      * Should only be used when arm has been rotated for deployment position
      */
 
-    public void retractArm() {
+    public void setArmIn() {
 
     }
 

@@ -7,21 +7,21 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.robot.subsystems.IntakeWheelsSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
-public class SetIntakeWheelsOut extends CommandBase {
+public class SetIntakeOut extends CommandBase {
 
-    private final IntakeWheelsSubsystem m_intakeWheelsSubsystem;
+    private final IntakeSubsystem m_intakeSubsystem;
 
-    public SetIntakeWheelsOut(IntakeWheelsSubsystem subsystem) {
+    public SetIntakeOut(IntakeSubsystem subsystem) {
         // super();
-        m_intakeWheelsSubsystem = subsystem;
-        addRequirements(m_intakeWheelsSubsystem);
+        m_intakeSubsystem = subsystem;
+        addRequirements(m_intakeSubsystem);
     }
 
     @Override
     public void execute() {
-        m_intakeWheelsSubsystem.intakeWheelsReverse();
+        m_intakeSubsystem.intakeWheelsReverse();
     }
 
     @Override
