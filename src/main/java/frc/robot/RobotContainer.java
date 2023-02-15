@@ -101,7 +101,7 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
 
-        // return new PathPlannerTesting(s_Swerve).Generate();
-        return null;
+        return new PathPlannerTesting(s_Swerve).Generate();
+        
     }
 }

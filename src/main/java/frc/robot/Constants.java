@@ -179,17 +179,19 @@ public final class Constants {
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
-
         public static final double kPXController = 1;
         public static final double kPYController = 1;
         public static final double kPThetaController = 1;
+
 
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
         public static final ProfiledPIDController thetaProfiledPID = new ProfiledPIDController(kPThetaController,
                 kMaxAccelerationMetersPerSecondSquared, stickDeadband, kThetaControllerConstraints);
-    }
+        public static final PIDController kThetaPIDController = new PIDController(kPThetaController, 0,0);
+        
+        }
 
     // Needed for LED
     public static final class PWMPorts {

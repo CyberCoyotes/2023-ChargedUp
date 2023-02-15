@@ -41,7 +41,7 @@ public Command Generate()
                 // Position controllers
                 Constants.Swerve.xPIDController,
                 Constants.Swerve.yPIDController,
-                Constants.AutoConstants.thetaProfiledPID,
+                Constants.AutoConstants.thetaPIDController,//!Non-profiled for 2023 PAthplanner
                 consumah,
                 swerve);
     return command;
