@@ -18,6 +18,10 @@ import frc.robot.autos.exampleAuto;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a
@@ -51,7 +55,7 @@ public class RobotContainer {
     private final Swerve s_Swerve = new Swerve();
 
     // declare? the subsystems
-    private final IntakeSubsystem m_intake = new IntakeSubsystem();
+    private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
     // TODO Liam
     /** Path planner testing purposes only */
 
@@ -86,8 +90,8 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
-        IntakeIn.onTrue(new SetIntakeIn(m_intake)); // TODO test
-        // IntakeIn.whileTrue(new SetIntakeIn(m_intake)); // TODO Test
+        IntakeIn.onTrue(new SetIntakeIn(m_intakeSubsystem)); // TODO test
+    //    IntakeIn.whileTrue(new SetIntakeIn(m_intakeSubsystem)); // TODO Test
 
     }
         

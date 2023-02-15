@@ -10,14 +10,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SetIntakeIn extends CommandBase {
 
-   private final IntakeSubsystem m_intakeSubsystem;
+   private IntakeSubsystem m_intakeSubsystem;
 
    public SetIntakeIn(IntakeSubsystem subsystem) {
-      // super();
-
       m_intakeSubsystem = subsystem;
       //addRequirements(m_intakeWheelsSubsystem);
-      addRequirements(m_intakeSubsystem);
+      addRequirements(subsystem);
 
    }
 

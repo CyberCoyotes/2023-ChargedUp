@@ -6,33 +6,36 @@
 --------------------------------------------------------*/
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.jni.CANSparkMaxJNI;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.*;
+import frc.robot.Constants;
+
 
 public class IntakeSubsystem extends SubsystemBase {
-    
-    
-    private static final int INTAKE_WHEELS_MOTOR = 41;
 
-    private final Spark m_motor = new Spark(INTAKE_WHEELS_MOTOR); // TODO Check actual channel
+    
+    private final  CANSparkMax m_spark = new CANSparkMax(Constants.INTAKE_WHEELS_MOTOR, MotorType.kBrushless);
 
     public IntakeSubsystem() {
-        addChild("Wheels", m_motor);
+        // addChild("Wheels", m_motor);
     }
 
     public void intakeWheelsIn() {
-        m_motor.set(-1);
+        m_spark.set(1);
 
     }
 
     // Should not be needed. May or may not assign to a button
     public void intakeWheelsReverse() {
-        m_motor.set(1);
+        m_spark.set(-1);
     }
 
     public void intakeWheelsOff() {    
-        m_motor.set(0);
+        m_spark.set(0);
         }
 }

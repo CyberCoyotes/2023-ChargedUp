@@ -18,7 +18,11 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
+
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+
 
 
 public final class Constants {
@@ -40,7 +44,6 @@ public final class Constants {
 
     public static final int INTAKE_WHEELS_MOTOR = 41; // Connected to Spark Max & New
     
-
     public static final double stickDeadband = 0.1;
 
     public static final class Swerve {
@@ -218,4 +221,6 @@ public final class Constants {
     public static final int VISION_LED_OFF = 1;
     public static final int VISION_LED_ON = 2;
 
+    public static final double WHEEL_MAX = 1; //maybe not be needed
+    
 } // end of class
