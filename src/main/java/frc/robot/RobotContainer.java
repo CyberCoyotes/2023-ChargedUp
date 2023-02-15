@@ -39,9 +39,9 @@ public class RobotContainer {
 
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
-    // private final JoystickButton IntakeIn = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton IntakeOut = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton IntakeIn = new JoystickButton(driver, XboxController.Button.kY.value);
-    // private final JoystickButton IntakeIn = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton IntakeOff = new JoystickButton(driver, XboxController.Button.kA.value);
     // private final JoystickButton IntakeIn = new JoystickButton(driver, XboxController.Button.kB.value);
 
 
@@ -52,6 +52,9 @@ public class RobotContainer {
 
     // declare? the subsystems
     private final IntakeSubsystem m_intake = new IntakeSubsystem();
+    private final IntakeSubsystem m_Outake = new IntakeSubsystem();
+    private final IntakeSubsystem m_OFFTake = new IntakeSubsystem();
+    
     // TODO Liam
     /** Path planner testing purposes only */
 
@@ -87,6 +90,9 @@ public class RobotContainer {
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
         IntakeIn.onTrue(new SetIntakeIn(m_intake)); // TODO test
+        IntakeOut.onTrue(new SetIntakeOut(m_Outake));  
+        IntakeOff.onTrue(new SetIntakeOut(m_OFFTake)); 
+    
         // IntakeIn.whileTrue(new SetIntakeIn(m_intake)); // TODO Test
 
     }
