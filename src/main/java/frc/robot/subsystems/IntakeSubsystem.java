@@ -9,9 +9,14 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.*;
 
 public class IntakeSubsystem extends SubsystemBase {
-    private final Spark m_motor = new Spark(41); // TODO Check actual channel
+    
+    
+    private static final int INTAKE_WHEELS_MOTOR = 41;
+
+    private final Spark m_motor = new Spark(INTAKE_WHEELS_MOTOR); // TODO Check actual channel
 
     public IntakeSubsystem() {
         addChild("Wheels", m_motor);

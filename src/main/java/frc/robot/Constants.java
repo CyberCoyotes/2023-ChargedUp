@@ -18,6 +18,8 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
+
 
 public final class Constants {
     /**
@@ -28,15 +30,15 @@ public final class Constants {
      * but I don't think they an ID
      *  
      **/
-    public static final int ARM_RIGHT_ROTATION = 9; // Connected to Falcon 500
+    public static final int ARM_RIGHT_ROT_MOTOR = 9; // Connected to Falcon 500
 
-    public static final int ARM_LEFT_ROTATION = 10; // Connected to Falcon 500
+    public static final int ARM_LEFT_ROT_MOTOR = 10; // Connected to Falcon 500
     
     public static final int CANDLE = 26;
 
-    public static final int ARM_EXTENDER = 27; // Connected to SRX and Neo
+    public static final int ARM_EXTENDER_MOTOR = 27; // Connected to SRX and Neo
 
-    public static final int INTAKE_WHEELS = 41; // Connected to Spark Max & New
+    public static final int INTAKE_WHEELS_MOTOR = 41; // Connected to Spark Max & New
     
 
     public static final double stickDeadband = 0.1;
