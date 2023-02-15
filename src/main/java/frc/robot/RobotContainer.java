@@ -43,17 +43,25 @@ public class RobotContainer {
     private final JoystickButton IntakeIn = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton IntakeOff = new JoystickButton(driver, XboxController.Button.kA.value);
     // private final JoystickButton IntakeIn = new JoystickButton(driver, XboxController.Button.kB.value);
-
-
+    
+    // private final JoystickButton IntakeIn = new JoystickButton(operator, XboxController.Button.kB.value);
+    // private final JoystickButton IntakeIn = new JoystickButton(operator, XboxController.Button.kA.value);
+    // private final JoystickButton IntakeIn = new JoystickButton(operator, XboxController.Button.kX.value);
+    // private final JoystickButton IntakeIn = new JoystickButton(operator, XboxController.Button.kY.value);
+    
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
     /* Subsystems */
-    private final Swerve s_Swerve = new Swerve();
-
     // declare? the subsystems
+    private final ArmExtensionSubsystem m_extend = new ArmExtensionSubsystem();
+    private final ArmSubsystem m_arm = new ArmSubsystem(); 
+    //private final Blinkin m_blinkin = new Blinkin();
+    private final CANdle m_candle = new CANdle();
+    private final ClawSubsystem m_claw = new ClawSubsystem();
     private final IntakeSubsystem m_intake = new IntakeSubsystem();
-    private final IntakeSubsystem m_Outake = new IntakeSubsystem();
-    private final IntakeSubsystem m_OFFTake = new IntakeSubsystem();
+    private final Vision m_vision = new Vision();
+    private final Swerve s_Swerve = new Swerve();
+    ;
     
     // TODO Liam
     /** Path planner testing purposes only */
@@ -90,9 +98,10 @@ public class RobotContainer {
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
         IntakeIn.onTrue(new SetIntakeIn(m_intake)); // TODO test
-        IntakeOut.onTrue(new SetIntakeOut(m_Outake));  
-        IntakeOff.onTrue(new SetIntakeOut(m_OFFTake)); 
-    
+       //ArmExtensionSubsystem.onTrue(new  (m_extend));  
+       //ArmSubsystem.onTrue(new (m_arm)); 
+       //ClawSubsystem.onTrue(new (m_claw));
+       
         // IntakeIn.whileTrue(new SetIntakeIn(m_intake)); // TODO Test
 
     }
