@@ -17,10 +17,17 @@
 --------------------------------------------------------*/
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.sensors.CANCoder;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class ArmSubsystem extends SubsystemBase {
-    
+ 
+    private TalonFX leftMotor = new TalonFX(Constants.ARM_LEFT_ROT_MOTOR);//integrated encoder
+    private TalonFX rightMotor = new TalonFX(Constants.ARM_RIGHT_ROT_MOTOR);//integrated encoder
+
     /** Rotates arm to deploment side of robot */ 
     public void rotateArmDeploy(){
         
