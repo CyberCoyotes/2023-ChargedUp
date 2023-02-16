@@ -31,6 +31,9 @@ import frc.robot.Constants;
 public class ArmSubsystem extends SubsystemBase {
  
 
+    //How to calculate kF: %output*maxOutputNum(1023?)/(native units at desired point)
+    //also recall that kF is a percentage between -1 and 1. Anything exceeding this and you clearly don't own a printer
+    
     /***
      * The left motor of the rotation of the arm, and host of the follower configuration. 
      */
