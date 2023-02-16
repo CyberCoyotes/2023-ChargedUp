@@ -2,6 +2,9 @@
  * 
  * 2023 Charged Up
  * 
+ * operate when the button is pressed,
+ * stop when released
+ * 
 --------------------------------------------------------*/
 package frc.robot.commands;
 
