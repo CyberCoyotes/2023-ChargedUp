@@ -54,6 +54,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     public float ReadExtension()
     {
         m_motorController.set(TalonSRXControlMode.Position, 0, null, 0);
+        return 0;
     }
 
     public ArmExtensionSubsystem() {
