@@ -18,10 +18,6 @@ import frc.robot.autos.exampleAuto;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a
@@ -63,7 +59,6 @@ public class RobotContainer {
     /* Subsystems */
     private final ArmExtensionSubsystem m_extend = new ArmExtensionSubsystem();
     private final ArmSubsystem m_arm = new ArmSubsystem();
-    // private final Blinkin m_blinkin = new Blinkin();
     private final CANdle m_candle = new CANdle();
     private final ClawSubsystem m_claw = new ClawSubsystem();
     private final IntakeSubsystem m_intake = new IntakeSubsystem();

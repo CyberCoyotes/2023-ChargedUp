@@ -19,12 +19,6 @@ import edu.wpi.first.math.util.Units;
 import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
-
-
-
 public final class Constants {
     /**
      * 
@@ -42,7 +36,7 @@ public final class Constants {
 
     public static final int ARM_EXTENDER_MOTOR = 27; // Connected to SRX and Neo
 
-    public static final int INTAKE_WHEELS_MOTOR = 41; // Connected to Spark Max & New
+    public static final int INTAKE_WHEELS_MOTOR = 41; // Connected to Victor SPX
     
     public static final double stickDeadband = 0.1;
 

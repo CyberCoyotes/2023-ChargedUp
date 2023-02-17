@@ -6,10 +6,9 @@
 --------------------------------------------------------*/
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.jni.CANSparkMaxJNI;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,23 +18,23 @@ import frc.robot.Constants;
 public class IntakeSubsystem extends SubsystemBase {
 
     
-    private final  CANSparkMax m_spark = new CANSparkMax(Constants.INTAKE_WHEELS_MOTOR, MotorType.kBrushless);
+    private final  VictorSPX m_motor = new VictorSPX(Constants.INTAKE_WHEELS_MOTOR);
 
     public IntakeSubsystem() {
         // addChild("Wheels", m_motor);
     }
 
     public void intakeWheelsIn() {
-        m_spark.set(1);
+        m_motor.set(ControlMode.PercentOutput, 1.0);
 
     }
 
     // Should not be needed. May or may not assign to a button
     public void intakeWheelsReverse() {
-        m_spark.set(-1);
+        m_motor.set(ControlMode.PercentOutput,-1.0);
     }
 
     public void intakeWheelsOff() {    
-        m_spark.set(0);
+        m_motor.set(ControlMode.PercentOutput,0.0);
         }
 }
