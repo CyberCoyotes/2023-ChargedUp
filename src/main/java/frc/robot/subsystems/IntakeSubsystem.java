@@ -6,7 +6,6 @@
 --------------------------------------------------------*/
 package frc.robot.subsystems;
 
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
@@ -15,27 +14,26 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-
 public class IntakeSubsystem extends SubsystemBase {
 
-    // FIXME check tuner
-    private final  VictorSPX m_motor = new VictorSPX(Constants.INTAKE_WHEELS_MOTOR_ID); // CAN motor ID from Constants and Phoenix tuner
+    private final VictorSPX m_motor = new VictorSPX(Constants.INTAKE_WHEELS_MOTOR_ID); // CAN motor ID from Constants
+                                                                                       // and Phoenix tuner
 
     public IntakeSubsystem() {
-        // addChild("Wheels", m_motor);
+        // addChild("Intake Wheels", m_motor);
     }
 
     public void intakeWheelsIn() {
-        m_motor.set(ControlMode.PercentOutput, 1.0);
+        m_motor.set(ControlMode.PercentOutput, 0.25);
 
     }
 
     // Should not be needed. May or may not assign to a button
     public void intakeWheelsReverse() {
-        m_motor.set(ControlMode.PercentOutput,-1.0);
+        m_motor.set(ControlMode.PercentOutput, -1.0);
     }
 
-    public void intakeWheelsOff() {    
-        m_motor.set(ControlMode.PercentOutput,0.0);
-        }
+    public void intakeWheelsOff() {
+        m_motor.set(ControlMode.PercentOutput, 0.0);
+    }
 }

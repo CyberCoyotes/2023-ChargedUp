@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.autos.exampleAuto;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -97,10 +98,13 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         intakeIn.onTrue(new SetIntakeIn(m_intake)); // TODO Test, starts but doesn't stop on release
-        // IntakeIn.whileTrue(new SetIntakeIn(m_intake)); // TODO test
-        // ArmExtensionSubsystem.onTrue(new (m_extend)); // TODO test
-        // ArmSubsystem.onTrue(new (m_arm)); // TODO test
-        // ClawSubsystem.onTrue(new (m_claw)); // TODO test
+       
+        // TODO Thinngs to test
+        // IntakeIn.whileTrue(new SetIntakeIn(m_intake));
+        // new Trigger(m_vision::checkTagID).onTrue(new SetIntakeIn(m_intake));
+        // ArmExtensionSubsystem.onTrue(new (m_extend));
+        // ArmSubsystem.onTrue(new (m_arm));
+        // ClawSubsystem.onTrue(new (m_claw));
     }
 
     /**
@@ -112,6 +116,7 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
 
+        // FIXME
         // return new PathPlannerTesting(s_Swerve).Generate();
         return null;
     }

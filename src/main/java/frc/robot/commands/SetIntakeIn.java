@@ -14,23 +14,22 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SetIntakeIn extends CommandBase {
 
-   private IntakeSubsystem m_intakeSubsystem;
+   private final IntakeSubsystem m_intakeSubsystem; // made into a final
 
    public SetIntakeIn(IntakeSubsystem subsystem) {
       m_intakeSubsystem = subsystem;
       addRequirements(m_intakeSubsystem);
-      addRequirements(subsystem);
-
    }
 
    // Called when the command is initially scheduled.
    @Override
    public void initialize() {
+      m_intakeSubsystem.intakeWheelsIn(); // moved from execute
+
    }
 
    @Override
    public void execute() {
-      m_intakeSubsystem.intakeWheelsIn();
    }
 
    @Override
@@ -39,9 +38,11 @@ public class SetIntakeIn extends CommandBase {
    }
 
    // Returns true when the command should end.
+   /* Commented out
    @Override
    public boolean isFinished() {
       return false;
    }
+   */
 
 }

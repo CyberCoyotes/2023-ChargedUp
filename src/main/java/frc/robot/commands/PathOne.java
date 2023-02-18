@@ -21,18 +21,20 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;;
 
-public class PathPlannerTesting {
+public class PathOne {
     private Swerve swerve;
 
-    public PathPlannerTesting(Swerve swerve) {
+    public PathOne(Swerve swerve) {
         this.swerve = swerve;
     }
-public Command Generate()
-{
-    PathPlannerTrajectory trajectory = PathPlanner.loadPath("New Path", 2, 1);
+
+public Command Generate() {
+    PathPlannerTrajectory trajectory = PathPlanner.loadPath("PathOne", 2, 1);
     
     Consumer<SwerveModuleState[]> consumah =  (swerve::setModuleStates);
     Supplier<Pose2d> suppliah = () -> swerve.getPose();
+
+    
     var command =  new PPSwerveControllerCommand(
                 trajectory,
                 suppliah, // Functional interface to feed supplier
@@ -46,5 +48,6 @@ public Command Generate()
                 swerve);
     return command;
 
-}
+
+    }
 }

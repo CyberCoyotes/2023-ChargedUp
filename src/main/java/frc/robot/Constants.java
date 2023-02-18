@@ -36,7 +36,7 @@ public final class Constants {
 
     public static final int ARM_EXTENDER_MOTOR_ID = 27; // Connected to SRX and Neo
 
-    public static final int INTAKE_WHEELS_MOTOR_ID = 41; // Connected to Victor SPX
+    public static final int INTAKE_WHEELS_MOTOR_ID = 11; // Connected to Victor SPX
     
     public static final double stickDeadband = 0.1;
 
