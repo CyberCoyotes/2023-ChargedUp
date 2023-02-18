@@ -6,6 +6,8 @@
 --------------------------------------------------------*/
 package frc.robot;
 
+import com.ctre.phoenix.led.CANdle;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -39,9 +41,8 @@ public class RobotContainer {
 
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
-    private final JoystickButton IntakeOut = new JoystickButton(driver, XboxController.Button.kX.value);
-    private final JoystickButton IntakeIn = new JoystickButton(driver, XboxController.Button.kY.value);
-    private final JoystickButton IntakeOff = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton intakeOut = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton intakeIn = new JoystickButton(driver, XboxController.Button.kY.value);
     // private final JoystickButton IntakeIn = new JoystickButton(driver,
     // XboxController.Button.kB.value);
 
@@ -59,7 +60,7 @@ public class RobotContainer {
     /* Subsystems */
     private final ArmExtensionSubsystem m_extend = new ArmExtensionSubsystem();
     private final ArmSubsystem m_arm = new ArmSubsystem();
-    private final CANdle m_candle = new CANdle();
+    private final CANdle m_candle = new CANdle(Constants.CANDLE_ID);
     private final ClawSubsystem m_claw = new ClawSubsystem();
     private final IntakeSubsystem m_intake = new IntakeSubsystem();
     private final Vision m_vision = new Vision();
@@ -95,7 +96,7 @@ public class RobotContainer {
 
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        IntakeIn.onTrue(new SetIntakeIn(m_intake)); // TODO Test, starts but doesn't stop on release
+        intakeIn.onTrue(new SetIntakeIn(m_intake)); // TODO Test, starts but doesn't stop on release
         // IntakeIn.whileTrue(new SetIntakeIn(m_intake)); // TODO test
         // ArmExtensionSubsystem.onTrue(new (m_extend)); // TODO test
         // ArmSubsystem.onTrue(new (m_arm)); // TODO test
