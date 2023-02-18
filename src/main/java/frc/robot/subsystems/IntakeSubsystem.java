@@ -16,7 +16,7 @@ public class IntakeSubsystem extends SubsystemBase {
     
     private static final int INTAKE_WHEELS_MOTOR = 41;
 
-    private final Spark m_motor = new Spark(INTAKE_WHEELS_MOTOR); // TODO Check actual channel
+    private final Spark m_motor = new Spark(14); // TODO Check actual channel
 
     public IntakeSubsystem() {
         addChild("Wheels", m_motor);

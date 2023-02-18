@@ -1,8 +1,9 @@
 # Chronological:
 - ## Getting a basic arm
-    - [ ] Confirm encoder works
-    - [ ] Confirm encoder offset(straight down, towards robot is represented by a 0 encoder). If it needs tuning, do so.
-    - [ ] Simple Percent Output to control arm
+    - [x] Confirm encoder works
+    - [x] Confiroffset(~~straight down, towards robot~~ the arm at rest is represented by a 0 encoder). If it needs tuning, do so.
+    - [x] Simple Percent Output to control arm
+    - [ ] Encoder value at end, straight up, level
 - ## Tuning for gravity
     - [ ] Create kF, arbitrary feedforward(Find power required to maintain position at 90°) and apply to arm power in update, which can be used by Percent Output with `m_talonSRX.(set(ControlMode.PercentOutput, [powerPercentage], DemandType.ArbitraryFeedForward, [feedForward source]);`)
 - ## PID/MotionMagic

@@ -10,14 +10,17 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.exampleAuto;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
-
+// 94505//horizontaL
+// 314446 // serve
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a
@@ -31,6 +34,7 @@ public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
     private final Joystick operator = new Joystick(1);
+    private final ArmSubsystem armSubsystem = new ArmSubsystem();
 
     /* Drive Controls */
     private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -39,6 +43,7 @@ public class RobotContainer {
 
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
+    private final JoystickButton zeroArmEncoder = new JoystickButton(driver, XboxController.Button.kBack.value);
     // private final JoystickButton IntakeIn = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton IntakeIn = new JoystickButton(driver, XboxController.Button.kY.value);
     // private final JoystickButton IntakeIn = new JoystickButton(driver, XboxController.Button.kA.value);
@@ -58,18 +63,24 @@ public class RobotContainer {
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
+    public void DebugMethod()
+    {
+        SmartDashboard.putNumber("Arm Rotation",armSubsystem.GetRotation());
+    }
     public RobotContainer() {
 
-        s_Swerve.setDefaultCommand(
-                new TeleopSwerve(
-                        s_Swerve,
-                        () -> -driver.getRawAxis(translationAxis),
-                        () -> -driver.getRawAxis(strafeAxis),
-                        () -> -driver.getRawAxis(rotationAxis),
-                        () -> robotCentric.getAsBoolean()));
-
+        armSubsystem.setDefaultCommand(
+               // new TeleopSwerve(
+                //         s_Swerve,
+                //         () -> -driver.getRawAxis(translationAxis),
+                //         () -> -driver.getRawAxis(strafeAxis),
+                //         () -> -driver.getRawAxis(rotationAxis),
+                //         () -> robotCentric.getAsBoolean()));
+            new RotateArmManual2(armSubsystem, () -> -driver.getRawAxis(translationAxis)
+                    ));
         // Configure the button bindings
         configureButtonBindings();
+        System.out.println();
     }
 
     /**
@@ -86,6 +97,7 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
+        zeroArmEncoder.onTrue(new InstantCommand(() -> armSubsystem.ZeroArmEncoder()));
         IntakeIn.onTrue(new SetIntakeIn(m_intake)); // TODO test
         // IntakeIn.whileTrue(new SetIntakeIn(m_intake)); // TODO Test
 
@@ -100,8 +112,8 @@ public class RobotContainer {
     
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-
-        return new PathPlannerTesting(s_Swerve).Generate();
+        return new WaitCommand(2);
+        // return new PathPlannerTesting(s_Swerve).Generate();
         
     }
 }

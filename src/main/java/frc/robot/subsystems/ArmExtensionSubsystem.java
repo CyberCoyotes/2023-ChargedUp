@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.Arm;
 
 public class ArmExtensionSubsystem extends SubsystemBase {
 
@@ -67,7 +68,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
       //no state?
 
     public void setArmIn() {
-
+        m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_POSITION_OUT);
     }
 
 }
