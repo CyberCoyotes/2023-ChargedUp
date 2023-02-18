@@ -28,15 +28,15 @@ public final class Constants {
      * but I don't think they an ID
      *  
      **/
-    public static final int ARM_RIGHT_ROT_MOTOR = 9; // Connected to Falcon 500
+    public static final int ARM_RIGHT_ROT_MOTOR_ID = 9; // Connected to Falcon 500
 
-    public static final int ARM_LEFT_ROT_MOTOR = 10; // Connected to Falcon 500
+    public static final int ARM_LEFT_ROT_MOTOR_ID = 10; // Connected to Falcon 500
     
-    public static final int CANDLE = 26;
+    public static final int CANDLE_ID = 26;
 
-    public static final int ARM_EXTENDER_MOTOR = 27; // Connected to SRX and Neo
+    public static final int ARM_EXTENDER_MOTOR_ID = 27; // Connected to SRX and Neo
 
-    public static final int INTAKE_WHEELS_MOTOR = 41; // Connected to Victor SPX
+    public static final int INTAKE_WHEELS_MOTOR_ID = 41; // Connected to Victor SPX
     
     public static final double stickDeadband = 0.1;
 

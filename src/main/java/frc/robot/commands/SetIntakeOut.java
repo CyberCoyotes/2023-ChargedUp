@@ -26,7 +26,10 @@ public class SetIntakeOut extends CommandBase {
     public void execute() {
         m_intakeSubsystem.intakeWheelsReverse();
     }
-
+    @Override
+    public void end(boolean interuppted) {
+       m_intakeSubsystem.intakeWheelsOff();
+    }
     @Override
     public boolean isFinished() {
         return false;

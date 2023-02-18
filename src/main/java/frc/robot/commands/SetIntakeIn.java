@@ -18,7 +18,7 @@ public class SetIntakeIn extends CommandBase {
 
    public SetIntakeIn(IntakeSubsystem subsystem) {
       m_intakeSubsystem = subsystem;
-      //addRequirements(m_intakeWheelsSubsystem);
+      addRequirements(m_intakeSubsystem);
       addRequirements(subsystem);
 
    }
@@ -35,7 +35,6 @@ public class SetIntakeIn extends CommandBase {
 
    @Override
    public void end(boolean interuppted) {
-      // see above :)
       m_intakeSubsystem.intakeWheelsOff();
    }
 
