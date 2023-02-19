@@ -16,9 +16,6 @@
 
 package frc.robot.subsystems;
 
-//import static edu.wpi.first.wpilibj.Solenoid.Value.kForward;
-// import static edu.wpi.first.wpilibj.Solenoid.Value.kForward;
-
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -30,7 +27,7 @@ public class ClawSubsystem extends SubsystemBase {
     // REV Pneumatics Hub
     private final Solenoid m_clawSolenoid = new Solenoid(PneumaticsModuleType.REVPH, Constants.REVPH_CLAW_ID);
 
-    Compressor phCompressor = new Compressor(1, PneumaticsModuleType.REVPH);
+    Compressor phCompressor = new Compressor(42, PneumaticsModuleType.REVPH);
     
     boolean enabled = phCompressor.isEnabled();
     boolean pressureSwitch = phCompressor.getPressureSwitchValue();
