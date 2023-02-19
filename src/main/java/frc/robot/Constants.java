@@ -38,7 +38,9 @@ public final class Constants {
 
     public static final int INTAKE_WHEELS_MOTOR_ID = 11; // Connected to Victor SPX
 
-    public static final int REVPH_CLAW_ID = 42; // REV Pneumatics Hub for Claw
+    // public static final int REVPH_CLAW_ID = 42; // REV Pneumatics Hub for Claw
+
+    public static final int REV_CLAW_ID = 0; // REV Pneumatics Hub Single channel for Claw
     
     public static final double stickDeadband = 0.1;
 
