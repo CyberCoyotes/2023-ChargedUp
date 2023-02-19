@@ -12,23 +12,34 @@
 package frc.robot.subsystems;
 
 //import static edu.wpi.first.wpilibj.Solenoid.Value.kForward;
+// import static edu.wpi.first.wpilibj.Solenoid.Value.kForward;
+
+import edu.wpi.first.wpilibj.Compressor;
+
 //import static edu.wpi.first.wpilibj.Solenoid.Value.kReverse;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
-public class ClawSubsystem extends SubsystemBase{
-    private final Solenoid m_clawSolenoid =
-     new Solenoid(
-      PneumaticsModuleType.CTREPCM, 0); // TODO what is our module type?
+public class ClawSubsystem extends SubsystemBase {
     
- public void clawOpen(){
- // m_clawSolenoid.set(kForward);
- }   
-  public void clawClose(){
-   // m_clawSolenoid.set(kReverse);  
-  }     
- }
+    // REV Pneumatics Hub
+    private final Solenoid m_clawSolenoid = new Solenoid(PneumaticsModuleType.REVPH, Constants.REVPH_CLAW_ID);
+
+    Compressor phCompressor = new Compressor(1, PneumaticsModuleType.REVPH);
+    
+    boolean enabled = pcmCompressor.enabled();
+    boolean pressureSwitch = pcmCompressor.getPressureSwitchValue();
+    double current = pcmCompressor.getCompressorCurrent();
 
 
+    public void clawOpen() {
+        // m_clawSolenoid.set(kForward);
+    }
+
+    public void clawClose() {
+        // m_clawSolenoid.set(kReverse);
+    }
+}

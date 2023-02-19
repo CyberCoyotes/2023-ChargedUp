@@ -66,12 +66,17 @@ public class RobotContainer {
     private final IntakeSubsystem m_intake = new IntakeSubsystem();
     private final Vision m_vision = new Vision();
     private final Swerve s_Swerve = new Swerve();
+    // private final Solenoid exampleSolenoidPH = new Solenoid(PneumaticsModuleType.REVPH, 1);
+
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
 
+        // m_vision.setDefaultCommand(new SetLEDtags(m_candle, m_vision));
+
+        
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(
                         s_Swerve,
@@ -97,10 +102,11 @@ public class RobotContainer {
 
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        intakeIn.onTrue(new SetIntakeIn(m_intake)); // TODO Test, starts but doesn't stop on release
        
-        // TODO Thinngs to test
-        // IntakeIn.whileTrue(new SetIntakeIn(m_intake));
+        intakeIn.whileTrue(new SetIntakeIn(m_intake));
+        intakeOut.whileTrue(new SetIntakeOut(m_intake));
+
+        // TODO Things to test
         // new Trigger(m_vision::checkTagID).onTrue(new SetIntakeIn(m_intake));
         // ArmExtensionSubsystem.onTrue(new (m_extend));
         // ArmSubsystem.onTrue(new (m_arm));

@@ -16,8 +16,7 @@ import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
 
-    private final VictorSPX m_motor = new VictorSPX(Constants.INTAKE_WHEELS_MOTOR_ID); // CAN motor ID from Constants
-                                                                                       // and Phoenix tuner
+    private final VictorSPX m_motor = new VictorSPX(Constants.INTAKE_WHEELS_MOTOR_ID);
 
     public IntakeSubsystem() {
         // addChild("Intake Wheels", m_motor);
@@ -30,7 +29,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
     // Should not be needed. May or may not assign to a button
     public void intakeWheelsReverse() {
-        m_motor.set(ControlMode.PercentOutput, -1.0);
+        m_motor.set(ControlMode.PercentOutput, -0.25);
     }
 
     public void intakeWheelsOff() {
