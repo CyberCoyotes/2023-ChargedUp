@@ -39,25 +39,35 @@ public class RobotContainer {
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
-
-    /* Driver Buttons */
+    
+    /*--------------------------------------------------------*
+    * Driver Buttons
+    *--------------------------------------------------------*/
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
-    private final JoystickButton intakeOut = new JoystickButton(driver, XboxController.Button.kX.value);
-    private final JoystickButton intakeIn = new JoystickButton(driver, XboxController.Button.kY.value);
-    // private final JoystickButton IntakeIn = new JoystickButton(driver,
-    // XboxController.Button.kB.value);
+    private final JoystickButton intakeIn = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton intakeOut = new JoystickButton(driver, XboxController.Button.kY.value);
+    private final JoystickButton openClaw = new JoystickButton(driver, XboxController.Button.kA.value);
+    // private final JoystickButton <IntakeIn> = new JoystickButton(driver, XboxController.Button.kB.value);
 
-    // private final JoystickButton IntakeIn = new JoystickButton(operator,
-    // XboxController.Button.kB.value);
-    // private final JoystickButton IntakeIn = new JoystickButton(operator,
-    // XboxController.Button.kA.value);
-    // private final JoystickButton IntakeIn = new JoystickButton(operator,
-    // XboxController.Button.kX.value);
-    // private final JoystickButton IntakeIn = new JoystickButton(operator,
-    // XboxController.Button.kY.value);
+    /*--------------------------------------------------------*
+    * Operator Buttons
+    *--------------------------------------------------------*/
 
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    /* TODO
+    armRotReset
+    extendArm
+    retractArm
 
+    // private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value); // TODO
+    // private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value); // TODO
+
+    // private final JoystickButton clawOpen = new JoystickButton(operator, XboxController.Button.kA.value); // TODO
+    // private final JoystickButton <intakeOut> = new JoystickButton(operator, XboxController.Button.kB.value);
+
+    */
+
+    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value); // TODO Remove robot centric buttons
+    
     /* Subsystems */
     private final ArmExtensionSubsystem m_extend = new ArmExtensionSubsystem();
     private final ArmSubsystem m_arm = new ArmSubsystem();
@@ -66,8 +76,6 @@ public class RobotContainer {
     private final IntakeSubsystem m_intake = new IntakeSubsystem();
     private final Vision m_vision = new Vision();
     private final Swerve s_Swerve = new Swerve();
-    // private final Solenoid exampleSolenoidPH = new Solenoid(PneumaticsModuleType.REVPH, 1);
-
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -100,17 +108,18 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
 
-        /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-       
+        /* Driver Button Bindings */
+        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));       
+
+        /* Operator Button Bindings */
         intakeIn.whileTrue(new SetIntakeIn(m_intake));
         intakeOut.whileTrue(new SetIntakeOut(m_intake));
+        openClaw.whileTrue(new SetClawOpen(m_claw));
 
-        // TODO Things to test
         // new Trigger(m_vision::checkTagID).onTrue(new SetIntakeIn(m_intake));
         // ArmExtensionSubsystem.onTrue(new (m_extend));
         // ArmSubsystem.onTrue(new (m_arm));
-        // ClawSubsystem.onTrue(new (m_claw));
+        
     }
 
     /**
