@@ -23,13 +23,13 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void intakeWheelsIn() {
-        m_motor.set(ControlMode.PercentOutput, 0.25);
+        m_motor.set(ControlMode.PercentOutput, 1.0);
 
     }
 
     // Should not be needed. May or may not assign to a button
     public void intakeWheelsReverse() {
-        m_motor.set(ControlMode.PercentOutput, -0.25);
+        m_motor.set(ControlMode.PercentOutput, -1.0);
     }
 
     public void intakeWheelsOff() {
