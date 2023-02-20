@@ -117,8 +117,8 @@ public class RobotContainer {
         /* Operator Button Bindings */
         intakeIn.whileTrue(new SetIntakeIn(m_intake));
         intakeOut.whileTrue(new SetIntakeOut(m_intake));
-        openClaw.whileTrue(new SetClawOpen(m_claw));
-        closeClaw.whileTrue(new SetClawOpen(m_claw));
+        openClaw.onTrue(new SetClawOpen(m_claw));
+        closeClaw.onTrue(new SetClawClose(m_claw));
 
 
         // new Trigger(m_vision::checkTagID).onTrue(new SetIntakeIn(m_intake));

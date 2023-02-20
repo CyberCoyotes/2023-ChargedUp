@@ -16,10 +16,12 @@
 
 package frc.robot.subsystems;
 
+import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kForward;
+import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kReverse;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -27,7 +29,8 @@ public class ClawSubsystem extends SubsystemBase {
     
     // REV Pneumatics Hub
     // private final Solenoid m_clawSolenoid = new Solenoid(PneumaticsModuleType.REVPH, Constants.REV_CLAW_ID);
-    private final Solenoid m_claw = new Solenoid(PneumaticsModuleType.REVPH, 0);
+    private final DoubleSolenoid m_claw = 
+        new DoubleSolenoid(PneumaticsModuleType.REVPH,0,1);
 
 
     Compressor phCompressor = new Compressor(21, PneumaticsModuleType.REVPH); // Using 21 from the PDH
@@ -35,15 +38,15 @@ public class ClawSubsystem extends SubsystemBase {
     boolean enabled = phCompressor.isEnabled();
     boolean pressureSwitch = phCompressor.getPressureSwitchValue();
     // double current = phCompressor.getCompressorCurrent(); // FIXME
-    AnalogInput pressureSensor = new AnalogInput(0);
+    // AnalogInput pressureSensor = new AnalogInput(0);
 
 
 
     public void clawOpen() {
-        m_claw.set(true); // TODO TBD experimentally
+        m_claw.set(kForward); // TODO TBD experimentally
     }
 
     public void clawClose() {
-        m_claw.set(false);
+        m_claw.set(kReverse);
     }
 }
