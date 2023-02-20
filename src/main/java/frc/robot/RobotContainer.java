@@ -47,7 +47,7 @@ public class RobotContainer {
     private final JoystickButton intakeIn = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton intakeOut = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton openClaw = new JoystickButton(driver, XboxController.Button.kA.value);
-    // private final JoystickButton <IntakeIn> = new JoystickButton(driver, XboxController.Button.kB.value);
+    // private final JoystickButton openClaw = new JoystickButton(driver, XboxController.Button.kB.value);
 
     /*--------------------------------------------------------*
     * Operator Buttons
