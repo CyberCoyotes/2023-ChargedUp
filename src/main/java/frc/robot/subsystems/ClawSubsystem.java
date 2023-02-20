@@ -27,7 +27,7 @@ public class ClawSubsystem extends SubsystemBase {
     // REV Pneumatics Hub
     private final Solenoid m_clawSolenoid = new Solenoid(PneumaticsModuleType.REVPH, Constants.REV_CLAW_ID);
 
-    Compressor phCompressor = new Compressor(21, PneumaticsModuleType.REVPH);
+    Compressor phCompressor = new Compressor(21, PneumaticsModuleType.REVPH); // Using 21 from the PDH
     
     boolean enabled = phCompressor.isEnabled();
     boolean pressureSwitch = phCompressor.getPressureSwitchValue();

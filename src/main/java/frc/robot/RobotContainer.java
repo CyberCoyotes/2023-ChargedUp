@@ -47,7 +47,7 @@ public class RobotContainer {
     private final JoystickButton intakeIn = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton intakeOut = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton openClaw = new JoystickButton(driver, XboxController.Button.kA.value);
-    // private final JoystickButton openClaw = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final JoystickButton closeClaw = new JoystickButton(driver, XboxController.Button.kB.value);
 
     /*--------------------------------------------------------*
     * Operator Buttons
@@ -115,6 +115,8 @@ public class RobotContainer {
         intakeIn.whileTrue(new SetIntakeIn(m_intake));
         intakeOut.whileTrue(new SetIntakeOut(m_intake));
         openClaw.whileTrue(new SetClawOpen(m_claw));
+        closeClaw.whileTrue(new SetClawOpen(m_claw));
+
 
         // new Trigger(m_vision::checkTagID).onTrue(new SetIntakeIn(m_intake));
         // ArmExtensionSubsystem.onTrue(new (m_extend));
