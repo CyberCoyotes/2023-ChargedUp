@@ -66,6 +66,10 @@ public class RobotContainer {
     public void DebugMethod()
     {
         SmartDashboard.putNumber("Arm Rotation",armSubsystem.GetRotation());
+        SmartDashboard.putNumber("Module Rotation0",s_Swerve.mSwerveMods[0].getState().angle.getDegrees());
+        SmartDashboard.putNumber("Module Rotation1",s_Swerve.mSwerveMods[1].getState().angle.getDegrees());
+        SmartDashboard.putNumber("Module Rotation2",s_Swerve.mSwerveMods[2].getState().angle.getDegrees());
+        SmartDashboard.putNumber("Module Rotation3",s_Swerve.mSwerveMods[3].getState().angle.getDegrees());
     }
     public RobotContainer() {
 
