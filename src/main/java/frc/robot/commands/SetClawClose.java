@@ -13,17 +13,17 @@ public class SetClawClose extends CommandBase {
     private final ClawSubsystem m_clawSubsystem;
    
     public SetClawClose(ClawSubsystem subsystem) {
-     m_clawSubsystem = subsystem;
-     addRequirements(m_clawSubsystem);
-    }
-
-    @Override
-    public void initialize() {
-        m_clawSubsystem.clawClose();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return true;
-    }
+        m_clawSubsystem = subsystem;
+        addRequirements(m_clawSubsystem);
+       }
+   
+       @Override
+       public void initialize() {
+           m_clawSubsystem.clawClose();
+       }
+   
+       @Override
+       public boolean isFinished() {
+           return true;
+       }
 }

@@ -1,4 +1,12 @@
-0 config wheel offsets
-0.5 configure gyro
-1 verify the current version works
-2 Take a date to the library and test measurements
+# Chronological:
+- ## Getting a basic arm
+    - [x] Confirm encoder works
+    - [x] Confiroffset(~~straight down, towards robot~~ the arm at rest is represented by a 0 encoder). If it needs tuning, do so.
+    - [x] Simple Percent Output to control arm
+    - [ ] Encoder value at end, straight up, level
+- ## Tuning for gravity
+    - [ ] Create kF, arbitrary feedforward(Find power required to maintain position at 90°) and apply to arm power in update, which can be used by Percent Output with `m_talonSRX.(set(ControlMode.PercentOutput, [powerPercentage], DemandType.ArbitraryFeedForward, [feedForward source]);`)
+- ## PID/MotionMagic
+    - [ ] investigate need for velocity and acceleration constraints on the arm 
+    - [ ] Create P value for arm
+    - [ ] Implement motionmagic using PID alongside kF
