@@ -49,9 +49,9 @@ public final class Constants {
         /**
          *Total encoder tick distance of the falcon500s on the arm, in encoder ticks of 224:1 * 2048
          */
-        // 94505//horizontaL
+        public static final int ARM_ROTATION_HORIZONTAL_TICKS = 94505;//horizontaL
         // 314446
-        public static final int ARM_ROTATION_RANGE_TICKS_ = 458752;
+        public static final int ARM_ROTATION_RANGE_TICKS = 458752;
         /**
          * The estimated encoder position at the resting  
          */

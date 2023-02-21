@@ -32,6 +32,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.Arm;
 
 public class ArmSubsystem extends SubsystemBase {
  
@@ -79,11 +80,11 @@ public class ArmSubsystem extends SubsystemBase {
         rightMotHost.set(ControlMode.PercentOutput, input.getAsDouble() * .2);//took like 6.5 seconds at 10% output to make a revolution 
     }
     public void rotateArmDeploy(){
-        double target_sensorUnits = ConvertRotToFXEncoder(180); //todo the setpoint, figure this out logically; at the deploy end of the arm?
-        double maxGravityFF = 0; //todo haha
+        double target_sensorUnits= Arm.ARM_ROTATE_POSITION_DEPLOY; //todo the setpoint, figure this out logically; at the deploy end of the arm?
+        double maxGravityFF = .02; //todo haha
         
         
-        int kMeasuredPosHorizontal = 0; //todo Position measured when arm is horizontal/give an offset to resting position
+        int kMeasuredPosHorizontal =  Arm.ARM_ROTATION_HORIZONTAL_TICKS; //todo Position measured when arm is horizontal/give an offset to resting position
         double kTicksPerDegree = 4096 / 360; //Sensor is 1:1 with arm rotation
         double degrees = (GetRotation() - kMeasuredPosHorizontal) / kTicksPerDegree;
         double radians = java.lang.Math.toRadians(degrees);
