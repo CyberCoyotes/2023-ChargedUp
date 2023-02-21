@@ -9,12 +9,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClawSubsystem;
 
 public class SetClawOpen extends CommandBase {
-   
+
     private final ClawSubsystem m_clawSubsystem;
-   
+
     public SetClawOpen(ClawSubsystem subsystem) {
-     m_clawSubsystem = subsystem;
-     addRequirements(m_clawSubsystem);
+        m_clawSubsystem = subsystem;
+        addRequirements(m_clawSubsystem);
     }
 
     @Override
