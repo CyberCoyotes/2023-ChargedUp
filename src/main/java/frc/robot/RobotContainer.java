@@ -12,9 +12,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.Compressor;
@@ -23,7 +25,8 @@ import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.autos.exampleAuto;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
-
+// 94505//horizontaL
+// 314446 // serve
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a
@@ -37,6 +40,7 @@ public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
     private final Joystick operator = new Joystick(1);
+    private final ArmSubsystem armSubsystem = new ArmSubsystem();
 
     /* Drive Controls */
     private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -47,10 +51,12 @@ public class RobotContainer {
     * Driver Buttons
     *--------------------------------------------------------*/
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
-    private final JoystickButton intakeIn = new JoystickButton(driver, XboxController.Button.kX.value);
-    private final JoystickButton intakeOut = new JoystickButton(driver, XboxController.Button.kY.value);
-    private final JoystickButton openClaw = new JoystickButton(driver, XboxController.Button.kA.value);
-    private final JoystickButton closeClaw = new JoystickButton(driver, XboxController.Button.kB.value);
+    // private final JoystickButton intakeIn = new JoystickButton(driver, XboxController.Button.kX.value);
+    // private final JoystickButton intakeOut = new JoystickButton(driver, XboxController.Button.kY.value);
+    // private final JoystickButton openClaw = new JoystickButton(driver, XboxController.Button.kA.value);
+    // private final JoystickButton closeClaw = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value); // TODO Remove robot centric buttons
+
 
     /*--------------------------------------------------------*
     * Operator Buttons
@@ -60,6 +66,12 @@ public class RobotContainer {
     armRotReset
     extendArm
     retractArm
+    */
+    private final JoystickButton zeroArmEncoder = new JoystickButton(operator, XboxController.Button.kBack.value);
+    private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value);
+    private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value);
+    private final JoystickButton openClaw = new JoystickButton(operator, XboxController.Button.kA.value);
+    private final JoystickButton closeClaw = new JoystickButton(operator, XboxController.Button.kB.value);
 
     // private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value); // TODO
     // private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value); // TODO
@@ -67,9 +79,7 @@ public class RobotContainer {
     // private final JoystickButton clawOpen = new JoystickButton(operator, XboxController.Button.kA.value); // TODO
     // private final JoystickButton <intakeOut> = new JoystickButton(operator, XboxController.Button.kB.value);
 
-    */
 
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value); // TODO Remove robot centric buttons
     
     /* Subsystems */
     private final ArmExtensionSubsystem m_extend = new ArmExtensionSubsystem();
@@ -83,6 +93,10 @@ public class RobotContainer {
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
+    public void DebugMethod()
+    {
+        SmartDashboard.putNumber("Arm Rotation",armSubsystem.GetRotation());
+    }
     public RobotContainer() {
 
         // m_vision.setDefaultCommand(new SetLEDtags(m_candle, m_vision));
@@ -96,8 +110,12 @@ public class RobotContainer {
                         () -> -driver.getRawAxis(rotationAxis),
                         () -> robotCentric.getAsBoolean()));
 
+        armSubsystem.setDefaultCommand(
+            new RotateArmManual(armSubsystem, () -> -operator.getRawAxis(translationAxis)
+                    ));
         // Configure the button bindings
         configureButtonBindings();
+        System.out.println();
     }
 
     /**
@@ -113,6 +131,8 @@ public class RobotContainer {
 
         /* Driver Button Bindings */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));       
+        zeroArmEncoder.onTrue(new InstantCommand(() -> armSubsystem.ZeroArmEncoder()));
+
 
         /* Operator Button Bindings */
         intakeIn.whileTrue(new SetIntakeIn(m_intake));
@@ -135,9 +155,8 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-
-        // FIXME
+        return new WaitCommand(2);
         // return new PathPlannerTesting(s_Swerve).Generate();
-        return null;
+        
     }
 }

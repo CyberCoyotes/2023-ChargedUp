@@ -18,6 +18,9 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
+import frc.robot.subsystems.ArmSubsystem;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
+
 
 public final class Constants {
     /**
@@ -43,9 +46,28 @@ public final class Constants {
     public static final int REV_CLAW_ID = 0; // REV Pneumatics Hub Single channel for Claw
     
     public static final double stickDeadband = 0.1;
+    public static final class Arm 
+    {
+        
+        /**
+         *Total encoder tick distance of the falcon500s on the arm, in encoder ticks of 224:1 * 2048
+         */
+        public static final int ARM_ROTATION_HORIZONTAL_TICKS = 94505;//horizontaL
+        // 314446
+        public static final int ARM_ROTATION_RANGE_TICKS = 458752;
+        /**
+         * The estimated encoder position at the resting  
+         */
+        public final static double ARM_ROTATE_POSITION_REST = 79* (458752/360);
+        public final static double ARM_ROTATE_POSITION_DEPLOY = 1000; // TODO TBD experimentally
+        public final static double ARM_ROTATE_POSITION_INTAKE    = 0; // TODO TBD experimentally
+        public final static double EXTENSION_POSITION_OUT = 0; // TODO TBD experimentally
+        public final static double EXENTSION_POSITION_IN  = 0; // TODO TBD experimentally
 
+    }
     public static final class Swerve {
 
+        
         public static final int pigeonID = 25; // Team3603
 
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
@@ -180,17 +202,19 @@ public final class Constants {
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
-
         public static final double kPXController = 1;
         public static final double kPYController = 1;
         public static final double kPThetaController = 1;
+
 
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
         public static final ProfiledPIDController thetaProfiledPID = new ProfiledPIDController(kPThetaController,
                 kMaxAccelerationMetersPerSecondSquared, stickDeadband, kThetaControllerConstraints);
-    }
+        public static final PIDController kThetaPIDController = new PIDController(kPThetaController, 0,0);
+        
+        }
 
     // Needed for LED
     public static final class PWMPorts {
@@ -202,12 +226,8 @@ public final class Constants {
      * These all need to be figured experimentally
      * 
     */
-    public final double ARM_POSITION_DEPLOY = 1000; // TODO TBD experimentally
-    double ARM_POSITION_INTAKE; // TODO TBD experimentally
-    double ARM_CURRENT_POSITION;
-
-    double EXTENSION_POSITION_OUT; // TODO TBD experimentally
-    double EXENTSION_POSITION_IN; // TODO TBD experimentally
+    
+    
 
     double CLAW_OPEN;
     double CLAW_CLOSED;
