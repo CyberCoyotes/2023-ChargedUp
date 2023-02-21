@@ -79,25 +79,7 @@ public class ArmSubsystem extends SubsystemBase {
     {
         rightMotHost.set(ControlMode.PercentOutput, input.getAsDouble() * .2);//took like 6.5 seconds at 10% output to make a revolution 
     }
-    public void rotateArmDeploy(){
-        double target_sensorUnits= Arm.ARM_ROTATE_POSITION_DEPLOY; //todo the setpoint, figure this out logically; at the deploy end of the arm?
-        double maxGravityFF = .02; //todo haha
-        
-        
-        int kMeasuredPosHorizontal =  Arm.ARM_ROTATION_HORIZONTAL_TICKS; //todo Position measured when arm is horizontal/give an offset to resting position
-        double kTicksPerDegree = 4096 / 360; //Sensor is 1:1 with arm rotation
-        double degrees = (GetRotation() - kMeasuredPosHorizontal) / kTicksPerDegree;
-        double radians = java.lang.Math.toRadians(degrees);
-        double cosineScalar = java.lang.Math.cos(radians);  //todo get the cosine of the motor
-        
-        //FF is measured as 
-
-
-        double feedFwdTerm = maxGravityFF * cosineScalar; // todo get ff, depends on cosine
-
-        rightMotHost.set(TalonFXControlMode.MotionMagic, target_sensorUnits, DemandType.ArbitraryFeedForward, feedFwdTerm);
-
-    }
+    
     private int ConvertRotToFXEncoder(double angle) {
         //2pi =  2048
         //2048 * 2pi/2pi 
@@ -123,11 +105,30 @@ public class ArmSubsystem extends SubsystemBase {
      * //FOR THIS:  encoder range, encoder read at horizontal position, power needed to keep horizontal
      * Encoder goes negative when driven from rest to other side
      * Gear ratio is 224: 1; base talonfx integrated encoder is 2048; 458752 is expected total encoder range
-
-
+    
     /** Rotates arm to intake side of robot */
+    //we should try a position P(I)D with arbFF rather than jumping to motionmagic in the case we don;t need too advanced control https://v5.docs.ctr-electronics.com/en/stable/ch16_ClosedLoop.html#position-closed-loop-control-mode
     public void rotateArmforIntake(){
         
+    }
+    public void rotateArmDeploy(){
+        double target_sensorUnits= Arm.ARM_ROTATE_POSITION_DEPLOY; //todo the setpoint, figure this out logically; at the deploy end of the arm?
+        double maxGravityFF = .02; //todo haha
+        
+        
+        int kMeasuredPosHorizontal =  Arm.ARM_ROTATION_HORIZONTAL_TICKS; //todo Position measured when arm is horizontal/give an offset to resting position
+        double kTicksPerDegree = 4096 / 360; //Sensor is 1:1 with arm rotation
+        double degrees = (GetRotation() - kMeasuredPosHorizontal) / kTicksPerDegree;
+        double radians = java.lang.Math.toRadians(degrees);
+        double cosineScalar = java.lang.Math.cos(radians);  //todo get the cosine of the motor
+        
+        //FF is measured as 
+
+
+        double feedFwdTerm = maxGravityFF * cosineScalar; // todo get ff, depends on cosine
+
+        // rightMotHost.set(TalonFXControlMode.MotionMagic, target_sensorUnits, DemandType.ArbitraryFeedForward, feedFwdTerm);
+
     }
 
     /** 
