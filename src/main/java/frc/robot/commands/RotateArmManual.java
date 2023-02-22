@@ -17,11 +17,11 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmSubsystem;
 
-public class RotateArmManual2 extends CommandBase {
+public class RotateArmManual extends CommandBase {
 
     private final ArmSubsystem m_armSubsystem;
     private final DoubleSupplier input;
-    public RotateArmManual2(ArmSubsystem subsystem, DoubleSupplier supplier) {
+    public RotateArmManual(ArmSubsystem subsystem, DoubleSupplier supplier) {
      m_armSubsystem = subsystem;
      addRequirements(m_armSubsystem);
      this.input = supplier;

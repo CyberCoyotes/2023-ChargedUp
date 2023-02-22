@@ -7,6 +7,8 @@
  ** Rotates the arm rotates "x" encoder marks to an almost deployed arm position
  ** Operator will deploy arm to final position
  * 
+ * Single button will be a toggle between deploy position and intake position
+ * 
 --------------------------------------------------------*/
 package frc.robot.commands;
 

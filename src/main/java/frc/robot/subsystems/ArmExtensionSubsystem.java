@@ -40,7 +40,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
      * Extends the arm for deployement to level 2 or level 2
      * Should only be used when arm has been rotated for deployment position
      */
-    private TalonSRX m_motorController = new TalonSRX(Constants.ARM_EXTENDER_MOTOR);
+    private TalonSRX m_motorController = new TalonSRX(Constants.ARM_EXTENDER_MOTOR_ID);
     
     // private Encoder m_Encoder = new Encoder(0, 0, 0)
 

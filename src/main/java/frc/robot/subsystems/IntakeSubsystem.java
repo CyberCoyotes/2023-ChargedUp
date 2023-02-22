@@ -6,33 +6,33 @@
 --------------------------------------------------------*/
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.*;
+import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
-    
-    
-    private static final int INTAKE_WHEELS_MOTOR = 41;
 
-    private final Spark m_motor = new Spark(14); // TODO Check actual channel
+    private final VictorSPX m_motor = new VictorSPX(Constants.INTAKE_WHEELS_MOTOR_ID);
 
     public IntakeSubsystem() {
-        addChild("Wheels", m_motor);
+        // addChild("Intake Wheels", m_motor);
     }
 
     public void intakeWheelsIn() {
-        m_motor.set(-1);
+        m_motor.set(ControlMode.PercentOutput, 1.0);
 
     }
 
     // Should not be needed. May or may not assign to a button
     public void intakeWheelsReverse() {
-        m_motor.set(1);
+        m_motor.set(ControlMode.PercentOutput, -1.0);
     }
 
-    public void intakeWheelsOff() {    
-        m_motor.set(0);
-        }
+    public void intakeWheelsOff() {
+        m_motor.set(ControlMode.PercentOutput, 0.0);
+    }
 }

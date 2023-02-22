@@ -27,6 +27,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -43,7 +44,7 @@ public class ArmSubsystem extends SubsystemBase {
     /***
      * The left motor of the rotation of the arm, and host of the follower configuration. 
      */
-    private WPI_TalonFX rightMotHost = new  WPI_TalonFX(Constants.ARM_RIGHT_ROT_MOTOR);//integrated encoder, accessed via GetSelectedSensorPosition
+    private WPI_TalonFX rightMotHost = new  WPI_TalonFX(Constants.ARM_RIGHT_ROT_MOTOR_ID);//integrated encoder, accessed via GetSelectedSensorPosition
     /***
      * The right motor of the rotation of the arm, and follower of the left motor, for the follower configuration. 
      */
@@ -51,10 +52,18 @@ public class ArmSubsystem extends SubsystemBase {
     {
         
     }
-    private WPI_TalonFX leftMota = new WPI_TalonFX(Constants.ARM_LEFT_ROT_MOTOR);//integrated encoder, accessed via GetSelectedSensorPosition
+    private WPI_TalonFX leftMota = new WPI_TalonFX(Constants.ARM_LEFT_ROT_MOTOR_ID);//integrated encoder, accessed via GetSelectedSensorPosition
 
-    /** Rotates arm to deploment side of robot */ 
+    /** Rotates arm to deploment side of robot 
+     * Brake mode for both causes the motors to work against each other.
+     * Brake mode for the right side only appears to work as desired.
+     * Brake mode for the left side and coast for the right causes a strong
+     * snap back.
+     **/ 
     public ArmSubsystem() {
+        rightMotHost.setNeutralMode(NeutralMode.Brake);
+        leftMota.setNeutralMode(NeutralMode.Coast);
+
         //here we choose to use follower control mode as the left as host, to use motionmagic
         leftMota.set(TalonFXControlMode.Follower, leftMota.getDeviceID());
         //closed-loop modes the demand0 output is the output of PID0.
