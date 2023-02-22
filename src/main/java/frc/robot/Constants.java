@@ -239,5 +239,7 @@ public final class Constants {
     public static final int VISION_LED_ON = 2;
 
     public static final double WHEEL_MAX = 1; //maybe not be needed
+
+    public static final int LIMIT_SWITCH_ARM_PORT = 0;
     
 } // end of class
