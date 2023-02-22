@@ -27,6 +27,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -55,6 +56,10 @@ public class ArmSubsystem extends SubsystemBase {
 
     /** Rotates arm to deploment side of robot */ 
     public ArmSubsystem() {
+        rightMotHost.setNeutralMode(NeutralMode.Brake); // TODO Test
+        leftMota.setNeutralMode(NeutralMode.Brake); // TODO Test
+        
+
         //here we choose to use follower control mode as the left as host, to use motionmagic
         leftMota.set(TalonFXControlMode.Follower, leftMota.getDeviceID());
         //closed-loop modes the demand0 output is the output of PID0.
