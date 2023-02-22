@@ -54,11 +54,15 @@ public class ArmSubsystem extends SubsystemBase {
     }
     private WPI_TalonFX leftMota = new WPI_TalonFX(Constants.ARM_LEFT_ROT_MOTOR_ID);//integrated encoder, accessed via GetSelectedSensorPosition
 
-    /** Rotates arm to deploment side of robot */ 
+    /** Rotates arm to deploment side of robot 
+     * Brake mode for both causes the motors to work against each other.
+     * Brake mode for the right side only appears to work as desired.
+     * Brake mode for the left side and coast for the right causes a strong
+     * snap back.
+     **/ 
     public ArmSubsystem() {
-        rightMotHost.setNeutralMode(NeutralMode.Brake); // TODO Test
-        leftMota.setNeutralMode(NeutralMode.Brake); // TODO Test
-        
+        rightMotHost.setNeutralMode(NeutralMode.Brake);
+        leftMota.setNeutralMode(NeutralMode.Coast);
 
         //here we choose to use follower control mode as the left as host, to use motionmagic
         leftMota.set(TalonFXControlMode.Follower, leftMota.getDeviceID());
