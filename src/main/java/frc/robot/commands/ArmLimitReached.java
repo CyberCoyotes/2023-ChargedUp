@@ -26,7 +26,6 @@ public class ArmLimitReached extends CommandBase{
             m_ArmSub.ZeroArmEncoder(); // reset right arm motor encoder to zero AND stop arm
             // Set motor to zero for 300 ms
         } 
-    }
 
     @Override
     public boolean isFinished() {
