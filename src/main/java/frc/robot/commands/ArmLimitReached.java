@@ -1,8 +1,8 @@
 package frc.robot.commands;
 
-import javax.swing.text.html.HTMLDocument.BlockElement;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.SensorsSubsystem;
 
@@ -22,9 +22,11 @@ public class ArmLimitReached extends CommandBase{
      */
     @Override
     public void initialize() {
-        // if(limit.get( )) {  need to figure out correct check
-            m_ArmSub.ZeroArmEncoder(); // reset right arm motor encoder to zero AND stop arm
-            // Set motor to zero for 300 ms
+        if(limit.get( )) {  //need to figure out correct check
+            m_ArmSub.ZeroArmEncoder();
+             // reset right arm motor encoder to zero AND stop arm
+            // WaitCommand();
+// Set motor to zero for 300 ms
         } 
 
     @Override
