@@ -28,7 +28,7 @@ import frc.robot.Constants;
 
 public class SensorsSubsystem extends SubsystemBase {
 
-    private DigitalInput armSwitch = new DigitalInput(Constants.LIMIT_SWITCH_ARM_PORT);
+    public DigitalInput armSwitch = new DigitalInput(Constants.LIMIT_SWITCH_ARM_PORT);
 
     public SensorsSubsystem() {
     }
