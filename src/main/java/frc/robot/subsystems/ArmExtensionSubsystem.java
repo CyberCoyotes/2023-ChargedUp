@@ -62,7 +62,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     public ArmExtensionSubsystem() {
         m_motorController.configForwardSoftLimitThreshold(Arm.EXTENSION_POSITION_OUT, 0);
         m_motorController.configForwardSoftLimitEnable(true, 0);
-        m_motorController.configReverseSoftLimitThreshold(Arm.EXENTSION_POSITION_IN, 0);
+        m_motorController.configReverseSoftLimitThreshold(Arm.EXENSION_POSITION_IN, 0);
         m_motorController.configReverseSoftLimitEnable(true, 0);
 
         
@@ -78,7 +78,10 @@ public class ArmExtensionSubsystem extends SubsystemBase {
       //no state?
 
     public void setArmIn() {
-        m_motorController.set(TalonSRXControlMode.Position, Arm.EXENTSION_POSITION_IN);
+        m_motorController.set(TalonSRXControlMode.Position, Arm.EXENSION_POSITION_IN);
+    }
+    public void setArmOut() {
+        m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_POSITION_OUT);
     }
 
 }
