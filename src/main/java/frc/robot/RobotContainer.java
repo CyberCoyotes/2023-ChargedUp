@@ -100,10 +100,11 @@ public class RobotContainer {
         SmartDashboard.putNumber("Module Rotation1",s_Swerve.mSwerveMods[1].getState().angle.getDegrees());
         SmartDashboard.putNumber("Module Rotation2",s_Swerve.mSwerveMods[2].getState().angle.getDegrees());
         SmartDashboard.putNumber("Module Rotation3",s_Swerve.mSwerveMods[3].getState().angle.getDegrees());
+        //SmartDashboard.putNumber("April Tag", m_vision.getEntry("tid").getDouble(0));    
     }
     public RobotContainer() {
 
-        // m_vision.setDefaultCommand(new SetLEDtags(m_candle, m_vision));
+          m_vision.setDefaultCommand(new GetTagID(m_vision));
 
         
         s_Swerve.setDefaultCommand(
