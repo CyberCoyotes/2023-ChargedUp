@@ -28,16 +28,21 @@ import frc.robot.Constants;
 
 public class SensorsSubsystem extends SubsystemBase {
 
-    private DigitalInput armLimitSwitch = new DigitalInput(Constants.LIMIT_SWITCH_ARM_PORT);
+    private DigitalInput armSwitch = new DigitalInput(Constants.LIMIT_SWITCH_ARM_PORT);
 
     public SensorsSubsystem() {
     }
 
-    // Start
+    /* SmartDashboard calls this from robot container 
+     * Maybe also needed for other methods and commands?
+    */
+
     public boolean getLimitSwitchState() {
-        return armLimitSwitch.get();
-        // SmartDashboard.putBoolean("Rotation Switch", getLimitSwitchState());
+        return armSwitch.get();
     }
+
+    
+
 
 }
 
@@ -62,11 +67,14 @@ public class SensorsSubsystem extends SubsystemBase {
  * Magnetic Limit Switch
  * https://www.revrobotics.com/rev-31-1462/
  * 
- * https://www.chiefdelphi.com/t/rev-magnetic-limit-switches/365147
- * 
+ * Hardware
+ * https://docs.wpilib.org/en/stable/docs/hardware/sensors/digital-inputs-hardware.html 
  * https://docs.wpilib.org/en/stable/docs/software/hardware-apis/sensors/limit-switch.html
  * 
+ * https://www.chiefdelphi.com/t/rev-magnetic-limit-switches/365147
+ * 
+ * Software
+ * https://docs.wpilib.org/en/stable/docs/software/hardware-apis/sensors/limit-switch.html
  * https://docs.wpilib.org/en/stable/docs/software/dashboards/smartdashboard/displaying-expressions.html 
  * 
- * https://docs.wpilib.org/en/stable/docs/hardware/sensors/digital-inputs-hardware.html 
  */

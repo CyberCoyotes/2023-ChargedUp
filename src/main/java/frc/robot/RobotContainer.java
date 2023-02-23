@@ -68,6 +68,7 @@ public class RobotContainer {
     retractArm
     */
     private final JoystickButton zeroArmEncoder = new JoystickButton(operator, XboxController.Button.kBack.value);
+    
     private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value);
     private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value);
     private final JoystickButton openClaw = new JoystickButton(operator, XboxController.Button.kA.value);
@@ -89,6 +90,7 @@ public class RobotContainer {
     private final IntakeSubsystem m_intake = new IntakeSubsystem();
     private final Vision m_vision = new Vision();
     private final Swerve s_Swerve = new Swerve();
+    private final SensorsSubsystem m_ArmSwitch = new SensorsSubsystem();
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -100,11 +102,13 @@ public class RobotContainer {
         SmartDashboard.putNumber("Module Rotation1",s_Swerve.mSwerveMods[1].getState().angle.getDegrees());
         SmartDashboard.putNumber("Module Rotation2",s_Swerve.mSwerveMods[2].getState().angle.getDegrees());
         SmartDashboard.putNumber("Module Rotation3",s_Swerve.mSwerveMods[3].getState().angle.getDegrees());
+        
     }
     public RobotContainer() {
 
         // m_vision.setDefaultCommand(new SetLEDtags(m_candle, m_vision));
 
+        SmartDashboard.putBoolean("Rotation Switch", m_ArmSwitch.getLimitSwitchState());
         
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(
@@ -143,11 +147,6 @@ public class RobotContainer {
         intakeOut.whileTrue(new SetIntakeOut(m_intake));
         openClaw.onTrue(new SetClawOpen2(m_claw));
         closeClaw.onTrue(new SetClawClose2(m_claw));
-
-
-        // new Trigger(m_vision::checkTagID).onTrue(new SetIntakeIn(m_intake));
-        // ArmExtensionSubsystem.onTrue(new (m_extend));
-        // ArmSubsystem.onTrue(new (m_arm));
         
     }
 
