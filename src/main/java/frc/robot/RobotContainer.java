@@ -12,9 +12,13 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -22,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
+import frc.robot.Constants.Arm;
 import frc.robot.autos.exampleAuto;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -72,6 +77,7 @@ public class RobotContainer {
     private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value);
     private final JoystickButton openClaw = new JoystickButton(operator, XboxController.Button.kA.value);
     private final JoystickButton closeClaw = new JoystickButton(operator, XboxController.Button.kB.value);
+    private final JoystickButton setArmIntake = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
     // private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value); // TODO
     // private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value); // TODO
@@ -82,6 +88,7 @@ public class RobotContainer {
 
     
     /* Subsystems */
+    
     private final ArmExtensionSubsystem m_extend = new ArmExtensionSubsystem();
     private final ArmSubsystem m_arm = new ArmSubsystem();
     private final CANdle m_candle = new CANdle(Constants.CANDLE_ID);
@@ -90,16 +97,41 @@ public class RobotContainer {
     private final Vision m_vision = new Vision();
     private final Swerve s_Swerve = new Swerve();
 
+    //#region Commands
+    RotateArmIntake intakeCommand = new RotateArmIntake(armSubsystem); 
+    
+
+    //#endregion
+
+
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public void DebugMethod()
     {
-        SmartDashboard.putNumber("Arm Rotation",armSubsystem.GetRotation());
-        SmartDashboard.putNumber("Module Rotation0",s_Swerve.mSwerveMods[0].getState().angle.getDegrees());
-        SmartDashboard.putNumber("Module Rotation1",s_Swerve.mSwerveMods[1].getState().angle.getDegrees());
-        SmartDashboard.putNumber("Module Rotation2",s_Swerve.mSwerveMods[2].getState().angle.getDegrees());
-        SmartDashboard.putNumber("Module Rotation3",s_Swerve.mSwerveMods[3].getState().angle.getDegrees());
+        // SmartDashboard.putNumber("Module Rotation0",s_Swerve.mSwerveMods[0].getState().angle.getDegrees());
+        // SmartDashboard.putNumber("Module Rotation1",s_Swerve.mSwerveMods[1].getState().angle.getDegrees());
+        // SmartDashboard.putNumber("Module Rotation2",s_Swerve.mSwerveMods[2].getState().angle.getDegrees());
+        // SmartDashboard.putNumber("Module Rotation3",s_Swerve.mSwerveMods[3].getState().angle.getDegrees());
+        SmartDashboard.putNumber("Arm_Extent",m_extend.ReadExtension());
+
+        SmartDashboard.putBoolean("rot intake command on",intakeCommand.isScheduled());
+
+                //some data valiidation stuff
+
+        //Using degrees maximum encoder range and offsets, getting the calculated measure
+        
+        var hypoIntake = armSubsystem.ConvertFXEncodertoDeg(armSubsystem.GetRotation()) + Constants.Arm.ARM_OFFSET_DEGREES;
+        // SmartDashboard.putNumber("Encoder value @ horziontal: Calculated:", hypoIntake);
+        //tested value
+        // SmartDashboard.putNumber("Encoder value @ horziontal: Tested:",armSubsystem.ConvertFXEncodertoDeg(Arm.ARM_ROTATE_POSITION_INTAKE ));
+
+
+        // SmartDashboard.putNumber("Arm Rotation(ticks)",armSubsystem.GetRotation());
+        SmartDashboard.putNumber("Arm Rotation(°)", armSubsystem.ConvertFXEncodertoDeg(armSubsystem.GetRotation()));
+
+
+
     }
     public RobotContainer() {
 
@@ -136,7 +168,8 @@ public class RobotContainer {
         /* Driver Button Bindings */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));       
         zeroArmEncoder.onTrue(new InstantCommand(() -> armSubsystem.ZeroArmEncoder()));
-
+        //logs confirmation
+        setArmIntake.whileTrue(intakeCommand);
 
         /* Operator Button Bindings */
         intakeIn.whileTrue(new SetIntakeIn(m_intake));

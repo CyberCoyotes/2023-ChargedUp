@@ -8,6 +8,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -44,8 +45,13 @@ public final class Constants {
     public static final int REV_CLAW_ID = 0; // REV Pneumatics Hub Single channel for Claw
     
     public static final double stickDeadband = 0.1;
+    public static final int ARM_EXTENT_LIMIT = -14000;//playing it safe
     public static final class Arm 
     {
+
+        // public static final int ARM_EXTENT_RANGE = //todo determine
+
+
         
         /**
          *Total encoder tick distance of the falcon500s on the arm, in encoder ticks of 224:1 * 2048
@@ -53,14 +59,23 @@ public final class Constants {
         public static final int ARM_ROTATION_HORIZONTAL_TICKS = 94505;//horizontaL
         // 314446
         public static final int ARM_ROTATION_RANGE_TICKS = 458752;
+       
         /**
          * The estimated encoder position at the resting  
          */
-        public final static double ARM_ROTATE_POSITION_REST = 79* (458752/360);
+        // public final static double ARM_ROTATE_POSITION_REST = 79* (458752/360);
         public final static double ARM_ROTATE_POSITION_DEPLOY = 1000; // TODO TBD experimentally
-        public final static double ARM_ROTATE_POSITION_INTAKE    = 0; // TODO TBD experimentally
-        public final static double EXTENSION_POSITION_OUT = 0; // TODO TBD experimentally
+        public final static double ARM_ROTATE_POSITION_INTAKE    = 8878; // approximate from testing; compare to the change in angle from rest to deploy
+        public final static double EXTENSION_POSITION_OUT = -14000; //playing it safe for now
         public final static double EXENTSION_POSITION_IN  = 0; // TODO TBD experimentally
+        public static final int PIDSlotIDx = 0; //keep this
+        public static final double kP =  (0.50 * 1023) / 2048; //50% power at total error
+        public static final double kI = 0;//may need tuning
+        public static final double kD = 0; //may need tuning
+        public static final double kMaxVelocity = 11468/2; //currently so that the robot may go 1/16th rotation in a second
+        public static final double kMaxAcceletation = 11468/2; //tuning needed
+        public static final int ARM_OFFSET_DEGREES = 19;//!Obsolete
+        public static final double DEG_TO_mRAD = 17.4533;
 
     }
     public static final class Swerve {

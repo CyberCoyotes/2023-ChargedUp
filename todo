@@ -10,3 +10,5 @@
     - [ ] investigate need for velocity and acceleration constraints on the arm 
     - [ ] Create P value for arm
     - [ ] Implement motionmagic using PID alongside kF
+
+miliradian measures

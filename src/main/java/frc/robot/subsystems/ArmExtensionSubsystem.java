@@ -23,6 +23,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -52,14 +53,23 @@ public class ArmExtensionSubsystem extends SubsystemBase {
      * 
      * @return The encoder reading of the motor
      */
-    public float ReadExtension()
+    public double ReadExtension()
     {
-        m_motorController.set(TalonSRXControlMode.Position, 0, null, 0);
-        return 0;
+        //absolute quad mag encoder; Placed after the gearboxes (1:4, 1:9). Need to test if a single lap ()
+        return m_motorController.getSelectedSensorPosition();
     }
 
     public ArmExtensionSubsystem() {
+        m_motorController.configForwardSoftLimitThreshold(Arm.EXTENSION_POSITION_OUT, 0);
+        m_motorController.configForwardSoftLimitEnable(true, 0);
+        m_motorController.configReverseSoftLimitThreshold(Arm.EXENTSION_POSITION_IN, 0);
+        m_motorController.configReverseSoftLimitEnable(true, 0);
+
         
+        m_motorController.configPeakOutputForward(0.75);
+        m_motorController.configPeakOutputReverse(-0.75);
+
+
     }
     /**
      * Retracts arm from a deployement to level 2 or level 3
@@ -68,7 +78,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
       //no state?
 
     public void setArmIn() {
-        m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_POSITION_OUT);
+        m_motorController.set(TalonSRXControlMode.Position, Arm.EXENTSION_POSITION_IN);
     }
 
 }

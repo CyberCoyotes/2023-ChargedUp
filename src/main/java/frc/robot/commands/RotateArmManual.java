@@ -28,7 +28,7 @@ public class RotateArmManual extends CommandBase {
     }    
     @Override
     public void execute() {
-        m_armSubsystem.PercentOutputSupplierDrive(input);
+        m_armSubsystem.PercentOutputSupplierDrive(input.getAsDouble());
     }
    
     

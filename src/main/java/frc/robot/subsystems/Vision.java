@@ -54,13 +54,13 @@ public class Vision extends SubsystemBase {
         tid = limelight.getEntry("tid").getDouble(0);
 
         // post to smart dashboard periodically
-        SmartDashboard.putNumber("Limelight X", tx);
-        SmartDashboard.putNumber("Limelight Y", ty);
-        SmartDashboard.putNumber("Limelight Area", ta);
-        SmartDashboard.putNumber("April Tag", tid);
-        SmartDashboard.putBoolean("V Nominal Tag Sequence", checkTagID); // Works
-        SmartDashboard.putBoolean("V Nominal Area", checkArea); // Works
-        SmartDashboard.putBoolean("V Nominal Target", nominalTarget); // Works
+        // SmartDashboard.putNumber("Limelight X", tx);
+        // SmartDashboard.putNumber("Limelight Y", ty);
+        // SmartDashboard.putNumber("Limelight Area", ta);
+        // SmartDashboard.putNumber("April Tag", tid);
+        // SmartDashboard.putBoolean("V Nominal Tag Sequence", checkTagID); // Works
+        // SmartDashboard.putBoolean("V Nominal Area", checkArea); // Works
+        // SmartDashboard.putBoolean("V Nominal Target", nominalTarget); // Works
 
     }
 

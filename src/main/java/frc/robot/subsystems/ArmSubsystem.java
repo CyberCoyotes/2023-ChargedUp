@@ -48,10 +48,6 @@ public class ArmSubsystem extends SubsystemBase {
     /***
      * The right motor of the rotation of the arm, and follower of the left motor, for the follower configuration. 
      */
-    private static void dsfsdf()
-    {
-        
-    }
     private WPI_TalonFX leftMota = new WPI_TalonFX(Constants.ARM_LEFT_ROT_MOTOR_ID);//integrated encoder, accessed via GetSelectedSensorPosition
 
     /** Rotates arm to deploment side of robot 
@@ -61,7 +57,7 @@ public class ArmSubsystem extends SubsystemBase {
      * snap back.
      **/ 
     public ArmSubsystem() {
-        rightMotHost.setNeutralMode(NeutralMode.Brake);
+        rightMotHost.setNeutralMode(NeutralMode.Coast);//for testing
         leftMota.setNeutralMode(NeutralMode.Coast);
 
         //here we choose to use follower control mode as the left as host, to use motionmagic
@@ -71,33 +67,67 @@ public class ArmSubsystem extends SubsystemBase {
         //
         rightMotHost.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, 100);
         
+ //#region     PIDF, motion profile configurations
 
+        //main PID, no aux
+        rightMotHost.selectProfileSlot(Arm.PIDSlotIDx, 0);
+        rightMotHost.config_kP(0, Arm.kP);
+        rightMotHost.config_kI(0, Arm.kI);
+        rightMotHost.config_kD(0, Arm.kD);
+
+        rightMotHost.configMotionCruiseVelocity(Arm.kMaxVelocity);
+        rightMotHost.configMotionAcceleration(Arm.kMaxAcceletation);//max accel in units towards endgoal, in sensor units /0.1 seconds
+
+
+        //#endregion PIDF, motion profile configurations
+        
         // rightMotHost.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor); 
         // leftMota.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
         
     }
+
+    
     /***
      * Gets the rotation of the system in encoder ticks.
      * 
+     *@return 
+     * The rotation of the arm in encoder ticks, adjusted so that 0 equals straight down. 
      */
     public double GetRotation()
     {
         return( rightMotHost.getSelectedSensorPosition() );
     }
-    public void PercentOutputSupplierDrive(DoubleSupplier input)
+    
+    /**
+     * Equivalent to calling {@code ConvertFXEncodertoDeg()} after {@code GetRotation()}. 
+     * @return 
+     * The rotation of the arm in degrees, adjusted so that 0 equals straight down. 
+     */
+    public double GetRotationInDeg()
     {
-        rightMotHost.set(ControlMode.PercentOutput, input.getAsDouble() * .2);//took like 6.5 seconds at 10% output to make a revolution 
+        return ConvertFXEncodertoDeg( ( rightMotHost.getSelectedSensorPosition()));
+    }
+    public void PercentOutputSupplierDrive(double input)
+    {
+        rightMotHost.set(ControlMode.PercentOutput, input * .2);//took like 6.5 seconds at 10% output to make a revolution 
     }
     
-    private int ConvertRotToFXEncoder(double angle) {
+    public int ConvertDegToFXEncoder(double degs) {
         //2pi =  2048
         //2048 * 2pi/2pi 
-        return 0;
+        int maxEncoder = Arm.ARM_ROTATION_RANGE_TICKS;
+        int maxDegree = 360;//trust the process
+        
+        return (int)(degs * maxEncoder/maxDegree);
     }
-    private int ConvertFXEncodertoRot(double angle) {
-        return 0;
+    public int ConvertFXEncodertoDeg(double ticks) {
+     
+        int maxEncoder = Arm.ARM_ROTATION_RANGE_TICKS;
+        int maxDegree = 360;//trust the process
+        
+        return  (int)(ticks * maxDegree/maxEncoder);
     }
-    //too many possible apporoaches;
+    //THE BLOCK;
     /*
      * profiledpid subsystem subclass
      * position controlmode
@@ -116,16 +146,18 @@ public class ArmSubsystem extends SubsystemBase {
      * Gear ratio is 224: 1; base talonfx integrated encoder is 2048; 458752 is expected total encoder range
     
     /** Rotates arm to intake side of robot */
-    //we should try a position P(I)D with arbFF rather than jumping to motionmagic in the case we don;t need too advanced control https://v5.docs.ctr-electronics.com/en/stable/ch16_ClosedLoop.html#position-closed-loop-control-mode
+    //we should try a position P(I)D with arbFF rather than jumping to motionmagic in the case we don't need too advanced control https://v5.docs.ctr-electronics.com/en/stable/ch16_ClosedLoop.html#position-closed-loop-control-mode
     public void rotateArmforIntake(){
         
     }
-    public void rotateArmDeploy(){
-        double target_sensorUnits= Arm.ARM_ROTATE_POSITION_DEPLOY; //todo the setpoint, figure this out logically; at the deploy end of the arm?
-        double maxGravityFF = .02; //todo haha
+    public void rotateArmForDeploy(){
+        System.out.println("arm being moved sorta");
+       
+        //#region Gravity ArbFF configurations
         
-        
-        int kMeasuredPosHorizontal =  Arm.ARM_ROTATION_HORIZONTAL_TICKS; //todo Position measured when arm is horizontal/give an offset to resting position
+        double target_sensorUnits= ConvertDegToFXEncoder(270);//intake //todo the setpoint, figure this out logically; at the deploy end of the arm?
+        double maxGravityFF = .02; //todo; doesnt cover the extended compensation where it may matter most; 0.04 was the value at extention
+int kMeasuredPosHorizontal =  Arm.ARM_ROTATION_HORIZONTAL_TICKS; //todo Position measured when arm is horizontal/give an offset to resting position
         double kTicksPerDegree = 4096 / 360; //Sensor is 1:1 with arm rotation
         double degrees = (GetRotation() - kMeasuredPosHorizontal) / kTicksPerDegree;
         double radians = java.lang.Math.toRadians(degrees);
@@ -134,9 +166,14 @@ public class ArmSubsystem extends SubsystemBase {
         //FF is measured as 
 
 
-        double feedFwdTerm = maxGravityFF * cosineScalar; // todo get ff, depends on cosine
+        double arbFF = maxGravityFF * cosineScalar; // todo get ff, depends on cosine
 
-        // rightMotHost.set(TalonFXControlMode.MotionMagic, target_sensorUnits, DemandType.ArbitraryFeedForward, feedFwdTerm);
+        //#endregion Gravity ArbFF configurations
+        
+        //:Position mode may not be the right choice, as it assumes a close, updating position, rather than a final endpoint. It would likely be incompatible with an arb. FF with this approach 
+        //// rightMotHost.set(TalonFXControlMode.Position, Arm.ARM_ROTATE_POSITION_DEPLOY, DemandType.ArbitraryFeedForward, arbFF);
+        rightMotHost.set(TalonFXControlMode.MotionMagic, target_sensorUnits);//no arb for now
+        // rightMotHost.set(TalonFXControlMode.MotionMagic, target_sensorUnits, DemandType.ArbitraryFeedForward, arbFF);
 
     }
 
@@ -148,6 +185,11 @@ public class ArmSubsystem extends SubsystemBase {
         
     }
     public void ZeroArmEncoder() {
+        // rightMotHost.setSelectedSensorPosition(this.ConvertDegToFXEncoder( Arm.ARM_OFFSET_DEGREES));
         rightMotHost.setSelectedSensorPosition(0);
+    }
+    @Override
+    public void periodic() {
+        
     }
 }
