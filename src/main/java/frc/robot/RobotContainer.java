@@ -11,23 +11,11 @@ import com.ctre.phoenix.led.CANdle;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Solenoid;
-import frc.robot.Constants.Arm;
-import frc.robot.autos.exampleAuto;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 // 94505//horizontaL
@@ -183,11 +171,6 @@ public class RobotContainer {
             new RotateArmManual(
                 armSubsystem, 
                 () -> -operator.getRawAxis(rotateArmDeploy)));
-
-        armSubsystem.setDefaultCommand(
-                    new RotateArmManual(
-                        armSubsystem, 
-                       () -> -operator.getRawAxis(rotateArmIntake) * -1 )); // TODO negative multiplier?
 
         // Configure the button bindings
         configureButtonBindings();

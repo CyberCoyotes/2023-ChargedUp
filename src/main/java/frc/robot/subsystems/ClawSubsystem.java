@@ -37,13 +37,13 @@ public class ClawSubsystem extends SubsystemBase {
     
     boolean enabled = phCompressor.isEnabled();
     boolean pressureSwitch = phCompressor.getPressureSwitchValue();
-    // double current = phCompressor.getCompressorCurrent(); // FIXME
+    // double current = phCompressor.getCompressorCurrent();
     // AnalogInput pressureSensor = new AnalogInput(0);
 
 
 
     public void clawOpen() {
-        m_claw.set(kForward); // TODO TBD experimentally
+        m_claw.set(kForward);
     }
 
     public void clawClose() {
