@@ -61,18 +61,14 @@ public class RobotContainer {
     /*--------------------------------------------------------*
     * Operator Buttons
     *--------------------------------------------------------*/
-
-    /* TODO
-    armRotReset
-    extendArm
-    retractArm
-    */
     private final JoystickButton zeroArmEncoder = new JoystickButton(operator, XboxController.Button.kBack.value);
     
     private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value);
     private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value);
     private final JoystickButton openClaw = new JoystickButton(operator, XboxController.Button.kA.value);
     private final JoystickButton closeClaw = new JoystickButton(operator, XboxController.Button.kB.value);
+    
+    private final JoystickButton armReset = new JoystickButton(operator, XboxController.Button.kStart.value);
 
     // private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value); // TODO
     // private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value); // TODO
@@ -154,8 +150,12 @@ public class RobotContainer {
         /* Operator Button Bindings */
         intakeIn.whileTrue(new SetIntakeIn(m_intake));
         intakeOut.whileTrue(new SetIntakeOut(m_intake));
+
         openClaw.onTrue(new SetClawOpen2(m_claw));
         closeClaw.onTrue(new SetClawClose2(m_claw));
+
+        armReset.onTrue(new ArmLimitReached(armSubsystem, m_ArmSwitch, m_intake));
+
         
     }
 
