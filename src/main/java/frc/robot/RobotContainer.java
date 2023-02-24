@@ -98,6 +98,7 @@ public class RobotContainer {
     private final IntakeSubsystem m_intake = new IntakeSubsystem();
     private final Vision m_vision = new Vision();
     private final Swerve s_Swerve = new Swerve();
+    private final SensorsSubsystem m_ArmSwitch = new SensorsSubsystem();
 
     //#region Commands
     RotateArmIntake intakeCommand = new RotateArmIntake(armSubsystem); 
@@ -119,6 +120,9 @@ public class RobotContainer {
 
         SmartDashboard.putBoolean("rot intake command on",intakeCommand.isScheduled());
 
+        SmartDashboard.putBoolean("Rotation Switch", m_ArmSwitch.getLimitSwitchState());
+
+
                 //some data valiidation stuff
 
         //Using degrees maximum encoder range and offsets, getting the calculated measure
@@ -135,11 +139,20 @@ public class RobotContainer {
 
 
     }
+
     public RobotContainer() {
 
         // m_vision.setDefaultCommand(new SetLEDtags(m_candle, m_vision));
+        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));       
+        // SmartDashboard.putNumber("April Tag", m_vision.getEntry("tid").getDouble(0));    
 
+
+          m_vision.setDefaultCommand(new GetTagID(m_vision));
+
+        SmartDashboard.putBoolean("Rotation Switch", m_ArmSwitch.getLimitSwitchState());
         
+        // armSubsystem.setDefaultCommand(new ArmLimitReached(m_getLimitSwitchState());
+
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(
                         s_Swerve,
@@ -186,11 +199,6 @@ public class RobotContainer {
 
         openClaw.onTrue(new SetClawOpen2(m_claw));
         closeClaw.onTrue(new SetClawClose2(m_claw));
-
-
-        // new Trigger(m_vision::checkTagID).onTrue(new SetIntakeIn(m_intake));
-        // ArmExtensionSubsystem.onTrue(new (m_extend));
-        // ArmSubsystem.onTrue(new (m_arm));
         
     }
 
