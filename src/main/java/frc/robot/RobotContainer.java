@@ -41,8 +41,9 @@ public class RobotContainer {
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
 
-    private final int rotateArmDeploy = XboxController.Axis.kRightTrigger.value;
-    private final int rotateArmIntake = XboxController.Axis.kLeftTrigger.value;
+    private final int rotateArmInput = XboxController.Axis.kLeftY.value;
+    private final int oRetractArm = XboxController.Axis.kLeftTrigger.value;
+    private final int oExtendArm = XboxController.Axis.kRightTrigger.value;
 
     
     /*--------------------------------------------------------*
@@ -67,8 +68,6 @@ public class RobotContainer {
     private final JoystickButton openClaw = new JoystickButton(operator, XboxController.Button.kA.value);
     private final JoystickButton closeClaw = new JoystickButton(operator, XboxController.Button.kB.value);
    
-    private final JoystickButton intakeArm = new JoystickButton(operator, XboxController.Button.kLeftBumper.value); // change to D pad?
-    private final JoystickButton extendArm = new JoystickButton(operator, XboxController.Button.kRightBumper.value); // change to D pad?
 
 
     // private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value); 
@@ -175,7 +174,7 @@ public class RobotContainer {
         armSubsystem.setDefaultCommand(
             new RotateArmManual(
                 armSubsystem, 
-                () -> -operator.getRawAxis(rotateArmDeploy)));
+                () -> -operator.getRawAxis(rotateArmInput)));
 
         // Configure the button bindings
         configureButtonBindings();
