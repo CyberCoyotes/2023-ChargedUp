@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
@@ -157,7 +158,7 @@ public class RobotContainer {
 
         SmartDashboard.putBoolean("Rotation Switch", m_ArmSwitch.getLimitSwitchState());
         
-        // armSubsystem.setDefaultCommand(new ArmLimitReached(m_getLimitSwitchState());
+        armSubsystem.setDefaultCommand(new RunCommand(() -> armSubsystem.PercentOutputSupplierDrive(operator.getY())));
 
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(

@@ -117,7 +117,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void PercentOutputSupplierDrive(double input) {
-        rightMotHost.set(ControlMode.PercentOutput, input * .2);// took like 6.5 seconds at 10% output to make a
+        rightMotHost.set(ControlMode.PercentOutput, input * .6);// took like 6.5 seconds at 10% output to make a
                                                                 // revolution
     }
 
