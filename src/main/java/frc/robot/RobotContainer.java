@@ -91,6 +91,7 @@ public class RobotContainer {
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
+
     public void DebugMethod()
     {
         SmartDashboard.putNumber("Arm Rotation",armSubsystem.GetRotation());
@@ -100,6 +101,23 @@ public class RobotContainer {
         SmartDashboard.putNumber("Module Rotation3",s_Swerve.mSwerveMods[3].getState().angle.getDegrees());
         SmartDashboard.putBoolean("Rotation Switch", m_ArmSwitch.getLimitSwitchState());
         
+    }
+
+    /**
+     * Runs relevant code for any non-CAN sensors 
+     * 
+     */
+    public void SensorPeriodic()
+    {  
+        //resets arm rotation encoder when it touches sensor
+        TouchSensorEncoderReset();
+    }
+
+    private void TouchSensorEncoderReset()
+    {
+        if (m_ArmSwitch.getLimitSwitchState()) {
+            armSubsystem.ZeroArmEncoder();
+        }
     }
 
     public RobotContainer() {
