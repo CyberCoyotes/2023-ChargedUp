@@ -23,4 +23,15 @@ public class RotateArmDeploy extends CommandBase {
      m_armSubsystem = subsystem;
      addRequirements(m_armSubsystem);
     }
+
+    @Override
+    public void initialize() {
+        // TODO Auto-generated method stub
+        super.initialize();
+    }
+    @Override
+    public void execute() {
+    }
+    
+
 }

@@ -16,4 +16,18 @@ public class RotateArmIntake extends CommandBase {
      m_armSubsystem = subsystem;
      addRequirements(m_armSubsystem);
     }
+
+    @Override
+    public void execute() {
+        m_armSubsystem.rotateArmforIntake();
+
+    }
+    @Override
+    public boolean isFinished() {
+        return m_armSubsystem.ConvertFXEncodertoDeg(m_armSubsystem.GetRotation()) >= 90;
+    }
+    @Override
+    public void end(boolean interrupted) {
+        m_armSubsystem.PercentOutputSupplierDrive(0);
+    }
 }
