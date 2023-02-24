@@ -47,10 +47,14 @@ public class RobotContainer {
     private final Joystick operator = new Joystick(1);
     private final ArmSubsystem armSubsystem = new ArmSubsystem();
 
-    /* Drive Controls */
+    /* Analog Controls */
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
+
+    private final int rotateArmDeploy = XboxController.Axis.kRightTrigger.value;
+    private final int rotateArmIntake = XboxController.Axis.kLeftTrigger.value;
+
     
     /*--------------------------------------------------------*
     * Driver Buttons
@@ -66,29 +70,27 @@ public class RobotContainer {
     /*--------------------------------------------------------*
     * Operator Buttons
     *--------------------------------------------------------*/
-
-    /* TODO
-    armRotReset
-    extendArm
-    retractArm
-    */
     private final JoystickButton zeroArmEncoder = new JoystickButton(operator, XboxController.Button.kBack.value);
+   
     private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value);
     private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value);
+   
     private final JoystickButton openClaw = new JoystickButton(operator, XboxController.Button.kA.value);
     private final JoystickButton closeClaw = new JoystickButton(operator, XboxController.Button.kB.value);
-    private final JoystickButton setArmIntake = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+   
+    private final JoystickButton intakeArm = new JoystickButton(operator, XboxController.Button.kLeftBumper.value); // change to D pad?
+    private final JoystickButton extendArm = new JoystickButton(operator, XboxController.Button.kRightBumper.value); // change to D pad?
 
-    // private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value); // TODO
-    // private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value); // TODO
 
-    // private final JoystickButton clawOpen = new JoystickButton(operator, XboxController.Button.kA.value); // TODO
+    // private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value); 
+    // private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value);
+
+    // private final JoystickButton clawOpen = new JoystickButton(operator, XboxController.Button.kA.value);
     // private final JoystickButton <intakeOut> = new JoystickButton(operator, XboxController.Button.kB.value);
 
 
     
     /* Subsystems */
-    
     private final ArmExtensionSubsystem m_extend = new ArmExtensionSubsystem();
     private final ArmSubsystem m_arm = new ArmSubsystem();
     private final CANdle m_candle = new CANdle(Constants.CANDLE_ID);
@@ -147,8 +149,15 @@ public class RobotContainer {
                         () -> robotCentric.getAsBoolean()));
 
         armSubsystem.setDefaultCommand(
-            new RotateArmManual(armSubsystem, () -> -operator.getRawAxis(translationAxis)
-                    ));
+            new RotateArmManual(
+                armSubsystem, 
+                () -> -operator.getRawAxis(rotateArmDeploy)));
+
+        armSubsystem.setDefaultCommand(
+                    new RotateArmManual(
+                        armSubsystem, 
+                       () -> -operator.getRawAxis(rotateArmIntake) * -1 )); // TODO negative multiplier?
+
         // Configure the button bindings
         configureButtonBindings();
         System.out.println();
@@ -169,11 +178,12 @@ public class RobotContainer {
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));       
         zeroArmEncoder.onTrue(new InstantCommand(() -> armSubsystem.ZeroArmEncoder()));
         //logs confirmation
-        setArmIntake.whileTrue(intakeCommand);
+        // setArmIntake.whileTrue(intakeCommand);
 
         /* Operator Button Bindings */
         intakeIn.whileTrue(new SetIntakeIn(m_intake));
         intakeOut.whileTrue(new SetIntakeOut(m_intake));
+
         openClaw.onTrue(new SetClawOpen2(m_claw));
         closeClaw.onTrue(new SetClawClose2(m_claw));
 
@@ -197,3 +207,11 @@ public class RobotContainer {
         
     }
 }
+
+/**
+ * 
+ * Buttons
+ * https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj/XboxController.html
+ * 
+ * https://first.wpi.edu/wpilib/allwpilib/docs/release/java/src-html/edu/wpi/first/wpilibj/XboxController.html 
+ */
