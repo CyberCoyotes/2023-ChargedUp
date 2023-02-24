@@ -102,14 +102,18 @@ public class RobotContainer {
         SmartDashboard.putNumber("Module Rotation1",s_Swerve.mSwerveMods[1].getState().angle.getDegrees());
         SmartDashboard.putNumber("Module Rotation2",s_Swerve.mSwerveMods[2].getState().angle.getDegrees());
         SmartDashboard.putNumber("Module Rotation3",s_Swerve.mSwerveMods[3].getState().angle.getDegrees());
-        
         SmartDashboard.putBoolean("Rotation Switch", m_ArmSwitch.getLimitSwitchState());
         
     }
+
     public RobotContainer() {
 
         // m_vision.setDefaultCommand(new SetLEDtags(m_candle, m_vision));
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));       
+        // SmartDashboard.putNumber("April Tag", m_vision.getEntry("tid").getDouble(0));    
+
+
+          m_vision.setDefaultCommand(new GetTagID(m_vision));
 
         SmartDashboard.putBoolean("Rotation Switch", m_ArmSwitch.getLimitSwitchState());
         
