@@ -60,14 +60,14 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     }
 
     public ArmExtensionSubsystem() {
-        m_motorController.configForwardSoftLimitThreshold(Arm.EXTENSION_POSITION_OUT, 0);
-        m_motorController.configForwardSoftLimitEnable(true, 0);
-        m_motorController.configReverseSoftLimitThreshold(Arm.EXENSION_POSITION_IN, 0);
-        m_motorController.configReverseSoftLimitEnable(true, 0);
+        // m_motorController.configReverseSoftLimitThreshold(Arm.EXTENSION_POSITION_OUT);
+        // m_motorController.configForwardSoftLimitEnable(true, 0);
+        // m_motorController.configForwardSoftLimitThreshold(Arm.EXENSION_POSITION_IN);
+        // m_motorController.configReverseSoftLimitEnable(true, 0);
 
         
-        m_motorController.configPeakOutputForward(0.75);
-        m_motorController.configPeakOutputReverse(-0.75);
+        // m_motorController.configPeakOutputReverse(-0.75);
+        // m_motorController.configPeakOutputForward(0.75);
 
 
     }
