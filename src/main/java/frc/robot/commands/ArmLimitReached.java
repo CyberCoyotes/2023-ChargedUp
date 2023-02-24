@@ -1,8 +1,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.SensorsSubsystem;
@@ -30,7 +28,7 @@ public class ArmLimitReached extends CommandBase{
           boolean limit =  m_SensorsSub.armSwitch.get();
 
         if(limit == false) {  //need to figure out correct check
-            m_IntakeSub.intakeWheelsReverse();
+            m_ArmSub.ZeroArmEncoder();
              // reset right arm motor encoder to zero AND stop arm
             // WaitCommand();
 // Set motor to zero for 300 ms

@@ -38,7 +38,7 @@ public class SensorsSubsystem extends SubsystemBase {
     */
 
     public boolean getLimitSwitchState() {
-        return armSwitch.get();
+        return !armSwitch.get();//Pull-up; natrually returns false when touching, so we invert for user-friendly-ness
     }
 
     
