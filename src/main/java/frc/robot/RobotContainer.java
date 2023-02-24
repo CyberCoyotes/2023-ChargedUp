@@ -77,7 +77,8 @@ public class RobotContainer {
     private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value);
     private final JoystickButton openClaw = new JoystickButton(operator, XboxController.Button.kA.value);
     private final JoystickButton closeClaw = new JoystickButton(operator, XboxController.Button.kB.value);
-    private final JoystickButton setArmIntake = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+    private final JoystickButton retractArm = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton extendArm = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
     // private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value); // TODO
     // private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value); // TODO
@@ -138,6 +139,7 @@ public class RobotContainer {
         // m_vision.setDefaultCommand(new SetLEDtags(m_candle, m_vision));
 
         
+
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(
                         s_Swerve,
@@ -145,7 +147,8 @@ public class RobotContainer {
                         () -> -driver.getRawAxis(strafeAxis),
                         () -> -driver.getRawAxis(rotationAxis),
                         () -> robotCentric.getAsBoolean()));
-
+                        
+        // m_extend.setDefaultCommand(new ExtendArmManual(armSubsystem, extendArm.getAsBoolean(), retractArm.getAsBoolean()));
         armSubsystem.setDefaultCommand(
             new RotateArmManual(armSubsystem, () -> -operator.getRawAxis(translationAxis)
                     ));
