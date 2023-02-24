@@ -158,7 +158,11 @@ public class RobotContainer {
 
         SmartDashboard.putBoolean("Rotation Switch", m_ArmSwitch.getLimitSwitchState());
         
-        armSubsystem.setDefaultCommand(new RunCommand(() -> armSubsystem.PercentOutputSupplierDrive(operator.getY())));
+        armSubsystem.setDefaultCommand(
+            new RotateArmManual(armSubsystem, () -> -operator.getRawAxis(translationAxis)
+                    ));
+
+
 
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(
