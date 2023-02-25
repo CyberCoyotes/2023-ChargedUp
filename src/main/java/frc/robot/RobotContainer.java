@@ -80,14 +80,13 @@ public class RobotContainer {
     // private final JoystickButton clawOpen = new JoystickButton(operator, XboxController.Button.kA.value);
     // private final JoystickButton <intakeOut> = new JoystickButton(operator, XboxController.Button.kB.value);
 
-    /* SELECT */private final JoystickButton zeroArmEncoder = new JoystickButton(operator,
-            XboxController.Button.kBack.value);
+    // /* SELECT */private final JoystickButton zeroArmEncoder = new JoystickButton(operator, XboxController.Button.kBack.value);
 
-    /* X */private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value);
-    /* Y */private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value);
+    // /* X */private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value);
+    // /* Y */private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value);
 
-    /* A */private final JoystickButton openClaw = new JoystickButton(operator, XboxController.Button.kA.value);
-    /* B */private final JoystickButton closeClaw = new JoystickButton(operator, XboxController.Button.kB.value);
+    // /* A */private final JoystickButton openClaw = new JoystickButton(operator, XboxController.Button.kA.value);
+    // /* B */private final JoystickButton closeClaw = new JoystickButton(operator, XboxController.Button.kB.value);
 
     // private final JoystickButton intakeIn = new JoystickButton(operator,
     // XboxController.Button.kX.value);
@@ -158,17 +157,20 @@ public class RobotContainer {
      * Runs relevant code for any non-CAN sensors
      * 
      */
+    
+    /*
     public void SensorPeriodic() {
         // resets arm rotation encoder when it touches sensor
         TouchSensorEncoderReset();
     }
 
+     
     private void TouchSensorEncoderReset() {
         if (m_ArmSwitch.getLimitSwitchState()) {
             armSubsystem.ZeroArmEncoder();
         }
     }
-
+    */
 
     /**
      * Runs relevant code for any non-CAN sensors 
@@ -207,7 +209,7 @@ public class RobotContainer {
 
         m_vision.setDefaultCommand(new GetTagID(m_vision));
 
-        SmartDashboard.putBoolean("Rotation Switch", m_ArmSwitch.getLimitSwitchState());
+        // SmartDashboard.putBoolean("Rotation Switch", m_ArmSwitch.getLimitSwitchState());
 
         armSubsystem.setDefaultCommand(
                 new RotateArmManual(armSubsystem, () -> -operator.getRawAxis(translationAxis)));
@@ -225,20 +227,7 @@ public class RobotContainer {
         //   m_vision.setDefaultCommand(new GetTagID(m_vision));
 
         // SmartDashboard.putBoolean("Rotation Switch", m_ArmSwitch.getLimitSwitchState());
-        
 
-            new RotateArmManual(armSubsystem, () -> -operator.getRawAxis(translationAxis)
-                    ));
-
-
-
-        s_Swerve.setDefaultCommand(
-                 new TeleopSwerve(
-                         s_Swerve,
-                         () -> -driver.getRawAxis(translationAxis),
-                         () -> -driver.getRawAxis(strafeAxis),
-                         () -> -driver.getRawAxis(rotationAxis),
-                         () -> robotCentric.getAsBoolean()));
 
         // armSubsystem.setDefaultCommand(
         //     new RotateArmManual(
