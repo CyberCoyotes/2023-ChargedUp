@@ -51,53 +51,23 @@ public class RobotContainer {
     * Driver Buttons
     *--------------------------------------------------------*/
     /* START */private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
-    /* LB */private final JoystickButton robotCentric = new JoystickButton(driver,
-            XboxController.Button.kLeftBumper.value);
+    /* LB */private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    
     // TODO Remove robot centric buttons
-    /* B */private final JoystickButton creepButton = new JoystickButton(driver, XboxController.Button.kB.value); // TODO
-                                                                                                                  // Remove
-                                                                                                                  // robot
-                                                                                                                  // centric
-                                                                                                                  // buttons
-
+    /* B */private final JoystickButton creepButton = new JoystickButton(driver, XboxController.Button.kB.value); 
+    
     /*--------------------------------------------------------*
     * Operator Buttons
     *--------------------------------------------------------*/
 
-    private final JoystickButton zeroArmEncoder = new JoystickButton(operator, XboxController.Button.kBack.value);
+    /* SELECT */private final JoystickButton zeroArmEncoder = new JoystickButton(operator, XboxController.Button.kBack.value);
    
-    private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value);
-    private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value);
+    /* X */private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value);
+    /* Y */private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value);
    
-    private final JoystickButton openClaw = new JoystickButton(operator, XboxController.Button.kA.value);
-    private final JoystickButton closeClaw = new JoystickButton(operator, XboxController.Button.kB.value);
-   
+    /* A */private final JoystickButton openClaw = new JoystickButton(operator, XboxController.Button.kA.value);
+    /* B */private final JoystickButton closeClaw = new JoystickButton(operator, XboxController.Button.kB.value);
 
-
-    // private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value); 
-    // private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value);
-
-    // private final JoystickButton clawOpen = new JoystickButton(operator, XboxController.Button.kA.value);
-    // private final JoystickButton <intakeOut> = new JoystickButton(operator, XboxController.Button.kB.value);
-
-    // /* SELECT */private final JoystickButton zeroArmEncoder = new JoystickButton(operator, XboxController.Button.kBack.value);
-
-    // /* X */private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value);
-    // /* Y */private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value);
-
-    // /* A */private final JoystickButton openClaw = new JoystickButton(operator, XboxController.Button.kA.value);
-    // /* B */private final JoystickButton closeClaw = new JoystickButton(operator, XboxController.Button.kB.value);
-
-    // private final JoystickButton intakeIn = new JoystickButton(operator,
-    // XboxController.Button.kX.value);
-    // private final JoystickButton intakeOut = new JoystickButton(operator,
-    // XboxController.Button.kY.value);
-
-
-    // private final JoystickButton clawOpen = new JoystickButton(operator,
-    // XboxController.Button.kA.value);
-    // private final JoystickButton <intakeOut> = new JoystickButton(operator,
-    // XboxController.Button.kB.value);
 
     /* Subsystems */
     private final ArmExtensionSubsystem m_extend = new ArmExtensionSubsystem();
