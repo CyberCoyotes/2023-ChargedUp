@@ -175,7 +175,7 @@ public class RobotContainer {
         // m_vision.setDefaultCommand(new SetLEDtags(m_candle, m_vision));
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));       
         // SmartDashboard.putNumber("April Tag", m_vision.getEntry("tid").getDouble(0));    
-
+        m_extend.setDefaultCommand(new ExtendArmManual(m_extend, () -> operator.getRawAxis(RT),() ->  operator.getRawAxis(LT)));
 
         m_vision.setDefaultCommand(new GetTagID(m_vision));
 
@@ -203,7 +203,11 @@ public class RobotContainer {
         //     new RotateArmManual(
         //         armSubsystem, 
         //         () -> -operator.getRawAxis(rotateArmInput)));
-        m_extend.setDefaultCommand(new ExtendArmManual(m_extend, () -> operator.getRawAxis(RT),() ->  operator.getRawAxis(LT)));
+        m_extend.setDefaultCommand(
+            new ExtendArmManual(
+                m_extend,
+                () -> operator.getRawAxis(RT),
+                () ->  operator.getRawAxis(LT)));
 
         // Configure the button bindings
         configureButtonBindings();
