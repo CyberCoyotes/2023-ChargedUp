@@ -42,8 +42,8 @@ public class RobotContainer {
     private final int rotationAxis = XboxController.Axis.kRightX.value;
 
     private final int rotateArmInput = XboxController.Axis.kLeftY.value;
-    private final int retractArm = XboxController.Axis.kLeftTrigger.value;
-    private final int extendArm = XboxController.Axis.kRightTrigger.value;
+    private final int LT = XboxController.Axis.kLeftTrigger.value;
+    private final int RT = XboxController.Axis.kRightTrigger.value;
     
     
     /*--------------------------------------------------------*
@@ -106,6 +106,8 @@ public class RobotContainer {
         // SmartDashboard.putNumber("Module Rotation2",s_Swerve.mSwerveMods[2].getState().angle.getDegrees());
         // SmartDashboard.putNumber("Module Rotation3",s_Swerve.mSwerveMods[3].getState().angle.getDegrees());
         SmartDashboard.putNumber("Arm_Extent",m_extend.ReadExtension());
+        SmartDashboard.putNumber("Arm_Extent_Attempt",operator.getRawAxis(RT));
+        SmartDashboard.putNumber("Arm_Retract",(operator.getRawAxis(LT)));
 
         SmartDashboard.putBoolean("rot intake command on",intakeCommand.isScheduled());
 
@@ -163,19 +165,19 @@ public class RobotContainer {
 
 
 
-        s_Swerve.setDefaultCommand(
-                new TeleopSwerve(
-                        s_Swerve,
-                        () -> -driver.getRawAxis(translationAxis),
-                        () -> -driver.getRawAxis(strafeAxis),
-                        () -> -driver.getRawAxis(rotationAxis),
-                        () -> robotCentric.getAsBoolean()));
+        // s_Swerve.setDefaultCommand(
+        //         new TeleopSwerve(
+        //                 s_Swerve,
+        //                 () -> -driver.getRawAxis(translationAxis),
+        //                 () -> -driver.getRawAxis(strafeAxis),
+        //                 () -> -driver.getRawAxis(rotationAxis),
+        //                 () -> robotCentric.getAsBoolean()));
 
         // armSubsystem.setDefaultCommand(
         //     new RotateArmManual(
         //         armSubsystem, 
         //         () -> -operator.getRawAxis(rotateArmInput)));
-        m_extend.setDefaultCommand(ExtendArmManual(extendArm));
+        m_extend.setDefaultCommand(new ExtendArmManual(m_extend, () -> operator.getRawAxis(RT),() ->  operator.getRawAxis(LT)));
         // Configure the button bindings
         configureButtonBindings();
         System.out.println();
