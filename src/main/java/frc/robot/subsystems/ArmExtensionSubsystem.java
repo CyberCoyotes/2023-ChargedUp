@@ -66,8 +66,8 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         m_motorController.configForwardSoftLimitThreshold(Arm.EXENSION_POSITION_IN);
         m_motorController.configReverseSoftLimitEnable(false, 0);
 
-        m_motorController.configPeakOutputReverse(-0.75);
-        m_motorController.configPeakOutputForward(0.75);
+        m_motorController.configPeakOutputReverse(0);
+        m_motorController.configPeakOutputForward(0);
 
 
     }

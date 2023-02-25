@@ -11,23 +11,12 @@ import com.ctre.phoenix.led.CANdle;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Solenoid;
-import frc.robot.Constants.Arm;
-import frc.robot.autos.exampleAuto;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 // 94505//horizontaL
@@ -47,10 +36,15 @@ public class RobotContainer {
     private final Joystick operator = new Joystick(1);
     private final ArmSubsystem armSubsystem = new ArmSubsystem();
 
-    /* Drive Controls */
+    /* Analog Controls */
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
+
+    private final int rotateArmInput = XboxController.Axis.kLeftY.value;
+    private final int retractArm = XboxController.Axis.kLeftTrigger.value;
+    private final int extendArm = XboxController.Axis.kRightTrigger.value;
+    
     
     /*--------------------------------------------------------*
     * Driver Buttons
@@ -66,30 +60,25 @@ public class RobotContainer {
     /*--------------------------------------------------------*
     * Operator Buttons
     *--------------------------------------------------------*/
-
-    /* TODO
-    armRotReset
-    extendArm
-    retractArm
-    */
     private final JoystickButton zeroArmEncoder = new JoystickButton(operator, XboxController.Button.kBack.value);
+   
     private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value);
     private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value);
+   
     private final JoystickButton openClaw = new JoystickButton(operator, XboxController.Button.kA.value);
     private final JoystickButton closeClaw = new JoystickButton(operator, XboxController.Button.kB.value);
-    private final JoystickButton retractArm = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton extendArm = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+   
 
-    // private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value); // TODO
-    // private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value); // TODO
 
-    // private final JoystickButton clawOpen = new JoystickButton(operator, XboxController.Button.kA.value); // TODO
+    // private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value); 
+    // private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value);
+
+    // private final JoystickButton clawOpen = new JoystickButton(operator, XboxController.Button.kA.value);
     // private final JoystickButton <intakeOut> = new JoystickButton(operator, XboxController.Button.kB.value);
 
 
     
     /* Subsystems */
-    
     private final ArmExtensionSubsystem m_extend = new ArmExtensionSubsystem();
     private final ArmSubsystem m_arm = new ArmSubsystem();
     private final CANdle m_candle = new CANdle(Constants.CANDLE_ID);
@@ -97,6 +86,7 @@ public class RobotContainer {
     private final IntakeSubsystem m_intake = new IntakeSubsystem();
     private final Vision m_vision = new Vision();
     private final Swerve s_Swerve = new Swerve();
+    // private final SensorsSubsystem m_ArmSwitch = new SensorsSubsystem();
 
     //#region Commands
     RotateArmIntake intakeCommand = new RotateArmIntake(armSubsystem); 
@@ -108,6 +98,7 @@ public class RobotContainer {
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
+
     public void DebugMethod()
     {
         // SmartDashboard.putNumber("Module Rotation0",s_Swerve.mSwerveMods[0].getState().angle.getDegrees());
@@ -117,6 +108,9 @@ public class RobotContainer {
         SmartDashboard.putNumber("Arm_Extent",m_extend.ReadExtension());
 
         SmartDashboard.putBoolean("rot intake command on",intakeCommand.isScheduled());
+
+        // SmartDashboard.putBoolean("Rotation Switch", m_ArmSwitch.getLimitSwitchState());
+
 
                 //some data valiidation stuff
 
@@ -134,11 +128,40 @@ public class RobotContainer {
 
 
     }
+
+    /**
+     * Runs relevant code for any non-CAN sensors 
+     * 
+     */
+    // public void SensorPeriodic()
+    // {  
+    //     //resets arm rotation encoder when it touches sensor
+    //     TouchSensorEncoderReset();
+    // }
+
+    // private void TouchSensorEncoderReset()
+    // {
+    //     if (m_ArmSwitch.getLimitSwitchState()) {
+    //         armSubsystem.ZeroArmEncoder();
+    //     }
+    // }
+
     public RobotContainer() {
 
         // m_vision.setDefaultCommand(new SetLEDtags(m_candle, m_vision));
+        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));       
+        // SmartDashboard.putNumber("April Tag", m_vision.getEntry("tid").getDouble(0));    
 
+
+        //   m_vision.setDefaultCommand(new GetTagID(m_vision));
+
+        // SmartDashboard.putBoolean("Rotation Switch", m_ArmSwitch.getLimitSwitchState());
         
+        armSubsystem.setDefaultCommand(
+            new RotateArmManual(armSubsystem, () -> -operator.getRawAxis(translationAxis)
+                    ));
+
+
 
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(
@@ -147,11 +170,12 @@ public class RobotContainer {
                         () -> -driver.getRawAxis(strafeAxis),
                         () -> -driver.getRawAxis(rotationAxis),
                         () -> robotCentric.getAsBoolean()));
-                        
-        // m_extend.setDefaultCommand(new ExtendArmManual(armSubsystem, extendArm.getAsBoolean(), retractArm.getAsBoolean()));
-        armSubsystem.setDefaultCommand(
-            new RotateArmManual(armSubsystem, () -> -operator.getRawAxis(translationAxis)
-                    ));
+
+        // armSubsystem.setDefaultCommand(
+        //     new RotateArmManual(
+        //         armSubsystem, 
+        //         () -> -operator.getRawAxis(rotateArmInput)));
+        m_extend.setDefaultCommand(ExtendArmManual(extendArm));
         // Configure the button bindings
         configureButtonBindings();
         System.out.println();
@@ -172,18 +196,14 @@ public class RobotContainer {
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));       
         zeroArmEncoder.onTrue(new InstantCommand(() -> armSubsystem.ZeroArmEncoder()));
         //logs confirmation
-        setArmIntake.whileTrue(intakeCommand);
+        // setArmIntake.whileTrue(intakeCommand);
 
         /* Operator Button Bindings */
         intakeIn.whileTrue(new SetIntakeIn(m_intake));
         intakeOut.whileTrue(new SetIntakeOut(m_intake));
+
         openClaw.onTrue(new SetClawOpen2(m_claw));
         closeClaw.onTrue(new SetClawClose2(m_claw));
-
-
-        // new Trigger(m_vision::checkTagID).onTrue(new SetIntakeIn(m_intake));
-        // ArmExtensionSubsystem.onTrue(new (m_extend));
-        // ArmSubsystem.onTrue(new (m_arm));
         
     }
 
@@ -200,3 +220,11 @@ public class RobotContainer {
         
     }
 }
+
+/**
+ * 
+ * Buttons
+ * https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj/XboxController.html
+ * 
+ * https://first.wpi.edu/wpilib/allwpilib/docs/release/java/src-html/edu/wpi/first/wpilibj/XboxController.html 
+ */
