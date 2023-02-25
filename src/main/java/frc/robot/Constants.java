@@ -8,7 +8,6 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -19,9 +18,6 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
-import frc.robot.subsystems.ArmSubsystem;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
-
 
 public final class Constants {
     /**
@@ -66,8 +62,10 @@ public final class Constants {
         // public final static double ARM_ROTATE_POSITION_REST = 79* (458752/360);
         public final static double ARM_ROTATE_POSITION_DEPLOY = 1000; // TODO TBD experimentally
         public final static double ARM_ROTATE_POSITION_INTAKE    = 8878; // approximate from testing; compare to the change in angle from rest to deploy
+      
         public final static double EXTENSION_POSITION_OUT = -8000; //playing it safe for now; should be around -14000?
-        public final static double EXENSION_POSITION_IN  = 0; // TODO TBD experimentally
+        public final static double EXENSION_POSITION_IN  = 0;
+
         public static final int PIDSlotIDx = 0; //keep this
         public static final double kP =  (0.50 * 1023) / 2048; //50% power at total error
         public static final double kI = 0;//may need tuning
@@ -85,14 +83,12 @@ public final class Constants {
 
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 
-        public static final COTSFalconSwerveConstants chosenModule = // TODO: This must be tuned to specific robot
+        public static final COTSFalconSwerveConstants chosenModule =
                 COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L2);
 
         /* Drivetrain Constants */
-        public static final double trackWidth = Units.inchesToMeters(23.03); // TODO: This must be tuned to specific
-                                                                             // robot
-        public static final double wheelBase = Units.inchesToMeters(23.03); // TODO: This must be tuned to specific
-                                                                            // robot
+        public static final double trackWidth = Units.inchesToMeters(23.03); 
+        public static final double wheelBase = Units.inchesToMeters(23.03); 
         public static final double wheelCircumference = chosenModule.wheelCircumference;
 
         /*
@@ -106,6 +102,7 @@ public final class Constants {
                 new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
                 new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0));
 
+        public static final float CREEP_MODE_MULTIPLIER = .15f;
         /* Module Gear Ratios */
         public static final double driveGearRatio = chosenModule.driveGearRatio;
         public static final double angleGearRatio = chosenModule.angleGearRatio;
@@ -143,7 +140,7 @@ public final class Constants {
         public static final double angleKF = chosenModule.angleKF;
 
         /* Drive Motor PID Values */
-        public static final double driveKP = 0.05; // TODO: This must be tuned to specific robot
+        public static final double driveKP = 0.05; // TODO Tuned to specific robot
         public static final double driveKI = 0.0;
         public static final double driveKD = 0.0;
         public static final double driveKF = 0.0;
@@ -153,7 +150,7 @@ public final class Constants {
          * Drive Motor Characterization Values
          * Divide SYSID values by 12 to convert from volts to percent output for CTRE
          */
-        public static final double driveKS = (0.32 / 12); // TODO: This must be tuned to specific robot
+        public static final double driveKS = (0.32 / 12); // TODO Tuned to specific robot
         public static final double driveKV = (1.51 / 12);
         public static final double driveKA = (0.27 / 12);
 
@@ -168,7 +165,7 @@ public final class Constants {
         public static final NeutralMode driveNeutralMode = NeutralMode.Brake;
 
         /* Front Right Module - Module 1 */
-        public static final class Mod1 { // TODO: This must be tuned to specific robot
+        public static final class Mod1 {
             public static final int driveMotorID = 1; // Team3603
             public static final int angleMotorID = 2; // Team3603
             public static final int canCoderID = 21; // Team3603
@@ -178,7 +175,7 @@ public final class Constants {
         }
 
         /* Back Right Module - Module 3 */
-        public static final class Mod3 { // TODO: This must be tuned to specific robot
+        public static final class Mod3 {
             public static final int driveMotorID = 3; // Team3603
             public static final int angleMotorID = 4; // Team3603
             public static final int canCoderID = 22; // Team3603
@@ -189,7 +186,7 @@ public final class Constants {
         }
 
         /* Back Left Module - Module 2 */
-        public static final class Mod2 { // TODO: This must be tuned to specific robot
+        public static final class Mod2 {
             public static final int driveMotorID = 5; // Team3603
             public static final int angleMotorID = 6; // Team3603
             public static final int canCoderID = 23; // Team3603
@@ -200,7 +197,7 @@ public final class Constants {
 
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
-        public static final class Mod0 { // TODO: This must be tuned to specific robot
+        public static final class Mod0 {
             public static final int driveMotorID = 7; // Team3603
             public static final int angleMotorID = 8; // Team3603
             public static final int canCoderID = 24; // Team3603
@@ -254,5 +251,7 @@ public final class Constants {
     public static final int VISION_LED_ON = 2;
 
     public static final double WHEEL_MAX = 1; //maybe not be needed
+
+    public static final int LIMIT_SWITCH_ARM_PORT = 0; // channel or port on roboRIO DIO
     
 } // end of class
