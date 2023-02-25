@@ -23,10 +23,12 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -45,10 +47,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     
     // private Encoder m_Encoder = new Encoder(0, 0, 0)
 
-    public void setArmExtend() {
-        
-    }
-
+   
     /**
      * 
      * @return The encoder reading of the motor
@@ -60,15 +59,16 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     }
 
     public ArmExtensionSubsystem() {
-        m_motorController.configForwardSoftLimitThreshold(Arm.EXTENSION_POSITION_OUT, 0);
-        m_motorController.configForwardSoftLimitEnable(true, 0);
-        m_motorController.configReverseSoftLimitThreshold(Arm.EXENSION_POSITION_IN, 0);
-        m_motorController.configReverseSoftLimitEnable(true, 0);
 
-        
-        m_motorController.configPeakOutputForward(0.75);
-        m_motorController.configPeakOutputReverse(-0.75);
+        // m_motorController.setSensorPhase(false);//todo find if this is good enough
+        // m_motorController.configReverseSoftLimitThreshold(Arm.EXTENSION_POSITION_OUT);
+        // m_motorController.configForwardSoftLimitEnable(false, 0);
+        // m_motorController.configForwardSoftLimitThreshold(Arm.EXENSION_POSITION_IN);
+        // m_motorController.configReverseSoftLimitEnable(false, 0);
 
+        // m_motorController.configPeakOutputReverse(0);
+        // m_motorController.configPeakOutputForward(0);
+        m_motorController.setSensorPhase(true);
 
     }
     /**
@@ -79,9 +79,14 @@ public class ArmExtensionSubsystem extends SubsystemBase {
 
     public void setArmIn() {
         m_motorController.set(TalonSRXControlMode.Position, Arm.EXENSION_POSITION_IN);
+        
     }
     public void setArmOut() {
         m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_POSITION_OUT);
+    }
+    public void PercentOutputSupplierDrive(double input)
+    {
+        m_motorController.set(ControlMode.PercentOutput, input);
     }
 
 }

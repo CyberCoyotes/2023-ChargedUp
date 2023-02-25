@@ -62,8 +62,10 @@ public final class Constants {
         // public final static double ARM_ROTATE_POSITION_REST = 79* (458752/360);
         public final static double ARM_ROTATE_POSITION_DEPLOY = 1000; // TODO TBD experimentally
         public final static double ARM_ROTATE_POSITION_INTAKE    = 8878; // approximate from testing; compare to the change in angle from rest to deploy
-        public final static double EXTENSION_POSITION_OUT = -14000; //playing it safe for now
+      
+        public final static double EXTENSION_POSITION_OUT = -8000; //playing it safe for now; should be around -14000?
         public final static double EXENSION_POSITION_IN  = 0;
+
         public static final int PIDSlotIDx = 0; //keep this
         public static final double kP =  (0.50 * 1023) / 2048; //50% power at total error
         public static final double kI = 0;//may need tuning
@@ -158,8 +160,8 @@ public final class Constants {
         /** Radians per Second */
         public static final double maxAngularVelocity = 10.0; // TODO: This must be tuned to specific robot
 
-        /* Neutral Modes */
-        public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
+        /* Neutral Modes; can change from brake to neutral for testing purposes, but both on brake is the intended use */
+        public static final NeutralMode angleNeutralMode = NeutralMode.Brake;
         public static final NeutralMode driveNeutralMode = NeutralMode.Brake;
 
         /* Front Right Module - Module 1 */
