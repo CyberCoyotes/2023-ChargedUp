@@ -6,14 +6,14 @@ import frc.robot.subsystems.SensorsSubsystem;
 
 public class ArmLimitReached extends CommandBase{
 
-    private final ArmSubsystem m_ArmSub;
-    private final SensorsSubsystem m_SensorsSub;
+    private final ArmSubsystem m_ArmSubsystem;
+    private final SensorsSubsystem m_SensorsSubsystem;
 
-    public ArmLimitReached(ArmSubsystem subsystem1, SensorsSubsystem subsystem2) {
-        m_ArmSub = subsystem1;
-        m_SensorsSub = subsystem2;
+    public ArmLimitReached(ArmSubsystem subsystem, SensorsSubsystem subsystem2) {
+        m_ArmSubsystem = subsystem;
+        m_SensorsSubsystem = subsystem2;
     
-        addRequirements(m_ArmSub, m_SensorsSub);
+        addRequirements(m_ArmSubsystem, m_SensorsSubsystem);
     }
 
     /*
@@ -22,10 +22,10 @@ public class ArmLimitReached extends CommandBase{
     @Override
     public void initialize() {
         
-          boolean limit =  m_SensorsSub.armSwitch.get();
+          boolean limit =  m_SensorsSubsystem.armSwitch.get();
 
         if(limit == false) {  //need to figure out correct check
-            m_ArmSub.ZeroArmEncoder();
+            m_ArmSubsystem.ZeroArmEncoder();
              // reset right arm motor encoder to zero AND stop arm
             // WaitCommand();
 // Set motor to zero for 300 ms
