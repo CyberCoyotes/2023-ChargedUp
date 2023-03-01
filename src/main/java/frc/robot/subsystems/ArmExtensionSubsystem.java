@@ -63,7 +63,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         // m_motorController.setSelectedSensorPosition(0);
         // m_motorController.setSensorPhase(false);//todo find if this is good enough
       
-        m_motorController.configReverseSoftLimitThreshold(Arm.EXENSION_POSITION_IN + m_motorController.getSelectedSensorPosition());
+        m_motorController.configReverseSoftLimitThreshold(Arm.EXTENSION_POSITION_IN + m_motorController.getSelectedSensorPosition());
         m_motorController.configForwardSoftLimitEnable(true, 0);
         m_motorController.configForwardSoftLimitThreshold(Arm.EXTENSION_POSITION_OUT+ m_motorController.getSelectedSensorPosition());
         m_motorController.configReverseSoftLimitEnable(true, 0);
@@ -80,7 +80,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
       //no state?
 
     public void setArmIn() {
-        m_motorController.set(TalonSRXControlMode.Position, Arm.EXENSION_POSITION_IN);
+        m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_POSITION_IN);
         
     }
     public void setArmOut() {

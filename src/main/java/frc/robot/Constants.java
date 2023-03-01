@@ -64,7 +64,7 @@ public final class Constants {
         public final static double ARM_ROTATE_POSITION_INTAKE    = 8878; // approximate from testing; compare to the change in angle from rest to deploy
       
         public final static double EXTENSION_POSITION_OUT = 12000; //playing it safe for now; should be around -14000?
-        public final static double EXENSION_POSITION_IN  = -200;
+        public final static double EXTENSION_POSITION_IN  = -200;
 
         public static final int PIDSlotIDx = 0; //keep this
         public static final double kP =  (0.50 * 1023) / 2048; //50% power at total error
