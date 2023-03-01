@@ -60,7 +60,7 @@ public class ArmSubsystem extends SubsystemBase {
      * snap back.
      **/
     public ArmSubsystem() {
-        rightMotHost.setNeutralMode(NeutralMode.Coast);// for testing
+        rightMotHost.setNeutralMode(NeutralMode.Brake); // TODO Test
         leftMota.setNeutralMode(NeutralMode.Coast);
 
         // here we choose to use follower control mode as the left as host, to use

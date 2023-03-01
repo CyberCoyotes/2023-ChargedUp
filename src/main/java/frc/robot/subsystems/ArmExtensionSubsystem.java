@@ -25,6 +25,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -62,7 +63,8 @@ public class ArmExtensionSubsystem extends SubsystemBase {
 
         // m_motorController.setSelectedSensorPosition(0);
         // m_motorController.setSensorPhase(false);//todo find if this is good enough
-      
+       
+        m_motorController.setNeutralMode(NeutralMode.Brake); // TODO Test
         m_motorController.configReverseSoftLimitThreshold(Arm.EXTENSION_POSITION_IN + m_motorController.getSelectedSensorPosition());
         m_motorController.configForwardSoftLimitEnable(true, 0);
         m_motorController.configForwardSoftLimitThreshold(Arm.EXTENSION_POSITION_OUT+ m_motorController.getSelectedSensorPosition());
