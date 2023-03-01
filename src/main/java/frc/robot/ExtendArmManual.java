@@ -29,7 +29,7 @@ public class ExtendArmManual extends CommandBase {
     @Override
     public void execute() {
         double input = extend.getAsDouble() + retract.getAsDouble() * -1; 
-        subsystem.PercentOutputSupplierDrive(input * .3);
+        subsystem.PercentOutputSupplierDrive(input * .4);
     }
     // @Override //for use with bumpers, rather than triggers
     // public void execute() {
