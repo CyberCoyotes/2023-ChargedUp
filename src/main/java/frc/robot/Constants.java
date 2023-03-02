@@ -61,9 +61,9 @@ public final class Constants {
          */
         // public final static double ARM_ROTATE_POSITION_REST = 79* (458752/360);
         public final static double ARM_ROTATE_POSITION_DEPLOY = 1000; // TODO TBD experimentally
-        public final static double ARM_ROTATE_POSITION_INTAKE    = 8878; // approximate from testing; compare to the change in angle from rest to deploy
-      
-        public final static double EXTENSION_POSITION_OUT = 12000; //playing it safe for now; should be around -14000?
+        public final static double ARM_ROTATE_POSITION_INTAKE  = 8878; // approximate from testing; compare to the change in angle from rest to deploy
+        public final static double ARM_ROTATE_POSITION_DEPLOY_DEG =  220;//should be 260? TESTING
+        public final static double EXTENSION_POSITION_OUT = 14500; //playing it safe for now; should be around -14000?
         public final static double EXTENSION_POSITION_IN  = -200;
 
         public static final int PIDSlotIDx = 0; //keep this
@@ -210,6 +210,8 @@ public final class Constants {
     public static final class AutoConstants { // TODO: The below constants are used in the example auto, and must be
                                               // tuned to specific robot
         public static final double kMaxSpeedMetersPerSecond = 3;
+        public final static double AUTON_40_PERCENT_MULTIPLIER = 0.05992509363d;
+
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;

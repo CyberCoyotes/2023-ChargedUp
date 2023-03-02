@@ -17,20 +17,13 @@
 --------------------------------------------------------*/
 package frc.robot.subsystems;
 
-import java.util.function.DoubleSupplier;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.Arm;
@@ -60,6 +53,13 @@ public class ArmSubsystem extends SubsystemBase {
      * snap back.
      **/
     public ArmSubsystem() {
+
+        rightMotHost.configForwardSoftLimitThreshold(ConvertDegToFXEncoder(Arm.ARM_ROTATE_POSITION_DEPLOY_DEG));//TODO verify accuracy
+
+        rightMotHost.configForwardSoftLimitEnable(true, 0);
+     
+
+
         rightMotHost.setNeutralMode(NeutralMode.Brake); // TODO Test
         leftMota.setNeutralMode(NeutralMode.Coast);
 
@@ -83,15 +83,6 @@ public class ArmSubsystem extends SubsystemBase {
                                                                     // units /0.1 seconds
 
         // #endregion PIDF, motion profile configurations
-
-        // rightMotHost.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-        // leftMota.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-
-        rightMotHost.configForwardSoftLimitThreshold(this.ConvertDegToFXEncoder(270));
-        rightMotHost.configReverseSoftLimitThreshold(0);
-        rightMotHost.configForwardSoftLimitEnable(true);
-        rightMotHost.configReverseSoftLimitEnable(true);
-
 
     }
     /***
