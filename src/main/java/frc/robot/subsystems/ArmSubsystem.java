@@ -54,7 +54,7 @@ public class ArmSubsystem extends SubsystemBase {
      **/
     public ArmSubsystem() {
 
-        rightMotHost.configForwardSoftLimitThreshold(ConvertDegToFXEncoder(Arm.ARM_ROTATE_POSITION_DEPLOY_DEG));//TODO verify accuracy
+        rightMotHost.configForwardSoftLimitThreshold(ConvertDegToFXEncoder(180));//TODO verify accuracy
 
         rightMotHost.configForwardSoftLimitEnable(true, 0);
      
