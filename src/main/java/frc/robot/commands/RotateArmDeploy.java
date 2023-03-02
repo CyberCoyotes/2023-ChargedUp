@@ -31,6 +31,7 @@ public class RotateArmDeploy extends CommandBase {
     }
     @Override
     public void execute() {
+        m_armSubsystem.RotateArmToDeg(90);
     }
     
 

@@ -18,11 +18,11 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -39,12 +39,14 @@ public class ArmSubsystem extends SubsystemBase {
      * The left motor of the rotation of the arm, and host of the follower
      * configuration.
      */
-    private WPI_TalonFX rightMotHost = new WPI_TalonFX(Constants.ARM_RIGHT_ROT_MOTOR_ID);// integrated encoder                                                                                 // GetSelectedSensorPosition
+    private WPI_TalonFX rightMotHost = new WPI_TalonFX(Constants.ARM_RIGHT_ROT_MOTOR_ID);// integrated encoder //
+                                                                                         // GetSelectedSensorPosition
     /***
      * The right motor of the rotation of the arm, and follower of the left motor,
      * for the follower configuration.
      */
     private WPI_TalonFX leftMota = new WPI_TalonFX(Constants.ARM_LEFT_ROT_MOTOR_ID);// integrated encoder, accessed via
+
     /**
      * Rotates arm to deploment side of robot
      * Brake mode for both causes the motors to work against each other.
@@ -54,15 +56,19 @@ public class ArmSubsystem extends SubsystemBase {
      **/
     public ArmSubsystem() {
 
-        rightMotHost.configForwardSoftLimitThreshold(ConvertDegToFXEncoder(180));//TODO verify accuracy
+        rightMotHost.configFactoryDefault();
+        //:The arm is some degrees off from 0 being truly down pointing
+        rightMotHost.configIntegratedSensorOffset(Constants.Arm.ARM_OFFSET_DEGREES);
+
+
+        // roughly 20 degree offset
+        rightMotHost.configForwardSoftLimitThreshold(ConvertDegToFXEncoder(Arm.ARM_MAX_DEG));// TODO verify accuracy
 
         rightMotHost.configForwardSoftLimitEnable(true, 0);
-     
-
 
         rightMotHost.setNeutralMode(NeutralMode.Brake); // TODO Test
         leftMota.setNeutralMode(NeutralMode.Coast);
-
+//
         // here we choose to use follower control mode as the left as host, to use
         // motionmagic
         leftMota.set(TalonFXControlMode.Follower, leftMota.getDeviceID());
@@ -85,6 +91,7 @@ public class ArmSubsystem extends SubsystemBase {
         // #endregion PIDF, motion profile configurations
 
     }
+
     /***
      * Gets the rotation of the system in encoder ticks.
      *
@@ -95,6 +102,7 @@ public class ArmSubsystem extends SubsystemBase {
     public double GetRotation() {
         return (rightMotHost.getSelectedSensorPosition());
     }
+
     /**
      * Equivalent to calling {@code ConvertFXEncodertoDeg()} after
      * {@code GetRotation()}.
@@ -163,6 +171,23 @@ public class ArmSubsystem extends SubsystemBase {
     // in the case we don't need too advanced control
     // https://v5.docs.ctr-electronics.com/en/stable/ch16_ClosedLoop.html#position-closed-loop-control-mode
     public void rotateArmforIntake() {
+
+    }
+
+    /**
+     * Rotates the arm to a degree value, where straight down would be 0 degrees, up
+     * would be 180, etc
+     */
+    public void RotateArmToDeg(int degrees) {
+        double target_sensorUnits = ConvertDegToFXEncoder(degrees);// intake //todo the setpoint, figure this out
+                                                                   // logically;
+        rightMotHost.configPeakOutputForward(0.5);
+        rightMotHost.configPeakOutputReverse(-0.5);
+        
+
+        rightMotHost.set(TalonFXControlMode.Position, target_sensorUnits);// no arb for now
+        // rightMotHost.set(TalonFXControlMode.MotionMagic, target_sensorUnits,
+        // DemandType.ArbitraryFeedForward, arbFF);
 
     }
 

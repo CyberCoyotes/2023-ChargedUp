@@ -24,16 +24,9 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
-import com.ctre.phoenix.sensors.CANCoder;
-
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.Arm;
@@ -91,6 +84,15 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     public void PercentOutputSupplierDrive(double input)
     {
         m_motorController.set(ControlMode.PercentOutput, input);
+    }
+    
+    /**
+     * @param input the encoder degrees to set the arm at. Note the arm extends to roughly 0 at rest, and 14500 units maximum. 
+     */
+    public void SetArmToTickPosition(int input)
+    {
+        m_motorController.set(ControlMode.Position, input);
+
     }
 
 }

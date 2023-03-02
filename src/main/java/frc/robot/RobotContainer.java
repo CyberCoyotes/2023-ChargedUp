@@ -45,6 +45,7 @@ public class RobotContainer {
 
     private final int LT = XboxController.Axis.kLeftTrigger.value;
     private final int RT = XboxController.Axis.kRightTrigger.value;
+    // /* A */private final JoystickButton RotateArmTEST = new JoystickButton(operator, XboxController.Button.kA.value); 
 
     /*--------------------------------------------------------*
     * Driver Buttons
@@ -81,7 +82,7 @@ public class RobotContainer {
 
     // #region Commands
     RotateArmIntake intakeCommand = new RotateArmIntake(armSubsystem);
-
+    RotateArmDeploy deployCommand = new RotateArmDeploy(armSubsystem);
     // #endregion
 
     /**
@@ -226,7 +227,7 @@ public class RobotContainer {
         /* Driver Button Bindings */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         zeroArmEncoder.onTrue(new InstantCommand(() -> armSubsystem.ZeroArmEncoder()));
-
+        // RotateArmTEST.whileTrue(deployCommand);
         //logs confirmation
         // setArmIntake.whileTrue(intakeCommand);
 
@@ -250,20 +251,22 @@ public class RobotContainer {
      */
 
     public Command getAutonomousCommand() {
-        double inches = 2; //TODO calculate time to drive based off of inches
-        double seconds = 1;// double seconds = inches * Constants.AutoConstants.AUTON_40_PERCENT_MULTIPLIER;
-        var driveCommand = new TeleopSwerve(
-            s_Swerve,
-            () -> 0,
-            () -> -0.4,
-            () -> 0,
-            () -> robotCentric.getAsBoolean(),
-            () -> false);
-        return new ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand);
+        // double inches = 2; //TODO calculate time to drive based off of inches
+        // double seconds = 1;// double seconds = inches * Constants.AutoConstants.AUTON_40_PERCENT_MULTIPLIER;
+        // var driveCommand = new TeleopSwerve(
+        //     s_Swerve,
+        //     () -> 0,
+        //     () -> -0.4,
+        //     () -> 0,
+        //     () -> robotCentric.getAsBoolean(),
+        //     () -> false);
+        // return new ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand);
+
         //: 40% in a single direction for 1 second: ~51 inches 
         //: 40% in both directions for 1 second: ~75 inches total
         //: Both above seem to scale linearly
 
+        return new InstantCommand(() -> armSubsystem.RotateArmToDeg(90));
         //// return new PathPlannerTesting(s_Swerve).Generate();
 
     }

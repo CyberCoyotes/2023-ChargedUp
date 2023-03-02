@@ -74,6 +74,7 @@ public final class Constants {
         public static final double kMaxAcceletation = 11468/2; //tuning needed
         public static final int ARM_OFFSET_DEGREES = 19;//!Obsolete
         public static final double DEG_TO_mRAD = 17.4533;
+        public static final double ARM_MAX_DEG = 180;
 
     }
     public static final class Swerve {
