@@ -15,11 +15,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmSubsystem;
 
-public class RotateArmDeploy extends CommandBase {
+public class RotateArm90 extends CommandBase {
       
     private final ArmSubsystem m_armSubsystem;
    
-    public RotateArmDeploy(ArmSubsystem subsystem) {
+    public RotateArm90(ArmSubsystem subsystem) {
      m_armSubsystem = subsystem;
      addRequirements(m_armSubsystem);
     }
@@ -29,6 +29,7 @@ public class RotateArmDeploy extends CommandBase {
         // TODO Auto-generated method stub
         super.initialize();
     }
+    
     @Override
     public void execute() {
         m_armSubsystem.RotateArmToDeg(90);

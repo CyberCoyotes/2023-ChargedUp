@@ -15,11 +15,11 @@ public class cgCubeDeployMiddle extends SequentialCommandGroup {
         // FIXME Needs testing and some actual numbers
         addCommands(
                 new SetClawClose2(m_ClawSub),
-                m_ArmSub.RotateArmToDeg(90), // Rotate the arm to approximately 90 degrees. Determine experimentally
+                new SetArmRot(90, m_ArmSub), // Rotate the arm to approximately 90 degrees. Determine experimentally
                 // new SetArmExtend(m_ArmExtSub), // Extend the arm 6000 ticks?. Determine experimentally
                 
                 // This isn't a command, its a method in ArmSubstem
-                m_ArmSub.RotateArmToDeg(-70), // Rotate the arm to approximately 90 degrees (again to compensate for
+                new SetArmRot(20, m_ArmSub), // Rotate the arm to approximately 90 degrees (again to compensate for
                                                // sag) . Determine experimentally
                 new SetClawOpen2(m_ClawSub), // open the claw
                 new WaitCommand(.15), // short pause

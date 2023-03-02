@@ -82,7 +82,7 @@ public class RobotContainer {
 
     // #region Commands
     RotateArmIntake intakeCommand = new RotateArmIntake(armSubsystem);
-    RotateArmDeploy deployCommand = new RotateArmDeploy(armSubsystem);
+    RotateArm90 deployCommand = new RotateArm90(armSubsystem);
     // #endregion
 
     /**
