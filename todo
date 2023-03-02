@@ -4,11 +4,15 @@
     - [x] Confiroffset(~~straight down, towards robot~~ the arm at rest is represented by a 0 encoder). If it needs tuning, do so.
     - [x] Simple Percent Output to control arm
     - [ ] Encoder value at end, straight up, level
+    - [ ] Arm rotation soft limit
 - ## Tuning for gravity
-    - [ ] Create kF, arbitrary feedforward(Find power required to maintain position at 90°) and apply to arm power in update, which can be used by Percent Output with `m_talonSRX.(set(ControlMode.PercentOutput, [powerPercentage], DemandType.ArbitraryFeedForward, [feedForward source]);`)
+    - [ ] Create kF, arbitrary feedforward(Find power required to maintain position at 90°) and apply to arm power in update, which can be used by Percent Output with `m_talonSRX.(set(ControlMode.PercentOutput, [powerPercentage], DemandType.ArbitraryFeedForward, [feedForward source]);` that, or just brake the rotation motors.)
 - ## PID/MotionMagic
     - [ ] investigate need for velocity and acceleration constraints on the arm 
     - [ ] Create P value for arm
     - [ ] Implement motionmagic using PID alongside kF
+- ## Auton v1
+    - [ ] Create basic auton paths, with commands and such 
+- ## Auton v2
+    - [ ] Attempt Pathplanner, while using cartesian coord method's errors to improve
 
-miliradian measures

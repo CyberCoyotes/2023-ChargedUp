@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
@@ -42,7 +42,6 @@ public class RobotContainer {
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
 
-    private final int rotateArmInput = XboxController.Axis.kLeftY.value;
 
     private final int LT = XboxController.Axis.kLeftTrigger.value;
     private final int RT = XboxController.Axis.kRightTrigger.value;
@@ -102,6 +101,7 @@ public class RobotContainer {
         SmartDashboard.putNumber("Arm_Extent", m_extend.ReadExtension());
 
         SmartDashboard.putBoolean("rot intake command on", intakeCommand.isScheduled());
+        SmartDashboard.putNumber("new gyro read", s_Swerve.getYaw().getDegrees());
 
         // SmartDashboard.putBoolean("Rotation Switch", m_ArmSwitch.getLimitSwitchState());
         //some data valiidation stuff
@@ -109,8 +109,6 @@ public class RobotContainer {
         // Using degrees maximum encoder range and offsets, getting the calculated
         // measure
 
-        var hypoIntake = armSubsystem.ConvertFXEncodertoDeg(armSubsystem.GetRotation())
-                + Constants.Arm.ARM_OFFSET_DEGREES;
         // SmartDashboard.putNumber("Encoder value @ horziontal: Calculated:",
         // hypoIntake);
         // tested value
@@ -252,9 +250,21 @@ public class RobotContainer {
      */
 
     public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return new WaitCommand(2);
-        // return new PathPlannerTesting(s_Swerve).Generate();
+        double inches = 2; //TODO calculate time to drive based off of inches
+        double seconds = 1;// double seconds = inches * Constants.AutoConstants.AUTON_40_PERCENT_MULTIPLIER;
+        var driveCommand = new TeleopSwerve(
+            s_Swerve,
+            () -> 0,
+            () -> -0.4,
+            () -> 0,
+            () -> robotCentric.getAsBoolean(),
+            () -> false);
+        return new ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand);
+        //: 40% in a single direction for 1 second: ~51 inches 
+        //: 40% in both directions for 1 second: ~75 inches total
+        //: Both above seem to scale linearly
+
+        //// return new PathPlannerTesting(s_Swerve).Generate();
 
     }
 }
