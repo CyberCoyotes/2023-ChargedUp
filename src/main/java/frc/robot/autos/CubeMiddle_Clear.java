@@ -21,12 +21,12 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 public class CubeMiddle_Clear extends SequentialCommandGroup {
         // Move these to constants if it makes sense
         double DRIVE_RATE = 52; // inches per second at 0.40 output
-        double STATION_DEPTH = 36; // approx inches
+        double STATION_DEPTH = 54; // approx inches
         // COMMUNITY Depth ranges from 11 ft to 16 ft, 1 inch
         double COMMUNITY_DEPTH = 193; // 16 ft *12 inches + 1 inch = 193 inches
-        double DRIVE_DISTANCE = (COMMUNITY_DEPTH - STATION_DEPTH); // approx 157 inches
+        double DRIVE_DISTANCE = (COMMUNITY_DEPTH - STATION_DEPTH); // approx 139 inches
     
-        double DRIVE_TIME_CLEAR_ZONE = (DRIVE_DISTANCE / DRIVE_RATE); // should be approximately 3.02 seconds
+        double DRIVE_TIME_CLEAR_ZONE = (DRIVE_DISTANCE / DRIVE_RATE); // should be approximately 2.67 seconds
     
     
         /*

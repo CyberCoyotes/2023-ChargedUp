@@ -24,7 +24,7 @@ public class cgCubeDeployMiddle extends SequentialCommandGroup {
                 new SetClawClose2(m_ClawSub), // open the claw
                 new SetArmIn(m_ArmExtSub), // Retract the arm same as extension ticks
                 new RotateArmIntake(m_ArmSub) // Rotate arm back to intake position 0 degrees or shorter 20 degrees
-        // In auton, this would move on to drive phase
+                // In auton, this would move on to drive phase
 
         ); // end of commands
     }
