@@ -75,6 +75,9 @@ public final class Constants {
         public static final int ARM_OFFSET_DEGREES = 19;//!Obsolete
         public static final double DEG_TO_mRAD = 17.4533;
         public static final double ARM_MAX_DEG = 245;
+        public static final int ARM_STOW_ROTATION_DEG = 20;
+        public static final int ARM_STOW_EXTENT_ENCODER = 200;
+
 
     }
     public static final class Swerve {
