@@ -39,7 +39,7 @@ public class ArmSubsystem extends SubsystemBase {
      * The left motor of the rotation of the arm, and host of the follower
      * configuration.
      */
-    private WPI_TalonFX rightMotHost = new WPI_TalonFX(Constants.ARM_RIGHT_ROT_MOTOR_ID);// integrated encoder //
+    // private WPI_TalonFX leftMota = new WPI_TalonFX(Constants.ARM_RIGHT_ROT_MOTOR_ID);// integrated encoder //
                                                                                          // GetSelectedSensorPosition
     /***
      * The right motor of the rotation of the arm, and follower of the left motor,
@@ -55,37 +55,37 @@ public class ArmSubsystem extends SubsystemBase {
      * snap back.
      **/
     public ArmSubsystem() {
-
-        rightMotHost.configFactoryDefault();
+        
+        leftMota.configFactoryDefault();
         //:The arm is some degrees off from 0 being truly down pointing
-        rightMotHost.configIntegratedSensorOffset(Constants.Arm.ARM_OFFSET_DEGREES);
+        leftMota.configIntegratedSensorOffset(Constants.Arm.ARM_OFFSET_DEGREES);
 
 
         // roughly 20 degree offset
-        rightMotHost.configForwardSoftLimitThreshold(ConvertDegToFXEncoder(Arm.ARM_MAX_DEG));// TODO verify accuracy
+        leftMota.configForwardSoftLimitThreshold(ConvertDegToFXEncoder(Arm.ARM_MAX_DEG));// TODO verify accuracy
 
-        rightMotHost.configForwardSoftLimitEnable(true, 0);
+        leftMota.configForwardSoftLimitEnable(true, 0);
 
-        rightMotHost.setNeutralMode(NeutralMode.Brake); // TODO Test
-        leftMota.setNeutralMode(NeutralMode.Coast);
+        leftMota.setNeutralMode(NeutralMode.Brake); // TODO Test
+        leftMota.setNeutralMode(NeutralMode.Brake);
 //
         // here we choose to use follower control mode as the left as host, to use
         // motionmagic
-        leftMota.set(TalonFXControlMode.Follower, leftMota.getDeviceID());
+        // leftMota.set(TalonFXControlMode.Follower, leftMota.getDeviceID());
         // closed-loop modes the demand0 output is the output of PID0.
-        rightMotHost.setSelectedSensorPosition(0);
+        leftMota.setSelectedSensorPosition(0);
         //
-        rightMotHost.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, 100);
+        leftMota.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, 100);
         // #region PIDF, motion profile configurations
 
         // main PID, no aux
-        rightMotHost.selectProfileSlot(Arm.PIDSlotIDx, 0);
-        rightMotHost.config_kP(0, Arm.kP);
-        rightMotHost.config_kI(0, Arm.kI);
-        rightMotHost.config_kD(0, Arm.kD);
+        leftMota.selectProfileSlot(Arm.PIDSlotIDx, 0);
+        leftMota.config_kP(0, Arm.kP);
+        leftMota.config_kI(0, Arm.kI);
+        leftMota.config_kD(0, Arm.kD);
 
-        rightMotHost.configMotionCruiseVelocity(Arm.kMaxVelocity);
-        rightMotHost.configMotionAcceleration(Arm.kMaxAcceletation);// max accel in units towards endgoal, in sensor
+        leftMota.configMotionCruiseVelocity(Arm.kMaxVelocity);
+        leftMota.configMotionAcceleration(Arm.kMaxAcceletation);// max accel in units towards endgoal, in sensor
                                                                     // units /0.1 seconds
 
         // #endregion PIDF, motion profile configurations
@@ -100,7 +100,7 @@ public class ArmSubsystem extends SubsystemBase {
      *         straight down.
      */
     public double GetRotation() {
-        return (rightMotHost.getSelectedSensorPosition());
+        return (leftMota.getSelectedSensorPosition());
     }
 
     /**
@@ -112,11 +112,11 @@ public class ArmSubsystem extends SubsystemBase {
      *         straight down.
      */
     public double GetRotationInDeg() {
-        return ConvertFXEncodertoDeg((rightMotHost.getSelectedSensorPosition()));
+        return ConvertFXEncodertoDeg((leftMota.getSelectedSensorPosition()));
     }
 
     public void PercentOutputSupplierDrive(double input) {
-        rightMotHost.set(ControlMode.PercentOutput, input * .6);// took like 6.5 seconds at 10% output to make a
+        leftMota.set(ControlMode.PercentOutput, input * .6);// took like 6.5 seconds at 10% output to make a
                                                                 // revolution
     }
 
@@ -181,12 +181,12 @@ public class ArmSubsystem extends SubsystemBase {
     public void RotateArmToDeg(int degrees) {
         double target_sensorUnits = ConvertDegToFXEncoder(degrees);// intake //todo the setpoint, figure this out
                                                                    // logically;
-        rightMotHost.configPeakOutputForward(0.5);
-        rightMotHost.configPeakOutputReverse(-0.5);
+        leftMota.configPeakOutputForward(0.5);
+        leftMota.configPeakOutputReverse(-0.5);
         
 
-        rightMotHost.set(TalonFXControlMode.Position, target_sensorUnits);// no arb for now
-        // rightMotHost.set(TalonFXControlMode.MotionMagic, target_sensorUnits,
+        leftMota.set(TalonFXControlMode.Position, target_sensorUnits);// no arb for now
+        // leftMota.set(TalonFXControlMode.MotionMagic, target_sensorUnits,
         // DemandType.ArbitraryFeedForward, arbFF);
 
     }
@@ -216,10 +216,10 @@ public class ArmSubsystem extends SubsystemBase {
         // :Position mode may not be the right choice, as it assumes a close, updating
         // position, rather than a final endpoint. It would likely be incompatible with
         // an arb. FF with this approach
-        //// rightMotHost.set(TalonFXControlMode.Position,
+        //// leftMota.set(TalonFXControlMode.Position,
         // Arm.ARM_ROTATE_POSITION_DEPLOY, DemandType.ArbitraryFeedForward, arbFF);
-        rightMotHost.set(TalonFXControlMode.MotionMagic, target_sensorUnits);// no arb for now
-        // rightMotHost.set(TalonFXControlMode.MotionMagic, target_sensorUnits,
+        leftMota.set(TalonFXControlMode.MotionMagic, target_sensorUnits);// no arb for now
+        // leftMota.set(TalonFXControlMode.MotionMagic, target_sensorUnits,
         // DemandType.ArbitraryFeedForward, arbFF);
 
     }
@@ -234,9 +234,9 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void ZeroArmEncoder() {
-        // rightMotHost.setSelectedSensorPosition(this.ConvertDegToFXEncoder(
+        // leftMota.setSelectedSensorPosition(this.ConvertDegToFXEncoder(
         // Arm.ARM_OFFSET_DEGREES));
-        rightMotHost.setSelectedSensorPosition(0);
+        leftMota.setSelectedSensorPosition(0);
     }
 
     @Override

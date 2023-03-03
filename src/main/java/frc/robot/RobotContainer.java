@@ -12,11 +12,14 @@ import com.ctre.phoenixpro.configs.SoftwareLimitSwitchConfigs;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
@@ -105,6 +108,8 @@ public class RobotContainer {
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
+
+    //  public SendableChooser<Command> autonChooser = new SendableChooser<>();
 
     public void DebugMethod()
     {
@@ -201,7 +206,7 @@ public class RobotContainer {
         // SmartDashboard.putBoolean("Rotation Switch", m_ArmSwitch.getLimitSwitchState());
 
         armSubsystem.setDefaultCommand(
-                new RotateArmManual(armSubsystem, () -> -operator.getRawAxis(translationAxis)));
+                new RotateArmManual(armSubsystem, () -> operator.getRawAxis(translationAxis)));
 
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(
@@ -230,7 +235,39 @@ public class RobotContainer {
 
         // Configure the button bindings
         configureButtonBindings();
-        System.out.println();
+
+
+        //#region autochooser
+       //!NOT THE AUTON, DO NOT TOUCH THIS YOU BIG SILLY  「F O O L」
+        // short polarity = 1;
+        // double power = .4;
+        // double seconds = 3.5;// double seconds = inches * Constants.AutoConstants.AUTON_40_PERCENT_MULTIPLIER;
+        // final float input = (float) (polarity * power);
+
+
+        // var longDriveCommand = new TeleopSwerve(
+        //     s_Swerve,
+        //     () -> polarity*.4,
+        //     () -> 0,
+        //     () -> 0,
+        //     () -> robotCentric.getAsBoolean(),
+        //     () -> false);
+
+
+
+
+        //     var command0 = new ParallelDeadlineGroup(new WaitCommand(2.6), longDriveCommand);
+        //     var command1 = new WaitCommand(1);
+        //     var command2 =  new LongDriveCubeLow(armSubsystem, m_extend, m_claw, s_Swerve, robotCentric);
+        // autonChooser.addOption("Long Drive", command0 );
+        // autonChooser.addOption("Long Drive Cube Low", command2);
+        // autonChooser.setDefaultOption("Watch Paint Dry", command1);
+        // System.out.println("Here's the thing " + command0 == null );
+        // System.out.println("Here's the thing " + command1 == null );
+        // System.out.println("Here's the thing " + command2 == null );
+        // 
+        // Shuffleboard.getTab("Auton").add(autonChooser).withSize(2, 4);
+     //#endregion
     }
 
     /**
@@ -272,7 +309,7 @@ public class RobotContainer {
      */
 
     public Command getAutonomousCommand() {
-      
+        
         //To ensure we're going the same way
         //abs(-180 - -172 ) = 8 < 20 = false, out gyro is reversed and thus input will be negative 
         //abs(180 - 172 ) = 8 < 20 = false, out gyro is reversed and thus input will be negative 
@@ -311,7 +348,7 @@ public class RobotContainer {
         //? If polarity is 1, the PDH/gyro/robot is facing away from us, the technically "right" orient.
         short polarity = 1;
         double power = .4;
-        double seconds = 2.6;// double seconds = inches * Constants.AutoConstants.AUTON_40_PERCENT_MULTIPLIER;
+        double seconds = 3.5;// double seconds = inches * Constants.AutoConstants.AUTON_40_PERCENT_MULTIPLIER;
         final float input = (float) (polarity * power);
         var driveCommand = new TeleopSwerve(
             s_Swerve,
@@ -322,7 +359,8 @@ public class RobotContainer {
             () -> false);
         // return new ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand);
 
-        return new cgCubeDeployMiddle(armSubsystem, m_extend, m_claw).andThen(new ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand));
+        return new ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand);
+        // return autonChooser.getSelected();
         //: 40% in a single direction for 1 second: ~51 inches 
         //: 40% in both directions for 1 second: ~75 inches total
         //: Both above seem to scale linearly
