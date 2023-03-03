@@ -97,8 +97,10 @@ public class ArmExtensionSubsystem extends SubsystemBase {
      */
     public void SetArmToTickPosition(int input)
     {
-        // m_motorController.configPeakOutputForward(0.3);
-        // m_motorController.configPeakOutputReverse(-0.3);
+        System.out.println("Internal method being called; position control");
+        System.out.println();
+        m_motorController.configPeakOutputForward(0.4);
+        m_motorController.configPeakOutputReverse(-0.4);
         m_motorController.set(ControlMode.Position, input);
 
     }

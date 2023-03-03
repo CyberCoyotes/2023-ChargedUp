@@ -19,7 +19,7 @@ public class SensorHoldup extends CommandBase {
 
     private double inputStep;
     private DoubleConsumer inputGlutton;
-    public SensorHoldup(DoubleSupplier sensorPositionSupplier, double desiredPosition, double input) {
+    public SensorHoldup(DoubleSupplier sensorPositionSupplier, double desiredPosition) {
         
         
         this.positionSupplier = sensorPositionSupplier;    

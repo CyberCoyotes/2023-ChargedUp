@@ -15,7 +15,6 @@ public class ArmExtendToArg extends CommandBase {
    
     private final ArmExtensionSubsystem m_armExtensionSubsystem;
    
-    private int position;
     public ArmExtendToArg(ArmExtensionSubsystem subsystem) {
      m_armExtensionSubsystem = subsystem;
      

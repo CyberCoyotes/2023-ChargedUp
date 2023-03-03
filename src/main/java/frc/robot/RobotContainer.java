@@ -84,8 +84,11 @@ public class RobotContainer {
     private final Swerve s_Swerve = new Swerve();
     // private final SensorsSubsystem m_ArmSwitch = new SensorsSubsystem();
 
-    // public final Command exTest = new ArmExtendToArg(m_extend);
-    public final Command exTest = new ParallelDeadlineGroup(getAutonomousCommand(), )
+    public final Command exTestProper = new ArmExtendToArg(m_extend);
+    public final Command exTest = new ParallelDeadlineGroup(new SensorHoldup(m_extend::ReadExtension, 3500 ), new InstantCommand(() -> System.out.println("running the primitive form")).andThen( new ExtendArmManual(
+        m_extend,
+        () -> .3,
+        () ->  0)));
 
     // #region Commands
     // StowArmCommand stowCommand = new StowArmCommand(m_extend, armSubsystem);
@@ -307,9 +310,9 @@ public class RobotContainer {
 
         //? If polarity is 1, the PDH/gyro/robot is facing away from us, the technically "right" orient.
         short polarity = 1;
-        
-        final float input = (float) (polarity * .2);
-        double seconds = 2;// double seconds = inches * Constants.AutoConstants.AUTON_40_PERCENT_MULTIPLIER;
+        double power = .4;
+        double seconds = 2.6;// double seconds = inches * Constants.AutoConstants.AUTON_40_PERCENT_MULTIPLIER;
+        final float input = (float) (polarity * power);
         var driveCommand = new TeleopSwerve(
             s_Swerve,
             () -> input,
