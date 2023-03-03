@@ -117,15 +117,11 @@ public class RobotContainer {
         // SmartDashboard.putNumber("Module Rotation1",s_Swerve.mSwerveMods[1].getState().angle.getDegrees());
         // SmartDashboard.putNumber("Module Rotation2",s_Swerve.mSwerveMods[2].getState().angle.getDegrees());
         // SmartDashboard.putNumber("Module Rotation3",s_Swerve.mSwerveMods[3].getState().angle.getDegrees());
-        SmartDashboard.putNumber("Arm_Extent",m_extend.ReadExtension());
 
-        SmartDashboard.putNumber("Arm_Extent_Attempt",operator.getRawAxis(RT));
-        SmartDashboard.putNumber("Arm_Retract",(operator.getRawAxis(LT)));
-
+        // SmartDashboard.p
         SmartDashboard.putNumber("Arm_Extent", m_extend.ReadExtension());
         
-        SmartDashboard.putBoolean("rot intake command on", intakeCommand.isScheduled());
-        SmartDashboard.putBoolean("extend command on", exTest.isScheduled());
+      SmartDashboard.putBoolean("extend command on", exTest.isScheduled());
         //!The very existence of extest broke the arm entirely.
         SmartDashboard.putNumber("new gyro read", s_Swerve.getYaw().getDegrees());
 
@@ -206,7 +202,7 @@ public class RobotContainer {
         // SmartDashboard.putBoolean("Rotation Switch", m_ArmSwitch.getLimitSwitchState());
 
         armSubsystem.setDefaultCommand(
-                new RotateArmManual(armSubsystem, () -> operator.getRawAxis(translationAxis)));
+                new RotateArmManual(armSubsystem, () -> 0.65* operator.getRawAxis(translationAxis)));
 
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(
@@ -348,7 +344,7 @@ public class RobotContainer {
         //? If polarity is 1, the PDH/gyro/robot is facing away from us, the technically "right" orient.
         short polarity = 1;
         double power = .4;
-        double seconds = 3.5;// double seconds = inches * Constants.AutoConstants.AUTON_40_PERCENT_MULTIPLIER;
+        double seconds = 3;// double seconds = inches * Constants.AutoConstants.AUTON_40_PERCENT_MULTIPLIER;
         final float input = (float) (polarity * power);
         var driveCommand = new TeleopSwerve(
             s_Swerve,
@@ -359,7 +355,7 @@ public class RobotContainer {
             () -> false);
         // return new ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand);
 
-        return new ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand);
+        return new cgCubeDeployLow(armSubsystem, m_extend, m_claw).andThen( new ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand));
         // return autonChooser.getSelected();
         //: 40% in a single direction for 1 second: ~51 inches 
         //: 40% in both directions for 1 second: ~75 inches total

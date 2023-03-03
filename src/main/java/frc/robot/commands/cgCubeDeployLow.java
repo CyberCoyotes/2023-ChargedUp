@@ -13,8 +13,10 @@ public class cgCubeDeployLow extends SequentialCommandGroup {
 
         // FIXME Needs testing and some actual numbers
         addCommands(
+                new SetClawClose2(m_ClawSub),
+                new WaitCommand(.35), // short pause
                 new RotateArmArg(m_ArmSub, 20), // Pop out arm 20 degrees
-                new WaitCommand(.15), // short pause
+                new WaitCommand(.35), // short pause
                 new SetClawOpen2(m_ClawSub) // open the claw
                 // move on to drive phase
 
