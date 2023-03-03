@@ -7,6 +7,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.led.CANdle;
+import com.ctre.phoenixpro.configs.SoftwareLimitSwitchConfigs;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -49,7 +50,7 @@ public class RobotContainer {
     /*--------------------------------------------------------*
     * Driver Buttons
     *--------------------------------------------------------*/
-    /* A */private final JoystickButton RotateArmTEST = new JoystickButton(driver, XboxController.Button.kA.value); 
+    // /* A */private final JoystickButton RotateArmTEST = new JoystickButton(driver, XboxController.Button.kA.value); 
 
     /* START */private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
     /* LB */private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
@@ -62,6 +63,7 @@ public class RobotContainer {
     *--------------------------------------------------------*/
 
     /* SELECT */private final JoystickButton zeroArmEncoder = new JoystickButton(operator, XboxController.Button.kBack.value);
+    /* START */private final JoystickButton stowArm = new JoystickButton(operator, XboxController.Button.kStart.value);
    
     /* X */private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value);
     /* Y */private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value);
@@ -82,6 +84,7 @@ public class RobotContainer {
 
 
     // #region Commands
+    StowArmCommand stowCommand = new StowArmCommand(m_extend, armSubsystem);
     RotateArmIntake intakeCommand = new RotateArmIntake(armSubsystem);
     RotateArm90 deployCommand = new RotateArm90(armSubsystem);
     // #endregion
@@ -228,10 +231,10 @@ public class RobotContainer {
         /* Driver Button Bindings */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         zeroArmEncoder.onTrue(new InstantCommand(() -> armSubsystem.ZeroArmEncoder()));
-        RotateArmTEST.whileTrue(deployCommand);
+        // RotateArmTEST.whileTrue(deployCommand);
         //logs confirmation
         // setArmIntake.whileTrue(intakeCommand);
-
+        stowArm.onTrue(stowCommand);
         creepButton.onTrue(new InstantCommand(() -> SetCreepToggle(!GetCreepToggle())));//inverts creep when button pressed
         // creepButton.onFalse(new InstantCommand(() -> SetCreepToggle(false)));
 
