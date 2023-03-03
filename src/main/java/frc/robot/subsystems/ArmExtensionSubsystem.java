@@ -52,17 +52,23 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         return m_motorController.getSelectedSensorPosition();
     }
 
-    public ArmExtensionSubsystem() {
-
-        // m_motorController.setSelectedSensorPosition(0);
-        // m_motorController.setSensorPhase(false);//todo find if this is good enough
-       
+    public void Setup()
+    {
+        
         m_motorController.setNeutralMode(NeutralMode.Brake); // TODO Test
         m_motorController.configReverseSoftLimitThreshold(Arm.EXTENSION_POSITION_IN + m_motorController.getSelectedSensorPosition());
         m_motorController.configForwardSoftLimitEnable(true, 0);
         m_motorController.configForwardSoftLimitThreshold(Arm.EXTENSION_POSITION_OUT+ m_motorController.getSelectedSensorPosition());
         m_motorController.configReverseSoftLimitEnable(true, 0);
         m_motorController.setSensorPhase(true);
+
+    }
+    public ArmExtensionSubsystem() {
+
+        // m_motorController.setSelectedSensorPosition(0);
+        // m_motorController.setSensorPhase(false);//todo find if this is good enough
+       
+      Setup();
 
         // m_motorController.configPeakOutputReverse(.4);
         // m_motorController.configPeakOutputForward(.4);
@@ -91,6 +97,8 @@ public class ArmExtensionSubsystem extends SubsystemBase {
      */
     public void SetArmToTickPosition(int input)
     {
+        // m_motorController.configPeakOutputForward(0.3);
+        // m_motorController.configPeakOutputReverse(-0.3);
         m_motorController.set(ControlMode.Position, input);
 
     }

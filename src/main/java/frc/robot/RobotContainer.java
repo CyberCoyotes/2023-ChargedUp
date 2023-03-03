@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
@@ -44,13 +45,14 @@ public class RobotContainer {
     private final int rotationAxis = XboxController.Axis.kRightX.value;
 
 
+
     private final int LT = XboxController.Axis.kLeftTrigger.value;
     private final int RT = XboxController.Axis.kRightTrigger.value;
 
     /*--------------------------------------------------------*
     * Driver Buttons
     *--------------------------------------------------------*/
-    // /* A */private final JoystickButton RotateArmTEST = new JoystickButton(driver, XboxController.Button.kA.value); 
+    /* A */private final JoystickButton RotateArmTEST = new JoystickButton(driver, XboxController.Button.kA.value); 
 
     /* START */private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
     /* LB */private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
@@ -82,11 +84,19 @@ public class RobotContainer {
     private final Swerve s_Swerve = new Swerve();
     // private final SensorsSubsystem m_ArmSwitch = new SensorsSubsystem();
 
+    // public final Command exTest = new ArmExtendToArg(m_extend);
+    public final Command exTest = new ParallelDeadlineGroup(getAutonomousCommand(), )
 
     // #region Commands
-    StowArmCommand stowCommand = new StowArmCommand(m_extend, armSubsystem);
+    // StowArmCommand stowCommand = new StowArmCommand(m_extend, armSubsystem);
     RotateArmIntake intakeCommand = new RotateArmIntake(armSubsystem);
-    RotateArm90 deployCommand = new RotateArm90(armSubsystem);
+    RotateArm90 rotTo90 = new RotateArm90(armSubsystem);
+
+    //todo: find a way to detect when the sensor has reach an acceptable point while still continuing to move towards the final point. 
+    MoveUntilSensor rotationMoveUntilSensor;
+    MoveUntilSensor extentionMoveUntilSensor;
+
+
     // #endregion
 
     /**
@@ -100,12 +110,15 @@ public class RobotContainer {
         // SmartDashboard.putNumber("Module Rotation2",s_Swerve.mSwerveMods[2].getState().angle.getDegrees());
         // SmartDashboard.putNumber("Module Rotation3",s_Swerve.mSwerveMods[3].getState().angle.getDegrees());
         SmartDashboard.putNumber("Arm_Extent",m_extend.ReadExtension());
+
         SmartDashboard.putNumber("Arm_Extent_Attempt",operator.getRawAxis(RT));
         SmartDashboard.putNumber("Arm_Retract",(operator.getRawAxis(LT)));
 
         SmartDashboard.putNumber("Arm_Extent", m_extend.ReadExtension());
-
+        
         SmartDashboard.putBoolean("rot intake command on", intakeCommand.isScheduled());
+        SmartDashboard.putBoolean("extend command on", exTest.isScheduled());
+        //!The very existence of extest broke the arm entirely.
         SmartDashboard.putNumber("new gyro read", s_Swerve.getYaw().getDegrees());
 
         // SmartDashboard.putBoolean("Rotation Switch", m_ArmSwitch.getLimitSwitchState());
@@ -178,8 +191,8 @@ public class RobotContainer {
         // m_vision.setDefaultCommand(new SetLEDtags(m_candle, m_vision));
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));       
         // SmartDashboard.putNumber("April Tag", m_vision.getEntry("tid").getDouble(0));    
-        m_extend.setDefaultCommand(new ExtendArmManual(m_extend, () -> operator.getRawAxis(RT),() ->  operator.getRawAxis(LT)));
-
+        // m_extend.setDefaultCommand(new ExtendArmManual(m_extend, () -> operator.getRawAxis(RT),() ->  operator.getRawAxis(LT)));
+//the stinky one
         m_vision.setDefaultCommand(new GetTagID(m_vision));
 
         // SmartDashboard.putBoolean("Rotation Switch", m_ArmSwitch.getLimitSwitchState());
@@ -231,10 +244,11 @@ public class RobotContainer {
         /* Driver Button Bindings */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         zeroArmEncoder.onTrue(new InstantCommand(() -> armSubsystem.ZeroArmEncoder()));
-        // RotateArmTEST.whileTrue(deployCommand);
-        //logs confirmation
+        RotateArmTEST.whileTrue(exTest);
+        // RotateArmTEST.onTrue(new InstantCommand(() -> m_extend.SetArmToTickPosition(2500), m_extend));
+        //logs confirmation//8611 
         // setArmIntake.whileTrue(intakeCommand);
-        stowArm.onTrue(stowCommand);
+        // stowArm.onTrue(stowCommand);//todo test arm stow
         creepButton.onTrue(new InstantCommand(() -> SetCreepToggle(!GetCreepToggle())));//inverts creep when button pressed
         // creepButton.onFalse(new InstantCommand(() -> SetCreepToggle(false)));
 
@@ -255,22 +269,63 @@ public class RobotContainer {
      */
 
     public Command getAutonomousCommand() {
-        // double inches = 2; //TODO calculate time to drive based off of inches
-        // double seconds = 1;// double seconds = inches * Constants.AutoConstants.AUTON_40_PERCENT_MULTIPLIER;
-        // var driveCommand = new TeleopSwerve(
-        //     s_Swerve,
-        //     () -> 0,
-        //     () -> -0.4,
-        //     () -> 0,
-        //     () -> robotCentric.getAsBoolean(),
-        //     () -> false);
+      
+        //To ensure we're going the same way
+        //abs(-180 - -172 ) = 8 < 20 = false, out gyro is reversed and thus input will be negative 
+        //abs(180 - 172 ) = 8 < 20 = false, out gyro is reversed and thus input will be negative 
+
+        // if (Math.abs(-180 - s_Swerve.getYaw().getDegrees()) > 20  || 180 - s_Swerve.getYaw().getDegrees() > 20) //if true, gyro is reversed and out auto input will reverse
+        // {
+        //    polarity = 1;  
+        // }
+        // else
+        // {
+        //    polarity = -1;
+        // }
+
+        // s_Swerve.zeroGyro();
+        //we need to experiemnt with starting an auton with exact setup as we would do in a match, 
+        //and seeing if a certain input is at all consitent. We should then check if there is a way to always drive in the same direction, pressumably with a conditional.
+        
+        // Test auto dirve command, see if it goes in a predictible direction, after asking ryker about exactly how it works.
+            //Read gyro on a robot start for teleop, if it always 0? If not, resetting the gyro could have use
+        //After a solution is found, begin experimenting with the full cube command. 
+
+        //#region interrogation
+            //PDH is front, and should be facing away from us
+            //gyro resets (predictibly?) at the start of a match
+            //No official restrictions on starting rotation
+            //for vanscoyoc's auto, we will drive with a poitive input
+            // pdh facing away from us at the end of auton is ALWAYS Ryker's preference
+            //just stop thinking about it shaun
+
+
+            //
+        
+
+        //#endregion
+
+        //? If polarity is 1, the PDH/gyro/robot is facing away from us, the technically "right" orient.
+        short polarity = 1;
+        
+        final float input = (float) (polarity * .2);
+        double seconds = 2;// double seconds = inches * Constants.AutoConstants.AUTON_40_PERCENT_MULTIPLIER;
+        var driveCommand = new TeleopSwerve(
+            s_Swerve,
+            () -> input,
+            () -> 0,
+            () -> 0,
+            () -> robotCentric.getAsBoolean(),
+            () -> false);
         // return new ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand);
 
+        return new cgCubeDeployMiddle(armSubsystem, m_extend, m_claw).andThen(new ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand));
         //: 40% in a single direction for 1 second: ~51 inches 
         //: 40% in both directions for 1 second: ~75 inches total
         //: Both above seem to scale linearly
 
-        return new InstantCommand(() -> armSubsystem.RotateArmToDeg(90));
+        // return new InstantCommand(() -> armSubsystem.RotateArmToDeg(90));
+        // return new WaitCommand(1);
         //// return new PathPlannerTesting(s_Swerve).Generate();
 
     }

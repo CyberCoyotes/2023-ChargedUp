@@ -19,4 +19,8 @@ public class SetArmIn extends CommandBase {
      m_armExtensionSubsystem = subsystem;
      addRequirements(m_armExtensionSubsystem);
     }
+    @Override
+    public void execute() {
+        
+    }
 }
