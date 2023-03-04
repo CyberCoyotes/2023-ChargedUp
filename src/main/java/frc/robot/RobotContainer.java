@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.Arm;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -87,7 +88,7 @@ public class RobotContainer {
     private final Swerve s_Swerve = new Swerve();
     // private final SensorsSubsystem m_ArmSwitch = new SensorsSubsystem();
 
-    public final Command exTestProper = new ArmExtendToArg(m_extend);
+    public final Command exTestProper = new ArmExtendToArg(m_extend, Arm.EXTENSTION_MID_ENCODER);
     public final Command exTest = new ParallelDeadlineGroup(new SensorHoldup(m_extend::ReadExtension, 3500 ), new InstantCommand(() -> System.out.println("running the primitive form")).andThen( new ExtendArmManual(
         m_extend,
         () -> .3,
@@ -120,6 +121,7 @@ public class RobotContainer {
 
         // SmartDashboard.p
         SmartDashboard.putNumber("Arm_Extent", m_extend.ReadExtension());
+        SmartDashboard.putNumber("Arm Rotation Current", m_arm.GetCurrent());
         
       SmartDashboard.putBoolean("extend command on", exTest.isScheduled());
         //!The very existence of extest broke the arm entirely.
@@ -353,9 +355,9 @@ public class RobotContainer {
             () -> 0,
             () -> robotCentric.getAsBoolean(),
             () -> false);
-        // return new ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand);
+        return new ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand);
 
-        return new cgCubeDeployLow(armSubsystem, m_extend, m_claw).andThen( new ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand));
+        // return new cgCubeDeployLow(armSubsystem, m_extend, m_claw).andThen( new ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand));
         // return autonChooser.getSelected();
         //: 40% in a single direction for 1 second: ~51 inches 
         //: 40% in both directions for 1 second: ~75 inches total

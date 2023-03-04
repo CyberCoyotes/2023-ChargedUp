@@ -14,11 +14,11 @@ import frc.robot.subsystems.ArmExtensionSubsystem;
 public class ArmExtendToArg extends CommandBase {
    
     private final ArmExtensionSubsystem m_armExtensionSubsystem;
-   
-    public ArmExtendToArg(ArmExtensionSubsystem subsystem) {
+   private final int target;
+    public ArmExtendToArg(ArmExtensionSubsystem subsystem, int target) {
+
      m_armExtensionSubsystem = subsystem;
-     
-    //  this.position = position;
+     this.target = target;
      addRequirements(m_armExtensionSubsystem);
     }
     @Override
@@ -27,19 +27,17 @@ public class ArmExtendToArg extends CommandBase {
     }
     @Override
     public void initialize() {
-        // TODO Auto-generated method stub
         super.initialize();
-        m_armExtensionSubsystem.Setup();
+        //// m_armExtensionSubsystem.Setup();
     }
     
     @Override
     public void execute() {
-                 
-        m_armExtensionSubsystem.SetArmToTickPosition(3500);
+        m_armExtensionSubsystem.SetArmToTickPosition(target);
     }
     @Override
     public InterruptionBehavior getInterruptionBehavior() {
-        return InterruptionBehavior.kCancelIncoming;
+        return InterruptionBehavior.kCancelSelf;
     }
 
 }

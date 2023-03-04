@@ -77,6 +77,7 @@ public final class Constants {
         public static final double ARM_MAX_DEG = 260;
         public static final int ARM_STOW_ROTATION_DEG = 20;
         public static final int ARM_STOW_EXTENT_ENCODER = 200;
+        public static final int EXTENSTION_MID_ENCODER = 5500;
 
 
     }

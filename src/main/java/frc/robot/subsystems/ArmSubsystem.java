@@ -19,6 +19,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -54,7 +55,12 @@ public class ArmSubsystem extends SubsystemBase {
      * Brake mode for the left side and coast for the right causes a strong
      * snap back.
      **/
+    public double GetCurrent()
+    {
+        return leftMota.getSupplyCurrent();
+    }
     public ArmSubsystem() {
+        // leftMota.setInverted(true);
         
         leftMota.configFactoryDefault();
         //:The arm is some degrees off from 0 being truly down pointing

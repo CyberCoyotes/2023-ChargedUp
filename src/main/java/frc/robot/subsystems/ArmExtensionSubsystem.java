@@ -101,7 +101,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         System.out.println();
         m_motorController.configPeakOutputForward(0.4);
         m_motorController.configPeakOutputReverse(-0.4);
-        m_motorController.set(ControlMode.Position, input);
+        m_motorController.set(ControlMode.Position, (double)input);
 
     }
 
