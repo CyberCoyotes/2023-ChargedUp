@@ -25,6 +25,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.Arm;
@@ -47,7 +48,8 @@ public class ArmSubsystem extends SubsystemBase {
      * for the follower configuration.
      */
     private WPI_TalonFX leftMota = new WPI_TalonFX(Constants.ARM_LEFT_ROT_MOTOR_ID);// integrated encoder, accessed via
-
+    private DigitalInput limitSwitch;
+    
     /**
      * Rotates arm to deploment side of robot
      * Brake mode for both causes the motors to work against each other.
@@ -59,9 +61,9 @@ public class ArmSubsystem extends SubsystemBase {
     {
         return leftMota.getSupplyCurrent();
     }
-    public ArmSubsystem() {
+    public ArmSubsystem(DigitalInput input) {
         // leftMota.setInverted(true);
-        
+        this.limitSwitch = input;
         leftMota.configFactoryDefault();
         //:The arm is some degrees off from 0 being truly down pointing
         leftMota.configIntegratedSensorOffset(Constants.Arm.ARM_OFFSET_DEGREES);
@@ -120,11 +122,29 @@ public class ArmSubsystem extends SubsystemBase {
     public double GetRotationInDeg() {
         return ConvertFXEncodertoDeg((leftMota.getSelectedSensorPosition()));
     }
-
-    public void PercentOutputSupplierDrive(double input) {
-        leftMota.set(ControlMode.PercentOutput, input * .6);// took like 6.5 seconds at 10% output to make a
-                                                                // revolution
+    public boolean GetSwtichState()
+    {
+        // Keep in mind the pull-up reads positive when "off-duty"
+        
+        return limitSwitch.get();
     }
+
+    
+    public void PercentOutputSupplierDrive(double input) {
+        
+        
+        if (GetSwtichState()  && input < 0) //If the switch is being pressed and the input is negative, do nothing.
+        {
+            System.out.println("Limit switch enabled; you get no arm movement");
+        }
+        else
+        {
+        leftMota.set(ControlMode.PercentOutput, input * .6);// took like 6.5 seconds at 10% output to make a
+
+        }                                                               // revolution
+    }
+
+    
 
     public int ConvertDegToFXEncoder(double degs) {
         // 2pi = 2048

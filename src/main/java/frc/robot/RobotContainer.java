@@ -9,6 +9,7 @@ package frc.robot;
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenixpro.configs.SoftwareLimitSwitchConfigs;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -41,7 +42,6 @@ public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
     private final Joystick operator = new Joystick(1);
-    private final ArmSubsystem armSubsystem = new ArmSubsystem();
 
     /* Analog Controls */
     private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -77,10 +77,12 @@ public class RobotContainer {
     /* A */private final JoystickButton openClaw = new JoystickButton(operator, XboxController.Button.kA.value);
     /* B */private final JoystickButton closeClaw = new JoystickButton(operator, XboxController.Button.kB.value);
 
-
+    private final DigitalInput limit = new DigitalInput(Constants.LIMIT_SWITCH_ARM_PORT);
     /* Subsystems */
     private final ArmExtensionSubsystem m_extend = new ArmExtensionSubsystem();
-    private final ArmSubsystem m_arm = new ArmSubsystem();
+    // private final ArmSubsystem m_arm = new ArmSubsystem(limit);
+    private final ArmSubsystem armSubsystem = new ArmSubsystem(limit);
+
     private final CANdle m_candle = new CANdle(Constants.CANDLE_ID);
     private final ClawSubsystem m_claw = new ClawSubsystem();
     private final IntakeSubsystem m_intake = new IntakeSubsystem();
@@ -121,7 +123,7 @@ public class RobotContainer {
 
         // SmartDashboard.p
         SmartDashboard.putNumber("Arm_Extent", m_extend.ReadExtension());
-        SmartDashboard.putNumber("Arm Rotation Current", m_arm.GetCurrent());
+        // SmartDashboard.putNumber("Arm Rotation Current", m_arm.GetCurrent());
         
       SmartDashboard.putBoolean("extend command on", exTest.isScheduled());
         //!The very existence of extest broke the arm entirely.
@@ -142,6 +144,7 @@ public class RobotContainer {
 
         // SmartDashboard.putNumber("Arm Rotation(ticks)",armSubsystem.GetRotation());
         SmartDashboard.putNumber("Arm Rotation(°)", armSubsystem.ConvertFXEncodertoDeg(armSubsystem.GetRotation()));
+        SmartDashboard.putBoolean("Limit Switch", limit.get());
 
     }
 

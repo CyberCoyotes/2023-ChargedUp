@@ -78,6 +78,7 @@ public final class Constants {
         public static final int ARM_STOW_ROTATION_DEG = 20;
         public static final int ARM_STOW_EXTENT_ENCODER = 200;
         public static final int EXTENSTION_MID_ENCODER = 5500;
+        // public static final int LimitDIO = 0;
 
 
     }
@@ -259,6 +260,6 @@ public final class Constants {
 
     public static final double WHEEL_MAX = 1; //maybe not be needed
 
-    public static final int LIMIT_SWITCH_ARM_PORT = 0; // channel or port on roboRIO DIO
+    public static final int LIMIT_SWITCH_ARM_PORT = 3; // channel or port on roboRIO DIO
     
 } // end of class
