@@ -1,5 +1,7 @@
 - # New Post-Calvin Todo, everything done **before** W3 Traverse City
     - [ ] Re-measure constants
+      - [ ] SysID
+      - [x] Potentially max speed and such
     - [ ] getting a consitent, one-meter auton in a straight line with standard swerve trajectories
     
     - [ ] A time based tracker for matches that diagnostics after the match on shuffleboard

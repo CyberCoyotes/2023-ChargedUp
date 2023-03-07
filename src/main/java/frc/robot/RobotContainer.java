@@ -212,8 +212,8 @@ public class RobotContainer {
         //: technically "right" orient.
 
         Pose2d startingPose = new Pose2d(0, 0, new Rotation2d(0));
-        Pose2d endingPose = new Pose2d(2, 1, new Rotation2d(0));
-        TrajectoryConfig trajectoryConfig = new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond, AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+        Pose2d endingPose = new Pose2d(-4, 0, new Rotation2d(0));
+        TrajectoryConfig trajectoryConfig = new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond, AutoConstants.kMaxAccelerationMetersPerSecondSquared);
 
         s_Swerve.resetOdometry(startingPose);
 
@@ -222,8 +222,12 @@ public class RobotContainer {
             startingPose,
             List.of
             (
+                
                 new Translation2d(1,0),
-                new Translation2d(1,1)
+                new Translation2d(-2,0)
+                // new Translation2d(3,0)
+                // new Translation2d(0,0),
+                // new Translation2d(1,0)
             ),
             endingPose,
             trajectoryConfig
@@ -238,11 +242,16 @@ public class RobotContainer {
         (trajectory, 
         s_Swerve::getPose,
         frc.robot.Constants.Swerve.swerveKinematics, 
-        , 
-        null, 
-        null);
+        XPIDcontroller,
+        YPIDcontroller,
+        thetaController,
+        s_Swerve::setModuleStates,
+        s_Swerve);
 
-
+        return new SequentialCommandGroup(
+            new InstantCommand(() -> s_Swerve.resetOdometry(trajectory.getInitialPose())),
+            autoCommand,
+            new InstantCommand(() -> s_Swerve.StopModules()));
     }
 }
 
