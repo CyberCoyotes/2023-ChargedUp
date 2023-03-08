@@ -146,9 +146,9 @@ public final class Constants {
         public static final double angleKF = chosenModule.angleKF;
 
         /* Drive Motor PID Values */
-        public static final double driveKP = 0.05; // TODO Tuned to specific robot
+        public static final double driveKP = 0.2; // TODO Tuned to specific robot
         public static final double driveKI = 0.0;
-        public static final double driveKD = 0.0;
+        public static final double driveKD = 0.1;
         public static final double driveKF = 0.0;
         public static final PIDController xPIDController = new PIDController(driveKP, 0, 0);
         public static final PIDController yPIDController = new PIDController(driveKP, 0, 0);
@@ -162,7 +162,7 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 4.5; // TODO: This must be tuned to specific robot
+        public static final double maxSpeed = 4.4196; // TODO: This must be tuned to specific robot
         /** Radians per Second */
         public static final double maxAngularVelocity = 10.0; // TODO: This must be tuned to specific robot
 
@@ -215,7 +215,7 @@ public final class Constants {
 
     public static final class AutoConstants { // TODO: The below constants are used in the example auto, and must be
                                               // tuned to specific robot
-        public static final double kMaxSpeedMetersPerSecond = 3;
+        public static final double kMaxSpeedMetersPerSecond = 4.4196;
         public final static double AUTON_40_PERCENT_MULTIPLIER = 0.05992509363d;
 
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
