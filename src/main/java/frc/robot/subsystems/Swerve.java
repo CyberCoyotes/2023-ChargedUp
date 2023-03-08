@@ -141,4 +141,19 @@ public class Swerve extends SubsystemBase {
         }
         );
     }
+
+    public double GetPitch() {
+     return gyro.getPitch();
+    }
+
+    /**
+     * taking a chassisspeed, convert the chassis state into swerve mod states, desaturating the speeds along the way.
+     */
+    public void setModuleStates(ChassisSpeeds chassisSpeeds) {
+        SwerveModuleState[] output = Constants.Swerve.swerveKinematics.toSwerveModuleStates(chassisSpeeds);
+        SwerveDriveKinematics.desaturateWheelSpeeds(output, Constants.AutoConstants.kMaxSpeedMetersPerSecond);
+        setModuleStates(output);
+
+        
+    }
 }
