@@ -1,6 +1,9 @@
 package frc.robot.commands;
 
 import frc.lib.math.CLAWTransform;
+
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
@@ -18,12 +21,17 @@ public class SeekBalanceCommand extends CommandBase {
      */
     
     
+    private static final double pStarter = -0.049;
+    private static final double dStarter = -0.002;
+
+    private static final double PITCH_SETPOINT_ERROR_DEG = 30;
     
-    private static final double PITCH_SETPOINT_ERROR_DEG = 1;
-    
+private static final DoubleSupplier pSupplier;
+private static final DoubleSupplier dSupplier;
+
     private Swerve swerveDrive;
     
-    private final PIDController drivePID = new PIDController(0,0,0);
+    private final PIDController drivePID = new PIDController(pStarter, 0, dStarter);
     
     private final Debouncer balancedDebouncer = new Debouncer(1, DebounceType.kRising);
     
@@ -41,13 +49,20 @@ public class SeekBalanceCommand extends CommandBase {
         
         // Apply the corrective turn
         //basically gets the current rotation and demolishes its size, resulting in a direction to go to negate offset rotation.
-        .then(offsetDeg -> offsetDeg / 30.)
+        .then(offsetDeg -> offsetDeg / 30.);
         .then(CLAWTransform.clamp(-1, 1))
         .then(v -> 3.5*v);
     
     public SeekBalanceCommand (Swerve swerveDrive) {
         this.swerveDrive = swerveDrive;
         addRequirements(swerveDrive);
+    }
+    public SeekBalanceCommand (Swerve swerveDrive, DoubleSupplier p, DoubleSupplier d) {
+        this.swerveDrive = swerveDrive;
+        addRequirements(swerveDrive);
+
+        this.pSupplier = p;
+        this.dSupplier = d;
     }
     
     @Override
@@ -63,6 +78,11 @@ public class SeekBalanceCommand extends CommandBase {
     @Override
     public void execute () {
      
+    double p = GetPVal();
+    double d = GetDVal();        
+        drivePID.setP(p);
+        drivePID.setD(d);
+
         double pitch = swerveDrive.GetPitch();
         
         double speed = drivePID.calculate(pitch);
@@ -73,6 +93,22 @@ public class SeekBalanceCommand extends CommandBase {
         swerveDrive.setModuleStates(new ChassisSpeeds(speed, 0, turnSpeed));
     }
     
+    private double GetDVal() {//!this smells
+        if(dSupplier != null)
+        {
+            return dSupplier.getAsDouble();
+        }
+        else return dStarter;
+    }
+
+    private double GetPVal() {
+        if(pSupplier != null)
+        {
+            return pSupplier.getAsDouble();
+        }
+        else return pStarter;
+    }
+
     @Override
     public void end (boolean interrupted) {
         swerveDrive.StopModules();

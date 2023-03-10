@@ -3,13 +3,15 @@
       - [ ] SysID
       - [x] Potentially max speed and such
     - [ ] getting a consitent, one-meter auton in a straight line with standard swerve trajectories
-    
+    - [ ] Wrist subsystem
+    - [ ] intake subsystem
+    - [ ] clean up mess from dio ports
     - [ ] A time based tracker for matches that diagnostics after the match on shuffleboard
-    - [ ] Auton Chooser
-    - [ ] PID control
-    - [ ] PID control with input from gyro pitch.
-    - [ ] Arm Extent Command for auton
+    - [x] Auton Chooser
+    - [x] PID control with input from gyro pitch.
+    - [x] Arm Extent Command for auton
     - [ ] Offsets; do as late as possible
+    - [ ] stow command + capability
 
 # Chronological:
 - ## Getting a basic arm
