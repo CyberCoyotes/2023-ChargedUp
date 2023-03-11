@@ -81,7 +81,8 @@ public final class Constants {
         public static final int ARM_STOW_EXTENT_ENCODER = 200;
         public static final int EXTENSTION_MID_ENCODER = 5500;
         // public static final int LimitDIO = 0;
-        public static final int WRIST_TALONFX_ID = 12;
+        public static final int WRIST_TALONFX_ID = 12; 
+        
 
 
     }
