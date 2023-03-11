@@ -123,10 +123,9 @@ public class RobotContainer {
     RotateArm90 rotTo90 = new RotateArm90(armSubsystem);
     MoveUntilSensor rotationMoveUntilSensor;
     MoveUntilSensor extentionMoveUntilSensor;
-    
+    DriveOutAndChargeStation autonCommand = new DriveOutAndChargeStation(s_Swerve, robotCentric);
 
     // #endregion
-
     public void DebugMethod() {
         SmartDashboard.putNumber("Arm_Extent", m_extend.ReadExtension());
         SmartDashboard.putNumber("new gyro read", s_Swerve.getYaw().getDegrees());
@@ -159,6 +158,7 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
 
+        
         /* Driver Button Bindings */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         zeroArmEncoder.onTrue(new InstantCommand(() -> armSubsystem.ZeroArmEncoder()));
@@ -169,6 +169,8 @@ public class RobotContainer {
         intakeOut.whileTrue(new InstantCommand(() -> intakeSubsystem.SetDriveOutake()));
         intakeOut.and(intakeIn).whileFalse(new InstantCommand(() -> intakeSubsystem.SetDriveOutake()));
         
+        autonCommand.incrementPIDs(() -> driver.getRawAxis(LT),() ->  driver.getRawAxis(RT));
+
 
     }
 
@@ -193,6 +195,8 @@ public class RobotContainer {
                         m_extend,
                         () -> operator.getRawAxis(RT),
                         () -> operator.getRawAxis(LT)));
+
+
 
     }
 
@@ -266,7 +270,7 @@ public class RobotContainer {
 ////             new SeekBeginofChargeStation(s_Swerve),
 ////             new SeekBalanceCommand(s_Swerve));
 //todo test this in the first place
-return new DriveOutAndChargeStation(s_Swerve, robotCentric);
+return autonCommand;
     }
 }
 

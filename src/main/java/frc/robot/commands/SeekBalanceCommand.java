@@ -26,8 +26,8 @@ public class SeekBalanceCommand extends CommandBase {
 
     private static final double PITCH_SETPOINT_ERROR_DEG = 30;
     
-private static final DoubleSupplier pSupplier;
-private static final DoubleSupplier dSupplier;
+private static DoubleSupplier pSupplier;
+private static DoubleSupplier dSupplier;
 
     private Swerve swerveDrive;
     
@@ -49,7 +49,7 @@ private static final DoubleSupplier dSupplier;
         
         // Apply the corrective turn
         //basically gets the current rotation and demolishes its size, resulting in a direction to go to negate offset rotation.
-        .then(offsetDeg -> offsetDeg / 30.);
+        .then(offsetDeg -> offsetDeg / 30.)
         .then(CLAWTransform.clamp(-1, 1))
         .then(v -> 3.5*v);
     
@@ -64,7 +64,9 @@ private static final DoubleSupplier dSupplier;
         this.pSupplier = p;
         this.dSupplier = d;
     }
-    
+
+
+
     @Override
     public void initialize () {
         swerveDrive.StopModules();
