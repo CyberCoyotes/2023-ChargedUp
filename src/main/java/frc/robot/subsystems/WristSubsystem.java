@@ -25,4 +25,10 @@ public class WristSubsystem extends SubsystemBase {
     {
         m_motorController.set(ControlMode.PercentOutput, input);
     }
+
+    public void setWristHome(double input) {
+        m_motorController.set(ControlMode.Position, input);
+        
+    }
+
 }
