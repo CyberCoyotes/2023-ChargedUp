@@ -100,8 +100,8 @@ public class RobotContainer {
     /* X */private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value);
     /* Y */private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value);
 
-    /* A */private final JoystickButton openClaw = new JoystickButton(operator, XboxController.Button.kA.value);
-    /* B */private final JoystickButton closeClaw = new JoystickButton(operator, XboxController.Button.kB.value);
+    /* A */private final JoystickButton wristDown = new JoystickButton(operator, XboxController.Button.kA.value);
+    /* B */private final JoystickButton wristUp = new JoystickButton(operator, XboxController.Button.kB.value);
 
 
     // #endregion Operator Buttons
@@ -199,32 +199,6 @@ public class RobotContainer {
                         () -> operator.getRawAxis(LT)));
 
 
-
-    }
-
-    private void configureAutonChooser() {
-
-    }
-
-    private void configureDefaultCommands() {
-        m_vision.setDefaultCommand(new GetTagID(m_vision));
-
-        armSubsystem.setDefaultCommand(
-                new RotateArmManual(armSubsystem, () -> 0.65 * operator.getRawAxis(translationAxis)));
-
-        s_Swerve.setDefaultCommand(
-                new TeleopSwerve(
-                        s_Swerve,
-                        () -> -driver.getRawAxis(translationAxis),
-                        () -> -driver.getRawAxis(strafeAxis),
-                        () -> -driver.getRawAxis(rotationAxis),
-                        () -> robotCentric.getAsBoolean(),
-                        () -> GetCreepToggle()));
-        m_extend.setDefaultCommand(
-                new ExtendArmManual(
-                        m_extend,
-                        () -> operator.getRawAxis(RT),
-                        () -> operator.getRawAxis(LT)));
 
     }
 
