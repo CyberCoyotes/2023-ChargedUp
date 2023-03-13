@@ -56,6 +56,8 @@ public final class Constants {
         // 314446
         public static final int ARM_ROTATION_RANGE_TICKS = 458752;
        
+        public static final int ARM_INTAKE_PWM_PORT = 0;
+
         /**
          * The estimated encoder position at the resting  
          */
@@ -79,6 +81,8 @@ public final class Constants {
         public static final int ARM_STOW_EXTENT_ENCODER = 200;
         public static final int EXTENSTION_MID_ENCODER = 5500;
         // public static final int LimitDIO = 0;
+        public static final int WRIST_TALONFX_ID = 12; 
+        
 
 
     }
@@ -146,9 +150,9 @@ public final class Constants {
         public static final double angleKF = chosenModule.angleKF;
 
         /* Drive Motor PID Values */
-        public static final double driveKP = 0.05; // TODO Tuned to specific robot
+        public static final double driveKP = 0.2; // TODO Tuned to specific robot
         public static final double driveKI = 0.0;
-        public static final double driveKD = 0.0;
+        public static final double driveKD = 0.1;
         public static final double driveKF = 0.0;
         public static final PIDController xPIDController = new PIDController(driveKP, 0, 0);
         public static final PIDController yPIDController = new PIDController(driveKP, 0, 0);
@@ -156,13 +160,13 @@ public final class Constants {
          * Drive Motor Characterization Values
          * Divide SYSID values by 12 to convert from volts to percent output for CTRE
          */
-        public static final double driveKS = (0.32 / 12); // TODO Tuned to specific robot
+        public static final double driveKS = (0.32 / 12); //TODO Tuned to specific robot
         public static final double driveKV = (1.51 / 12);
         public static final double driveKA = (0.27 / 12);
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 4.5; // TODO: This must be tuned to specific robot
+        public static final double maxSpeed = 4.4196; // TODO: This must be tuned to specific robot
         /** Radians per Second */
         public static final double maxAngularVelocity = 10.0; // TODO: This must be tuned to specific robot
 
@@ -215,7 +219,7 @@ public final class Constants {
 
     public static final class AutoConstants { // TODO: The below constants are used in the example auto, and must be
                                               // tuned to specific robot
-        public static final double kMaxSpeedMetersPerSecond = 3;
+        public static final double kMaxSpeedMetersPerSecond = 4.4196;
         public final static double AUTON_40_PERCENT_MULTIPLIER = 0.05992509363d;
 
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;

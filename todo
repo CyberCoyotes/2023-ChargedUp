@@ -1,10 +1,25 @@
+- # New Post-Calvin Todo, everything done **before** W3 Traverse City
+    - [ ] Re-measure constants
+      - [ ] SysID
+      - [x] Potentially max speed and such
+    - [ ] getting a consitent, one-meter auton in a straight line with standard swerve trajectories
+    - [ ] Wrist subsystem
+    - [ ] intake subsystem
+    - [ ] clean up mess from dio ports
+    - [ ] A time based tracker for matches that diagnostics after the match on shuffleboard
+    - [x] Auton Chooser
+    - [x] PID control with input from gyro pitch.
+    - [x] Arm Extent Command for auton
+    - [ ] Offsets; do as late as possible
+    - [ ] stow command + capability
+
 # Chronological:
 - ## Getting a basic arm
     - [x] Confirm encoder works
     - [x] Confiroffset(~~straight down, towards robot~~ the arm at rest is represented by a 0 encoder). If it needs tuning, do so.
     - [x] Simple Percent Output to control arm
-    - [ ] Encoder value at end, straight up, level
-    - [ ] Arm rotation soft limit
+    - [x] Encoder value at end, straight up, level
+    - [x] Arm rotation soft limit
 - ## Tuning for gravity
     - [ ] Create kF, arbitrary feedforward(Find power required to maintain position at 90°) and apply to arm power in update, which can be used by Percent Output with `m_talonSRX.(set(ControlMode.PercentOutput, [powerPercentage], DemandType.ArbitraryFeedForward, [feedForward source]);` that, or just brake the rotation motors.)
 - ## PID/MotionMagic

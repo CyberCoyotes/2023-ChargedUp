@@ -1,3 +1,4 @@
+
 /*--------------------------------------------------------* 
  * 
  * 2023 Charged Up
@@ -6,8 +7,20 @@
 --------------------------------------------------------*/
 package frc.robot;
 
+import java.util.List;
+
+import javax.swing.plaf.synth.Region;
+
 import com.ctre.phoenix.led.CANdle;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -20,9 +33,11 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.Arm;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -88,16 +103,19 @@ public class RobotContainer {
     /* A */private final JoystickButton openClaw = new JoystickButton(operator, XboxController.Button.kA.value);
     /* B */private final JoystickButton closeClaw = new JoystickButton(operator, XboxController.Button.kB.value);
 
+
     // #endregion Operator Buttons
     // #region Subsystems
+//// private final ClawSubsystem m_claw = new ClawSubsystem();
+    ////private final IntakeSubsystem m_intake = new IntakeSubsystem();
+
     private final ArmExtensionSubsystem m_extend = new ArmExtensionSubsystem();
     private final ArmSubsystem armSubsystem = new ArmSubsystem(limit);
-
     private final CANdle m_candle = new CANdle(Constants.CANDLE_ID);
-    private final ClawSubsystem m_claw = new ClawSubsystem();
-    private final IntakeSubsystem m_intake = new IntakeSubsystem();
     private final Vision m_vision = new Vision();
     private final Swerve s_Swerve = new Swerve();
+    private final IntakeSubsystemV2 intakeSubsystem = new IntakeSubsystemV2();
+    private final WristSubsystem wristSubsystem = new WristSubsystem();
     // private final SensorsSubsystem m_ArmSwitch = new SensorsSubsystem();
 
     // #endregion
@@ -106,6 +124,7 @@ public class RobotContainer {
     RotateArm90 rotTo90 = new RotateArm90(armSubsystem);
     MoveUntilSensor rotationMoveUntilSensor;
     MoveUntilSensor extentionMoveUntilSensor;
+    DriveOutAndChargeStation autonCommand = new DriveOutAndChargeStation(s_Swerve, robotCentric);
 
     // #endregion
 
@@ -141,17 +160,49 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
 
+        
         /* Driver Button Bindings */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         zeroArmEncoder.onTrue(new InstantCommand(() -> armSubsystem.ZeroArmEncoder()));
         creepButton.onTrue(new InstantCommand(() -> SetCreepToggle(!GetCreepToggle())));// inverts creep when button
 
         /* Operator Button Bindings */
-        intakeIn.whileTrue(new SetIntakeIn(m_intake));
-        intakeOut.whileTrue(new SetIntakeOut(m_intake));
+        intakeIn.whileTrue(new  InstantCommand(() -> intakeSubsystem.SetDriveIntake()));
+        intakeOut.whileTrue(new InstantCommand(() -> intakeSubsystem.SetDriveOutake()));
+        intakeOut.and(intakeIn).whileFalse(new InstantCommand(() -> intakeSubsystem.SetDriveOutake()));
+        
+        autonCommand.incrementPIDs(() -> driver.getRawAxis(LT),() ->  driver.getRawAxis(RT));
 
-        openClaw.onTrue(new SetClawOpen2(m_claw));
-        closeClaw.onTrue(new SetClawClose2(m_claw));
+
+    }
+
+    private void configureDefaultCommands() {
+        m_vision.setDefaultCommand(new GetTagID(m_vision));
+
+        armSubsystem.setDefaultCommand(
+                new RotateArmManual(armSubsystem, () -> 0.65 * operator.getRawAxis(translationAxis)));
+
+                wristSubsystem.setDefaultCommand(new MoveWristManual(wristSubsystem,  () -> 0.65 * operator.getRawAxis(rotationAxis)));
+
+        s_Swerve.setDefaultCommand(
+                new TeleopSwerve(
+                        s_Swerve,
+                        () -> -driver.getRawAxis(translationAxis),
+                        () -> -driver.getRawAxis(strafeAxis),
+                        () -> -driver.getRawAxis(rotationAxis),
+                        () -> robotCentric.getAsBoolean(),
+                        () -> GetCreepToggle()));
+        m_extend.setDefaultCommand(
+                new ExtendArmManual(
+                        m_extend,
+                        () -> operator.getRawAxis(RT),
+                        () -> operator.getRawAxis(LT)));
+
+
+
+    }
+
+    private void configureAutonChooser() {
 
     }
 
@@ -187,35 +238,67 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
 
-    public Command getAutonomousCommand() {
-
-        // #region Ryker interrogation, day 1 of Calvin
+     public Command getAutonomousCommand() {
+        // #region Q+A
         // PDH is front, and should be facing away from us
         // gyro resets (predictibly?) at the start of a match
-        // No official restrictions on starting rotation
+        // No official restrictions on starting rotation, just placement
         // pdh facing away from us at the end of auton is ALWAYS Ryker's preference
         // #endregion
+        
+        //: If polarity is 1, the PDH/gyro/robot is facing away from us, the
+        //: technically "right" orient.
 
-        // ? If polarity is 1, the PDH/gyro/robot is facing away from us, the
-        // technically "right" orient.
-        short polarity = 1;
-        double power = .4;
-        double seconds = 3;
-        final float input = (float) (polarity * power);
-        var driveCommand = new TeleopSwerve(
-                s_Swerve,
-                () -> input,
-                () -> 0,
-                () -> 0,
-                () -> robotCentric.getAsBoolean(),
-                () -> false);
-        return new ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand);
+        //#region PID stuff
+        
+        // Pose2d startingPose = new Pose2d(0, 0, new Rotation2d(0));
+        // Pose2d endingPose = new Pose2d(-4, 0, new Rotation2d(0));
+        // TrajectoryConfig trajectoryConfig = new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond, AutoConstants.kMaxAccelerationMetersPerSecondSquared);
 
-        // return new cgCubeDeployLow(armSubsystem, m_extend, m_claw).andThen( new
-        // ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand));
-        // : 40% in a single direction for 1 second: ~51 inches
-        // : 40% in both directions for 1 second: ~75 inches total
-        // : Both above seem to scale linearly
+        // s_Swerve.resetOdometry(startingPose);
+
+        // Trajectory trajectory = TrajectoryGenerator.generateTrajectory
+        // (
+        //     startingPose,
+        //     List.of
+        //     (
+                
+        //         new Translation2d(1,0),
+        //         new Translation2d(20,0)
+        //         // new Translation2d(3,0)
+        //         // new Translation2d(0,0),
+        //         // new Translation2d(1,0)
+        //     ),
+        //     endingPose,
+        //     trajectoryConfig
+        // );
+        // PIDController XPIDcontroller = new PIDController(AutoConstants.kPXController, 0, 0);
+        // PIDController YPIDcontroller = new PIDController(AutoConstants.kPYController, 0, 0);
+        // ProfiledPIDController thetaController = AutoConstants.thetaProfiledPID; //todo define this here
+
+
+        // SwerveControllerCommand autoCommand = 
+        // new SwerveControllerCommand
+        // (trajectory, 
+        // s_Swerve::getPose,
+        // frc.robot.Constants.Swerve.swerveKinematics, 
+        // XPIDcontroller,
+        // YPIDcontroller,
+        // thetaController,
+        // s_Swerve::setModuleStates,
+        // s_Swerve);
+//#endregion
+
+//// return new SequentialCommandGroup(
+////             new InstantCommand(() -> s_Swerve.resetOdometry(trajectory.getInitialPose())),
+////             // autoCommand.withTimeout(seconds),
+////             // new InstantCommand(() -> s_Swerve.StopModules()),
+////             driveCommand,
+////             new SeekBeginofChargeStation(s_Swerve),
+////             new SeekBalanceCommand(s_Swerve));
+//todo test this in the first place
+return autonCommand;
+
     }
 }
 

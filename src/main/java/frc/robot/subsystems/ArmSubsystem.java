@@ -20,6 +20,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -62,8 +63,11 @@ public class ArmSubsystem extends SubsystemBase {
         return leftMota.getSupplyCurrent();
     }
     public ArmSubsystem(DigitalInput input) {
+
+        leftMota.setInverted(true);
         // leftMota.setInverted(true);
         this.limitSwitch = input;
+        
         leftMota.configFactoryDefault();
         //:The arm is some degrees off from 0 being truly down pointing
         leftMota.configIntegratedSensorOffset(Constants.Arm.ARM_OFFSET_DEGREES);
@@ -119,8 +123,10 @@ public class ArmSubsystem extends SubsystemBase {
      *         The rotation of the arm in degrees, adjusted so that 0 equals
      *         straight down.
      */
+    
     public double GetRotationInDeg() {
         return ConvertFXEncodertoDeg((leftMota.getSelectedSensorPosition()));
+        
     }
     public boolean GetSwtichState()
     {
@@ -133,15 +139,9 @@ public class ArmSubsystem extends SubsystemBase {
     public void PercentOutputSupplierDrive(double input) {
         
         
-        if (GetSwtichState()  && input < 0) //If the switch is being pressed and the input is negative, do nothing.
-        {
-            System.out.println("Limit switch enabled; you get no arm movement");
-        }
-        else
-        {
+        
         leftMota.set(ControlMode.PercentOutput, input * .6);// took like 6.5 seconds at 10% output to make a
-
-        }                                                               // revolution
+                                                                  // revolution
     }
 
     
