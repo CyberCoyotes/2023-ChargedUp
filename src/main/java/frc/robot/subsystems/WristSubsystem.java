@@ -6,9 +6,23 @@ import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+/*
+ * DATA COLLECTION
+ * Rot  | Wrist     | Notes
+ * -------------------------------------
+ * 0    | 00,000    | Home position
+ * 0    | 44,000    | Wrist is resting, flipped down
+ * 10   | 22,000    | Wrist is level
+ * 
+ */
+
+
 public class WristSubsystem extends SubsystemBase {
     private TalonFX m_motorController = new TalonFX(Constants.Arm.WRIST_TALONFX_ID);
 
+    double WRIST_HOME_POS = 22000;
+
+    /* If ARM ROTATION = 10 or less, then setWristHome() */
     /*
     
     TODO test encoder values (direction of sensors relative to positive motor input), limits
@@ -27,8 +41,14 @@ public class WristSubsystem extends SubsystemBase {
     }
 
     public void setWristHome(double input) {
-        m_motorController.set(ControlMode.Position, input);
         
+        m_motorController.set(ControlMode.Position, WRIST_HOME_POS);
+        
+    }
+    public double getWristPos() {
+        return m_motorController.getSelectedSensorPosition();
+        // Return the current encoder position of the Wrist
+        // return 0; // leaving for the LOLs 
     }
 
 }

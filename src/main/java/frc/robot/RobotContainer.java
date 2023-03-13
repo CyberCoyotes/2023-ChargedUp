@@ -1,10 +1,13 @@
-
 /*--------------------------------------------------------* 
  * 
  * 2023 Charged Up
  * RobotContainer.java 
  * 
 --------------------------------------------------------*/
+
+// I know this is redundant b/c using instant commmands elsewhere,
+// but wanting to use in sequential command groups
+
 package frc.robot;
 
 import java.util.List;
@@ -100,8 +103,8 @@ public class RobotContainer {
     /* X */private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value);
     /* Y */private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value);
 
-    /* A */private final JoystickButton wristDown = new JoystickButton(operator, XboxController.Button.kA.value);
-    /* B */private final JoystickButton wristUp = new JoystickButton(operator, XboxController.Button.kB.value);
+    // /* A */private final JoystickButton wristDown = new JoystickButton(operator, XboxController.Button.kA.value);
+    // /* B */private final JoystickButton wristUp = new JoystickButton(operator, XboxController.Button.kB.value);
 
 
     // #endregion Operator Buttons
@@ -126,13 +129,19 @@ public class RobotContainer {
     MoveUntilSensor extentionMoveUntilSensor;
     DriveOutAndChargeStation autonCommand = new DriveOutAndChargeStation(s_Swerve, robotCentric);
 
+    Command auton_Default = // TODO Set the
+        new SetIntakeIn2(intakeSubsystem); // TODO An autonomous command or command group
+
     // #endregion
+
+    SendableChooser<Command> autonChooser = new SendableChooser<>(); // TODO Auton test
 
     public void DebugMethod() {
         SmartDashboard.putNumber("Arm_Extent", m_extend.ReadExtension());
         SmartDashboard.putNumber("new gyro read", s_Swerve.getYaw().getDegrees());
         SmartDashboard.putNumber("Arm Rotation(°)", armSubsystem.ConvertFXEncodertoDeg(armSubsystem.GetRotation()));
         SmartDashboard.putBoolean("Limit Switch", limit.get());
+        SmartDashboard.putNumber("Wrist Encoder", wristSubsystem.getWristPos());
 
     }
 
@@ -143,6 +152,19 @@ public class RobotContainer {
       }
       
     public RobotContainer() {
+
+        autonChooser.setDefaultOption("XXX Run Intake XXX", auton_Default); // "Drive Only" Command or Command Group
+        autonChooser.addOption("XXX Run Intake XXX", auton_Default); // " "Low Cube + Drive" TODO Replace * with No. when working
+        // autonChooser.addOption("* Med Cube + Drive", auton_Default); // TODO replace the variable representing the auton command group from above
+        // autonChooser.addOption("* Low Cube + Balance", auton_Default); // TODO
+        // autonChooser.addOption("* Med Cube + Balance", auton_Default); // TODO
+        // autonChooser.addOption("* Low Cube + Out & Back", auton_Default); // TODO
+        // autonChooser.addOption("* Med Cube + Out & Back", auton_Default); // TODO
+        // autonChooser.addOption("Order 66 NO DRIVE + Low Cube", auton_Default); // TODO
+
+        Shuffleboard.getTab("Auton").add(autonChooser).withSize(2, 4); // Create an Auton "Tab"
+
+        Shuffleboard.getTab("Experimental Commands"); // Create an Auton "Tab"
 
         configureButtonBindings();
         configureDefaultCommands();
@@ -160,6 +182,8 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
 
+        SmartDashboard.putData("Intake In", new SetIntakeIn2(intakeSubsystem));
+
         
         /* Driver Button Bindings */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
@@ -167,8 +191,11 @@ public class RobotContainer {
         creepButton.onTrue(new InstantCommand(() -> SetCreepToggle(!GetCreepToggle())));// inverts creep when button
 
         /* Operator Button Bindings */
+        // intakeIn.whileTrue(new  InstantCommand(() -> intakeSubsystem.SetDriveIntake()));
+        // intakeOut.whileTrue(new InstantCommand(() -> intakeSubsystem.SetDriveOutake()));
         intakeIn.whileTrue(new  InstantCommand(() -> intakeSubsystem.SetDriveIntake()));
         intakeOut.whileTrue(new InstantCommand(() -> intakeSubsystem.SetDriveOutake()));
+
         intakeIn.whileFalse(new InstantCommand(() -> intakeSubsystem.ShutUp()));
         intakeOut.whileFalse(new InstantCommand(() -> intakeSubsystem.ShutUp()));
         
@@ -272,7 +299,7 @@ public class RobotContainer {
 ////             new SeekBeginofChargeStation(s_Swerve),
 ////             new SeekBalanceCommand(s_Swerve));
 //todo test this in the first place
-return autonCommand;
+    return autonChooser.getSelected();
 
     }
 }
