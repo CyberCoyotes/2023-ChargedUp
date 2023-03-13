@@ -29,7 +29,7 @@ public class IntakeSubsystemV2 extends SubsystemBase
         m_motorController.set(power);  
     }
 
-    public void ShutUp()
+    public void ShutUp() // lol
     {
         m_motorController.set(0);  
     }
