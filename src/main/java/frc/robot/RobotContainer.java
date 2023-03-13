@@ -108,6 +108,7 @@ public class RobotContainer {
     // #region Subsystems
 //// private final ClawSubsystem m_claw = new ClawSubsystem();
     ////private final IntakeSubsystem m_intake = new IntakeSubsystem();
+
     private final ArmExtensionSubsystem m_extend = new ArmExtensionSubsystem();
     private final ArmSubsystem armSubsystem = new ArmSubsystem(limit);
     private final CANdle m_candle = new CANdle(Constants.CANDLE_ID);
@@ -126,6 +127,7 @@ public class RobotContainer {
     DriveOutAndChargeStation autonCommand = new DriveOutAndChargeStation(s_Swerve, robotCentric);
 
     // #endregion
+
     public void DebugMethod() {
         SmartDashboard.putNumber("Arm_Extent", m_extend.ReadExtension());
         SmartDashboard.putNumber("new gyro read", s_Swerve.getYaw().getDegrees());
@@ -204,12 +206,37 @@ public class RobotContainer {
 
     }
 
+    private void configureDefaultCommands() {
+        m_vision.setDefaultCommand(new GetTagID(m_vision));
+
+        armSubsystem.setDefaultCommand(
+                new RotateArmManual(armSubsystem, () -> 0.65 * operator.getRawAxis(translationAxis)));
+
+        s_Swerve.setDefaultCommand(
+                new TeleopSwerve(
+                        s_Swerve,
+                        () -> -driver.getRawAxis(translationAxis),
+                        () -> -driver.getRawAxis(strafeAxis),
+                        () -> -driver.getRawAxis(rotationAxis),
+                        () -> robotCentric.getAsBoolean(),
+                        () -> GetCreepToggle()));
+        m_extend.setDefaultCommand(
+                new ExtendArmManual(
+                        m_extend,
+                        () -> operator.getRawAxis(RT),
+                        () -> operator.getRawAxis(LT)));
+
+    }
+
+    private void configureAutonChooser() {
+
+    }
+
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
      * @return the command to run in autonomous
      */
-
 
      public Command getAutonomousCommand() {
         // #region Q+A
@@ -271,6 +298,7 @@ public class RobotContainer {
 ////             new SeekBalanceCommand(s_Swerve));
 //todo test this in the first place
 return autonCommand;
+
     }
 }
 
@@ -281,6 +309,3 @@ return autonCommand;
  * 
  * https://first.wpi.edu/wpilib/allwpilib/docs/release/java/src-html/edu/wpi/first/wpilibj/XboxController.html
  */
-
-
-
