@@ -49,6 +49,8 @@ public class ArmSubsystem extends SubsystemBase {
      * for the follower configuration.
      */
     private WPI_TalonFX leftMota = new WPI_TalonFX(Constants.ARM_LEFT_ROT_MOTOR_ID);// integrated encoder, accessed via
+    private WPI_TalonFX rightMota = new WPI_TalonFX(Constants.ARM_RIGHT_ROT_MOTOR_ID);// integrated encoder, accessed via
+    
     private DigitalInput limitSwitch;
     
     /**
@@ -64,7 +66,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
     public ArmSubsystem(DigitalInput input) {
 
-        leftMota.setInverted(true);
+        leftMota.setInverted(false);
         // leftMota.setInverted(true);
         this.limitSwitch = input;
         
@@ -78,8 +80,9 @@ public class ArmSubsystem extends SubsystemBase {
 
         leftMota.configForwardSoftLimitEnable(true, 0);
 
-        leftMota.setNeutralMode(NeutralMode.Brake); // TODO Test
         leftMota.setNeutralMode(NeutralMode.Brake);
+        // rightMota.setNeutralMode(NeutralMode.Coast); // added 3/13/23
+
 //
         // here we choose to use follower control mode as the left as host, to use
         // motionmagic
