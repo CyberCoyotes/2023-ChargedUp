@@ -169,7 +169,8 @@ public class RobotContainer {
         /* Operator Button Bindings */
         intakeIn.whileTrue(new  InstantCommand(() -> intakeSubsystem.SetDriveIntake()));
         intakeOut.whileTrue(new InstantCommand(() -> intakeSubsystem.SetDriveOutake()));
-        intakeOut.and(intakeIn).whileFalse(new InstantCommand(() -> intakeSubsystem.SetDriveOutake()));
+        intakeIn.whileFalse(new InstantCommand(() -> intakeSubsystem.ShutUp()));
+        intakeOut.whileFalse(new InstantCommand(() -> intakeSubsystem.ShutUp()));
         
         autonCommand.incrementPIDs(() -> driver.getRawAxis(LT),() ->  driver.getRawAxis(RT));
 

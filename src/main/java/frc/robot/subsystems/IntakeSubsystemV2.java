@@ -15,17 +15,18 @@ public class IntakeSubsystemV2 extends SubsystemBase
 
     //todo Check if the motor needs inversion to properly intake.
 
-    private PWMSparkMax m_motorController = new PWMSparkMax(Constants.Arm.ARM_INTAKE_PWM_PORT);    
+    private PWMSparkMax m_motorController = new PWMSparkMax(Constants.Arm.ARM_INTAKE_PWM_PORT);
+
 
     private float power = 0.6f;
 
     public void SetDriveOutake()
     {
-        m_motorController.set(power);
+        m_motorController.set(power*-1);
     }
     public void SetDriveIntake()
     {
-        m_motorController.set(-1 * power);  
+        m_motorController.set(power);  
     }
 
     public void ShutUp()
