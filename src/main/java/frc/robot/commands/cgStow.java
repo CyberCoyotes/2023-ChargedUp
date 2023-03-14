@@ -20,14 +20,13 @@ public class cgStow extends SequentialCommandGroup {
     
     public cgStow
     (ArmSubsystem armSub, ArmExtensionSubsystem armExtSub, WristSubsystem wristSub, IntakeSubsystemV2 intakeSub) {
-        addCommands(
-            new ArmExtendToArg(armExtSub, 0)
-                , new WaitCommand(0.5) // FIXME excessive for testing
-            /*     
-            , new WristToArg(wristSub, Constants.WRIST_POS_LEVEL)
-                , new WaitCommand(0.5) // FIXME excessive for testing
-            , new RotateArmArg(armSub, 10) // FIXME excessive for testing
-            */
+        addCommands( 
+        // , new ArmExtendToArg(armExtSub, 0)
+        // , new WaitCommand(0.5) // FIXME excessive for testing                 
+        // , new WristToArg(wristSub, Constants.WRIST_POS_LEVEL)
+        // , new WaitCommand(0.5) // FIXME excessive for testing
+        // , new RotateArmArg(armSub, 10) // FIXME excessive for testing
+            
          );
     
     }

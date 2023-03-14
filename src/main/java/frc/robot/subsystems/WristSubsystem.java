@@ -5,6 +5,7 @@ import frc.robot.Constants;
 import frc.robot.Constants.*;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 /*
@@ -35,8 +36,10 @@ public class WristSubsystem extends SubsystemBase {
      * 
      */
     public WristSubsystem() {
-        m_motorController.configPeakOutputForward(0.5);
-        m_motorController.configPeakOutputReverse(-0.5);
+        m_motorController.setNeutralMode(NeutralMode.Brake);
+
+        // m_motorController.configPeakOutputForward(0.5);
+        // m_motorController.configPeakOutputReverse(-0.5);
 
     }
 
@@ -61,8 +64,10 @@ public class WristSubsystem extends SubsystemBase {
      * that is optimize for loading.
      * Wrist must be pointed slightly up or it will hit the hall when loading
      */
-    public void setWristPosLoad(double input) {
-        m_motorController.set(ControlMode.Position, Constants.WRIST_POS_LOAD);
+    public void setWristPositionLoad() {
+        // m_motorController.set(ControlMode.Position, Constants.WRIST_POS_LOAD);
+        m_motorController.set(ControlMode.Position, 11000);
+
     }
 
     /*

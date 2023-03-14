@@ -30,7 +30,6 @@ public class WristToArg extends CommandBase {
     @Override
     public void initialize() {
         super.initialize();
-        //// m_armExtensionSubsystem.Setup();
     }
     
     @Override

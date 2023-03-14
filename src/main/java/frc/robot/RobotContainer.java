@@ -98,6 +98,7 @@ public class RobotContainer {
     /* SELECT */private final JoystickButton zeroArmEncoder = new JoystickButton(operator,
             XboxController.Button.kBack.value);
     /* LB */private final JoystickButton loadStation = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+
     /* RB */private final JoystickButton stowArm = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
     /* X */private final JoystickButton intakeCone = new JoystickButton(operator, XboxController.Button.kY.value);
@@ -130,8 +131,8 @@ public class RobotContainer {
     MoveUntilSensor rotationMoveUntilSensor;
     MoveUntilSensor extentionMoveUntilSensor;
     DriveOutAndChargeStation autonCommand = new DriveOutAndChargeStation(s_Swerve, robotCentric);
-    cgStow c_stowArm = new cgStow(armSubsystem, m_extend, wristSubsystem, intakeSubsystem);
-
+    RotateWristLevel c_wristLevel = new RotateWristLevel(wristSubsystem);
+    // SetWristLoad load = new SetWristLoad(wristSubsystem);
 
     Command auton_Default = // TODO Set the
         new SetIntakeCone(intakeSubsystem); // TODO An autonomous command or command group
@@ -141,11 +142,13 @@ public class RobotContainer {
     SendableChooser<Command> autonChooser = new SendableChooser<>(); // TODO Auton test
 
     public void DebugMethod() {
+        /*
         SmartDashboard.putNumber("Arm_Extent", m_extend.ReadExtension());
         SmartDashboard.putNumber("new gyro read", s_Swerve.getYaw().getDegrees());
         SmartDashboard.putNumber("Arm Rotation(°)", armSubsystem.ConvertFXEncodertoDeg(armSubsystem.GetRotation()));
         SmartDashboard.putBoolean("Limit Switch", limit.get());
         SmartDashboard.putNumber("Wrist Encoder", wristSubsystem.getWristPos());
+         */
 
     }
 
@@ -158,7 +161,7 @@ public class RobotContainer {
     public RobotContainer() {
 
         autonChooser.setDefaultOption("XXX Run Intake XXX", auton_Default); // "Drive Only" Command or Command Group
-        autonChooser.addOption("Stow Arm", c_stowArm); // " "Low Cube + Drive" TODO Replace * with No. when working
+        autonChooser.addOption("XXX Wrist to Level XXX", c_wristLevel); // " "Low Cube + Drive" TODO Replace * with No. when working
         // autonChooser.addOption("* Med Cube + Drive", auton_Default); // TODO replace the variable representing the auton command group from above
         // autonChooser.addOption("* Low Cube + Balance", auton_Default); // TODO
         // autonChooser.addOption("* Med Cube + Balance", auton_Default); // TODO
@@ -170,7 +173,7 @@ public class RobotContainer {
 
         Shuffleboard.getTab("Experimental Commands"); // Create an Auton "Tab"
 
-        SmartDashboard.putData("Stow Arm", new cgStow(armSubsystem, m_extend, wristSubsystem, intakeSubsystem));
+        SmartDashboard.putData("Wrist to Level", new RotateWristLevel(wristSubsystem));
 
 
         configureButtonBindings();
@@ -205,7 +208,9 @@ public class RobotContainer {
 
         intakeCone.whileFalse(new InstantCommand(() -> intakeSubsystem.ShutUp()));
         intakeCube.whileFalse(new InstantCommand(() -> intakeSubsystem.ShutUp()));
-        
+
+        loadStation.whileTrue(new InstantCommand(() ->  wristSubsystem.setWristPositionLoad()));
+
         autonCommand.incrementPIDs(() -> driver.getRawAxis(LT),() ->  driver.getRawAxis(RT));
 
 
