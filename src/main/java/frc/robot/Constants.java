@@ -74,7 +74,6 @@ public final class Constants {
        
         public static final int ARM_INTAKE_PWM_PORT = 0;
        
-
         /**
          * The estimated encoder position at the resting  
          */
@@ -286,5 +285,7 @@ public final class Constants {
     public static final double WHEEL_MAX = 1; //maybe not be needed
 
     public static final int LIMIT_SWITCH_ARM_PORT = 3; // channel or port on roboRIO DIO
+
+    public static final int ARM_ROTATE_POS_MID = -40;
     
 } // end of class

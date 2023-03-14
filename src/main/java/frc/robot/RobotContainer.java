@@ -144,14 +144,13 @@ public class RobotContainer {
     SendableChooser<Command> autonChooser = new SendableChooser<>(); // TODO Auton test
 
     public void DebugMethod() {
-        /*
-        SmartDashboard.putNumber("Arm_Extent", m_extend.ReadExtension());
+        
+        SmartDashboard.putNumber("Arm_Extent", armExtendSub.ReadExtension());
         SmartDashboard.putNumber("new gyro read", s_Swerve.getYaw().getDegrees());
-        SmartDashboard.putNumber("Arm Rotation(°)", armSubsystem.ConvertFXEncodertoDeg(armSubsystem.GetRotation()));
+        SmartDashboard.putNumber("Arm Rotation(°)", armSub.ConvertFXEncodertoDeg(armSub.GetRotation()));
         SmartDashboard.putBoolean("Limit Switch", limit.get());
-        SmartDashboard.putNumber("Wrist Encoder", wristSubsystem.getWristPos());
-         */
-
+        SmartDashboard.putNumber("Wrist Encoder", wristSub.getWristPos());
+        
     }
 
     /**
