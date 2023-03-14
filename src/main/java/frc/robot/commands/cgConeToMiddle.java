@@ -26,18 +26,16 @@ public class cgConeToMiddle extends SequentialCommandGroup{
     (ArmSubsystem armSub, ArmExtensionSubsystem armExtSub, WristSubsystem wristSub, IntakeSubsystemV2 intakeSub) {
         addCommands(
             new RotateArmArg(armSub, -90)
-                , new WaitCommand(0.5) // FIXME excessive for testing
-            /*     
-            , new ArmExtendToArg(armExtSub, Constants.ARM_EXTENT_LIMIT)
-                , new WaitCommand(0.5) // FIXME excessive for testing
+            , new WaitCommand(0.5) // FIXME excessive for testing 
+            // , new ArmExtendToArg(armExtSub, Constants.ARM_EXTENT_LIMIT)
+            // , new WaitCommand(0.5) // FIXME excessive for testing
             , new WristToArg(wristSub, Constants.WRIST_POS_MID)
-                , new WaitCommand(0.5) // FIXME excessive for testing
-            , new SetIntakeCube(intakeSub) // deploys a cone
-            , new WaitCommand(0.5)
-            , new WristToArg(wristSub, Constants.WRIST_POS_LEVEL)
-                , new WaitCommand(0.5) // FIXME excessive for testing
-            , new RotateArmArg(armSub, 10)
-            */
+            // , new WaitCommand(0.5) // FIXME excessive for testing
+            // , new SetIntakeCube(intakeSub) // deploys a cone
+            // , new WaitCommand(0.5)
+            // , new WristToArg(wristSub, Constants.WRIST_POS_LEVEL)
+            // , new WaitCommand(0.5) // FIXME excessive for testing
+            // , new RotateArmArg(armSub, 10)
         );
     }
 }

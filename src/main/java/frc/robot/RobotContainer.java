@@ -115,27 +115,29 @@ public class RobotContainer {
 //// private final ClawSubsystem m_claw = new ClawSubsystem();
     ////private final IntakeSubsystem m_intake = new IntakeSubsystem();
 
-    private final ArmExtensionSubsystem m_extend = new ArmExtensionSubsystem();
-    private final ArmSubsystem armSubsystem = new ArmSubsystem(limit);
-    private final CANdle m_candle = new CANdle(Constants.CANDLE_ID);
-    private final Vision m_vision = new Vision();
+    private final ArmExtensionSubsystem armExtendSub = new ArmExtensionSubsystem();
+    private final ArmSubsystem armSub = new ArmSubsystem(limit);
+    private final CANdle candleSub = new CANdle(Constants.CANDLE_ID);
+    private final Vision visionSub = new Vision();
     private final Swerve s_Swerve = new Swerve();
-    private final IntakeSubsystemV2 intakeSubsystem = new IntakeSubsystemV2();
-    private final WristSubsystem wristSubsystem = new WristSubsystem();
+    private final IntakeSubsystemV2 intakeSub = new IntakeSubsystemV2();
+    private final WristSubsystem wristSub = new WristSubsystem();
     // private final SensorsSubsystem m_ArmSwitch = new SensorsSubsystem();
 
     // #endregion
     // #region Commands
-    RotateArmIntake intakeCommand = new RotateArmIntake(armSubsystem);
-    RotateArm90 rotTo90 = new RotateArm90(armSubsystem);
+    RotateArmIntake intakeCommand = new RotateArmIntake(armSub);
+    RotateArm90 rotTo90 = new RotateArm90(armSub);
     MoveUntilSensor rotationMoveUntilSensor;
     MoveUntilSensor extentionMoveUntilSensor;
     DriveOutAndChargeStation autonCommand = new DriveOutAndChargeStation(s_Swerve, robotCentric);
-    RotateWristLevel c_wristLevel = new RotateWristLevel(wristSubsystem);
+    RotateWristLevel c_wristLevel = new RotateWristLevel(wristSub);
     // SetWristLoad load = new SetWristLoad(wristSubsystem);
 
     Command auton_Default = // TODO Set the
-        new SetIntakeCone(intakeSubsystem); // TODO An autonomous command or command group
+        new SetIntakeCone(intakeSub); // TODO An autonomous command or command group
+    Command auton_ConeToMiddle = //
+        new cgConeToMiddle(armSub, armExtendSub, wristSub, intakeSub); // 
 
     // #endregion
 
@@ -161,7 +163,7 @@ public class RobotContainer {
     public RobotContainer() {
 
         autonChooser.setDefaultOption("XXX Run Intake XXX", auton_Default); // "Drive Only" Command or Command Group
-        autonChooser.addOption("XXX Wrist to Level XXX", c_wristLevel); // " "Low Cube + Drive" TODO Replace * with No. when working
+        autonChooser.addOption("XXX Cone to Middle XXX", auton_ConeToMiddle); // " "Low Cube + Drive" TODO Replace * with No. when working
         // autonChooser.addOption("* Med Cube + Drive", auton_Default); // TODO replace the variable representing the auton command group from above
         // autonChooser.addOption("* Low Cube + Balance", auton_Default); // TODO
         // autonChooser.addOption("* Med Cube + Balance", auton_Default); // TODO
@@ -173,7 +175,7 @@ public class RobotContainer {
 
         Shuffleboard.getTab("Experimental Commands"); // Create an Auton "Tab"
 
-        SmartDashboard.putData("Wrist to Level", new RotateWristLevel(wristSubsystem));
+        SmartDashboard.putData("Wrist to Level", new RotateWristLevel(wristSub));
 
 
         configureButtonBindings();
@@ -192,24 +194,24 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
 
-        SmartDashboard.putData("Intake In", new SetIntakeCone(intakeSubsystem));
+        SmartDashboard.putData("Intake In", new SetIntakeCone(intakeSub));
 
         
         /* Driver Button Bindings */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        zeroArmEncoder.onTrue(new InstantCommand(() -> armSubsystem.ZeroArmEncoder()));
+        zeroArmEncoder.onTrue(new InstantCommand(() -> armSub.ZeroArmEncoder()));
         creepButton.onTrue(new InstantCommand(() -> SetCreepToggle(!GetCreepToggle())));// inverts creep when button
 
         /* Operator Button Bindings */
         // stowArm.onTrue(new  cgStow(ar;
         // intakeOut.whileTrue(new InstantCommand(() -> intakeSubsystem.SetDriveOutake()));
-        intakeCone.whileTrue(new  InstantCommand(() -> intakeSubsystem.SetDriveIntake()));
-        intakeCube.whileTrue(new InstantCommand(() -> intakeSubsystem.SetDriveOutake()));
+        intakeCone.whileTrue(new  InstantCommand(() -> intakeSub.SetDriveIntake()));
+        intakeCube.whileTrue(new InstantCommand(() -> intakeSub.SetDriveOutake()));
 
-        intakeCone.whileFalse(new InstantCommand(() -> intakeSubsystem.ShutUp()));
-        intakeCube.whileFalse(new InstantCommand(() -> intakeSubsystem.ShutUp()));
+        intakeCone.whileFalse(new InstantCommand(() -> intakeSub.ShutUp()));
+        intakeCube.whileFalse(new InstantCommand(() -> intakeSub.ShutUp()));
 
-        loadStation.whileTrue(new InstantCommand(() ->  wristSubsystem.setWristPositionLoad()));
+        loadStation.whileTrue(new InstantCommand(() ->  wristSub.setWristPositionLoad()));
 
         autonCommand.incrementPIDs(() -> driver.getRawAxis(LT),() ->  driver.getRawAxis(RT));
 
@@ -217,12 +219,12 @@ public class RobotContainer {
     }
 
     private void configureDefaultCommands() {
-        m_vision.setDefaultCommand(new GetTagID(m_vision));
+        visionSub.setDefaultCommand(new GetTagID(visionSub));
 
-        armSubsystem.setDefaultCommand(
-                new RotateArmManual(armSubsystem, () -> 0.65 * operator.getRawAxis(translationAxis)));
+        armSub.setDefaultCommand(
+                new RotateArmManual(armSub, () -> 0.65 * operator.getRawAxis(translationAxis)));
 
-                wristSubsystem.setDefaultCommand(new MoveWristManual(wristSubsystem,  () -> 0.65 * operator.getRawAxis(rotationAxis)));
+                wristSub.setDefaultCommand(new MoveWristManual(wristSub,  () -> 0.65 * operator.getRawAxis(rotationAxis)));
 
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(
@@ -232,9 +234,9 @@ public class RobotContainer {
                         () -> -driver.getRawAxis(rotationAxis),
                         () -> robotCentric.getAsBoolean(),
                         () -> GetCreepToggle()));
-        m_extend.setDefaultCommand(
+        armExtendSub.setDefaultCommand(
                 new ExtendArmManual(
-                        m_extend,
+                        armExtendSub,
                         () -> operator.getRawAxis(RT),
                         () -> operator.getRawAxis(LT)));
 
