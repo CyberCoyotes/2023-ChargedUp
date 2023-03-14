@@ -141,10 +141,14 @@ public class ArmSubsystem extends SubsystemBase {
     
     public void PercentOutputSupplierDrive(double input) {
         
-        
-        
-        rightMota.set(ControlMode.PercentOutput, input * .6);// took like 6.5 seconds at 10% output to make a
-                                                                  // revolution
+        if (input < 0 && limitSwitch.get()) {
+            return;
+        }
+        else
+        {
+            rightMota.set(ControlMode.PercentOutput, input * .6);// took like 6.5 seconds at 10% output to make a
+        }
+                                                                  // 
     }
 
     
