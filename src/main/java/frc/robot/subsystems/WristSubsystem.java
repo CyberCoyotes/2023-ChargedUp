@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 /*
@@ -31,6 +32,8 @@ public class WristSubsystem extends SubsystemBase {
     
     */
     public WristSubsystem() {
+        m_motorController.setNeutralMode(NeutralMode.Brake);
+        
         m_motorController.configPeakOutputForward(0.5);
         m_motorController.configPeakOutputReverse(-0.5);
         

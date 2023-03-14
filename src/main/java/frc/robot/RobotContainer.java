@@ -98,10 +98,13 @@ public class RobotContainer {
 
     /* SELECT */private final JoystickButton zeroArmEncoder = new JoystickButton(operator,
             XboxController.Button.kBack.value);
-    /* START */private final JoystickButton stowArm = new JoystickButton(operator, XboxController.Button.kStart.value);
+    // /* START */private final JoystickButton stowArm = new JoystickButton(operator, XboxController.Button.kStart.value);
+    /* LB */private final JoystickButton load = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
 
-    /* X */private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value);
-    /* Y */private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value);
+    /* RB */private final JoystickButton stow = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+
+    /* X */private final JoystickButton intakeCube = new JoystickButton(operator, XboxController.Button.kX.value);
+    /* Y */private final JoystickButton intakeCone = new JoystickButton(operator, XboxController.Button.kY.value);
 
     // /* A */private final JoystickButton wristDown = new JoystickButton(operator, XboxController.Button.kA.value);
     // /* B */private final JoystickButton wristUp = new JoystickButton(operator, XboxController.Button.kB.value);
@@ -109,9 +112,6 @@ public class RobotContainer {
 
     // #endregion Operator Buttons
     // #region Subsystems
-//// private final ClawSubsystem m_claw = new ClawSubsystem();
-    ////private final IntakeSubsystem m_intake = new IntakeSubsystem();
-
     private final ArmExtensionSubsystem m_extend = new ArmExtensionSubsystem();
     private final ArmSubsystem armSubsystem = new ArmSubsystem(limit);
     private final CANdle m_candle = new CANdle(Constants.CANDLE_ID);
@@ -154,7 +154,7 @@ public class RobotContainer {
     public RobotContainer() {
 
         autonChooser.setDefaultOption("XXX Run Intake XXX", auton_Default); // "Drive Only" Command or Command Group
-        autonChooser.addOption("XXX Run Intake XXX", auton_Default); // " "Low Cube + Drive" TODO Replace * with No. when working
+        // autonChooser.addOption("XXX Run Intake XXX", auton_Default); // " "Low Cube + Drive" TODO Replace * with No. when working
         // autonChooser.addOption("* Med Cube + Drive", auton_Default); // TODO replace the variable representing the auton command group from above
         // autonChooser.addOption("* Low Cube + Balance", auton_Default); // TODO
         // autonChooser.addOption("* Med Cube + Balance", auton_Default); // TODO
@@ -164,7 +164,7 @@ public class RobotContainer {
 
         Shuffleboard.getTab("Auton").add(autonChooser).withSize(2, 4); // Create an Auton "Tab"
 
-        Shuffleboard.getTab("Experimental Commands"); // Create an Auton "Tab"
+        // Shuffleboard.getTab("Experimental Commands"); // Create an Auton "Tab"
 
         configureButtonBindings();
         configureDefaultCommands();
@@ -193,11 +193,11 @@ public class RobotContainer {
         /* Operator Button Bindings */
         // intakeIn.whileTrue(new  InstantCommand(() -> intakeSubsystem.SetDriveIntake()));
         // intakeOut.whileTrue(new InstantCommand(() -> intakeSubsystem.SetDriveOutake()));
-        intakeIn.whileTrue(new  InstantCommand(() -> intakeSubsystem.SetDriveIntake()));
-        intakeOut.whileTrue(new InstantCommand(() -> intakeSubsystem.SetDriveOutake()));
+        intakeCone.whileTrue(new  InstantCommand(() -> intakeSubsystem.SetDriveIntake()));
+        intakeCube.whileTrue(new InstantCommand(() -> intakeSubsystem.SetDriveOutake()));
 
-        intakeIn.whileFalse(new InstantCommand(() -> intakeSubsystem.ShutUp()));
-        intakeOut.whileFalse(new InstantCommand(() -> intakeSubsystem.ShutUp()));
+        intakeCone.whileFalse(new InstantCommand(() -> intakeSubsystem.ShutUp()));
+        intakeCube.whileFalse(new InstantCommand(() -> intakeSubsystem.ShutUp()));
         
         autonCommand.incrementPIDs(() -> driver.getRawAxis(LT),() ->  driver.getRawAxis(RT));
 
