@@ -91,19 +91,17 @@ public class RobotContainer {
     /* LB */private final JoystickButton robotCentric = new JoystickButton(driver,
             XboxController.Button.kLeftBumper.value);
 
+    // TODO Remove robot centric buttons
     /* B */private final JoystickButton creepButton = new JoystickButton(driver, XboxController.Button.kB.value);
     // #endregion
     // #region Operator Buttons
 
     /* SELECT */private final JoystickButton zeroArmEncoder = new JoystickButton(operator,
             XboxController.Button.kBack.value);
-    /* LB */private final JoystickButton loadStation = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
-    /* RB */private final JoystickButton stowArm = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+    /* START */private final JoystickButton stowArm = new JoystickButton(operator, XboxController.Button.kStart.value);
 
-    /* X */private final JoystickButton intakeCone = new JoystickButton(operator, XboxController.Button.kY.value);
-            // Intake Cone is same as Outtake Cube 
-    /* Y */private final JoystickButton intakeCube = new JoystickButton(operator, XboxController.Button.kX.value);
-            // Intake Cube is same as OuttakeCone
+    /* X */private final JoystickButton intakeIn = new JoystickButton(operator, XboxController.Button.kX.value);
+    /* Y */private final JoystickButton intakeOut = new JoystickButton(operator, XboxController.Button.kY.value);
 
     // /* A */private final JoystickButton wristDown = new JoystickButton(operator, XboxController.Button.kA.value);
     // /* B */private final JoystickButton wristUp = new JoystickButton(operator, XboxController.Button.kB.value);
@@ -130,11 +128,9 @@ public class RobotContainer {
     MoveUntilSensor rotationMoveUntilSensor;
     MoveUntilSensor extentionMoveUntilSensor;
     DriveOutAndChargeStation autonCommand = new DriveOutAndChargeStation(s_Swerve, robotCentric);
-    cgStow c_stowArm = new cgStow(armSubsystem, m_extend, wristSubsystem, intakeSubsystem);
-
 
     Command auton_Default = // TODO Set the
-        new SetIntakeCone(intakeSubsystem); // TODO An autonomous command or command group
+        new SetIntakeIn2(intakeSubsystem); // TODO An autonomous command or command group
 
     // #endregion
 
@@ -158,7 +154,7 @@ public class RobotContainer {
     public RobotContainer() {
 
         autonChooser.setDefaultOption("XXX Run Intake XXX", auton_Default); // "Drive Only" Command or Command Group
-        autonChooser.addOption("Stow Arm", c_stowArm); // " "Low Cube + Drive" TODO Replace * with No. when working
+        autonChooser.addOption("XXX Run Intake XXX", auton_Default); // " "Low Cube + Drive" TODO Replace * with No. when working
         // autonChooser.addOption("* Med Cube + Drive", auton_Default); // TODO replace the variable representing the auton command group from above
         // autonChooser.addOption("* Low Cube + Balance", auton_Default); // TODO
         // autonChooser.addOption("* Med Cube + Balance", auton_Default); // TODO
@@ -169,9 +165,6 @@ public class RobotContainer {
         Shuffleboard.getTab("Auton").add(autonChooser).withSize(2, 4); // Create an Auton "Tab"
 
         Shuffleboard.getTab("Experimental Commands"); // Create an Auton "Tab"
-
-        SmartDashboard.putData("Stow Arm", new cgStow(armSubsystem, m_extend, wristSubsystem, intakeSubsystem));
-
 
         configureButtonBindings();
         configureDefaultCommands();
@@ -189,7 +182,7 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
 
-        SmartDashboard.putData("Intake In", new SetIntakeCone(intakeSubsystem));
+        SmartDashboard.putData("Intake In", new SetIntakeIn2(intakeSubsystem));
 
         
         /* Driver Button Bindings */
@@ -198,13 +191,13 @@ public class RobotContainer {
         creepButton.onTrue(new InstantCommand(() -> SetCreepToggle(!GetCreepToggle())));// inverts creep when button
 
         /* Operator Button Bindings */
-        // stowArm.onTrue(new  cgStow(ar;
+        // intakeIn.whileTrue(new  InstantCommand(() -> intakeSubsystem.SetDriveIntake()));
         // intakeOut.whileTrue(new InstantCommand(() -> intakeSubsystem.SetDriveOutake()));
-        intakeCone.whileTrue(new  InstantCommand(() -> intakeSubsystem.SetDriveIntake()));
-        intakeCube.whileTrue(new InstantCommand(() -> intakeSubsystem.SetDriveOutake()));
+        intakeIn.whileTrue(new  InstantCommand(() -> intakeSubsystem.SetDriveIntake()));
+        intakeOut.whileTrue(new InstantCommand(() -> intakeSubsystem.SetDriveOutake()));
 
-        intakeCone.whileFalse(new InstantCommand(() -> intakeSubsystem.ShutUp()));
-        intakeCube.whileFalse(new InstantCommand(() -> intakeSubsystem.ShutUp()));
+        intakeIn.whileFalse(new InstantCommand(() -> intakeSubsystem.ShutUp()));
+        intakeOut.whileFalse(new InstantCommand(() -> intakeSubsystem.ShutUp()));
         
         autonCommand.incrementPIDs(() -> driver.getRawAxis(LT),() ->  driver.getRawAxis(RT));
 
