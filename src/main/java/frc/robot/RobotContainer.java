@@ -323,7 +323,9 @@ public class RobotContainer {
   tab.addNumber("Arm_Extent", () -> armExtendSub.ReadExtension());
   tab.addNumber( "new gyro read", () -> s_Swerve.getYaw().getDegrees());
   tab.addNumber( "Arm Rotation(°)", () -> armSub.ConvertFXEncodertoDeg(armSub.GetRotation()));
-  tab.addBoolean("Limit Switch", () -> limit.get());
+  tab.addBoolean("Arm Main Limit Switch", () -> limit.get());
+  tab.addBoolean("", () -> limit.get());
+
 
     }
 }
