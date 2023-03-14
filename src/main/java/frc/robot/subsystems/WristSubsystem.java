@@ -36,7 +36,8 @@ public class WristSubsystem extends SubsystemBase {
      * 
      */
     public WristSubsystem() {
-        m_motorController.setNeutralMode(NeutralMode.Coast);
+        m_motorController.setNeutralMode(NeutralMode.Brake);
+        m_motorController.setSelectedSensorPosition(0);
 
         // m_motorController.configPeakOutputForward(0.5);
         // m_motorController.configPeakOutputReverse(-0.5);
@@ -92,8 +93,8 @@ public class WristSubsystem extends SubsystemBase {
     {
         System.out.println("Internal method being called; position control");
         System.out.println();
-        m_motorController.configPeakOutputForward(0.5);
-        m_motorController.configPeakOutputReverse(-0.5);
+        // m_motorController.configPeakOutputForward(0.8);
+        // m_motorController.configPeakOutputReverse(-0.8);
         m_motorController.set(ControlMode.Position, (double)input);
 
     }

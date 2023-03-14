@@ -221,9 +221,9 @@ public class RobotContainer {
         visionSub.setDefaultCommand(new GetTagID(visionSub));
 
         armSub.setDefaultCommand(
-                new RotateArmManual(armSub, () -> 0.65 * operator.getRawAxis(translationAxis)));
+                new RotateArmManual(armSub, () -> operator.getRawAxis(translationAxis)));
 
-                wristSub.setDefaultCommand(new MoveWristManual(wristSub,  () -> 0.65 * operator.getRawAxis(rotationAxis)));
+                wristSub.setDefaultCommand(new MoveWristManual(wristSub,  () ->  operator.getRawAxis(rotationAxis)));
 
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(
@@ -313,6 +313,17 @@ public class RobotContainer {
 ////             new SeekBalanceCommand(s_Swerve));
 //todo test this in the first place
     return autonChooser.getSelected();
+
+    }
+
+    public void DebugMethodSingle() 
+    {
+        
+  var tab = Shuffleboard.getTab("Driver Diagnostics");
+  tab.addNumber("Arm_Extent", () -> armExtendSub.ReadExtension());
+  tab.addNumber( "new gyro read", () -> s_Swerve.getYaw().getDegrees());
+  tab.addNumber( "Arm Rotation(°)", () -> armSub.ConvertFXEncodertoDeg(armSub.GetRotation()));
+  tab.addBoolean("Limit Switch", () -> limit.get());
 
     }
 }
