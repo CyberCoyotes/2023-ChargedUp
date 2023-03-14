@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.*;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -11,44 +12,84 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
  * Rot  | Wrist     | Notes
  * -------------------------------------
  * 0    | 00,000    | Home position
- * 0    | 44,000    | Wrist is resting, flipped down
+ * 0    | 11,000    | Wrist for Loading
+ * 0    | 19,000    | Wrist is level
+ * 0    | 44,000    | Wrist is resting, flipped down (bad position)
+ * 
  * 10   | 22,000    | Wrist is level
  * 
+ * -90  | 72,250    | Position to deploy mid level cone. Also needs full extension
  */
 
-
 public class WristSubsystem extends SubsystemBase {
-    private TalonFX m_motorController = new TalonFX(Constants.Arm.WRIST_TALONFX_ID);
 
-    double WRIST_HOME_POS = 22000;
+    private TalonFX m_motorController = new TalonFX(Arm.WRIST_TALONFX_ID);
 
     /* If ARM ROTATION = 10 or less, then setWristHome() */
     /*
-    
-    TODO test encoder values (direction of sensors relative to positive motor input), limits
-    TODO Find comfortable input value, create virtual speed limiter
-
-    
-    */
+     * 
+     * TODO test encoder values (direction of sensors relative to positive motor
+     * input), limits
+     * TODO Find comfortable input value, create virtual speed limiter
+     * 
+     * 
+     */
     public WristSubsystem() {
         m_motorController.configPeakOutputForward(0.5);
         m_motorController.configPeakOutputReverse(-0.5);
-        
+
     }
-    public void PercentOutputSupplierDrive(double input)
-    {
+
+    public void PercentOutputSupplierDrive(double input) {
         m_motorController.set(ControlMode.PercentOutput, input);
     }
 
     public void setWristHome(double input) {
-        
-        m_motorController.set(ControlMode.Position, WRIST_HOME_POS);
-        
-    }
-    public double getWristPos() {
-        return m_motorController.getSelectedSensorPosition();
-        // Return the current encoder position of the Wrist
-        // return 0; // leaving for the LOLs 
+
+        m_motorController.set(ControlMode.Position, 0);
+
     }
 
+    // Set the wrist position to level i.e. parallel to the ground
+    public void setWristPosLevel(double input) {
+        m_motorController.set(ControlMode.Position, Constants.WRIST_POS_LEVEL);
+
+    }
+
+    /*
+     * Set the wrist position to using encoder values
+     * that is optimize for loading.
+     * Wrist must be pointed slightly up or it will hit the hall when loading
+     */
+    public void setWristPosLoad(double input) {
+        m_motorController.set(ControlMode.Position, Constants.WRIST_POS_LOAD);
+    }
+
+    /*
+     * Set the wrist position to using encoder values
+     * Optimize for deploying a cone to mid level.
+     * Wrist must be pointed down
+     */
+    public void setWristMidCone(double input) {
+        m_motorController.set(ControlMode.Position, Constants.WRIST_POS_MID);
+    }
+
+    // Return the current encoder position of the Wrist
+    public double getWristPos() {
+        return m_motorController.getSelectedSensorPosition();
+        // return 0; // leaving for the LOLs. It wasn't returning an encoder value :P
+    }
+
+       /**
+     * @param input the encoder degrees to set the arm at. Note the arm extends to roughly 0 at rest, and 14500 units maximum. 
+     */
+    public void SetWristToTickPosition(double input)
+    {
+        System.out.println("Internal method being called; position control");
+        System.out.println();
+        m_motorController.configPeakOutputForward(0.5);
+        m_motorController.configPeakOutputReverse(-0.5);
+        m_motorController.set(ControlMode.Position, (double)input);
+
+    }
 }

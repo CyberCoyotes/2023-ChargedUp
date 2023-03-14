@@ -38,9 +38,25 @@ public final class Constants {
 
     public static final int INTAKE_WHEELS_MOTOR_ID = 11; // Connected to Victor SPX
 
-    public static final int REV_CLAW_ID = 0; // REV Pneumatics Hub Single channel for Claw
+    // public static final int REV_CLAW_ID = 0; // REV Pneumatics Hub Single channel for Claw
     
     public static final double stickDeadband = 0.1;
+
+    public static int WRIST_POS_HOME = 0;
+
+    public static int WRIST_POS_LEVEL = 19000;
+
+    /* First attempt 11000
+    * experimental range is probably between 9200 to 11200
+    */
+    public static int WRIST_POS_LOAD = 11000; 
+    
+    /* First attempt 72250
+    * experimental range is probably between 9200 to 11200
+    */
+    public static int WRIST_POS_MID = 72250;
+
+     //#region arm   
     public static final int ARM_EXTENT_LIMIT = -14000;//playing it safe
     public static final class Arm 
     {
@@ -57,6 +73,7 @@ public final class Constants {
         public static final int ARM_ROTATION_RANGE_TICKS = 458752;
        
         public static final int ARM_INTAKE_PWM_PORT = 0;
+       
 
         /**
          * The estimated encoder position at the resting  
@@ -81,11 +98,15 @@ public final class Constants {
         public static final int ARM_STOW_EXTENT_ENCODER = 200;
         public static final int EXTENSTION_MID_ENCODER = 5500;
         // public static final int LimitDIO = 0;
+
+        
         public static final int WRIST_TALONFX_ID = 12; 
         
 
 
     }
+    //#endregion
+
     public static final class Swerve {
 
         

@@ -12,11 +12,11 @@ package frc.robot.commands;
 import frc.robot.subsystems.IntakeSubsystemV2;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class SetIntakeIn2 extends CommandBase {
+public class SetIntakeCone extends CommandBase {
 
    private final IntakeSubsystemV2 m_intakeSubsystem; // made into a final
 
-   public SetIntakeIn2(IntakeSubsystemV2 subsystem) {
+   public SetIntakeCone(IntakeSubsystemV2 subsystem) {
       m_intakeSubsystem = subsystem;
       addRequirements(m_intakeSubsystem);
    }
