@@ -121,7 +121,7 @@ public class RobotContainer {
     Command auton_ConeMidLevel = // Deploys a cone to middle level in auton
         new cgConeToMiddle(armSub, armExtendSub, wristSub, intakeSub); 
     Command auton_CubeMidLevel = //Deploys a cube to middle level in auton
-        new cgConeToMiddle(armSub, armExtendSub, wristSub, intakeSub); // 
+        new cgCubeToMiddleV2(armSub, armExtendSub, wristSub, intakeSub); // 
     // #endregion
 
     SendableChooser<Command> autonChooser = new SendableChooser<>(); // TODO Auton test
