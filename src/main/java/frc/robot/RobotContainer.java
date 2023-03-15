@@ -22,6 +22,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+// import frc.robot.autos.LongDriveCubeMiddle;
+// import frc.robot.autos.LongDrive;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -116,15 +118,25 @@ public class RobotContainer {
 
     Command auton_Default = // TODO Set
         new SetIntakeCone(intakeSub); //
+
+    // Command auton_LongDriveCubeMiddle = //Deploys a cube to middle level in auton
+        // new LongDriveCubeMiddle(armSub, armExtendSub, s_Swerve, RotateArmTEST); // 
+
     Command auton_ChargeStation = // Drives out, and then back onto the Charge Station
         new DriveOutAndChargeStation(s_Swerve, robotCentric);
+        
     Command auton_ConeLow = // Deploys a cone to middle level in auton
         new cgConeLow(armSub, armExtendSub, wristSub, intakeSub); 
         
     Command auton_ConeMiddle = // Deploys a cone to middle level in auton
         new cgConeMiddle(armSub, armExtendSub, wristSub, intakeSub); 
+
+    Command auton_CubeLow = //Deploys a cube to middle level in auton
+        new cgCubeLow(armSub, armExtendSub, wristSub, intakeSub); // 
+
     Command auton_CubeMiddle = //Deploys a cube to middle level in auton
         new cgCubeMiddle(armSub, armExtendSub, wristSub, intakeSub); // 
+
     // #endregion
 
     SendableChooser<Command> autonChooser = new SendableChooser<>(); // TODO Auton test
@@ -231,12 +243,14 @@ public class RobotContainer {
     {
 
         autonChooser.setDefaultOption("XXX Run Intake XXX", auton_Default); // "Drive Only" Command or Command Group
-        autonChooser.addOption("XXX Cone to Low XXX", auton_ConeLow); // " "Low Cube + Drive" TODO Replace * with No. when working
-        autonChooser.addOption("XXX Cone to Middle XXX", auton_ConeMiddle); // " "Low Cube + Drive" TODO Replace * with No. when working
+        // autonChooser.addOption("XXX Cone to Low XXX", auton_ConeLow); // " "Low Cube + Drive" TODO Replace * with No. when working
+        
+        // autonChooser.addOption("XXX Long Drive + Cube XXX", auton_LongDriveCubeMiddle); // " "Low Cube + Drive" TODO Replace * with No. when working
 
-        autonChooser.addOption("XXX Cube to Middle XXX", auton_CubeMiddle); // TODO replace the variable representing the auton command group from above
-        autonChooser.addOption("XXX Out & back Charge Station XXX", auton_ChargeStation); // TODO replace the variable representing the auton command group from above
-        autonChooser.addOption("Arm Extent Auto Test", extendMiddle); //! for testing; getting this command to work is a MUST
+        // autonChooser.addOption("XXX Cone to Middle XXX", auton_ConeMiddle); // " "Low Cube + Drive" TODO Replace * with No. when working
+        autonChooser.addOption("Cube to Middle", auton_CubeMiddle); // TODO replace the variable representing the auton command group from above
+        // autonChooser.addOption("XXX Out & back Charge Station XXX", auton_ChargeStation); // TODO replace the variable representing the auton command group from above
+        // autonChooser.addOption("Arm Extent Auto Test", extendMiddle); //! for testing; getting this command to work is a MUST
        
     }
 
