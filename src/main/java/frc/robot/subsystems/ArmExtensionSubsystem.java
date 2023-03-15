@@ -33,10 +33,7 @@ import frc.robot.Constants.Arm;
 
 public class ArmExtensionSubsystem extends SubsystemBase {
 
-    /**
-     * Extends the arm for deployement to level 2 or level 2
-     * Should only be used when arm has been rotated for deployment position
-     */
+ 
     private TalonSRX m_motorController = new TalonSRX(Constants.ARM_EXTENDER_MOTOR_ID);
     
     // private Encoder m_Encoder = new Encoder(0, 0, 0)
@@ -64,22 +61,8 @@ public class ArmExtensionSubsystem extends SubsystemBase {
 
     }
     public ArmExtensionSubsystem() {
-
-        // m_motorController.setSelectedSensorPosition(0);
-        // m_motorController.setSensorPhase(false);//todo find if this is good enough
-       
       Setup();
-
-        // m_motorController.configPeakOutputReverse(.4);
-        // m_motorController.configPeakOutputForward(.4);
-
     }
-    /**
-     * Retracts arm from a deployement to level 2 or level 3
-     * Should only be used when arm has been rotated for deployment position
-     */
-      //no state?
-
     public void setArmIn() {
         m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_POSITION_IN);
         
@@ -98,10 +81,10 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     public void SetArmToTickPosition(int input)
     {
         System.out.println("Internal method being called; position control");
-        System.out.println();
-        m_motorController.configPeakOutputForward(0.4);
-        m_motorController.configPeakOutputReverse(-0.4);
-        m_motorController.set(ControlMode.Position, (double)input);
+        // System.out.println();
+        // m_motorController.configPeakOutputForward(0.4);
+        // m_motorController.configPeakOutputReverse(-0.4);
+        m_motorController.set(ControlMode.Position, input);
 
     }
 
