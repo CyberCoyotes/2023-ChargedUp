@@ -61,6 +61,8 @@ public class RobotContainer {
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
+    private final int wristAxis = XboxController.Axis.kRightY.value;
+
 
     private final int LT = XboxController.Axis.kLeftTrigger.value;
     private final int RT = XboxController.Axis.kRightTrigger.value;
@@ -87,14 +89,12 @@ public class RobotContainer {
     /* Y */private final JoystickButton intakeCube = new JoystickButton(operator, XboxController.Button.kX.value);
             // Intake Cube is same as OuttakeCone
 
-    // /* A */private final JoystickButton wristDown = new JoystickButton(operator, XboxController.Button.kA.value);
-    // /* B */private final JoystickButton wristUp = new JoystickButton(operator, XboxController.Button.kB.value);
+    // /* A */private final JoystickButton  = new JoystickButton(operator, XboxController.Button.kA.value);
+    // /* B */private final JoystickButton  = new JoystickButton(operator, XboxController.Button.kB.value);
 
 
     // #endregion Operator Buttons
     // #region Subsystems
-//// private final ClawSubsystem m_claw = new ClawSubsystem();
-    ////private final IntakeSubsystem m_intake = new IntakeSubsystem();
 
     private final ArmExtensionSubsystem armExtendSub = new ArmExtensionSubsystem();
     private final ArmSubsystem armSub = new ArmSubsystem(limit);
@@ -185,8 +185,8 @@ public class RobotContainer {
         creepButton.onTrue(new InstantCommand(() -> SetCreepToggle(!GetCreepToggle())));// inverts creep when button
 
         /* Operator Button Bindings */
-        stowArm.onTrue(new cgStow(armSub, armExtendSub, wristSub, intakeSub));
-        loadElement.onTrue(new cgLoad(armSub, armExtendSub, wristSub, intakeSub));
+        // stowArm.onTrue(new cgStow(armSub, armExtendSub, wristSub, intakeSub));
+        // loadElement.onTrue(new cgLoad(armSub, armExtendSub, wristSub, intakeSub));
         intakeCone.whileTrue(new  InstantCommand(() -> intakeSub.SetDriveIntake()));
         intakeCube.whileTrue(new InstantCommand(() -> intakeSub.SetDriveOutake()));
 
@@ -204,7 +204,7 @@ public class RobotContainer {
         armSub.setDefaultCommand(
                 new RotateArmManual(armSub, () -> operator.getRawAxis(translationAxis)));
 
-                wristSub.setDefaultCommand(new MoveWristManual(wristSub,  () ->  operator.getRawAxis(rotationAxis)));
+                wristSub.setDefaultCommand(new MoveWristManual(wristSub,  () ->  operator.getRawAxis(wristAxis)));
 
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(
