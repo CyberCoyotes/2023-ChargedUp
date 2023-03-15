@@ -97,7 +97,7 @@ public class RobotContainer {
 
     /* SELECT */private final JoystickButton zeroArmEncoder = new JoystickButton(operator,
             XboxController.Button.kBack.value);
-    /* LB */private final JoystickButton loadStation = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+    /* LB */private final JoystickButton loadElement = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
 
     /* RB */private final JoystickButton stowArm = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
@@ -131,7 +131,7 @@ public class RobotContainer {
     MoveUntilSensor rotationMoveUntilSensor;
     MoveUntilSensor extentionMoveUntilSensor;
     DriveOutAndChargeStation autonCommand = new DriveOutAndChargeStation(s_Swerve, robotCentric);
-    RotateWristLevel c_wristLevel = new RotateWristLevel(wristSub);
+    // RotateWristLevel c_wristLevel = new RotateWristLevel(wristSub);
     // SetWristLoad load = new SetWristLoad(wristSubsystem);
 
     Command auton_Default = // TODO Set
@@ -145,6 +145,10 @@ public class RobotContainer {
     // #endregion
 
     SendableChooser<Command> autonChooser = new SendableChooser<>(); // TODO Auton test
+    
+        // Shuffleboard.getTab("Auton").add(autonChooser).withSize(2, 4); // Create an Auton "Tab"
+
+        // Shuffleboard.getTab("Experimental Commands"); // Create an Auton "Tab"
 
     public void DebugMethod() {
         
@@ -179,8 +183,6 @@ public class RobotContainer {
 
         Shuffleboard.getTab("Experimental Commands"); // Create an Auton "Tab"
 
-        SmartDashboard.putData("Wrist to Level", new RotateWristLevel(wristSub));
-
 
         configureButtonBindings();
         configureDefaultCommands();
@@ -198,7 +200,8 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
 
-        SmartDashboard.putData("Intake In", new SetIntakeCone(intakeSub));
+        SmartDashboard.putData("Stow Arm", new cgStow(armSub, armExtendSub, wristSub, intakeSub));
+        SmartDashboard.putData("Load Element", new cgLoad(armSub, armExtendSub, wristSub, intakeSub));
 
         
         /* Driver Button Bindings */
@@ -207,15 +210,13 @@ public class RobotContainer {
         creepButton.onTrue(new InstantCommand(() -> SetCreepToggle(!GetCreepToggle())));// inverts creep when button
 
         /* Operator Button Bindings */
-        // stowArm.onTrue(new  cgStow(ar;
-        // intakeOut.whileTrue(new InstantCommand(() -> intakeSubsystem.SetDriveOutake()));
+        stowArm.onTrue(new cgStow(armSub, armExtendSub, wristSub, intakeSub));
+        loadElement.onTrue(new cgLoad(armSub, armExtendSub, wristSub, intakeSub));
         intakeCone.whileTrue(new  InstantCommand(() -> intakeSub.SetDriveIntake()));
         intakeCube.whileTrue(new InstantCommand(() -> intakeSub.SetDriveOutake()));
 
         intakeCone.whileFalse(new InstantCommand(() -> intakeSub.ShutUp()));
         intakeCube.whileFalse(new InstantCommand(() -> intakeSub.ShutUp()));
-
-        loadStation.whileTrue(new InstantCommand(() ->  wristSub.setWristPositionLoad()));
 
         autonCommand.incrementPIDs(() -> driver.getRawAxis(LT),() ->  driver.getRawAxis(RT));
 
