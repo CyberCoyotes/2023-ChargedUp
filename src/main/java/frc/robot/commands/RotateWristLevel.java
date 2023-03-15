@@ -1,7 +1,7 @@
 /*--------------------------------------------------------* 
  * 
  * 2023 Charged Up
- * commands/rotateArm
+ * Rotate Wrist
  * 
  * When button is pressed:
  ** Rotates the arm rotates "x" encoder marks to an almost deployed arm position
@@ -28,12 +28,12 @@ public class RotateWristLevel extends CommandBase {
     @Override
     public void initialize() {
         // TODO Auto-generated method stub
-        // super.initialize();
+        super.initialize();
     }
     
     @Override
     public void execute() {
-        m_wristSub.setWristPosLevel(Constants.WRIST_POS_LEVEL);
+        m_wristSub.setWristToPosition(Constants.WRIST_POS_LEVEL);
     }
     @Override
     public boolean isFinished() {

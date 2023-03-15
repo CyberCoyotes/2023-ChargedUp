@@ -118,10 +118,13 @@ public class RobotContainer {
         new SetIntakeCone(intakeSub); //
     Command auton_ChargeStation = // Drives out, and then back onto the Charge Station
         new DriveOutAndChargeStation(s_Swerve, robotCentric);
-    Command auton_ConeMidLevel = // Deploys a cone to middle level in auton
-        new cgConeToMiddle(armSub, armExtendSub, wristSub, intakeSub); 
-    Command auton_CubeMidLevel = //Deploys a cube to middle level in auton
-        new cgCubeToMiddleV2(armSub, armExtendSub, wristSub, intakeSub); // 
+    Command auton_ConeLow = // Deploys a cone to middle level in auton
+        new cgConeLow(armSub, armExtendSub, wristSub, intakeSub); 
+        
+    Command auton_ConeMiddle = // Deploys a cone to middle level in auton
+        new cgConeMiddle(armSub, armExtendSub, wristSub, intakeSub); 
+    Command auton_CubeMiddle = //Deploys a cube to middle level in auton
+        new cgCubeMiddle(armSub, armExtendSub, wristSub, intakeSub); // 
     // #endregion
 
     SendableChooser<Command> autonChooser = new SendableChooser<>(); // TODO Auton test
@@ -228,8 +231,10 @@ public class RobotContainer {
     {
 
         autonChooser.setDefaultOption("XXX Run Intake XXX", auton_Default); // "Drive Only" Command or Command Group
-        autonChooser.addOption("XXX Cone to Middle XXX", auton_ConeMidLevel); // " "Low Cube + Drive" TODO Replace * with No. when working
-        autonChooser.addOption("XXX Cube to Middle XXX", auton_CubeMidLevel); // TODO replace the variable representing the auton command group from above
+        autonChooser.addOption("XXX Cone to Low XXX", auton_ConeLow); // " "Low Cube + Drive" TODO Replace * with No. when working
+        autonChooser.addOption("XXX Cone to Middle XXX", auton_ConeMiddle); // " "Low Cube + Drive" TODO Replace * with No. when working
+
+        autonChooser.addOption("XXX Cube to Middle XXX", auton_CubeMiddle); // TODO replace the variable representing the auton command group from above
         autonChooser.addOption("XXX Out & back Charge Station XXX", auton_ChargeStation); // TODO replace the variable representing the auton command group from above
         autonChooser.addOption("Arm Extent Auto Test", extendMiddle); //! for testing; getting this command to work is a MUST
        

@@ -6,6 +6,7 @@ import frc.robot.Constants.*;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 /*
@@ -55,8 +56,8 @@ public class WristSubsystem extends SubsystemBase {
      * when the arm rotation is approximately zero
     */
 
-    public void setWristPosLevel(double input) {
-        m_motorController.set(ControlMode.Position, Constants.WRIST_POS_LEVEL);
+    public void setWristToPosition(int ticks) {
+        m_motorController.set(TalonFXControlMode.Position, ticks);
 
     }
 
