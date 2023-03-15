@@ -16,9 +16,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
  * 0    | 11,000    | Wrist for Loading
  * 0    | 19,000    | Wrist is level
  * 0    | 44,000    | Wrist is resting, flipped down (bad position)
- * 
  * 10   | 22,000    | Wrist is level
- * 
  * -90  | 72,250    | Position to deploy mid level cone. Also needs full extension
  */
 
@@ -29,10 +27,9 @@ public class WristSubsystem extends SubsystemBase {
     /* If ARM ROTATION = 10 or less, then setWristHome() */
     /*
      * 
-     * TODO test encoder values (direction of sensors relative to positive motor
-     * input), limits
+     * TODO test encoder values 
+     * (direction of sensors relative to positive motor input), limits
      * TODO Find comfortable input value, create virtual speed limiter
-     * 
      * 
      */
     public WristSubsystem() {
@@ -54,7 +51,10 @@ public class WristSubsystem extends SubsystemBase {
 
     }
 
-    // Set the wrist position to level i.e. parallel to the ground
+    /* Set the wrist position to level i.e. parallel to the ground 
+     * when the arm rotation is approximately zero
+    */
+
     public void setWristPosLevel(double input) {
         m_motorController.set(ControlMode.Position, Constants.WRIST_POS_LEVEL);
 
@@ -66,8 +66,8 @@ public class WristSubsystem extends SubsystemBase {
      * Wrist must be pointed slightly up or it will hit the hall when loading
      */
     public void setWristPositionLoad() {
-        // m_motorController.set(ControlMode.Position, Constants.WRIST_POS_LOAD);
-        m_motorController.set(ControlMode.Position, 11000);
+        m_motorController.set(ControlMode.Position, Constants.WRIST_POS_LOAD);
+        // m_motorController.set(ControlMode.Position, 11000);
 
     }
 

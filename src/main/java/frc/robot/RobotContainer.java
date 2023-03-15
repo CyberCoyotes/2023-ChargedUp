@@ -134,11 +134,14 @@ public class RobotContainer {
     RotateWristLevel c_wristLevel = new RotateWristLevel(wristSub);
     // SetWristLoad load = new SetWristLoad(wristSubsystem);
 
-    Command auton_Default = // TODO Set the
-        new SetIntakeCone(intakeSub); // TODO An autonomous command or command group
-    Command auton_ConeToMiddle = //
+    Command auton_Default = // TODO Set
+        new SetIntakeCone(intakeSub); //
+    Command auton_ChargeStation = // Drives out, and then back onto the Charge Station
+        new DriveOutAndChargeStation(s_Swerve, robotCentric);
+    Command auton_ConeMidLevel = // Deploys a cone to middle level in auton
+        new cgConeToMiddle(armSub, armExtendSub, wristSub, intakeSub); 
+    Command auton_CubeMidLevel = //Deploys a cube to middle level in auton
         new cgConeToMiddle(armSub, armExtendSub, wristSub, intakeSub); // 
-
     // #endregion
 
     SendableChooser<Command> autonChooser = new SendableChooser<>(); // TODO Auton test
@@ -162,8 +165,10 @@ public class RobotContainer {
     public RobotContainer() {
 
         autonChooser.setDefaultOption("XXX Run Intake XXX", auton_Default); // "Drive Only" Command or Command Group
-        autonChooser.addOption("XXX Cone to Middle XXX", auton_ConeToMiddle); // " "Low Cube + Drive" TODO Replace * with No. when working
-        // autonChooser.addOption("* Med Cube + Drive", auton_Default); // TODO replace the variable representing the auton command group from above
+        autonChooser.addOption("XXX Cone to Middle XXX", auton_ConeMidLevel); // " "Low Cube + Drive" TODO Replace * with No. when working
+        autonChooser.addOption("XXX Cube to Middle XXX", auton_CubeMidLevel); // TODO replace the variable representing the auton command group from above
+        autonChooser.addOption("XXX Out & back Charge Station XXX", auton_ChargeStation); // TODO replace the variable representing the auton command group from above
+       
         // autonChooser.addOption("* Low Cube + Balance", auton_Default); // TODO
         // autonChooser.addOption("* Med Cube + Balance", auton_Default); // TODO
         // autonChooser.addOption("* Low Cube + Out & Back", auton_Default); // TODO
