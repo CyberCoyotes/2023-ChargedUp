@@ -287,6 +287,6 @@ public final class Constants {
 
     public static final int LIMIT_SWITCH_ARM_PORT = 3; // channel or port on roboRIO DIO
 
-    public static final int ARM_ROTATE_POS_MID = -40;
+    public static final int ARM_ROTATE_POS_MID = -50;
     
 } // end of class

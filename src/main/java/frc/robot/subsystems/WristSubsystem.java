@@ -37,8 +37,8 @@ public class WristSubsystem extends SubsystemBase {
         m_motorController.setNeutralMode(NeutralMode.Brake);
         m_motorController.setSelectedSensorPosition(0);
 
-        // m_motorController.configPeakOutputForward(0.5);
-        // m_motorController.configPeakOutputReverse(-0.5);
+        m_motorController.configPeakOutputForward(0.25);
+        m_motorController.configPeakOutputReverse(-0.25);
 
     }
 

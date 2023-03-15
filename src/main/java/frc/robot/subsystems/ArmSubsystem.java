@@ -141,7 +141,7 @@ public class ArmSubsystem extends SubsystemBase {
     
     public void PercentOutputSupplierDrive(double input) {
         
-        if (input < 0 && limitSwitch.get()) {
+        if (input > 0 && limitSwitch.get()) { //Corrects ? the limit switch so arm can go back out
             return;
         }
         else

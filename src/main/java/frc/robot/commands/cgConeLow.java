@@ -10,6 +10,9 @@ import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystemV2;
 import frc.robot.subsystems.WristSubsystem;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -20,17 +23,19 @@ public class cgConeLow extends SequentialCommandGroup{
     public cgConeLow
     (ArmSubsystem armSub, ArmExtensionSubsystem armExtSub, WristSubsystem wristSub, IntakeSubsystemV2 intakeSub) {
         addCommands(
-            new RotateWristLevel(wristSub).withTimeout(1)
-            , new RotateArmArg(armSub, -30).withTimeout(.75)
-            , new RotateWristLevel(wristSub).withTimeout(1)
+            new RotateArmArg(armSub, -30).withTimeout(1)
+            , new WaitCommand(0.25) // FIXME excessive for testing
+
+            // Ideally the dead condition would be when the wrist achieves its angle
+            , new ParallelDeadlineGroup( // Use ParallelRaceGroup if this doesn't work 
+                new WristToArg(wristSub, 19000)
+                , new SetIntakeCube(intakeSub).withTimeout(1)) // deploys a cone (trust me)
             
-            // , new WaitCommand(0.25) // FIXME excessive for testing
-            , new SetIntakeCube(intakeSub).withTimeout(1.5) // deploys a cone)
-            // , new WaitCommand(0.5) // FIXME excessive for testing 
-            //,  new cgStow(armSub, armExtSub, wristSub, intakeSub)
+            , new WaitCommand(0.5) // FIXME excessive for testing 
+                    //,  new cgStow(armSub, armExtSub, wristSub, intakeSub)
             // , new WristToArg(wristSub, Constants.WRIST_POS_LEVEL)
             // , new WaitCommand(0.5) // FIXME excessive for testing
-            // , new RotateArmArg(armSub, 10)
+            // , new RotateArmArg(armSub, -5)
         );
     }
 }
