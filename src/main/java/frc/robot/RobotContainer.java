@@ -10,20 +10,8 @@
 
 package frc.robot;
 
-import java.util.List;
-
-import javax.swing.plaf.synth.Region;
-
 import com.ctre.phoenix.led.CANdle;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -33,14 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Constants.Arm;
-import frc.robot.Constants.AutoConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -131,8 +112,7 @@ public class RobotContainer {
     MoveUntilSensor rotationMoveUntilSensor;
     MoveUntilSensor extentionMoveUntilSensor;
     DriveOutAndChargeStation autonCommand = new DriveOutAndChargeStation(s_Swerve, robotCentric);
-    // RotateWristLevel c_wristLevel = new RotateWristLevel(wristSub);
-    // SetWristLoad load = new SetWristLoad(wristSubsystem);
+    ArmExtendMiddle extendMiddle = new ArmExtendMiddle(armExtendSub);
 
     Command auton_Default = // TODO Set
         new SetIntakeCone(intakeSub); //
@@ -168,11 +148,6 @@ public class RobotContainer {
       
     public RobotContainer() {
 
-        autonChooser.setDefaultOption("XXX Run Intake XXX", auton_Default); // "Drive Only" Command or Command Group
-        autonChooser.addOption("XXX Cone to Middle XXX", auton_ConeMidLevel); // " "Low Cube + Drive" TODO Replace * with No. when working
-        autonChooser.addOption("XXX Cube to Middle XXX", auton_CubeMidLevel); // TODO replace the variable representing the auton command group from above
-        autonChooser.addOption("XXX Out & back Charge Station XXX", auton_ChargeStation); // TODO replace the variable representing the auton command group from above
-       
         // autonChooser.addOption("* Low Cube + Balance", auton_Default); // TODO
         // autonChooser.addOption("* Med Cube + Balance", auton_Default); // TODO
         // autonChooser.addOption("* Low Cube + Out & Back", auton_Default); // TODO
@@ -249,8 +224,15 @@ public class RobotContainer {
 
     }
 
-    private void configureAutonChooser() {
+    private void configureAutonChooser() 
+    {
 
+        autonChooser.setDefaultOption("XXX Run Intake XXX", auton_Default); // "Drive Only" Command or Command Group
+        autonChooser.addOption("XXX Cone to Middle XXX", auton_ConeMidLevel); // " "Low Cube + Drive" TODO Replace * with No. when working
+        autonChooser.addOption("XXX Cube to Middle XXX", auton_CubeMidLevel); // TODO replace the variable representing the auton command group from above
+        autonChooser.addOption("XXX Out & back Charge Station XXX", auton_ChargeStation); // TODO replace the variable representing the auton command group from above
+        autonChooser.addOption("Arm Extent Auto Test", extendMiddle); //! for testing; getting this command to work is a MUST
+       
     }
 
     /**
@@ -330,7 +312,6 @@ public class RobotContainer {
   tab.addNumber( "new gyro read", () -> s_Swerve.getYaw().getDegrees());
   tab.addNumber( "Arm Rotation(°)", () -> armSub.ConvertFXEncodertoDeg(armSub.GetRotation()));
   tab.addBoolean("Arm Main Limit Switch", () -> limit.get());
-  tab.addBoolean("", () -> limit.get());
 
 
     }

@@ -99,7 +99,8 @@ public final class Constants {
         // public static final int LimitDIO = 0;
 
         
-        public static final int WRIST_TALONFX_ID = 12; 
+        public static final int WRIST_TALONFX_ID = 12;
+        public static final int ARM_EXTEND_MIDDLE_ENCODER = 9500; 
         
 
 

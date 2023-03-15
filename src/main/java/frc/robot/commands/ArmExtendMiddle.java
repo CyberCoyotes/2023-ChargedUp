@@ -9,6 +9,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.Arm;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 
 public class ArmExtendMiddle extends CommandBase {
@@ -19,5 +20,11 @@ public class ArmExtendMiddle extends CommandBase {
      m_armExtensionSubsystem = subsystem;
      addRequirements(m_armExtensionSubsystem);
     }
+
+    @Override
+    public void execute() {
+        m_armExtensionSubsystem.SetArmToTickPosition(Arm.ARM_EXTEND_MIDDLE_ENCODER);
+    }
+    
 
 }
