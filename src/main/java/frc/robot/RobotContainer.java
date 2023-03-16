@@ -140,15 +140,19 @@ public class RobotContainer {
         SmartDashboard.putNumber("Arm_Extent", armExtendSub.ReadExtension());
         SmartDashboard.putNumber("new gyro read", s_Swerve.getYaw().getDegrees());
         SmartDashboard.putNumber("Arm Rotation(°)", (armSub.GetRotationInDeg()));
+        SmartDashboard.putNumber("Arm Rotation(Ticks)", (armSub.GetRotation()));
         SmartDashboard.putBoolean("Limit Switch", limit.get());
         SmartDashboard.putNumber("Wrist Encoder", wristSub.getWristPos());
+        SmartDashboard.putString("arm mode", armSub.GetMode());
         
-        try {
-        System.out.println(("ex command " +  armExtendSub.getCurrentCommand().getName()));
+
+
+        // try {
+        // System.out.println(("ex command " +  armExtendSub.getCurrentCommand().getName()));
             
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
+        // } catch (Exception e) {
+        //     // TODO: handle exception
+        // }
 
         
     }
@@ -245,6 +249,7 @@ public class RobotContainer {
         autonChooser.addOption("XXX Cube to Middle XXX", auton_CubeMiddle); // TODO replace the variable representing the auton command group from above
         autonChooser.addOption("XXX Out & back Charge Station XXX", auton_ChargeStation); // TODO replace the variable representing the auton command group from above
         autonChooser.addOption("Arm Extent Auto Test", extendMiddle); //! for testing; getting this command to work is a MUST
+        autonChooser.addOption("Arm Rotate to 90 deg", rotTo90); //! for testing; getting this command to work is a MUST
        
     }
 

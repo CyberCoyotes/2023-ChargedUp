@@ -68,7 +68,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         
     }
     public void setArmOut() {
-        m_motorController.set(TalonSRXControlMode.Position, 9);
+        m_motorController.set(TalonSRXControlMode.Position, 9500);
     }
     public void PercentOutputSupplierDrive(double input)
     {

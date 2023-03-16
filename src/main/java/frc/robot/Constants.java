@@ -90,7 +90,7 @@ public final class Constants {
         public static final double kD = 0; //may need tuning
         public static final double kMaxVelocity = 11468/2; //currently so that the robot may go 1/16th rotation in a second
         public static final double kMaxAcceletation = 11468/2; //tuning needed
-        public static final int ARM_OFFSET_DEGREES = 19;//!Obsolete
+        public static final int ARM_OFFSET_DEGREES = 20;
         public static final double DEG_TO_mRAD = 17.4533;
         public static final double ARM_MAX_DEG = 260;
         public static final int ARM_STOW_ROTATION_DEG = 20;
