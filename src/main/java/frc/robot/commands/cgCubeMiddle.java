@@ -23,7 +23,7 @@ public class cgCubeMiddle extends SequentialCommandGroup{
         addCommands(
             new RotateArmMid(armSub).withTimeout(.75) // because I couldn't get smarter approaches to work
             , new WaitCommand(0.5) // FIXME excessive for testing 
-            , new ArmExtendToArg(armExtSub, (Constants.ARM_EXTENT_LIMIT * 1/2))
+            , new ArmExtendToArg(armExtSub, ()->(Constants.ARM_EXTENT_LIMIT * 1/2))
             , new WaitCommand(0.5) // FIXME excessive for testing            
             , new WristToArg(wristSub, Constants.WRIST_POS_MID)
             , new WaitCommand(0.25) // FIXME excessive for testing

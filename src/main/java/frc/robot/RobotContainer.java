@@ -59,6 +59,8 @@ public class RobotContainer {
     // #endregion
     // #region Analog Controls
     private final int translationAxis = XboxController.Axis.kLeftY.value;
+    private final int rightControllerY = XboxController.Axis.kRightY.value;
+
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
     private final int wristAxis = XboxController.Axis.kRightY.value;
@@ -137,9 +139,17 @@ public class RobotContainer {
         
         SmartDashboard.putNumber("Arm_Extent", armExtendSub.ReadExtension());
         SmartDashboard.putNumber("new gyro read", s_Swerve.getYaw().getDegrees());
-        SmartDashboard.putNumber("Arm Rotation(°)", armSub.ConvertFXEncodertoDeg(armSub.GetRotation()));
+        SmartDashboard.putNumber("Arm Rotation(°)", (armSub.GetRotationInDeg()));
         SmartDashboard.putBoolean("Limit Switch", limit.get());
         SmartDashboard.putNumber("Wrist Encoder", wristSub.getWristPos());
+        
+        try {
+        System.out.println(("ex command " +  armExtendSub.getCurrentCommand().getName()));
+            
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
         
     }
 
@@ -206,8 +216,8 @@ public class RobotContainer {
 
         armSub.setDefaultCommand(
                 new RotateArmManual(armSub, () -> operator.getRawAxis(translationAxis)));
-
-                wristSub.setDefaultCommand(new MoveWristManual(wristSub,  () ->  operator.getRawAxis(wristAxis)));
+        
+                wristSub.setDefaultCommand(new MoveWristManual(wristSub,  () -> .5 * operator.getRawAxis(rightControllerY)));
 
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(
@@ -222,9 +232,7 @@ public class RobotContainer {
                         armExtendSub,
                         () -> operator.getRawAxis(RT),
                         () -> operator.getRawAxis(LT)));
-
-
-
+                // new ArmExtendToArg(armExtendSub, () -> 9500));
     }
 
     private void configureAutonChooser() 
@@ -315,8 +323,8 @@ public class RobotContainer {
   var tab = Shuffleboard.getTab("Driver Diagnostics");
   tab.addNumber("Arm_Extent", () -> armExtendSub.ReadExtension());
   tab.addNumber( "new gyro read", () -> s_Swerve.getYaw().getDegrees());
-  tab.addNumber( "Arm Rotation(°)", () -> armSub.ConvertFXEncodertoDeg(armSub.GetRotation()));
-  tab.addBoolean("Arm Main Limit Switch", () -> limit.get());
+  tab.addNumber( "Arm Rotation(°)", () -> (armSub.GetRotationInDeg()));
+
 
 
     }

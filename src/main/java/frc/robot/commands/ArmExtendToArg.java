@@ -8,36 +8,34 @@
 --------------------------------------------------------*/
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 
 public class ArmExtendToArg extends CommandBase {
    
     private final ArmExtensionSubsystem m_armExtensionSubsystem;
-   private final int target;
-    public ArmExtendToArg(ArmExtensionSubsystem subsystem, int target) {
+   private final DoubleSupplier target;
+    public ArmExtendToArg(ArmExtensionSubsystem subsystem, DoubleSupplier target) {
 
      m_armExtensionSubsystem = subsystem;
      this.target = target;
      addRequirements(m_armExtensionSubsystem);
     }
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
+  
     @Override
     public void initialize() {
         super.initialize();
-        //// m_armExtensionSubsystem.Setup();
     }
     
     @Override
     public void execute() {
-        m_armExtensionSubsystem.SetArmToTickPosition(target);
+        m_armExtensionSubsystem.SetArmToTickPosition((int)this.target.getAsDouble());
     }
     @Override
-    public InterruptionBehavior getInterruptionBehavior() {
-        return InterruptionBehavior.kCancelSelf;
+    public boolean isFinished() {
+        return false;
     }
 
 }

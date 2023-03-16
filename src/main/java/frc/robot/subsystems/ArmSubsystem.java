@@ -71,6 +71,7 @@ public class ArmSubsystem extends SubsystemBase {
         this.limitSwitch = input;
         
         rightMota.configFactoryDefault();
+
         //:The arm is some degrees off from 0 being truly down pointing
         rightMota.configIntegratedSensorOffset( ConvertDegToFXEncoder(Constants.Arm.ARM_OFFSET_DEGREES));
 
@@ -102,6 +103,7 @@ public class ArmSubsystem extends SubsystemBase {
         rightMota.configMotionCruiseVelocity(Arm.kMaxVelocity);
         rightMota.configMotionAcceleration(Arm.kMaxAcceletation);// max accel in units towards endgoal, in sensor
                                                                     // units /0.1 seconds
+                                                                    // rightMota.setSensorPhase(true);
 
         // #endregion PIDF, motion profile configurations
 
@@ -128,7 +130,7 @@ public class ArmSubsystem extends SubsystemBase {
      */
     
     public double GetRotationInDeg() {
-        return ConvertFXEncodertoDeg((rightMota.getSelectedSensorPosition()));
+        return  -ConvertFXEncodertoDeg((rightMota.getSelectedSensorPosition()));
         
     }
     public boolean GetSwtichState()
@@ -141,11 +143,12 @@ public class ArmSubsystem extends SubsystemBase {
     
     public void PercentOutputSupplierDrive(double input) {
         
-        if (input < 0 && limitSwitch.get()) {
+        if (input > 0 && limitSwitch.get()) {
             return;
         }
         else
         {
+            // rightMota.set(ControlMode.PercentOutput, input * .6);// took like 6.5 seconds at 10% output to make a
             rightMota.set(ControlMode.PercentOutput, input * .6);// took like 6.5 seconds at 10% output to make a
         }
                                                                   // 
@@ -212,7 +215,7 @@ public class ArmSubsystem extends SubsystemBase {
      * would be 180, etc
      */
     public void RotateArmToDeg(int degrees) {
-        double target_sensorUnits = ConvertDegToFXEncoder(degrees);// intake //todo the setpoint, figure this out
+        double target_sensorUnits = -ConvertDegToFXEncoder(degrees);// intake //todo the setpoint, figure this out
                                                                    // logically;
         rightMota.configPeakOutputForward(0.5);
         rightMota.configPeakOutputReverse(-0.5);

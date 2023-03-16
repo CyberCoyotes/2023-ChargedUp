@@ -23,8 +23,10 @@ public class ArmExtendMiddle extends CommandBase {
 
     @Override
     public void execute() {
-        m_armExtensionSubsystem.SetArmToTickPosition(Arm.ARM_EXTEND_MIDDLE_ENCODER);
+        m_armExtensionSubsystem.setArmOut();
+        // m_armExtensionSubsystem.SetArmToTickPosition(Arm.ARM_EXTEND_MIDDLE_ENCODER);
     }
+
     
 
 }
