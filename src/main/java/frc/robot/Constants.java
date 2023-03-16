@@ -80,7 +80,7 @@ public final class Constants {
         // public final static double ARM_ROTATE_POSITION_REST = 79* (458752/360);
         public final static double ARM_ROTATE_POSITION_DEPLOY = 1000; // TODO TBD experimentally
         public final static double ARM_ROTATE_POSITION_INTAKE  = 8878; // approximate from testing; compare to the change in angle from rest to deploy
-        public final static double ARM_ROTATE_POSITION_DEPLOY_DEG =  220;//should be 260? TESTING
+        // public final static double ARM_ROTATE_POSITION_DEPLOY_DEG =  220;//should be 260? TESTING
         public final static double EXTENSION_POSITION_OUT = 9500; //playing it safe for now; should be around -14000?
         public final static double EXTENSION_POSITION_IN  = -200;
 
@@ -92,7 +92,7 @@ public final class Constants {
         public static final double kMaxAcceletation = 11468/2; //tuning needed
         public static final int ARM_OFFSET_DEGREES = 20;
         public static final double DEG_TO_mRAD = 17.4533;
-        public static final double ARM_MAX_DEG = 120;
+        public static final double ARM_MAX_DEG = 110;
         public static final int ARM_STOW_ROTATION_DEG = 20;
         public static final int ARM_STOW_EXTENT_ENCODER = 200;
         public static final int EXTENSTION_MID_ENCODER = 5500;
