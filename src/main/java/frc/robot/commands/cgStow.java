@@ -8,11 +8,6 @@
 
 package frc.robot.commands;
 
-<<<<<<< HEAD
-public class cgStow {
-    
-}
-=======
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
@@ -37,4 +32,3 @@ public class cgStow extends SequentialCommandGroup {
     }
 
 }
->>>>>>> experimental

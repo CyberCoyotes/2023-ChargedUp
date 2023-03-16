@@ -5,10 +5,7 @@ import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-<<<<<<< HEAD
-=======
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
->>>>>>> experimental
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 /*
@@ -16,17 +13,11 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
  * Rot  | Wrist     | Notes
  * -------------------------------------
  * 0    | 00,000    | Home position
-<<<<<<< HEAD
- * 0    | 44,000    | Wrist is resting, flipped down
- * 10   | 22,000    | Wrist is level
- * 
-=======
  * 0    | 11,000    | Wrist for Loading
  * 0    | 19,000    | Wrist is level
  * 0    | 44,000    | Wrist is resting, flipped down (bad position)
  * 10   | 22,000    | Wrist is level
  * -90  | 72,250    | Position to deploy mid level cone. Also needs full extension
->>>>>>> experimental
  */
 
 
@@ -37,20 +28,6 @@ public class WristSubsystem extends SubsystemBase {
 
     /* If ARM ROTATION = 10 or less, then setWristHome() */
     /*
-<<<<<<< HEAD
-    
-    TODO test encoder values (direction of sensors relative to positive motor input), limits
-    TODO Find comfortable input value, create virtual speed limiter
-
-    
-    */
-    public WristSubsystem() {
-        m_motorController.setNeutralMode(NeutralMode.Brake);
-        
-        m_motorController.configPeakOutputForward(0.5);
-        m_motorController.configPeakOutputReverse(-0.5);
-        
-=======
      * 
      * TODO test encoder values 
      * (direction of sensors relative to positive motor input), limits
@@ -64,7 +41,6 @@ public class WristSubsystem extends SubsystemBase {
         m_motorController.configPeakOutputForward(0.25);
         m_motorController.configPeakOutputReverse(-0.25);
 
->>>>>>> experimental
     }
     public void PercentOutputSupplierDrive(double input)
     {
@@ -76,8 +52,6 @@ public class WristSubsystem extends SubsystemBase {
         m_motorController.set(ControlMode.Position, WRIST_HOME_POS);
         
     }
-<<<<<<< HEAD
-=======
 
     /* Set the wrist position to level i.e. parallel to the ground 
      * when the arm rotation is approximately zero
@@ -106,18 +80,16 @@ public class WristSubsystem extends SubsystemBase {
      */
     public void setWristMidCone(double input) {
         m_motorController.set(ControlMode.Position, Constants.WRIST_POS_MID);
+        
     }
 
     // Return the current encoder position of the Wrist
->>>>>>> experimental
     public double getWristPos() {
         return m_motorController.getSelectedSensorPosition();
         // Return the current encoder position of the Wrist
         // return 0; // leaving for the LOLs 
     }
 
-<<<<<<< HEAD
-=======
        /**
      * @param input the encoder degrees to set the arm at. Note the arm extends to roughly 0 at rest, and 14500 units maximum. 
      */
@@ -130,5 +102,4 @@ public class WristSubsystem extends SubsystemBase {
         m_motorController.set(ControlMode.Position, (double)input);
 
     }
->>>>>>> experimental
 }
