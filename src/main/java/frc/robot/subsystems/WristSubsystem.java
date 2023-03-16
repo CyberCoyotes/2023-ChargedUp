@@ -34,6 +34,11 @@ public class WristSubsystem extends SubsystemBase {
      * 
      */
     public WristSubsystem() {
+
+        m_motorController.config_kP(0,1);
+        m_motorController.config_kI(0,0);
+        m_motorController.config_kD(0,0);
+
         m_motorController.setNeutralMode(NeutralMode.Brake);
         m_motorController.setSelectedSensorPosition(0);
 

@@ -70,9 +70,10 @@ public class ArmSubsystem extends SubsystemBase {
 
 
         rightMota.setInverted(true);
+        rightMota.setSensorPhase(true);
         // leftMota.setInverted(true);
         this.limitSwitch = input;
-        rightMota.setSelectedSensorPosition(this.ConvertDegToFXEncoder( Arm.ARM_OFFSET_DEGREES));
+        rightMota.setSelectedSensorPosition(this.ConvertDegToFXEncoder(Arm.ARM_OFFSET_DEGREES));
         
 
         //:The arm is some degrees off from 0 being truly down pointing
@@ -80,9 +81,9 @@ public class ArmSubsystem extends SubsystemBase {
 
 
         // roughly 20 degree offset
-        rightMota.configForwardSoftLimitThreshold(ConvertDegToFXEncoder(Arm.ARM_MAX_DEG));// TODO verify accuracy
+        rightMota.configReverseSoftLimitThreshold(ConvertDegToFXEncoder(-Arm.ARM_MAX_DEG));// TODO verify accuracy
 
-        rightMota.configForwardSoftLimitEnable(true, 0);
+        rightMota.configReverseSoftLimitEnable(true, 0);
 
         rightMota.setNeutralMode(NeutralMode.Brake);
         // rightMota.setNeutralMode(NeutralMode.Coast); // added 3/13/23
@@ -119,7 +120,7 @@ public class ArmSubsystem extends SubsystemBase {
      *         straight down.
      */
     public double GetRotation() {
-        return (rightMota.getSelectedSensorPosition());
+        return (-rightMota.getSelectedSensorPosition());
     }
 
     /**
@@ -132,7 +133,7 @@ public class ArmSubsystem extends SubsystemBase {
      */
     
     public double GetRotationInDeg() {
-        return  ConvertFXEncodertoDeg((rightMota.getSelectedSensorPosition()));
+        return -ConvertFXEncodertoDeg((rightMota.getSelectedSensorPosition()));
         
     }
     public boolean GetSwtichState()
@@ -169,7 +170,7 @@ double cosineScalar = java.lang.Math.cos(radians); // todo get the cosine of the
 double arbFF = maxGravityFF * cosineScalar; // todo get ff, depends on cosine
 
 //#endregion
-        
+        // DemandType.ArbitraryFeedForward, -0.01
             // rightMota.set(ControlMode.PercentOutput, input * .6);// took like 6.5 seconds at 10% output to make a
             rightMota.set(ControlMode.PercentOutput, input * .6);// took like 6.5 seconds at 10% output to make a
         }
@@ -253,7 +254,7 @@ double arbFF = maxGravityFF * cosineScalar; // todo get ff, depends on cosine
         rightMota.configPeakOutputReverse(-0.5);
         
 
-        rightMota.set(TalonFXControlMode.Position, target_sensorUnits);// no arb for now
+        rightMota.set(TalonFXControlMode.Position, -target_sensorUnits);// no arb for now
         // rightMota.set(TalonFXControlMode.MotionMagic, target_sensorUnits,
         // DemandType.ArbitraryFeedForward, arbFF);
 
@@ -304,7 +305,7 @@ double arbFF = maxGravityFF * cosineScalar; // todo get ff, depends on cosine
     public void ZeroArmEncoder() {
         // rightMota.setSelectedSensorPosition(this.ConvertDegToFXEncoder(
         // Arm.ARM_OFFSET_DEGREES));
-        rightMota.setSelectedSensorPosition(0);
+        rightMota.setSelectedSensorPosition(ConvertDegToFXEncoder(Arm.ARM_OFFSET_DEGREES));
     }
 
     @Override
