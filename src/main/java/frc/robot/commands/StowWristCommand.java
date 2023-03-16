@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
+import frc.robot.Constants;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.WristSubsystem;
@@ -16,6 +17,7 @@ public class StowWristCommand extends RepeatCommand
     private WristSubsystem wrist;
     ArmSubsystem armRot;
     ArmExtensionSubsystem extend;
+    
  StowWristCommand(WristSubsystem wrist, ArmSubsystem armRot, ArmExtensionSubsystem extend)
  {
     this.wrist = wrist;
@@ -29,6 +31,7 @@ public class StowWristCommand extends RepeatCommand
  @Override
  public void execute() {
      // TODO Auto-generated method stub
-     wrist.setWristToPosition(2000);
+    // Constants.STOW_WRIST_POS has been added
+     wrist.setWristToPosition(2000); 
  }
 }

@@ -33,7 +33,7 @@ public class RotateWristLevel extends CommandBase {
     
     @Override
     public void execute() {
-        m_wristSub.setWristToPosition(Constants.WRIST_POS_LEVEL);
+        m_wristSub.setWristToPosition(Constants.LEVEL_WRIST_POS);
     }
     @Override
     public boolean isFinished() {

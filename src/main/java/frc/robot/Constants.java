@@ -42,14 +42,14 @@ public final class Constants {
     
     public static final double stickDeadband = 0.1;
 
-    public static int WRIST_POS_HOME = 0;
+    public static int STOW_WRIST_POS = 2000;
 
-    public static int WRIST_POS_LEVEL = 19000;
+    public static int LEVEL_WRIST_POS = 19000;
 
     /* First attempt 11000
     * experimental range is probably between 9200 to 11200
     */
-    public static int WRIST_POS_LOAD = 11000; 
+    public static int LOAD_WRIST_POS = 6000; 
     
     /* First attempt 72250
     * experimental range is probably between 9200 to 11200
