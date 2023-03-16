@@ -57,7 +57,11 @@ public final class Constants {
         public static final int ARM_ROTATION_RANGE_TICKS = 458752;
        
         public static final int ARM_INTAKE_PWM_PORT = 0;
+<<<<<<< HEAD
 
+=======
+       
+>>>>>>> experimental
         /**
          * The estimated encoder position at the resting  
          */
@@ -81,7 +85,14 @@ public final class Constants {
         public static final int ARM_STOW_EXTENT_ENCODER = 200;
         public static final int EXTENSTION_MID_ENCODER = 5500;
         // public static final int LimitDIO = 0;
+<<<<<<< HEAD
         public static final int WRIST_TALONFX_ID = 12; 
+=======
+
+        
+        public static final int WRIST_TALONFX_ID = 12;
+        public static final int ARM_EXTEND_MIDDLE_ENCODER = 9500; 
+>>>>>>> experimental
         
 
 
@@ -265,5 +276,7 @@ public final class Constants {
     public static final double WHEEL_MAX = 1; //maybe not be needed
 
     public static final int LIMIT_SWITCH_ARM_PORT = 3; // channel or port on roboRIO DIO
+
+    public static final int ARM_ROTATE_POS_MID = -50;
     
 } // end of class
