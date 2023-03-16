@@ -21,9 +21,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-// import frc.robot.autos.LongDriveCubeMiddle;
-// import frc.robot.autos.LongDrive;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -61,6 +61,8 @@ public class RobotContainer {
     // #endregion
     // #region Analog Controls
     private final int translationAxis = XboxController.Axis.kLeftY.value;
+    private final int rightControllerY = XboxController.Axis.kRightY.value;
+
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
     private final int wristAxis = XboxController.Axis.kRightY.value;
@@ -76,26 +78,20 @@ public class RobotContainer {
     /* LB */private final JoystickButton robotCentric = new JoystickButton(driver,
             XboxController.Button.kLeftBumper.value);
 
-    // TODO Remove robot centric buttons
     /* B */private final JoystickButton creepButton = new JoystickButton(driver, XboxController.Button.kB.value);
     // #endregion
     // #region Operator Buttons
 
     /* SELECT */private final JoystickButton zeroArmEncoder = new JoystickButton(operator,
             XboxController.Button.kBack.value);
-<<<<<<< HEAD
-    // /* START */private final JoystickButton stowArm = new JoystickButton(operator, XboxController.Button.kStart.value);
-    /* LB */private final JoystickButton load = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
-=======
     /* LB */private final JoystickButton loadElement = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
 
     /* RB */private final JoystickButton stowArm = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
->>>>>>> experimental
 
-    /* RB */private final JoystickButton stow = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
-
-    /* X */private final JoystickButton intakeCube = new JoystickButton(operator, XboxController.Button.kX.value);
-    /* Y */private final JoystickButton intakeCone = new JoystickButton(operator, XboxController.Button.kY.value);
+    /* X */private final JoystickButton intakeCone = new JoystickButton(operator, XboxController.Button.kY.value);
+            // Intake Cone is same as Outtake Cube 
+    /* Y */private final JoystickButton intakeCube = new JoystickButton(operator, XboxController.Button.kX.value);
+            // Intake Cube is same as OuttakeCone
 
     // /* A */private final JoystickButton  = new JoystickButton(operator, XboxController.Button.kA.value);
     // /* B */private final JoystickButton  = new JoystickButton(operator, XboxController.Button.kB.value);
@@ -103,18 +99,11 @@ public class RobotContainer {
 
     // #endregion Operator Buttons
     // #region Subsystems
-<<<<<<< HEAD
-    private final ArmExtensionSubsystem m_extend = new ArmExtensionSubsystem();
-    private final ArmSubsystem armSubsystem = new ArmSubsystem(limit);
-    private final CANdle m_candle = new CANdle(Constants.CANDLE_ID);
-    private final Vision m_vision = new Vision();
-=======
 
     private final ArmExtensionSubsystem armExtendSub = new ArmExtensionSubsystem();
     private final ArmSubsystem armSub = new ArmSubsystem(limit);
     private final CANdle candleSub = new CANdle(Constants.CANDLE_ID);
     private final Vision visionSub = new Vision();
->>>>>>> experimental
     private final Swerve s_Swerve = new Swerve();
     private final IntakeSubsystemV2 intakeSub = new IntakeSubsystemV2();
     private final WristSubsystem wristSub = new WristSubsystem();
@@ -127,36 +116,23 @@ public class RobotContainer {
     MoveUntilSensor rotationMoveUntilSensor;
     MoveUntilSensor extentionMoveUntilSensor;
     DriveOutAndChargeStation autonCommand = new DriveOutAndChargeStation(s_Swerve, robotCentric);
-<<<<<<< HEAD
-
-    Command auton_Default = // TODO Set the
-        new SetIntakeIn2(intakeSubsystem); // TODO An autonomous command or command group
-=======
     ArmExtendMiddle extendMiddle = new ArmExtendMiddle(armExtendSub);
 
     Command auton_Default = // TODO Set
         new SetIntakeCone(intakeSub); //
-
-    // Command auton_LongDriveCubeMiddle = //Deploys a cube to middle level in auton
-        // new LongDriveCubeMiddle(armSub, armExtendSub, s_Swerve, RotateArmTEST); // 
-
     Command auton_ChargeStation = // Drives out, and then back onto the Charge Station
         new DriveOutAndChargeStation(s_Swerve, robotCentric);
-        
     Command auton_ConeLow = // Deploys a cone to middle level in auton
         new cgConeLow(armSub, armExtendSub, wristSub, intakeSub); 
         
     Command auton_ConeMiddle = // Deploys a cone to middle level in auton
         new cgConeMiddle(armSub, armExtendSub, wristSub, intakeSub); 
-
-    Command auton_CubeLow = //Deploys a cube to middle level in auton
-        new cgCubeLow(armSub, armExtendSub, wristSub, intakeSub); // 
-
     Command auton_CubeMiddle = //Deploys a cube to middle level in auton
         new cgCubeMiddle(armSub, armExtendSub, wristSub, intakeSub); // 
->>>>>>> experimental
 
+    Command auton_cgCubeTop =  new cgCubeTop(armSub, armExtendSub, wristSub, intakeSub);
     // #endregion
+    SequentialCommandGroup wristReceive = new SequentialCommandGroup(new WaitCommand(.25), new WristToArg(wristSub, 6000));//10000 is the stow position
 
     SendableChooser<Command> autonChooser = new SendableChooser<>(); // TODO Auton test
     
@@ -168,9 +144,21 @@ public class RobotContainer {
         
         SmartDashboard.putNumber("Arm_Extent", armExtendSub.ReadExtension());
         SmartDashboard.putNumber("new gyro read", s_Swerve.getYaw().getDegrees());
-        SmartDashboard.putNumber("Arm Rotation(°)", armSub.ConvertFXEncodertoDeg(armSub.GetRotation()));
+        SmartDashboard.putNumber("Arm Rotation(°)", (armSub.GetRotationInDeg()));
+        SmartDashboard.putNumber("Arm Rotation(Ticks)", (armSub.GetRotation()));
         SmartDashboard.putBoolean("Limit Switch", limit.get());
         SmartDashboard.putNumber("Wrist Encoder", wristSub.getWristPos());
+        SmartDashboard.putString("arm mode", armSub.GetMode());
+        
+
+
+        // try {
+        // System.out.println(("ex command " +  armExtendSub.getCurrentCommand().getName()));
+            
+        // } catch (Exception e) {
+        //     // TODO: handle exception
+        // }
+
         
     }
 
@@ -182,12 +170,6 @@ public class RobotContainer {
       
     public RobotContainer() {
 
-<<<<<<< HEAD
-        autonChooser.setDefaultOption("XXX Run Intake XXX", auton_Default); // "Drive Only" Command or Command Group
-        // autonChooser.addOption("XXX Run Intake XXX", auton_Default); // " "Low Cube + Drive" TODO Replace * with No. when working
-        // autonChooser.addOption("* Med Cube + Drive", auton_Default); // TODO replace the variable representing the auton command group from above
-=======
->>>>>>> experimental
         // autonChooser.addOption("* Low Cube + Balance", auton_Default); // TODO
         // autonChooser.addOption("* Med Cube + Balance", auton_Default); // TODO
         // autonChooser.addOption("* Low Cube + Out & Back", auton_Default); // TODO
@@ -196,12 +178,8 @@ public class RobotContainer {
 
         Shuffleboard.getTab("Auton").add(autonChooser).withSize(2, 4); // Create an Auton "Tab"
 
-<<<<<<< HEAD
-        // Shuffleboard.getTab("Experimental Commands"); // Create an Auton "Tab"
-=======
         Shuffleboard.getTab("Experimental Commands"); // Create an Auton "Tab"
 
->>>>>>> experimental
 
         configureButtonBindings();
         configureDefaultCommands();
@@ -219,12 +197,8 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
 
-<<<<<<< HEAD
-        SmartDashboard.putData("Intake In", new SetIntakeIn2(intakeSubsystem));
-=======
         SmartDashboard.putData("Stow Arm", new cgStow(armSub, armExtendSub, wristSub, intakeSub));
         SmartDashboard.putData("Load Element", new cgLoad(armSub, armExtendSub, wristSub, intakeSub));
->>>>>>> experimental
 
         
         /* Driver Button Bindings */
@@ -233,12 +207,6 @@ public class RobotContainer {
         creepButton.onTrue(new InstantCommand(() -> SetCreepToggle(!GetCreepToggle())));// inverts creep when button
 
         /* Operator Button Bindings */
-<<<<<<< HEAD
-        // intakeIn.whileTrue(new  InstantCommand(() -> intakeSubsystem.SetDriveIntake()));
-        // intakeOut.whileTrue(new InstantCommand(() -> intakeSubsystem.SetDriveOutake()));
-        intakeCone.whileTrue(new  InstantCommand(() -> intakeSubsystem.SetDriveIntake()));
-        intakeCube.whileTrue(new InstantCommand(() -> intakeSubsystem.SetDriveOutake()));
-=======
         // stowArm.onTrue(new cgStow(armSub, armExtendSub, wristSub, intakeSub));
         // loadElement.onTrue(new cgLoad(armSub, armExtendSub, wristSub, intakeSub));
         intakeCone.whileTrue(new  InstantCommand(() -> intakeSub.SetDriveIntake()));
@@ -246,7 +214,6 @@ public class RobotContainer {
 
         intakeCone.whileFalse(new InstantCommand(() -> intakeSub.ShutUp()));
         intakeCube.whileFalse(new InstantCommand(() -> intakeSub.ShutUp()));
->>>>>>> experimental
 
         autonCommand.incrementPIDs(() -> driver.getRawAxis(LT),() ->  driver.getRawAxis(RT));
 
@@ -258,8 +225,8 @@ public class RobotContainer {
 
         armSub.setDefaultCommand(
                 new RotateArmManual(armSub, () -> operator.getRawAxis(translationAxis)));
-
-                wristSub.setDefaultCommand(new MoveWristManual(wristSub,  () ->  operator.getRawAxis(wristAxis)));
+        
+                wristSub.setDefaultCommand(new MoveWristManual(wristSub,  () -> .5 * operator.getRawAxis(rightControllerY)));
 
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(
@@ -274,23 +241,22 @@ public class RobotContainer {
                         armExtendSub,
                         () -> operator.getRawAxis(RT),
                         () -> operator.getRawAxis(LT)));
-
-
-
+                // new ArmExtendToArg(armExtendSub, () -> 9500));
     }
 
     private void configureAutonChooser() 
     {
 
         autonChooser.setDefaultOption("XXX Run Intake XXX", auton_Default); // "Drive Only" Command or Command Group
-        // autonChooser.addOption("XXX Cone to Low XXX", auton_ConeLow); // " "Low Cube + Drive" TODO Replace * with No. when working
-        
-        // autonChooser.addOption("XXX Long Drive + Cube XXX", auton_LongDriveCubeMiddle); // " "Low Cube + Drive" TODO Replace * with No. when working
+        autonChooser.addOption("XXX Cone to Low XXX", auton_ConeLow); // " "Low Cube + Drive" TODO Replace * with No. when working
+        autonChooser.addOption("XXX Cone to Middle XXX", auton_ConeMiddle); // " "Low Cube + Drive" TODO Replace * with No. when working
 
-        // autonChooser.addOption("XXX Cone to Middle XXX", auton_ConeMiddle); // " "Low Cube + Drive" TODO Replace * with No. when working
-        autonChooser.addOption("Cube to Middle", auton_CubeMiddle); // TODO replace the variable representing the auton command group from above
-        // autonChooser.addOption("XXX Out & back Charge Station XXX", auton_ChargeStation); // TODO replace the variable representing the auton command group from above
-        // autonChooser.addOption("Arm Extent Auto Test", extendMiddle); //! for testing; getting this command to work is a MUST
+        autonChooser.addOption("XXX Cube to Middle XXX", auton_CubeMiddle); // TODO replace the variable representing the auton command group from above
+        autonChooser.addOption("XXX Cube to Top XXX", auton_cgCubeTop); // TODO replace the variable representing the auton command group from above
+        autonChooser.addOption("XXX Out & back Charge Station XXX", auton_ChargeStation); // TODO replace the variable representing the auton command group from above
+        autonChooser.addOption("Arm Extent Auto Test", extendMiddle); //! for testing; getting this command to work is a MUST
+        autonChooser.addOption("Arm Rotate to 90 deg", rotTo90); //! for testing; getting this command to work is a MUST
+        autonChooser.addOption("wristReceive", wristReceive);
        
     }
 
@@ -369,8 +335,8 @@ public class RobotContainer {
   var tab = Shuffleboard.getTab("Driver Diagnostics");
   tab.addNumber("Arm_Extent", () -> armExtendSub.ReadExtension());
   tab.addNumber( "new gyro read", () -> s_Swerve.getYaw().getDegrees());
-  tab.addNumber( "Arm Rotation(°)", () -> armSub.ConvertFXEncodertoDeg(armSub.GetRotation()));
-  tab.addBoolean("Arm Main Limit Switch", () -> limit.get());
+  tab.addNumber( "Arm Rotation(°)", () -> (armSub.GetRotationInDeg()));
+
 
 
     }

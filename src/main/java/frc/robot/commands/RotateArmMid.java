@@ -33,7 +33,7 @@ public class RotateArmMid extends CommandBase {
     
     @Override
     public void execute() {
-        m_armSubsystem.RotateArmToDeg(Constants.ARM_ROTATE_POS_MID); // adjust after testing
+        m_armSubsystem.RotateArmToDeg(90); // adjust after testing
     }
     @Override
     public boolean isFinished() {

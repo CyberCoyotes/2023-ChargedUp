@@ -65,20 +65,25 @@ public class ArmSubsystem extends SubsystemBase {
         return rightMota.getSupplyCurrent();
     }
     public ArmSubsystem(DigitalInput input) {
+        leftMota.configFactoryDefault();
+        rightMota.configFactoryDefault();
+
 
         rightMota.setInverted(true);
+        rightMota.setSensorPhase(true);
         // leftMota.setInverted(true);
         this.limitSwitch = input;
+        rightMota.setSelectedSensorPosition(this.ConvertDegToFXEncoder(Arm.ARM_OFFSET_DEGREES));
         
-        rightMota.configFactoryDefault();
+
         //:The arm is some degrees off from 0 being truly down pointing
-        rightMota.configIntegratedSensorOffset( ConvertDegToFXEncoder(Constants.Arm.ARM_OFFSET_DEGREES));
+        // rightMota.configIntegratedSensorOffset( ConvertDegToFXEncoder(Constants.Arm.ARM_OFFSET_DEGREES));
 
 
         // roughly 20 degree offset
-        rightMota.configForwardSoftLimitThreshold(ConvertDegToFXEncoder(Arm.ARM_MAX_DEG));// TODO verify accuracy
+        rightMota.configReverseSoftLimitThreshold(ConvertDegToFXEncoder(-Arm.ARM_MAX_DEG));// TODO verify accuracy
 
-        rightMota.configForwardSoftLimitEnable(true, 0);
+        rightMota.configReverseSoftLimitEnable(true, 0);
 
         rightMota.setNeutralMode(NeutralMode.Brake);
         // rightMota.setNeutralMode(NeutralMode.Coast); // added 3/13/23
@@ -88,7 +93,6 @@ public class ArmSubsystem extends SubsystemBase {
         // motionmagic
         leftMota.set(TalonFXControlMode.Follower, rightMota.getDeviceID());
         // closed-loop modes the demand0 output is the output of PID0.
-        rightMota.setSelectedSensorPosition(0);
         //
         rightMota.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, 100);
         // #region PIDF, motion profile configurations
@@ -102,6 +106,7 @@ public class ArmSubsystem extends SubsystemBase {
         rightMota.configMotionCruiseVelocity(Arm.kMaxVelocity);
         rightMota.configMotionAcceleration(Arm.kMaxAcceletation);// max accel in units towards endgoal, in sensor
                                                                     // units /0.1 seconds
+                                                                    // rightMota.setSensorPhase(true);
 
         // #endregion PIDF, motion profile configurations
 
@@ -115,7 +120,7 @@ public class ArmSubsystem extends SubsystemBase {
      *         straight down.
      */
     public double GetRotation() {
-        return (rightMota.getSelectedSensorPosition());
+        return (-rightMota.getSelectedSensorPosition());
     }
 
     /**
@@ -128,7 +133,7 @@ public class ArmSubsystem extends SubsystemBase {
      */
     
     public double GetRotationInDeg() {
-        return ConvertFXEncodertoDeg((rightMota.getSelectedSensorPosition()));
+        return -ConvertFXEncodertoDeg((rightMota.getSelectedSensorPosition()));
         
     }
     public boolean GetSwtichState()
@@ -141,11 +146,32 @@ public class ArmSubsystem extends SubsystemBase {
     
     public void PercentOutputSupplierDrive(double input) {
         
-        if (input > 0 && limitSwitch.get()) { //Corrects ? the limit switch so arm can go back out
+        if (input > 0 && limitSwitch.get()) {
             return;
         }
         else
         {
+            //here we go again
+    
+            //#region arbFF stuff
+
+            // at the deploy end of the arm?
+double maxGravityFF = .03; // todo; doesnt cover the extended compensation where it may matter most; 0.04
+// was the value at extention
+int kMeasuredPosHorizontal = Arm.ARM_ROTATION_HORIZONTAL_TICKS; // todo Position measured when arm is
+                     // horizontal/give an offset to resting position
+double kTicksPerDegree = 4096 / 360; // Sensor is 1:1 with arm rotation
+double degrees = (GetRotation() - kMeasuredPosHorizontal) / kTicksPerDegree;
+double radians = java.lang.Math.toRadians(degrees);
+double cosineScalar = java.lang.Math.cos(radians); // todo get the cosine of the motor
+
+// FF is measured as
+
+double arbFF = maxGravityFF * cosineScalar; // todo get ff, depends on cosine
+
+//#endregion
+        // DemandType.ArbitraryFeedForward, -0.01
+            // rightMota.set(ControlMode.PercentOutput, input * .6);// took like 6.5 seconds at 10% output to make a
             rightMota.set(ControlMode.PercentOutput, input * .6);// took like 6.5 seconds at 10% output to make a
         }
                                                                   // 
@@ -207,6 +233,16 @@ public class ArmSubsystem extends SubsystemBase {
 
     }
 
+    public String GetMode()
+    {
+        try {
+        return rightMota.getControlMode().name();
+            
+        } catch (Exception e) {
+          return "No mode read";
+        }
+        
+    }
     /**
      * Rotates the arm to a degree value, where straight down would be 0 degrees, up
      * would be 180, etc
@@ -218,7 +254,7 @@ public class ArmSubsystem extends SubsystemBase {
         rightMota.configPeakOutputReverse(-0.5);
         
 
-        rightMota.set(TalonFXControlMode.Position, target_sensorUnits);// no arb for now
+        rightMota.set(TalonFXControlMode.Position, -target_sensorUnits);// no arb for now
         // rightMota.set(TalonFXControlMode.MotionMagic, target_sensorUnits,
         // DemandType.ArbitraryFeedForward, arbFF);
 
@@ -269,7 +305,7 @@ public class ArmSubsystem extends SubsystemBase {
     public void ZeroArmEncoder() {
         // rightMota.setSelectedSensorPosition(this.ConvertDegToFXEncoder(
         // Arm.ARM_OFFSET_DEGREES));
-        rightMota.setSelectedSensorPosition(0);
+        rightMota.setSelectedSensorPosition(ConvertDegToFXEncoder(Arm.ARM_OFFSET_DEGREES));
     }
 
     @Override

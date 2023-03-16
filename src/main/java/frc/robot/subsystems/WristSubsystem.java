@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.*;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -20,11 +21,9 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
  * -90  | 72,250    | Position to deploy mid level cone. Also needs full extension
  */
 
-
 public class WristSubsystem extends SubsystemBase {
-    private TalonFX m_motorController = new TalonFX(Constants.Arm.WRIST_TALONFX_ID);
 
-    double WRIST_HOME_POS = 22000;
+    private TalonFX m_motorController = new TalonFX(Arm.WRIST_TALONFX_ID);
 
     /* If ARM ROTATION = 10 or less, then setWristHome() */
     /*
@@ -35,22 +34,27 @@ public class WristSubsystem extends SubsystemBase {
      * 
      */
     public WristSubsystem() {
+
+        m_motorController.config_kP(0,1);
+        m_motorController.config_kI(0,0);
+        m_motorController.config_kD(0,0);
+
         m_motorController.setNeutralMode(NeutralMode.Brake);
         m_motorController.setSelectedSensorPosition(0);
 
-        m_motorController.configPeakOutputForward(0.25);
-        m_motorController.configPeakOutputReverse(-0.25);
+        m_motorController.configPeakOutputForward(0.5);
+        m_motorController.configPeakOutputReverse(-0.5);
 
     }
-    public void PercentOutputSupplierDrive(double input)
-    {
+
+    public void PercentOutputSupplierDrive(double input) {
         m_motorController.set(ControlMode.PercentOutput, input);
     }
 
     public void setWristHome(double input) {
-        
-        m_motorController.set(ControlMode.Position, WRIST_HOME_POS);
-        
+
+        m_motorController.set(ControlMode.Position, 0);
+
     }
 
     /* Set the wrist position to level i.e. parallel to the ground 
@@ -80,14 +84,12 @@ public class WristSubsystem extends SubsystemBase {
      */
     public void setWristMidCone(double input) {
         m_motorController.set(ControlMode.Position, Constants.WRIST_POS_MID);
-        
     }
 
     // Return the current encoder position of the Wrist
     public double getWristPos() {
         return m_motorController.getSelectedSensorPosition();
-        // Return the current encoder position of the Wrist
-        // return 0; // leaving for the LOLs 
+        // return 0; // leaving for the LOLs. It wasn't returning an encoder value :P
     }
 
        /**

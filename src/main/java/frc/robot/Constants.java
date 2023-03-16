@@ -38,10 +38,26 @@ public final class Constants {
 
     public static final int INTAKE_WHEELS_MOTOR_ID = 11; // Connected to Victor SPX
 
-    public static final int REV_CLAW_ID = 0; // REV Pneumatics Hub Single channel for Claw
+    // public static final int REV_CLAW_ID = 0; // REV Pneumatics Hub Single channel for Claw
     
     public static final double stickDeadband = 0.1;
-    public static final int ARM_EXTENT_LIMIT = -14000;//playing it safe
+
+    public static int WRIST_POS_HOME = 0;
+
+    public static int WRIST_POS_LEVEL = 19000;
+
+    /* First attempt 11000
+    * experimental range is probably between 9200 to 11200
+    */
+    public static int WRIST_POS_LOAD = 11000; 
+    
+    /* First attempt 72250
+    * experimental range is probably between 9200 to 11200
+    */
+    public static int WRIST_POS_MID = 72250;
+
+     //#region arm   
+    public static final int ARM_EXTENT_LIMIT = 14500;//playing it safe
     public static final class Arm 
     {
 
@@ -65,7 +81,7 @@ public final class Constants {
         public final static double ARM_ROTATE_POSITION_DEPLOY = 1000; // TODO TBD experimentally
         public final static double ARM_ROTATE_POSITION_INTAKE  = 8878; // approximate from testing; compare to the change in angle from rest to deploy
         public final static double ARM_ROTATE_POSITION_DEPLOY_DEG =  220;//should be 260? TESTING
-        public final static double EXTENSION_POSITION_OUT = 14500; //playing it safe for now; should be around -14000?
+        public final static double EXTENSION_POSITION_OUT = 9500; //playing it safe for now; should be around -14000?
         public final static double EXTENSION_POSITION_IN  = -200;
 
         public static final int PIDSlotIDx = 0; //keep this
@@ -74,9 +90,9 @@ public final class Constants {
         public static final double kD = 0; //may need tuning
         public static final double kMaxVelocity = 11468/2; //currently so that the robot may go 1/16th rotation in a second
         public static final double kMaxAcceletation = 11468/2; //tuning needed
-        public static final int ARM_OFFSET_DEGREES = 19;//!Obsolete
+        public static final int ARM_OFFSET_DEGREES = 20;
         public static final double DEG_TO_mRAD = 17.4533;
-        public static final double ARM_MAX_DEG = 260;
+        public static final double ARM_MAX_DEG = 120;
         public static final int ARM_STOW_ROTATION_DEG = 20;
         public static final int ARM_STOW_EXTENT_ENCODER = 200;
         public static final int EXTENSTION_MID_ENCODER = 5500;
@@ -89,6 +105,8 @@ public final class Constants {
 
 
     }
+    //#endregion
+
     public static final class Swerve {
 
         
@@ -269,14 +287,6 @@ public final class Constants {
 
     public static final int LIMIT_SWITCH_ARM_PORT = 3; // channel or port on roboRIO DIO
 
-    public static final int ARM_ROTATE_POS_MID = 50;
-
-    public static final double WRIST_POS_LOAD = 6000; // FIXME
-
-    public static final double WRIST_POS_MID = 1000; // FIXME
-
-    public static final int WRIST_POS_LEVEL = 20000; // FIXME
-
-    public static final double WRIST_POS_HOME = 0;
+    public static final int ARM_ROTATE_POS_MID = -40;
     
 } // end of class

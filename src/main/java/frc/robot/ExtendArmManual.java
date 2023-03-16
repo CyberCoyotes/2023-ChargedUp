@@ -17,7 +17,7 @@ public class ExtendArmManual extends CommandBase {
         this.subsystem = subsystem;
         this.extend = extend;
         this.retract = retract;
-        this.addRequirements(subsystem);
+        addRequirements(subsystem);
     }
     // public ExtendArmManual(ArmExtensionSubsystem subsystem, BooleanSupplier extend, BooleanSupplier retract) {
     //     this.subsystem = subsystem;
@@ -29,11 +29,15 @@ public class ExtendArmManual extends CommandBase {
     public void execute() {
         double input = extend.getAsDouble() + retract.getAsDouble() * -1; 
         subsystem.PercentOutputSupplierDrive(input * .4);
-    }
+    // }
+    // public string ShowInfo()
+    // {
+    //     return extend.getAsDouble() + " " + retract.getAsDouble();
+    // }
     // @Override //for use with bumpers, rather than triggers
     // public void execute() {
     //     double input = (extend.getAsBoolean() ? 1 : 0 ) + (retract.getAsBoolean() ? -1: 0); 
     //     subsystem.PercentOutputSupplierDrive(input * .3);
     // }
 
-}
+}}

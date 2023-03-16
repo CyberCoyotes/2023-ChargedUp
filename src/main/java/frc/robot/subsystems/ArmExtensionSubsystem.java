@@ -34,7 +34,7 @@ import frc.robot.Constants.Arm;
 public class ArmExtensionSubsystem extends SubsystemBase {
 
  
-    private TalonSRX m_motorController = new TalonSRX(Constants.ARM_EXTENDER_MOTOR_ID);
+    private  TalonSRX m_motorController = new TalonSRX(Constants.ARM_EXTENDER_MOTOR_ID);
     
     // private Encoder m_Encoder = new Encoder(0, 0, 0)
 
@@ -52,11 +52,11 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     public void Setup()
     {
         
-        m_motorController.setNeutralMode(NeutralMode.Brake); // TODO Test
-        m_motorController.configReverseSoftLimitThreshold(Arm.EXTENSION_POSITION_IN + m_motorController.getSelectedSensorPosition());
-        m_motorController.configForwardSoftLimitEnable(true, 0);
-        m_motorController.configForwardSoftLimitThreshold(Arm.EXTENSION_POSITION_OUT+ m_motorController.getSelectedSensorPosition());
-        m_motorController.configReverseSoftLimitEnable(true, 0);
+        // m_motorController.setNeutralMode(NeutralMode.Brake); // TODO Test
+        // m_motorController.configReverseSoftLimitThreshold(Arm.EXTENSION_POSITION_IN + m_motorController.getSelectedSensorPosition());
+        // m_motorController.configForwardSoftLimitEnable(true, 0);
+        // m_motorController.configForwardSoftLimitThreshold(Arm.EXTENSION_POSITION_OUT+ m_motorController.getSelectedSensorPosition());
+        // m_motorController.configReverseSoftLimitEnable(true, 0);
         m_motorController.setSensorPhase(true);
 
     }
@@ -68,7 +68,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         
     }
     public void setArmOut() {
-        m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_POSITION_OUT);
+        m_motorController.set(TalonSRXControlMode.Position, 9500);
     }
     public void PercentOutputSupplierDrive(double input)
     {
@@ -80,11 +80,19 @@ public class ArmExtensionSubsystem extends SubsystemBase {
      */
     public void SetArmToTickPosition(int input)
     {
-        System.out.println("Internal method being called; position control");
+        Setup();
+        double target = (double)input;
         // System.out.println();
-        // m_motorController.configPeakOutputForward(0.4);
-        // m_motorController.configPeakOutputReverse(-0.4);
-        m_motorController.set(ControlMode.Position, input);
+
+        m_motorController.config_kP(0,1);
+        m_motorController.config_kI(0,0);
+        m_motorController.config_kD(0,0);
+
+        m_motorController.selectProfileSlot(0, 0);
+
+        m_motorController.configPeakOutputForward(0.4);
+        m_motorController.configPeakOutputReverse(-0.4);
+        m_motorController.set(ControlMode.Position, target);
 
     }
 
