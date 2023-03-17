@@ -82,20 +82,21 @@ private static DoubleSupplier dSupplier;
     @Override
     public void execute () {
      
-    double p = GetPVal();
+        //stealing ludingtons stuff
+    // double p = GetPVal(); //clean this crap later
+    double p = 0.015;
     double d = GetDVal();        
         drivePID.setP(p);
         drivePID.setD(d);
 
         double pitch = swerveDrive.GetPitch();
         
-        double speed = drivePID.calculate(pitch);
+        double speed = p * pitch;
         //If we're balanced enough, end the command
-        if (Math.abs(pitch) < PITCH_SETPOINT_ERROR_DEG) speed = 0;
         
-        double turnSpeed = yawOffsetToCorrectionTurn.apply(swerveDrive.getYaw().minus(initialRobotYaw).getDegrees());
+        // double turnSpeed = yawOffsetToCorrectionTurn.apply(swerveDrive.getYaw().minus(initialRobotYaw).getDegrees());
         
-        swerveDrive.setModuleStates(new ChassisSpeeds(speed, 0, turnSpeed));
+        swerveDrive.setModuleStates(new ChassisSpeeds(speed, 0,0));
         System.out.println("third command running of balance");
     }
     

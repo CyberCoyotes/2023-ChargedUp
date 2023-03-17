@@ -31,7 +31,7 @@ public class CubeMidTaxi extends SequentialCommandGroup
             this.m_arm = arm; 
             this.m_extend = extend; 
             this.m_intake = intake; 
-
+        // addRequirements(null);
 
 
         short polarity = 1;
@@ -41,7 +41,7 @@ public class CubeMidTaxi extends SequentialCommandGroup
         final float input = (float) (polarity * power);
         Command driveCommand;
     
-            addRequirements(m_swerve);
+            // addRequirements(m_swerve, m_arm, m_extend, m_intake);
             
             driveCommand = new TeleopSwerve(
                 m_swerve,
