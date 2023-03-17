@@ -53,7 +53,8 @@ public class CubeMidTaxi extends SequentialCommandGroup
         
 
         addCommands(
-            new cgCubeTop(m_arm, m_extend, m_wrist, m_intake ),
+            //just in case
+            new cgCubeTop(m_arm, m_extend, m_wrist, m_intake ).withTimeout(7),
             driveCommand
 
         );

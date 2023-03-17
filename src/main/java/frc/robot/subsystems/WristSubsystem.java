@@ -45,6 +45,11 @@ public class WristSubsystem extends SubsystemBase {
         m_motorController.configPeakOutputForward(0.5);
         m_motorController.configPeakOutputReverse(-0.5);
 
+
+        m_motorController.configForwardSoftLimitThreshold(Constants.Arm.WRIST_MAX);
+        m_motorController.configReverseSoftLimitThreshold(Constants.Arm.WRIST_MIN);
+        m_motorController.configForwardSoftLimitEnable(true);
+        m_motorController.configReverseSoftLimitEnable(true);
     }
 
     public void PercentOutputSupplierDrive(double input) {

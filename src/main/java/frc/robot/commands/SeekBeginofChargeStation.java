@@ -28,6 +28,6 @@ public class SeekBeginofChargeStation extends CommandBase
     }
     @Override
     public boolean isFinished() {
-        return s_swerve.GetPitch() < errorRequirement; //If the pitch is more than 5, we're done here
+        return s_swerve.GetPitch() - errorRequirement < 3; //If the pitch is more than 5, we're done here
     }
 }

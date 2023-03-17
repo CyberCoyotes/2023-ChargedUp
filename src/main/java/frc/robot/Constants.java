@@ -81,7 +81,7 @@ public final class Constants {
         public final static double ARM_ROTATE_POSITION_DEPLOY = 1000; // TODO TBD experimentally
         public final static double ARM_ROTATE_POSITION_INTAKE  = 8878; // approximate from testing; compare to the change in angle from rest to deploy
         // public final static double ARM_ROTATE_POSITION_DEPLOY_DEG =  220;//should be 260? TESTING
-        public final static double EXTENSION_POSITION_OUT = 9500; //playing it safe for now; should be around -14000?
+        public final static double EXTENSION_POSITION_OUT = 13000; //playing it safe for now; should be around -14000?
         public final static double EXTENSION_POSITION_IN  = -200;
 
         public static final int PIDSlotIDx = 0; //keep this
@@ -100,7 +100,9 @@ public final class Constants {
 
         
         public static final int WRIST_TALONFX_ID = 12;
-        public static final int ARM_EXTEND_MIDDLE_ENCODER = 9500; 
+        public static final int ARM_EXTEND_MIDDLE_ENCODER = 9500;
+        public static final double WRIST_MIN = -2343;
+        public static final double WRIST_MAX = 72000; 
         
 
 

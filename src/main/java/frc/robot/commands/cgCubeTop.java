@@ -23,7 +23,7 @@ public class cgCubeTop extends SequentialCommandGroup{
         addCommands(
             new RotateArmArg(armSub, 90).withTimeout(.75) // because I couldn't get smarter approaches to work
             , new WaitCommand(0.25) // FIXME excessive for testing 
-            , new ArmExtendToArg(armExtSub, ()->(12000)).withTimeout(1.5)
+            , new ArmExtendToArg(armExtSub, ()->(9500)).withTimeout(1.5)
             , new WaitCommand(0.25) // FIXME excessive for testing            
             , new WristToArg(wristSub, 11000).withTimeout(.75)
             , new SetIntakeCone(intakeSub).withTimeout(.75) // deploys a cube
@@ -33,5 +33,9 @@ public class cgCubeTop extends SequentialCommandGroup{
             // , new WaitCommand(0.5) // FIXME excessive for testing
             // , new RotateArmArg(armSub, 10)
         );
+    }
+    @Override
+    public InterruptionBehavior getInterruptionBehavior() {
+        return InterruptionBehavior.kCancelSelf;
     }
 }

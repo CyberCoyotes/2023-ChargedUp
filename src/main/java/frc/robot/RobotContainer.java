@@ -135,6 +135,7 @@ public class RobotContainer {
         new cgConeMiddle(armSub, armExtendSub, wristSub, intakeSub); 
     Command auton_CubeMiddle = //Deploys a cube to middle level in auton
         new cgCubeMiddle(armSub, armExtendSub, wristSub, intakeSub); // 
+    
 
     Command auton_cgCubeTop =  new cgCubeTop(armSub, armExtendSub, wristSub, intakeSub);
     // #endregion
@@ -262,17 +263,18 @@ public class RobotContainer {
     {
 
         autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
-        autonChooser.addOption("XXX Run Intake XXX", auton_Default); // "Drive Only" Command or Command Group
-        autonChooser.addOption("XXX Cone to Low XXX", auton_ConeLow); // " "Low Cube + Drive" TODO Replace * with No. when working
-        autonChooser.addOption("XXX Cone to Middle XXX", auton_ConeMiddle); // " "Low Cube + Drive" TODO Replace * with No. when working
-        autonChooser.addOption("Stow", stowCommand); // " "Low Cube + Drive" TODO Replace * with No. when working
+        // autonChooser.addOption("XXX Run Intake XXX", auton_Default); // "Drive Only" Command or Command Group
+        // autonChooser.addOption("XXX Cone to Low XXX", auton_ConeLow); // " "Low Cube + Drive" TODO Replace * with No. when working
+        // autonChooser.addOption("XXX Cone to Middle XXX", auton_ConeMiddle); // " "Low Cube + Drive" TODO Replace * with No. when working
+        // autonChooser.addOption("Stow", stowCommand); // " "Low Cube + Drive" TODO Replace * with No. when working
 
-        autonChooser.addOption("XXX Cube to Middle XXX", auton_CubeMiddle); // TODO replace the variable representing the auton command group from above
-        autonChooser.addOption("XXX Cube to Top XXX", auton_cgCubeTop); // TODO replace the variable representing the auton command group from above
+        // autonChooser.addOption("XXX Cube to Middle XXX", auton_CubeMiddle); // TODO replace the variable representing the auton command group from above
+        autonChooser.addOption("XXX Cube to Middle XXX", auton_cgCubeTop); // TODO replace the variable representing the auton command group from above
+        
         autonChooser.addOption("XXX Out & back Charge Station XXX", auton_ChargeStation); // TODO replace the variable representing the auton command group from above
-        autonChooser.addOption("Arm Extent Auto Test", extendMiddle); //! for testing; getting this command to work is a MUST
-        autonChooser.addOption("Arm Rotate to 90 deg", rotTo90); //! for testing; getting this command to work is a MUST
-        autonChooser.addOption("wristReceive", wristReceive);
+        // autonChooser.addOption("Arm Extent Auto Test", extendMiddle); //! for testing; getting this command to work is a MUST
+        // autonChooser.addOption("Arm Rotate to 90 deg", rotTo90); //! for testing; getting this command to work is a MUST
+        // autonChooser.addOption("wristReceive", wristReceive);
        
     }
 
