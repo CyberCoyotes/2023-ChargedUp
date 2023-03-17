@@ -24,6 +24,7 @@ public class SeekBeginofChargeStation extends CommandBase
         
         
         s_swerve.setModuleStates(new ChassisSpeeds(speed, 0, 0));
+        System.out.println("second command running of balance");
     
     }
     @Override

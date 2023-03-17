@@ -4,6 +4,8 @@ import frc.lib.math.CLAWTransform;
 
 import java.util.function.DoubleSupplier;
 
+import javax.swing.DebugGraphics;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
@@ -94,6 +96,7 @@ private static DoubleSupplier dSupplier;
         double turnSpeed = yawOffsetToCorrectionTurn.apply(swerveDrive.getYaw().minus(initialRobotYaw).getDegrees());
         
         swerveDrive.setModuleStates(new ChassisSpeeds(speed, 0, turnSpeed));
+        System.out.println("third command running of balance");
     }
     
     private double GetDVal() {//!this smells
