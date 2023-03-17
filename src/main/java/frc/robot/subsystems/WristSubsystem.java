@@ -61,6 +61,10 @@ public class WristSubsystem extends SubsystemBase {
         m_motorController.set(ControlMode.Position, 0);
 
     }
+    public void Zero()
+    {
+        m_motorController.setSelectedSensorPosition(0);
+    }
 
     /* Set the wrist position to level i.e. parallel to the ground 
      * when the arm rotation is approximately zero
