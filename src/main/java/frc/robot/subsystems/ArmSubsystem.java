@@ -73,7 +73,7 @@ public class ArmSubsystem extends SubsystemBase {
         rightMota.setSensorPhase(true);
         // leftMota.setInverted(true);
         this.limitSwitch = input;
-        rightMota.setSelectedSensorPosition(this.ConvertDegToFXEncoder(Arm.ARM_OFFSET_DEGREES));
+        rightMota.setSelectedSensorPosition(Math.abs( this.ConvertDegToFXEncoder(Arm.ARM_OFFSET_DEGREES)));
         
 
         //:The arm is some degrees off from 0 being truly down pointing
@@ -146,6 +146,11 @@ public class ArmSubsystem extends SubsystemBase {
     
     public void PercentOutputSupplierDrive(double input) {
         
+        //! this is terrible
+        if (limitSwitch.get()) {
+            ZeroArmEncoder();
+        }
+
         if (input > 0 && limitSwitch.get()) {
             return;
         }
@@ -305,7 +310,7 @@ double arbFF = maxGravityFF * cosineScalar; // todo get ff, depends on cosine
     public void ZeroArmEncoder() {
         // rightMota.setSelectedSensorPosition(this.ConvertDegToFXEncoder(
         // Arm.ARM_OFFSET_DEGREES));
-        rightMota.setSelectedSensorPosition(ConvertDegToFXEncoder(Arm.ARM_OFFSET_DEGREES));
+        rightMota.setSelectedSensorPosition(-Math.abs(ConvertDegToFXEncoder(( Arm.ARM_OFFSET_DEGREES))));
     }
 
     @Override

@@ -28,8 +28,8 @@ public class DriveOutAndChargeStation extends SequentialCommandGroup {
         public double getAsDouble() {return dTerm;};}; //bro what are these semicolons
         
     short polarity = 1;
-    double power = .4;
-    double seconds = 3;
+    double power = .35;
+    double seconds = 4;
     // : 40% in a single direction for 1 second: ~51 inches        
     final float input = (float) (polarity * power);
     Command driveCommand;
@@ -50,9 +50,13 @@ public class DriveOutAndChargeStation extends SequentialCommandGroup {
         addCommands
         (
            
-            driveCommand,
+            driveCommand.withTimeout(seconds),
             new SeekBeginofChargeStation(s_Swerve),
             new SeekBalanceCommand(s_Swerve, pSup, dSup)
         );
+      
+
     }
+
+    
 }

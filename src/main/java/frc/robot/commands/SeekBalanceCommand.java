@@ -88,6 +88,7 @@ private static DoubleSupplier dSupplier;
         double pitch = swerveDrive.GetPitch();
         
         double speed = drivePID.calculate(pitch);
+        //If we're balanced enough, end the command
         if (Math.abs(pitch) < PITCH_SETPOINT_ERROR_DEG) speed = 0;
         
         double turnSpeed = yawOffsetToCorrectionTurn.apply(swerveDrive.getYaw().minus(initialRobotYaw).getDegrees());

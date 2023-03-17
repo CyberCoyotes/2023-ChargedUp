@@ -51,7 +51,7 @@ public class WristSubsystem extends SubsystemBase {
         m_motorController.set(ControlMode.PercentOutput, input);
     }
 
-    public void setWristHome(double input) {
+    public void setWristHome() {
 
         m_motorController.set(ControlMode.Position, 0);
 
@@ -72,7 +72,7 @@ public class WristSubsystem extends SubsystemBase {
      * Wrist must be pointed slightly up or it will hit the hall when loading
      */
     public void setWristPositionLoad() {
-        m_motorController.set(ControlMode.Position, Constants.WRIST_POS_LOAD);
+        m_motorController.set(ControlMode.Position, 6000);
         // m_motorController.set(ControlMode.Position, 11000);
 
     }

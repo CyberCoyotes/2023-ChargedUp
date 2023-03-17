@@ -10,6 +10,8 @@
 
 package frc.robot;
 
+import java.security.KeyStore.LoadStoreParameter;
+
 import com.ctre.phoenix.led.CANdle;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -23,6 +25,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WrapperCommand;
+import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -65,7 +69,6 @@ public class RobotContainer {
 
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
-    private final int wristAxis = XboxController.Axis.kRightY.value;
 
 
     private final int LT = XboxController.Axis.kLeftTrigger.value;
@@ -117,7 +120,10 @@ public class RobotContainer {
     MoveUntilSensor extentionMoveUntilSensor;
     DriveOutAndChargeStation autonCommand = new DriveOutAndChargeStation(s_Swerve, robotCentric);
     ArmExtendMiddle extendMiddle = new ArmExtendMiddle(armExtendSub);
+    ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
 
+    StowArmCommand stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub);
+    
     Command auton_Default = // TODO Set
         new SetIntakeCone(intakeSub); //
     Command auton_ChargeStation = // Drives out, and then back onto the Charge Station
@@ -132,7 +138,6 @@ public class RobotContainer {
 
     Command auton_cgCubeTop =  new cgCubeTop(armSub, armExtendSub, wristSub, intakeSub);
     // #endregion
-    SequentialCommandGroup wristReceive = new SequentialCommandGroup(new WaitCommand(.25), new WristToArg(wristSub, 6000));//10000 is the stow position
 
     SendableChooser<Command> autonChooser = new SendableChooser<>(); // TODO Auton test
     
@@ -149,6 +154,13 @@ public class RobotContainer {
         SmartDashboard.putBoolean("Limit Switch", limit.get());
         SmartDashboard.putNumber("Wrist Encoder", wristSub.getWristPos());
         SmartDashboard.putString("arm mode", armSub.GetMode());
+        SmartDashboard.putNumber("pitch", (s_Swerve.GetPitch()));
+        try {
+            SmartDashboard.putString("command", s_Swerve.getCurrentCommand().getName());
+            
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
         
 
 
@@ -197,14 +209,16 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
 
-        SmartDashboard.putData("Stow Arm", new cgStow(armSub, armExtendSub, wristSub, intakeSub));
-        SmartDashboard.putData("Load Element", new cgLoad(armSub, armExtendSub, wristSub, intakeSub));
+        // SmartDashboard.putData("Stow Arm", new cgStow(armSub, armExtendSub, wristSub, intakeSub));
+        // SmartDashboard.putData("Load Element", new cgLoad(armSub, armExtendSub, wristSub, intakeSub));
 
         
         /* Driver Button Bindings */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         zeroArmEncoder.onTrue(new InstantCommand(() -> armSub.ZeroArmEncoder()));
         creepButton.onTrue(new InstantCommand(() -> SetCreepToggle(!GetCreepToggle())));// inverts creep when button
+        stowArm.onTrue(stowCommand);
+        loadElement.whileTrue(wristReceive);
 
         /* Operator Button Bindings */
         // stowArm.onTrue(new cgStow(armSub, armExtendSub, wristSub, intakeSub));
@@ -226,7 +240,7 @@ public class RobotContainer {
         armSub.setDefaultCommand(
                 new RotateArmManual(armSub, () -> operator.getRawAxis(translationAxis)));
         
-                wristSub.setDefaultCommand(new MoveWristManual(wristSub,  () -> .5 * operator.getRawAxis(rightControllerY)));
+                wristSub.setDefaultCommand(new MoveWristManual(wristSub,  () -> .25 * operator.getRawAxis(rightControllerY)));
 
         s_Swerve.setDefaultCommand(
                 new TeleopSwerve(
@@ -247,9 +261,11 @@ public class RobotContainer {
     private void configureAutonChooser() 
     {
 
-        autonChooser.setDefaultOption("XXX Run Intake XXX", auton_Default); // "Drive Only" Command or Command Group
+        autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
+        autonChooser.addOption("XXX Run Intake XXX", auton_Default); // "Drive Only" Command or Command Group
         autonChooser.addOption("XXX Cone to Low XXX", auton_ConeLow); // " "Low Cube + Drive" TODO Replace * with No. when working
         autonChooser.addOption("XXX Cone to Middle XXX", auton_ConeMiddle); // " "Low Cube + Drive" TODO Replace * with No. when working
+        autonChooser.addOption("Stow", stowCommand); // " "Low Cube + Drive" TODO Replace * with No. when working
 
         autonChooser.addOption("XXX Cube to Middle XXX", auton_CubeMiddle); // TODO replace the variable representing the auton command group from above
         autonChooser.addOption("XXX Cube to Top XXX", auton_cgCubeTop); // TODO replace the variable representing the auton command group from above
