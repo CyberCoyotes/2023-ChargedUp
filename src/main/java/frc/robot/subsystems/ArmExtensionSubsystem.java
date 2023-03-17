@@ -52,6 +52,15 @@ public class ArmExtensionSubsystem extends SubsystemBase {
 
     public void Setup()
     {
+
+        
+
+        m_motorController.config_kP(0,1);
+        m_motorController.config_kI(0,0);
+        m_motorController.config_kD(0,0);
+
+        m_motorController.selectProfileSlot(0, 0);
+
         m_motorController.setSelectedSensorPosition(0);
         
         m_motorController.config_kP(0,1);
@@ -64,7 +73,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         m_motorController.setNeutralMode(NeutralMode.Brake); // TODO Test
         m_motorController.configReverseSoftLimitThreshold(Arm.EXTENSION_POSITION_IN + m_motorController.getSelectedSensorPosition());
         m_motorController.configForwardSoftLimitEnable(true, 0);
-        m_motorController.configForwardSoftLimitThreshold(9500 + m_motorController.getSelectedSensorPosition());
+        m_motorController.configForwardSoftLimitThreshold(Arm.EXTENSION_POSITION_OUT + m_motorController.getSelectedSensorPosition());
         m_motorController.configReverseSoftLimitEnable(true, 0);
         m_motorController.setSensorPhase(true);
 
@@ -82,7 +91,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // TODO Auto-generated method stub
-        System.out.println(m_motorController.getSelectedSensorPosition(0));
+        System.out.println(m_motorController.getSelectedSensorPosition());
 
     }
     public void setArmOut() {
@@ -101,13 +110,6 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         
         double target = (double)input;
         // System.out.println();
-
-        m_motorController.config_kP(0,1);
-        m_motorController.config_kI(0,0);
-        m_motorController.config_kD(0,0);
-
-        m_motorController.selectProfileSlot(0, 0);
-
         m_motorController.configPeakOutputForward(0.4);
         m_motorController.configPeakOutputReverse(-0.4);
         m_motorController.set(ControlMode.Position, target);
