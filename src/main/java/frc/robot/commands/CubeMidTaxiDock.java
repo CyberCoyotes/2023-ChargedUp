@@ -36,7 +36,7 @@ public class CubeMidTaxiDock extends SequentialCommandGroup
 
         short polarity = 1;
         double power = .4;
-        double seconds = 5;
+        double seconds = 2.12;
         // : 40% in a single direction for 1 second: ~51 inches        
         final float input = (float) (polarity * power);
         Command driveCommand;
@@ -63,7 +63,7 @@ public class CubeMidTaxiDock extends SequentialCommandGroup
 
         addCommands(
             //just in case
-            new cgCubeMiddle(m_arm, m_extend, m_wrist, m_intake ).withTimeout(5),
+            // new cgCubeLow(m_arm, m_extend, m_wrist, m_intake ).withTimeout(5),
             driveCommand.withTimeout(seconds),
             driveCommandReverse.withTimeout(seconds -2)
 

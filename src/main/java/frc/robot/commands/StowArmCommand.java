@@ -58,7 +58,7 @@ public class StowArmCommand extends CommandBase {
     {
 
         this.wristSubsystem.SetWristToTickPosition(2000);
-        this.rotateSubsystem.RotateArmToDeg(20);
+        this.rotateSubsystem.RotateArmToDeg(25);
 
     }
     @Override
