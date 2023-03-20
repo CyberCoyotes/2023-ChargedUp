@@ -9,14 +9,14 @@
 --------------------------------------------------------*/
 package frc.robot.commands;
 
-import frc.robot.subsystems.IntakeSubsystemV2;
+import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class SetIntakeCube extends CommandBase {
 
-   private final IntakeSubsystemV2 m_intakeSubsystem; // made into a final
+   private final IntakeSubsystem m_intakeSubsystem; // made into a final
 
-   public SetIntakeCube(IntakeSubsystemV2 subsystem) {
+   public SetIntakeCube(IntakeSubsystem subsystem) {
       m_intakeSubsystem = subsystem;
       addRequirements(m_intakeSubsystem);
    }

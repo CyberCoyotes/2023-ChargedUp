@@ -28,6 +28,11 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WrapperCommand;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.autos.cgCubeLow_Taxi;
+import frc.robot.autos.cgCubeLow_Taxi_Dock;
+import frc.robot.autos.cgCubeMid_Taxi;
+import frc.robot.autos.cgCubeMid_Taxi_Dock;
+import frc.robot.autos.cgCubeLow_Taxi_Engaged;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -109,7 +114,7 @@ public class RobotContainer {
     private final CANdle candleSub = new CANdle(Constants.CANDLE_ID);
     private final Vision visionSub = new Vision();
     private final Swerve s_Swerve = new Swerve();
-    private final IntakeSubsystemV2 intakeSub = new IntakeSubsystemV2();
+    private final IntakeSubsystem intakeSub = new IntakeSubsystem();
     private final WristSubsystem wristSub = new WristSubsystem();
     // private final SensorsSubsystem m_ArmSwitch = new SensorsSubsystem();
 
@@ -120,7 +125,7 @@ public class RobotContainer {
     RotateArm90 rotTo90 = new RotateArm90(armSub);
     MoveUntilSensor rotationMoveUntilSensor;
     MoveUntilSensor extentionMoveUntilSensor;
-    DriveOutAndChargeStation autonCommand = new DriveOutAndChargeStation(s_Swerve, robotCentric);
+    cgCubeLow_Taxi_Engaged autonCommand = new cgCubeLow_Taxi_Engaged(s_Swerve, robotCentric);
     ArmExtendMiddle extendMiddle = new ArmExtendMiddle(armExtendSub);
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
 
@@ -129,18 +134,18 @@ public class RobotContainer {
     Command auton_Default = // TODO Set
         new SetIntakeCone(intakeSub); //
     Command auton_ChargeStation = // Drives out, and then back onto the Charge Station
-        new DriveOutAndChargeStation(s_Swerve, robotCentric);
+        new cgCubeLow_Taxi_Engaged(s_Swerve, robotCentric);
     Command auton_ConeLow = // Deploys a cone to middle level in auton
         new cgConeLow(armSub, armExtendSub, wristSub, intakeSub); 
         
     Command auton_ConeMiddle = // Deploys a cone to middle level in auton
         new cgConeMiddle(armSub, armExtendSub, wristSub, intakeSub); 
     Command auton_CubeMiddle = //Deploys a cube to middle level in auton
-        new cgCubeMiddle(armSub, armExtendSub, wristSub, intakeSub); // 
-    Command cubeMidTaxi = new CubeMidTaxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-    Command cubeLowTaxi = new CubeLowTaxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-    Command cubeLowTaxiDock = new CubeLowTaxiDock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-    Command cubeMidTaxiDock = new CubeMidTaxiDock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+        new cgCubeMid(armSub, armExtendSub, wristSub, intakeSub); // 
+    Command cubeMidTaxi = new cgCubeMid_Taxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    Command cubeLowTaxi = new cgCubeLow_Taxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    Command cubeLowTaxiDock = new cgCubeLow_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    Command cubeMidTaxiDock = new cgCubeMid_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
 
     Command auton_cgCubeTop =  new cgCubeTop(armSub, armExtendSub, wristSub, intakeSub);
     // #endregion

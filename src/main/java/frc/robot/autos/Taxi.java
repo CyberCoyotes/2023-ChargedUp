@@ -5,22 +5,19 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.TeleopSwerve;
-import frc.robot.subsystems.ArmExtensionSubsystem;
-import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Swerve;
 
-public class LongDrive extends SequentialCommandGroup {
-    public LongDrive(ArmSubsystem armSubsystem, ArmExtensionSubsystem m_extend, Swerve s_Swerve, BooleanSupplier robotCentric) {
+public class Taxi extends SequentialCommandGroup {
+    public Taxi(Swerve s_Swerve, BooleanSupplier robotCentric) {
 
-        addRequirements(armSubsystem, m_extend, s_Swerve);
+        addRequirements(s_Swerve);
 
         short polarity = 1;
         double power = .2;
         double seconds = 2;// double seconds = inches * Constants.AutoConstants.AUTON_40_PERCENT_MULTIPLIER;
         final float input = (float) (polarity * power);
-        var driveCommand = new TeleopSwerve(
+        Command driveCommand = new TeleopSwerve(
             s_Swerve,
             () -> input,
             () -> 0,
@@ -28,7 +25,9 @@ public class LongDrive extends SequentialCommandGroup {
             () -> robotCentric.getAsBoolean(),
             () -> false);
         
-        return new ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand);
+        addCommands(
+            // This originally had 2.0 seconds, the Taxi had 2.6 seconds
+            driveCommand.withTimeout(seconds));
         
 
         // addCommands(

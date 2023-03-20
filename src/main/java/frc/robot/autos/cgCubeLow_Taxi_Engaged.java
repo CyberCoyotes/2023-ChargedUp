@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.autos;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
@@ -6,9 +6,12 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.SeekBalanceCommand;
+import frc.robot.commands.SeekBeginofChargeStation;
+import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.Swerve;
 
-public class DriveOutAndChargeStation extends SequentialCommandGroup {
+public class cgCubeLow_Taxi_Engaged extends SequentialCommandGroup {
 
     private double pTerm;
     private double dTerm;
@@ -33,7 +36,7 @@ public class DriveOutAndChargeStation extends SequentialCommandGroup {
     // : 40% in a single direction for 1 second: ~51 inches        
     final float input = (float) (polarity * power);
     Command driveCommand;
-    public DriveOutAndChargeStation(Swerve s_Swerve, BooleanSupplier robotCentric) 
+    public cgCubeLow_Taxi_Engaged(Swerve s_Swerve, BooleanSupplier robotCentric) 
     {
         
         addRequirements(s_Swerve);

@@ -1,4 +1,4 @@
-package frc.robot.autos;
+package frc.robot.commands;
 
 import java.util.function.BooleanSupplier;
 
@@ -6,14 +6,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.TeleopSwerve;
-import frc.robot.commands.cgCubeMiddle;
+// import frc.robot.commands.cgCubeMiddle;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Swerve;
 
-public class LongDriveCubeMiddle extends SequentialCommandGroup {
-    public LongDriveCubeMiddle(ArmSubsystem armSubsystem, ArmExtensionSubsystem m_extend, Swerve s_Swerve, BooleanSupplier robotCentric) {
+public class cgCubeMid_ver2 extends SequentialCommandGroup {
+    public cgCubeMid_ver2(ArmSubsystem armSubsystem, ArmExtensionSubsystem m_extend, Swerve s_Swerve, BooleanSupplier robotCentric) {
 
         addRequirements(armSubsystem, m_extend, s_Swerve);
 
@@ -28,13 +27,10 @@ public class LongDriveCubeMiddle extends SequentialCommandGroup {
             () -> 0,
             () -> robotCentric.getAsBoolean(),
             () -> false);
-        // return new ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand);
-
-        // return new ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand);
-        
+        // return new ParallelDeadlineGroup(new WaitCommand(seconds), driveCommand);        
 
         addCommands(
-        new cgCubeMiddle(armSubsystem, m_extend, null, null), 
+        new cgCubeMid_ver2(armSubsystem, m_extend, null, null), 
         new ParallelDeadlineGroup(new WaitCommand(2.6), driveCommand ));
         ;
     }

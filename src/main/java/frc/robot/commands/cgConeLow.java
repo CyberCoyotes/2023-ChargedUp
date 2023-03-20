@@ -8,7 +8,7 @@ package frc.robot.commands;
 import frc.robot.Constants;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.IntakeSubsystemV2;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class cgConeLow extends SequentialCommandGroup{
 
     public cgConeLow
-    (ArmSubsystem armSub, ArmExtensionSubsystem armExtSub, WristSubsystem wristSub, IntakeSubsystemV2 intakeSub) {
+    (ArmSubsystem armSub, ArmExtensionSubsystem armExtSub, WristSubsystem wristSub, IntakeSubsystem intakeSub) {
         addCommands(
             new RotateArmArg(armSub, -30).withTimeout(1)
             , new WaitCommand(0.25) // FIXME excessive for testing

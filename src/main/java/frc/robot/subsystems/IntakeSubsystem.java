@@ -10,7 +10,7 @@ import frc.robot.Constants;
  * 
  * Made for sucking in the cargo, with 3 rollers all connected to a {@code PWMSparkMax}.
  */
-public class IntakeSubsystemV2 extends SubsystemBase  
+public class IntakeSubsystem extends SubsystemBase  
 {
 
     //todo Check if the motor needs inversion to properly intake.
