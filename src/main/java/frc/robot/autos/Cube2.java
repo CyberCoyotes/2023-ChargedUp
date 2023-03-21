@@ -13,10 +13,10 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Swerve;
 
-public class PPCube2 extends SequentialCommandGroup {
-    public PPCube2() {
+public class Cube2 extends SequentialCommandGroup {
+    public Cube2() {
         List<PathPlannerTrajectory> pptList = PathPlanner.loadPathGroup(
-            "CableCube2", new PathConstraints(4, 3)
+            "ppCableCube2", new PathConstraints(4, 3)
             );
         
         addCommands(
