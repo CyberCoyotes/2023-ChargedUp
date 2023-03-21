@@ -299,8 +299,8 @@ public class RobotContainer {
 
         autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
         autonChooser.addOption("Low cube Taxi (Side pref.)", cubeLowTaxi); 
-        autonChooser.addOption("0.02 Cube 2 Path Only (PP)", (Command) PathPlanner.loadPathGroup("ppCube2", new PathConstraints(4, 3)));
-        autonChooser.addOption("0.01 Out and Turn (PP)", (Command) PathPlanner.loadPathGroup("ppOutTurn", new PathConstraints(4, 3)));
+        // autonChooser.addOption("0.02 Cube 2 Path Only (PP)", (Command) PathPlanner.loadPathGroup("ppCableCube2", new PathConstraints(4, 3)));
+        autonChooser.addOption("0.02 Out and Turn (PP)", (Command) PathPlanner.loadPathGroup("ppOutTurn", new PathConstraints(4, 3)));
 
         // autonChooser.addOption("Mid cube Taxi (Side pref.)", cubeMidTaxi); 
         // autonChooser.addOption("Low cube Taxi + dock (Mid pref.)", cubeLowTaxiDock);
