@@ -10,7 +10,10 @@
 
 package frc.robot;
 
+import java.util.List;
+
 import com.ctre.phoenix.led.CANdle;
+import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -30,6 +33,15 @@ import frc.robot.autos.cgCubeMid_Taxi_Dock;
 import frc.robot.autos.cgCubeLow_Taxi_Engaged;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.auto.PIDConstants;
+import com.pathplanner.lib.auto.SwerveAutoBuilder;
+
 
 // 94505//horizontaL
 // 314446 // serve
@@ -108,7 +120,7 @@ public class RobotContainer {
     private final ArmSubsystem armSub = new ArmSubsystem(limit);
     private final CANdle candleSub = new CANdle(Constants.CANDLE_ID);
     private final Vision visionSub = new Vision();
-    private final Swerve s_Swerve = new Swerve();
+    private final static Swerve s_Swerve = new Swerve(); // changed to a static to work with PathPlanner
     private final IntakeSubsystem intakeSub = new IntakeSubsystem();
     private final WristSubsystem wristSub = new WristSubsystem();
     // private final SensorsSubsystem m_ArmSwitch = new SensorsSubsystem();
@@ -239,6 +251,24 @@ public class RobotContainer {
 
 
     }
+    private static SwerveAutoBuilder swerveAutoBuilder;
+
+    public static Command buildAuto(List<PathPlannerTrajectory> trajs) {
+        //s_Swerve.resetOdometry(trajs.get(0).getInitialHolonomicPose());
+        swerveAutoBuilder = new SwerveAutoBuilder(
+            s_Swerve::getPose,
+            s_Swerve::resetOdometry,
+            Constants.Swerve.swerveKinematics,
+            new PIDConstants(Constants.AutoConstants.kPXController, 0, 0),
+            new PIDConstants(Constants.AutoConstants.kPThetaController, 0, 0),
+            s_Swerve::setModuleStates,
+            Constants.AutoConstants.eventMap,
+            true,
+            s_Swerve
+        );
+
+        return swerveAutoBuilder.fullAuto(trajs);
+    }
 
     private void configureDefaultCommands() {
         visionSub.setDefaultCommand(new GetTagID(visionSub));
@@ -269,6 +299,7 @@ public class RobotContainer {
 
         autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
         autonChooser.addOption("Low cube Taxi (Side pref.)", cubeLowTaxi); 
+        autonChooser.addOption("0.01 Cube 2 Path Only (PP)", (Command) PathPlanner.loadPathGroup("PPCube2", new PathConstraints(4, 3)));
         // autonChooser.addOption("Mid cube Taxi (Side pref.)", cubeMidTaxi); 
         // autonChooser.addOption("Low cube Taxi + dock (Mid pref.)", cubeLowTaxiDock);
         autonChooser.addOption("Taxi + dock (Mid pref.)", cubeMidTaxiDock); 

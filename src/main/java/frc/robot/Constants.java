@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import java.util.HashMap;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -16,6 +18,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
@@ -259,6 +262,8 @@ public final class Constants {
         public static final ProfiledPIDController thetaProfiledPID = new ProfiledPIDController(kPThetaController,
                 kMaxAccelerationMetersPerSecondSquared, stickDeadband, kThetaControllerConstraints);
         public static final PIDController kThetaPIDController = new PIDController(kPThetaController, 0,0);
+        
+        public static HashMap<String, Command> eventMap = new HashMap<>(); // added for PathPlanner
         
         }
 
