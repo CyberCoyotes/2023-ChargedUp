@@ -1,3 +1,6 @@
+/*
+ * "CubeMidTaxi.java"
+ */
 package frc.robot.autos;
 
 import java.util.function.BooleanSupplier;
@@ -5,7 +8,7 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.TeleopSwerve;
-import frc.robot.commands.cgCubeTop;
+import frc.robot.commands.cgCubeMid_ver3;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -55,7 +58,7 @@ public class cgCubeMid_Taxi_ver1 extends SequentialCommandGroup
 
         addCommands(
             //just in case
-            new cgCubeTop(m_arm, m_extend, m_wrist, m_intake ).withTimeout(7),
+            new cgCubeMid_ver3(m_arm, m_extend, m_wrist, m_intake ).withTimeout(7),
             driveCommand
 
         );

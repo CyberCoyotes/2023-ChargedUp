@@ -134,7 +134,7 @@ public class RobotContainer {
         new cgConeLow(armSub, armExtendSub, wristSub, intakeSub); 
         
     Command auton_ConeMiddle = // Deploys a cone to middle level in auton
-        new cgConeMiddle(armSub, armExtendSub, wristSub, intakeSub); 
+        new cgConeMid(armSub, armExtendSub, wristSub, intakeSub); 
     Command auton_CubeMiddle = //Deploys a cube to middle level in auton
         new cgCubeMid_ver1(armSub, armExtendSub, wristSub, intakeSub); // 
     Command cubeMidTaxi = new cgCubeMid_Taxi_ver1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
@@ -142,7 +142,7 @@ public class RobotContainer {
     Command cubeLowTaxiDock = new cgCubeLow_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     Command cubeMidTaxiDock = new cgCubeMid_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
 
-    Command auton_cgCubeTop =  new cgCubeTop(armSub, armExtendSub, wristSub, intakeSub);
+    Command auton_cgCubeTop =  new cgCubeMid_ver3(armSub, armExtendSub, wristSub, intakeSub);
     // #endregion
 
     SendableChooser<Command> autonChooser = new SendableChooser<>(); // TODO Auton test

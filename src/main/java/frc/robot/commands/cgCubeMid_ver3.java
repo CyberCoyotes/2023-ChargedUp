@@ -1,6 +1,6 @@
 /*--------------------------------------------------------
 *
-* Deploy Cube to Mid Level
+* "cgCubeTop.java"
 * 
 *--------------------------------------------------------*/
 
@@ -15,9 +15,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 
-public class cgCubeTop extends SequentialCommandGroup{
+public class cgCubeMid_ver3 extends SequentialCommandGroup{
 
-    public cgCubeTop
+    public cgCubeMid_ver3
     (ArmSubsystem armSub, ArmExtensionSubsystem armExtSub, WristSubsystem wristSub, IntakeSubsystem intakeSub) {
         addCommands(
             new RotateArmArg(armSub, 90).withTimeout(.75)

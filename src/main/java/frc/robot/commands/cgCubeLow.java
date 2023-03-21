@@ -20,13 +20,8 @@ public class cgCubeLow extends SequentialCommandGroup{
     (ArmSubsystem armSub, ArmExtensionSubsystem armExtSub, WristSubsystem wristSub, IntakeSubsystem intakeSub) {
         addCommands(
             new RotateArmArg(armSub, 30).withTimeout(1)
-            // Ideally the dead condition would be when the wrist achieves its angle
-            // , new ParallelDeadlineGroup( // Use ParallelRaceGroup if this doesn't work 
-                // new WristToArg(wristSub, 19000)
-                , new SetIntakeCone(intakeSub).withTimeout(1.5) // deploys a cube (trust me)
-            
+            , new SetIntakeCone(intakeSub).withTimeout(1.5) // deploys a cube
             , new WaitCommand(0.2) 
-            // , new RotateArmArg(armSub, 0)
         );
     }
 }
