@@ -25,7 +25,7 @@ public class cgCubeMid_ver3 extends SequentialCommandGroup{
             , new ArmExtendToArg(armExtSub, ()->(9500)).withTimeout(1.5)
             , new WaitCommand(0.25)            
             , new WristToArg(wristSub, 11000).withTimeout(.75)
-            , new SetIntakeCone(intakeSub).withTimeout(.75) // deploys a cube
+            , new SetIntakeCone(intakeSub).withTimeout(.75)
             , new WaitCommand(0.25) 
         );
     }
