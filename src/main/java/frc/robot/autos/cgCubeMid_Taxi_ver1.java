@@ -1,11 +1,9 @@
 package frc.robot.autos;
 
 import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants.Arm;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.cgCubeTop;
 import frc.robot.subsystems.ArmExtensionSubsystem;
@@ -15,7 +13,7 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.WristSubsystem;
 
 
-public class cgCubeMid_Taxi extends SequentialCommandGroup
+public class cgCubeMid_Taxi_ver1 extends SequentialCommandGroup
 {
 
 
@@ -27,7 +25,7 @@ public class cgCubeMid_Taxi extends SequentialCommandGroup
 
 
 
-    public cgCubeMid_Taxi(Swerve s_Swerve, ArmExtensionSubsystem extend, ArmSubsystem arm, IntakeSubsystem intake, WristSubsystem wrist, BooleanSupplier robotCentric) {
+    public cgCubeMid_Taxi_ver1(Swerve s_Swerve, ArmExtensionSubsystem extend, ArmSubsystem arm, IntakeSubsystem intake, WristSubsystem wrist, BooleanSupplier robotCentric) {
 
             this.m_swerve = s_Swerve; 
             this.m_arm = arm; 

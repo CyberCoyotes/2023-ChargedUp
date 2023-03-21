@@ -10,8 +10,6 @@
 
 package frc.robot;
 
-import java.security.KeyStore.LoadStoreParameter;
-
 import com.ctre.phoenix.led.CANdle;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -23,14 +21,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.WrapperCommand;
-import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.cgCubeLow_Taxi;
 import frc.robot.autos.cgCubeLow_Taxi_Dock;
-import frc.robot.autos.cgCubeMid_Taxi;
+import frc.robot.autos.cgCubeMid_Taxi_ver1;
 import frc.robot.autos.cgCubeMid_Taxi_Dock;
 import frc.robot.autos.cgCubeLow_Taxi_Engaged;
 import frc.robot.commands.*;
@@ -141,8 +136,8 @@ public class RobotContainer {
     Command auton_ConeMiddle = // Deploys a cone to middle level in auton
         new cgConeMiddle(armSub, armExtendSub, wristSub, intakeSub); 
     Command auton_CubeMiddle = //Deploys a cube to middle level in auton
-        new cgCubeMid(armSub, armExtendSub, wristSub, intakeSub); // 
-    Command cubeMidTaxi = new cgCubeMid_Taxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+        new cgCubeMid_ver1(armSub, armExtendSub, wristSub, intakeSub); // 
+    Command cubeMidTaxi = new cgCubeMid_Taxi_ver1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     Command cubeLowTaxi = new cgCubeLow_Taxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     Command cubeLowTaxiDock = new cgCubeLow_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     Command cubeMidTaxiDock = new cgCubeMid_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
@@ -273,19 +268,10 @@ public class RobotContainer {
     {
 
         autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
-        // autonChooser.addOption("XXX Run Intake XXX", auton_Default); // "Drive Only" Command or Command Group
-        // autonChooser.addOption("XXX Cone to Low XXX", auton_ConeLow); // " "Low Cube + Drive" TODO Replace * with No. when working
-        // autonChooser.addOption("XXX Cone to Middle XXX", auton_ConeMiddle); // " "Low Cube + Drive" TODO Replace * with No. when working
-        // autonChooser.addOption("Stow", stowCommand); // " "Low Cube + Drive" TODO Replace * with No. when working
-
-        // autonChooser.addOption("XXX Cube to Middle XXX", auton_CubeMiddle); // TODO replace the variable representing the auton command group from above
-        // autonChooser.addOption(" Cube to Middle XXX", auton_cgCubeTop); // TODO replace the variable representing the auton command group from above
-        
-        // autonChooser.addOption("DONT USE Out & back Charge Station XXX", auton_ChargeStation); // TODO replace the variable representing the auton command group from above
-        autonChooser.addOption("Low cube Taxi (Side pref.)", cubeLowTaxi); // TODO replace the variable representing the auton command group from above
-        // autonChooser.addOption("Mid cube Taxi (Side pref.)", cubeMidTaxi); // TODO replace the variable representing the auton command group from above
-        // autonChooser.addOption("Low cube Taxi + dock (Mid pref.)", cubeLowTaxiDock); // TODO replace the variable representing the auton command group from above
-        autonChooser.addOption("Taxi + dock (Mid pref.)", cubeMidTaxiDock); // TODO replace the variable representing the auton command group from above
+        autonChooser.addOption("Low cube Taxi (Side pref.)", cubeLowTaxi); 
+        // autonChooser.addOption("Mid cube Taxi (Side pref.)", cubeMidTaxi); 
+        // autonChooser.addOption("Low cube Taxi + dock (Mid pref.)", cubeLowTaxiDock);
+        autonChooser.addOption("Taxi + dock (Mid pref.)", cubeMidTaxiDock); 
         // autonChooser.addOption("Arm Extent Auto Test", extendMiddle); //! for testing; getting this command to work is a MUST
         // autonChooser.addOption("Arm Rotate to 90 deg", rotTo90); //! for testing; getting this command to work is a MUST
         // autonChooser.addOption("wristReceive", wristReceive);
