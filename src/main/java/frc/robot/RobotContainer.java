@@ -28,7 +28,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.cgCubeLow_Taxi;
 import frc.robot.autos.cgCubeLow_Taxi_Dock;
-import frc.robot.autos.cgCubeMid_Taxi_ver1;
+import frc.robot.autos.CubeMidTaxiV1;
 import frc.robot.autos.cgCubeMid_Taxi_Dock;
 import frc.robot.autos.cgCubeLow_Taxi_Engaged;
 import frc.robot.commands.*;
@@ -137,7 +137,7 @@ public class RobotContainer {
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
 
     Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);
-    
+    Command TestArmExtendAuto = new ArmExtendMiddle(armExtendSub);
     Command auton_Default = // TODO Set
         new SetIntakeCone(intakeSub); //
     Command auton_ChargeStation = // Drives out, and then back onto the Charge Station
@@ -149,12 +149,12 @@ public class RobotContainer {
         new cgConeMid(armSub, armExtendSub, wristSub, intakeSub); 
     Command auton_CubeMiddle = //Deploys a cube to middle level in auton
         new cgCubeMid_ver1(armSub, armExtendSub, wristSub, intakeSub); // 
-    Command cubeMidTaxi = new cgCubeMid_Taxi_ver1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    Command cubeMidTaxi = new CubeMidTaxiV1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     Command cubeLowTaxi = new cgCubeLow_Taxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     Command cubeLowTaxiDock = new cgCubeLow_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     Command cubeMidTaxiDock = new cgCubeMid_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    Command midCubeAuto = new CubeMidAuton(armSub, wristSub, intakeSub);
 
-    Command auton_cgCubeTop =  new cgCubeMid_ver3(armSub, armExtendSub, wristSub, intakeSub);
     // #endregion
 
     SendableChooser<Command> autonChooser = new SendableChooser<>(); // TODO Auton test
@@ -173,6 +173,8 @@ public class RobotContainer {
         SmartDashboard.putNumber("Wrist Encoder", wristSub.getWristPos());
         SmartDashboard.putString("arm mode", armSub.GetMode());
         SmartDashboard.putNumber("pitch", (s_Swerve.GetPitch()));
+        // SmartDashboard.putString("mode", (s_Swerve.GetPitch()));
+        // SmartDashboard.putString("mode", (s_Swerve.GetPitch()));
         try {
             SmartDashboard.putString("command", s_Swerve.getCurrentCommand().getName());
             
@@ -300,11 +302,13 @@ public class RobotContainer {
         autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
         autonChooser.addOption("Low cube Taxi (Side pref.)", cubeLowTaxi); 
         // autonChooser.addOption("0.02 Cube 2 Path Only (PP)", (Command) PathPlanner.loadPathGroup("ppCableCube2", new PathConstraints(4, 3)));
-        autonChooser.addOption("0.02 Out and Turn (PP)", (Command) PathPlanner.loadPathGroup("ppOutTurn", new PathConstraints(4, 3)));
+
 
         // autonChooser.addOption("Mid cube Taxi (Side pref.)", cubeMidTaxi); 
         // autonChooser.addOption("Low cube Taxi + dock (Mid pref.)", cubeLowTaxiDock);
         autonChooser.addOption("Taxi + dock (Mid pref.)", cubeMidTaxiDock); 
+        autonChooser.addOption("Mid Cube Auto", midCubeAuto); 
+        autonChooser.addOption("Test Extend Arm Middle", TestArmExtendAuto); 
         // autonChooser.addOption("Arm Extent Auto Test", extendMiddle); //! for testing; getting this command to work is a MUST
         // autonChooser.addOption("Arm Rotate to 90 deg", rotTo90); //! for testing; getting this command to work is a MUST
         // autonChooser.addOption("wristReceive", wristReceive);

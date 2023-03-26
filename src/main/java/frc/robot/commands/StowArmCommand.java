@@ -12,6 +12,18 @@ public class StowArmCommand extends CommandBase {
     WristSubsystem wristSubsystem;
     
 
+    private int wrist, rot;
+
+    public boolean IsRunningStage1()
+    {
+        return (!((extendSubsystem.ReadExtension() <= 2000)) || !(wristSubsystem.getWristPos() <= 6000 )); 
+    }
+    public void GetData()
+    {    
+        System.out.println("extend safe " + ((extendSubsystem.ReadExtension() <= 2000)));
+        System.out.println("wrist safe "  + (wristSubsystem.getWristPos() <= 6000 ));
+    }
+
     public StowArmCommand(ArmExtensionSubsystem m_extend, ArmSubsystem m_rotate, WristSubsystem m_wrist) 
     {
         this.rotateSubsystem = m_rotate;
@@ -27,8 +39,16 @@ public class StowArmCommand extends CommandBase {
     
     @Override
     public void execute() {
+
+
+        boolean extendSafe = (extendSubsystem.ReadExtension() <= 2000);
+        boolean wristSafe = wristSubsystem.getWristPos() <= 6000 ;
+
+
+
+
         //if stage 1 isnt done
-        if (!(extendSubsystem.ReadExtension() <= 2000) && wristSubsystem.getWristPos() <= 6000 )
+        if (!extendSafe || !wristSafe )
         {
             Stage1();
         }
@@ -42,9 +62,14 @@ public class StowArmCommand extends CommandBase {
      */
     private void Stage1()
     {
-        this.wristSubsystem.SetWristToTickPosition(2000);
-        this.rotateSubsystem.RotateArmToDeg(50);
-        this.wristSubsystem.setWristHome();
+        wrist = 2000;
+        rot = 50;
+
+        this.wristSubsystem.SetWristToTickPosition(wrist);
+        this.rotateSubsystem.RotateArmToDeg(rot);
+        // this.wristSubsystem.setWristHome();
+        this.extendSubsystem.SetArmToTickPosition(2000);
+        System.out.println("RUNNING STAGE ONE");
 
     }
     
@@ -54,8 +79,12 @@ public class StowArmCommand extends CommandBase {
     private void Stage2()
     {
 
-        this.wristSubsystem.SetWristToTickPosition(2000);
-        this.rotateSubsystem.RotateArmToDeg(25);
+        wrist = 2000;
+        rot = 25;
+
+        this.wristSubsystem.SetWristToTickPosition(wrist);
+        this.rotateSubsystem.RotateArmToDeg(rot);
+        System.out.println("RUNNING STAGE TWO TWO TWO");
 
     }
     @Override

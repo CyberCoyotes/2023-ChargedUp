@@ -15,16 +15,14 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 
-public class cgCubeMid_ver3 extends SequentialCommandGroup{
+public class CubeMidAuton extends SequentialCommandGroup{
 
-    public cgCubeMid_ver3
-    (ArmSubsystem armSub, ArmExtensionSubsystem armExtSub, WristSubsystem wristSub, IntakeSubsystem intakeSub) {
+    public CubeMidAuton
+    (ArmSubsystem armSub, WristSubsystem wristSub, IntakeSubsystem intakeSub) {
         addCommands(
-            new RotateArmArg(armSub, 90).withTimeout(.75)
-            , new WaitCommand(0.25)
-            , new ArmExtendToArg(armExtSub, ()->(9500)).withTimeout(1.5)
-            , new WaitCommand(0.25)            
-            , new WristToArg(wristSub, 11000).withTimeout(.75)
+            new RotateArmArg(armSub, 80).withTimeout(.75)
+            , new WaitCommand(0.25)    
+            , new WristToArg(wristSub, 21000).withTimeout(.75)
             , new SetIntakeCone(intakeSub).withTimeout(.75)
             , new WaitCommand(0.25) 
         );
