@@ -5,6 +5,13 @@ import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 
+
+
+/**
+ * Stows the arm asyncronously. <b>No built-in timeout</b>, so an arm cancel or decorating timeout is recommended. 
+ * @deprecated Doesn't play well with WPILib, and should be replaced by {@link StowArmCG}.
+ */
+@Deprecated
 public class StowArmCommand extends CommandBase {
 
     ArmExtensionSubsystem extendSubsystem;
