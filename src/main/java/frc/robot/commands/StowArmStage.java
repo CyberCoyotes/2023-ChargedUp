@@ -1,5 +1,7 @@
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.IFollower;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
@@ -13,7 +15,7 @@ public class StowArmStage extends CommandBase
     WristSubsystem wristSubsystem;
     
     int wristPoint, extendPoint, rotatePoint;
-    private int wristAllowedError = 20, extendAllowedError = 100, rotateAllowedError = 3;
+    private int wristAllowedError = 750, extendAllowedError = 100, rotateAllowedError = 3;
 
 
 
@@ -51,10 +53,19 @@ public class StowArmStage extends CommandBase
     }
     @Override
     public boolean isFinished() {
-        return 
+
+        boolean fin = 
         this.wristSubsystem.getWristPos() <= wristPoint + wristAllowedError &&
-        this.rotateSubsystem.GetRotationInDeg() <= wristPoint + wristAllowedError &&
+        this.rotateSubsystem.GetRotationInDeg() <= rotatePoint + rotateAllowedError &&
         this.extendSubsystem.ReadExtension() <= extendPoint + extendAllowedError;
+
+        if(fin)
+        {
+            System.out.println("ITS DONE");
+        }
+
+        return fin; 
+     
     }
 
 }

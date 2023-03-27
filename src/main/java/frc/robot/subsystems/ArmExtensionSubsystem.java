@@ -86,7 +86,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // TODO Auto-generated method stub
-        System.out.println(m_motorController.getSelectedSensorPosition());
+        // System.out.println(m_motorController.getSelectedSensorPosition());
 
     }
     public void setArmMid() {

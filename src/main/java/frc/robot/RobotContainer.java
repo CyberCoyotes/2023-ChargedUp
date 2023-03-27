@@ -136,7 +136,14 @@ public class RobotContainer {
     ArmExtendMiddle extendMiddle = new ArmExtendMiddle(armExtendSub);
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
 
-    Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);
+    // Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);
+    
+    
+    // StowArmCG _raw = new StowArmCG(armExtendSub, armSub, wristSub);
+    StowArmStage stageOne = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
+    StowArmStage stageTwo = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
+
+    Command stowCommand = stageOne.andThen(stageTwo);
     Command TestArmExtendAuto = new ArmExtendMiddle(armExtendSub);
     Command auton_Default = // TODO Set
         new SetIntakeCone(intakeSub); //
@@ -173,6 +180,8 @@ public class RobotContainer {
         SmartDashboard.putNumber("Wrist Encoder", wristSub.getWristPos());
         SmartDashboard.putString("arm mode", armSub.GetMode());
         SmartDashboard.putNumber("pitch", (s_Swerve.GetPitch()));
+        SmartDashboard.putBoolean("stage one", stageOne.isScheduled());
+        SmartDashboard.putBoolean("stage two", stageTwo.isScheduled());
         // SmartDashboard.putString("mode", (s_Swerve.GetPitch()));
         // SmartDashboard.putString("mode", (s_Swerve.GetPitch()));
         try {
