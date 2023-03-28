@@ -24,10 +24,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.cgCubeLow_Taxi;
 import frc.robot.autos.cgCubeLow_Taxi_Dock;
+import frc.robot.autos.ConeMidAuto;
 import frc.robot.autos.CubeMidTaxiV1;
 import frc.robot.autos.cgCubeMid_Taxi_Dock;
 import frc.robot.autos.cgCubeLow_Taxi_Engaged;
@@ -87,7 +90,7 @@ public class RobotContainer {
     private final int RT = XboxController.Axis.kRightTrigger.value;
     // #endregion
     // #region Driver Buttons
-    /* A */private final JoystickButton RotateArmTEST = new JoystickButton(driver, XboxController.Button.kA.value);
+    /* A */private final JoystickButton coneMidTEST = new JoystickButton(driver, XboxController.Button.kA.value);
 
     /* START */private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
     /* LB */private final JoystickButton robotCentric = new JoystickButton(driver,
@@ -136,6 +139,10 @@ public class RobotContainer {
     ArmExtendMiddle extendMiddle = new ArmExtendMiddle(armExtendSub);
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
 
+     ConeMidAuto coneMid = new ConeMidAuto(wristSub, armSub); 
+
+
+    
     // Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);
     
     
@@ -244,6 +251,7 @@ public class RobotContainer {
         
         /* Driver Button Bindings */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        coneMidTEST.whileTrue(coneMid);
         zeroArmEncoder.onTrue(new InstantCommand(() -> armSub.ZeroArmEncoder()));
         creepButton.onTrue(new InstantCommand(() -> SetCreepToggle(!GetCreepToggle())));// inverts creep when button
         stowArm.onTrue(stowCommand);
@@ -318,6 +326,7 @@ public class RobotContainer {
         autonChooser.addOption("Taxi + dock (Mid pref.)", cubeMidTaxiDock); 
         autonChooser.addOption("Mid Cube Auto", midCubeAuto); 
         autonChooser.addOption("Test Extend Arm Middle", TestArmExtendAuto); 
+        // autonChooser.addOption("Test Cone Mid", coneMid); 
         // autonChooser.addOption("Arm Extent Auto Test", extendMiddle); //! for testing; getting this command to work is a MUST
         // autonChooser.addOption("Arm Rotate to 90 deg", rotTo90); //! for testing; getting this command to work is a MUST
         // autonChooser.addOption("wristReceive", wristReceive);
