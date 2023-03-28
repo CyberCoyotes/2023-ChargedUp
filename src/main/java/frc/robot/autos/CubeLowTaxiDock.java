@@ -13,7 +13,7 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.ArmWristSubsystem;
 
 
-public class cgCubeLow_Taxi_Dock extends SequentialCommandGroup
+public class CubeLowTaxiDock extends SequentialCommandGroup
 {
 
 
@@ -23,7 +23,8 @@ public class cgCubeLow_Taxi_Dock extends SequentialCommandGroup
     private IntakeSubsystem m_intake;
     private ArmWristSubsystem m_wrist;
 
-    public cgCubeLow_Taxi_Dock(Swerve s_Swerve, ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist, BooleanSupplier robotCentric) {
+    /**We don't know if this is accurate to the actual game field, but we can still keep it. */
+    public CubeLowTaxiDock(Swerve s_Swerve, ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist, BooleanSupplier robotCentric) {
 
             this.m_swerve = s_Swerve; 
             this.m_arm = arm; 
