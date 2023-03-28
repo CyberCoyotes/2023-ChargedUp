@@ -18,7 +18,7 @@ public class PathPlannerTest extends SequentialCommandGroup {
         List<PathPlannerTrajectory> pptList = PathPlanner.loadPathGroup("ppOutTurn", new PathConstraints(4, 3));
         
         addCommands(
-            RobotContainer.buildAuto(pptList)
+            RobotContainer.buildAuton(pptList)
         );
     }
 }

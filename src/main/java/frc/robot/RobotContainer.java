@@ -26,10 +26,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.autos.cgCubeLow_Taxi;
-import frc.robot.autos.cgCubeLow_Taxi_Dock;
-import frc.robot.autos.cgCubeMid_Taxi_ver1;
-import frc.robot.autos.cgCubeMid_Taxi_Dock;
+import frc.robot.autos.PathPlannerTest;
 import frc.robot.autos.cgCubeLow_Taxi_Engaged;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -41,7 +38,6 @@ import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
-
 
 // 94505//horizontaL
 // 314446 // serve
@@ -126,7 +122,9 @@ public class RobotContainer {
     // private final SensorsSubsystem m_ArmSwitch = new SensorsSubsystem();
 
     // #endregion
+    
     // #region Commands
+    /* Commands */
     // ResetArmCommand resetArm = new ResetArmCommand(armSub, wristSub, armExtendSub);
     RotateArmIntake intakeCommand = new RotateArmIntake(armSub);
     RotateArm90 rotTo90 = new RotateArm90(armSub);
@@ -135,33 +133,48 @@ public class RobotContainer {
     cgCubeLow_Taxi_Engaged autonCommand = new cgCubeLow_Taxi_Engaged(s_Swerve, robotCentric);
     ArmExtendMiddle extendMiddle = new ArmExtendMiddle(armExtendSub);
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
-
     Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);
-    
-    Command auton_Default = // TODO Set
-        new SetIntakeCone(intakeSub); //
-    Command auton_ChargeStation = // Drives out, and then back onto the Charge Station
-        new cgCubeLow_Taxi_Engaged(s_Swerve, robotCentric);
-    Command auton_ConeLow = // Deploys a cone to middle level in auton
-        new cgConeLow(armSub, armExtendSub, wristSub, intakeSub); 
-        
-    Command auton_ConeMiddle = // Deploys a cone to middle level in auton
-        new cgConeMid(armSub, armExtendSub, wristSub, intakeSub); 
-    Command auton_CubeMiddle = //Deploys a cube to middle level in auton
-        new cgCubeMid_ver1(armSub, armExtendSub, wristSub, intakeSub); // 
-    Command cubeMidTaxi = new cgCubeMid_Taxi_ver1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-    Command cubeLowTaxi = new cgCubeLow_Taxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-    Command cubeLowTaxiDock = new cgCubeLow_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-    Command cubeMidTaxiDock = new cgCubeMid_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    // private final SequentialCommandGroup chargestation = new MountAndBalance(s_Swerve); // Bobcats
+    // private final PathPlannerTest pathPlannerTest = new PathPlannerTest();
 
-    Command auton_cgCubeTop =  new cgCubeMid_ver3(armSub, armExtendSub, wristSub, intakeSub);
+    // Command auton_Default = //
+        // new SetIntakeCone(intakeSub); //
+    // Command auton_ChargeStation = // Drives out, and then back onto the Charge Station
+        // new cgCubeLow_Taxi_Engaged(s_Swerve, robotCentric);
+    // Command auton_ConeLow = // Deploys a cone to middle level in auton
+        // new cgConeLow(armSub, armExtendSub, wristSub, intakeSub); 
+        
+    // Command auton_ConeMiddle = // Deploys a cone to middle level in auton
+        // new cgConeMid(armSub, armExtendSub, wristSub, intakeSub); 
+    // Command auton_CubeMiddle = //Deploys a cube to middle level in auton
+        // new cgCubeMid_ver1(armSub, armExtendSub, wristSub, intakeSub); // 
+    // Command cubeMidTaxi = new cgCubeMid_Taxi_ver1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    // Command cubeLowTaxi = new cgCubeLow_Taxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    // Command cubeLowTaxiDock = new cgCubeLow_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    // Command cubeMidTaxiDock = new cgCubeMid_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+
+    // Command auton_cgCubeTop =  new cgCubeMid_ver3(armSub, armExtendSub, wristSub, intakeSub);
+
     // #endregion
 
-    SendableChooser<Command> autonChooser = new SendableChooser<>(); // TODO Auton test
-    
-        // Shuffleboard.getTab("Auton").add(autonChooser).withSize(2, 4); // Create an Auton "Tab"
+    // TODO Added from Bobcats
+    public void displayGyro(){
+        SmartDashboard.putNumber("pitch", s_Swerve.getPitch());
+        SmartDashboard.putNumber("yaw", s_Swerve.getRoll());
+    }
 
-        // Shuffleboard.getTab("Experimental Commands"); // Create an Auton "Tab"
+    /* TODO Bobcat Example */
+    // private final SequentialCommandGroup chargestation = new MountAndBalance(s_Swerve);
+    // private final Command align = new AlignToTarget(s_Swerve, m_Limelight).withInterruptBehavior(InterruptionBehavior.kCancelIncoming).repeatedly();
+    private static SwerveAutoBuilder swerveAutonBuilder;
+
+    /* SendableChooser */
+    SendableChooser<List<PathPlannerTrajectory>> autonChooser = new SendableChooser<>();
+    //     SendableChooser<List<PathPlannerTrajectory>> autonChooser = new SendableChooser<>();
+
+    // End Bobcat Example
+
+    
 
     public void DebugMethod() {
         
@@ -200,13 +213,7 @@ public class RobotContainer {
       
     public RobotContainer() {
 
-        // autonChooser.addOption("* Low Cube + Balance", auton_Default); // TODO
-        // autonChooser.addOption("* Med Cube + Balance", auton_Default); // TODO
-        // autonChooser.addOption("* Low Cube + Out & Back", auton_Default); // TODO
-        // autonChooser.addOption("* Med Cube + Out & Back", auton_Default); // TODO
-        // autonChooser.addOption("Order 66 NO DRIVE + Low Cube", auton_Default); // TODO
-
-        Shuffleboard.getTab("Auton").add(autonChooser).withSize(2, 4); // Create an Auton "Tab"
+        Shuffleboard.getTab("Auton Chooser").add(autonChooser).withSize(2, 4); // Create an Auton "Tab"
 
         Shuffleboard.getTab("Experimental Commands"); // Create an Auton "Tab"
 
@@ -251,11 +258,13 @@ public class RobotContainer {
 
 
     }
-    private static SwerveAutoBuilder swerveAutoBuilder;
 
-    public static Command buildAuto(List<PathPlannerTrajectory> trajs) {
+    // TODO Bobcat Code
+    public static Command buildAuton(List<PathPlannerTrajectory> trajs) {
+        // public static Command buildAuton(List<PathPlannerTrajectory> trajs) {
+
         //s_Swerve.resetOdometry(trajs.get(0).getInitialHolonomicPose());
-        swerveAutoBuilder = new SwerveAutoBuilder(
+        swerveAutonBuilder = new SwerveAutoBuilder(
             s_Swerve::getPose,
             s_Swerve::resetOdometry,
             Constants.Swerve.swerveKinematics,
@@ -267,7 +276,7 @@ public class RobotContainer {
             s_Swerve
         );
 
-        return swerveAutoBuilder.fullAuto(trajs);
+        return swerveAutonBuilder.fullAuto(trajs);
     }
 
     private void configureDefaultCommands() {
@@ -294,23 +303,55 @@ public class RobotContainer {
                 // new ArmExtendToArg(armExtendSub, () -> 9500));
     }
 
-    private void configureAutonChooser() 
-    {
+    // TODO See Bobcat public void setUpAutos() {}
+    // Sendable Chooser Setup
 
-        autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
-        autonChooser.addOption("Low cube Taxi (Side pref.)", cubeLowTaxi); 
+    private void configureAutonChooser() {
+
+        setUpEventMap(); // FIXME Bobcat code
+
+        // autonChooser.setDefaultOption("Score1HighCubeDirtyBalance", 
+            // PathPlanner.loadPathGroup("Score1HighCubeRightBalance", 
+            // new PathConstraints(4.5, 3)));
+
+        // FIXME autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
+        autonChooser.setDefaultOption("Do nothing", (List<PathPlannerTrajectory>) new WaitCommand(1)); // "Drive Only" Command or Command Group
+
+        // autonChooser.addOption("Low cube Taxi (Side pref.)", cubeLowTaxi); 
         // autonChooser.addOption("0.02 Cube 2 Path Only (PP)", (Command) PathPlanner.loadPathGroup("ppCableCube2", new PathConstraints(4, 3)));
-        // autonChooser.addOption("0.02 Out and Turn (PP)", (Command) PathPlanner.loadPathGroup("ppOutTurn", new PathConstraints(4, 3)));
+        
+        // FIXME Test this auton with Path Planner implementation
+        // 3603 Original
+        // autonChooser.addOption("Out and Turn v3.4", (Command) PathPlanner.loadPathGroup("TestOutAndTurn", new PathConstraints(4, 3)));
 
-        // autonChooser.addOption("Mid cube Taxi (Side pref.)", cubeMidTaxi); 
-        // autonChooser.addOption("Low cube Taxi + dock (Mid pref.)", cubeLowTaxiDock);
-        autonChooser.addOption("Taxi + dock (Mid pref.)", cubeMidTaxiDock); 
-        // autonChooser.addOption("Arm Extent Auto Test", extendMiddle); //! for testing; getting this command to work is a MUST
-        // autonChooser.addOption("Arm Rotate to 90 deg", rotTo90); //! for testing; getting this command to work is a MUST
-        // autonChooser.addOption("wristReceive", wristReceive);
+        autonChooser.addOption("BETA 3.4 Out and Turn", (List<PathPlannerTrajectory>) PathPlanner.loadPathGroup("TestOutAndTurn", new PathConstraints(4, 3)));
+
        
     }
 
+    /* TODO from Bobcat Auton */
+    public void setUpEventMap() {
+        Constants.AutoConstants.eventMap.clear();
+
+        // Constants.AutoConstants.eventMap.put("chargeStation", new MountAndBalance(s_Swerve)); // <-- An auto command group goes here
+        
+        /* These are all Bobcat examples and should be deleted */
+  
+        // Constants.AutoConstants.eventMap.put("scoreCubeHigh", new SequentialCommandGroup(
+            // new InstantCommand(m_Wrist::wristSolenoidON),
+            // new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2.125)), 
+            // new InstantCommand(m_Wrist::wristSolenoidON),
+            // new WaitCommand(0.2),
+            // new IntakeOutFullSpeed(m_Intake), 
+            // new StartingConfig(m_Elevator, m_Arm, m_Wrist)
+            // )
+        // );
+   }
+
+    // TODO Added from Bobcat auton
+    public void printHashMap() {
+        SmartDashboard.putString("eventMap", Constants.AutoConstants.eventMap.toString());
+    }
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
@@ -318,65 +359,13 @@ public class RobotContainer {
      */
 
      public Command getAutonomousCommand() {
-        // #region Q+A
-        // PDH is front, and should be facing away from us
-        // gyro resets (predictibly?) at the start of a match
-        // No official restrictions on starting rotation, just placement
-        // pdh facing away from us at the end of auton is ALWAYS Ryker's preference
-        // #endregion
-        
-        //: If polarity is 1, the PDH/gyro/robot is facing away from us, the
-        //: technically "right" orient.
 
-        //#region PID stuff
-        
-        // Pose2d startingPose = new Pose2d(0, 0, new Rotation2d(0));
-        // Pose2d endingPose = new Pose2d(-4, 0, new Rotation2d(0));
-        // TrajectoryConfig trajectoryConfig = new TrajectoryConfig(AutoConstants.kMaxSpeedMetersPerSecond, AutoConstants.kMaxAccelerationMetersPerSecondSquared);
+    
+    /* 3603 Original code */
+    // return autonChooser.getSelected();
 
-        // s_Swerve.resetOdometry(startingPose);
-
-        // Trajectory trajectory = TrajectoryGenerator.generateTrajectory
-        // (
-        //     startingPose,
-        //     List.of
-        //     (
-                
-        //         new Translation2d(1,0),
-        //         new Translation2d(20,0)
-        //         // new Translation2d(3,0)
-        //         // new Translation2d(0,0),
-        //         // new Translation2d(1,0)
-        //     ),
-        //     endingPose,
-        //     trajectoryConfig
-        // );
-        // PIDController XPIDcontroller = new PIDController(AutoConstants.kPXController, 0, 0);
-        // PIDController YPIDcontroller = new PIDController(AutoConstants.kPYController, 0, 0);
-        // ProfiledPIDController thetaController = AutoConstants.thetaProfiledPID; //todo define this here
-
-
-        // SwerveControllerCommand autoCommand = 
-        // new SwerveControllerCommand
-        // (trajectory, 
-        // s_Swerve::getPose,
-        // frc.robot.Constants.Swerve.swerveKinematics, 
-        // XPIDcontroller,
-        // YPIDcontroller,
-        // thetaController,
-        // s_Swerve::setModuleStates,
-        // s_Swerve);
-//#endregion
-
-//// return new SequentialCommandGroup(
-////             new InstantCommand(() -> s_Swerve.resetOdometry(trajectory.getInitialPose())),
-////             // autoCommand.withTimeout(seconds),
-////             // new InstantCommand(() -> s_Swerve.StopModules()),
-////             driveCommand,
-////             new SeekBeginofChargeStation(s_Swerve),
-////             new SeekBalanceCommand(s_Swerve));
-//todo test this in the first place
-    return autonChooser.getSelected();
+    /* TODO Bobcat code */
+    return buildAuton(autonChooser.getSelected());
 
     }
 
@@ -391,6 +380,7 @@ public class RobotContainer {
 
 
     }
+
 }
 
 /**

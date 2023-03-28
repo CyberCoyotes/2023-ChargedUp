@@ -20,7 +20,7 @@ public class cgCubeLow_PPCube2 extends SequentialCommandGroup {
             );
         
         addCommands(
-            RobotContainer.buildAuto(pptList)
+            RobotContainer.buildAuton(pptList)
         );
     }
 }
