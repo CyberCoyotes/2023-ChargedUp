@@ -21,7 +21,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
  * -90  | 72,250    | Position to deploy mid level cone. Also needs full extension
  */
 
-public class WristSubsystem extends SubsystemBase {
+public class ArmWristSubsystem extends SubsystemBase {
 
     private TalonFX m_motorController = new TalonFX(Arm.WRIST_TALONFX_ID);
 
@@ -33,7 +33,7 @@ public class WristSubsystem extends SubsystemBase {
      * TODO Find comfortable input value, create virtual speed limiter
      * 
      */
-    public WristSubsystem() {
+    public ArmWristSubsystem() {
 
         m_motorController.config_kP(0,1);
         m_motorController.config_kI(0,0);
@@ -70,8 +70,11 @@ public class WristSubsystem extends SubsystemBase {
      * when the arm rotation is approximately zero
     */
 
-    public void setWristToPosition(int ticks) {
-        m_motorController.set(TalonFXControlMode.Position, ticks);
+    public void setWristToPosition(int encoder) {
+    
+        // m_motorController.configPeakOutputForward(0.8);
+        // m_motorController.configPeakOutputReverse(-0.8);
+        m_motorController.set(ControlMode.Position, encoder);
 
     }
 
@@ -86,14 +89,7 @@ public class WristSubsystem extends SubsystemBase {
 
     }
 
-    /*
-     * Set the wrist position to using encoder values
-     * Optimize for deploying a cone to mid level.
-     * Wrist must be pointed down
-     */
-    public void setWristMidCone(double input) {
-        m_motorController.set(ControlMode.Position, Constants.Arm.WRIST_POS_MID);
-    }
+    
 
     // Return the current encoder position of the Wrist
     public double getWristPos() {
@@ -104,13 +100,5 @@ public class WristSubsystem extends SubsystemBase {
        /**
      * @param input the encoder degrees to set the arm at. Note the arm extends to roughly 0 at rest, and 14500 units maximum. 
      */
-    public void SetWristToTickPosition(double input)
-    {
-        System.out.println("Internal method being called; position control");
-        System.out.println();
-        // m_motorController.configPeakOutputForward(0.8);
-        // m_motorController.configPeakOutputReverse(-0.8);
-        m_motorController.set(ControlMode.Position, (double)input);
 
-    }
 }

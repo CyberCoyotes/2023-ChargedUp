@@ -9,14 +9,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.WristSubsystem;
+import frc.robot.subsystems.ArmWristSubsystem;
 
 public class WristToArg extends CommandBase {
    
-    private final WristSubsystem m_wristSubsystem;
-    private final double target;
+    private final ArmWristSubsystem m_wristSubsystem;
+    private final int target;
     
-    public WristToArg(WristSubsystem subsystem, double target) {
+    public WristToArg(ArmWristSubsystem subsystem, int target) {
 
      m_wristSubsystem = subsystem;
      this.target = target;
@@ -34,7 +34,7 @@ public class WristToArg extends CommandBase {
     
     @Override
     public void execute() {
-        m_wristSubsystem.SetWristToTickPosition(target);
+        m_wristSubsystem.setWristToPosition(target);
     }
     @Override
     public InterruptionBehavior getInterruptionBehavior() {

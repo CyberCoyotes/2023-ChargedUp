@@ -4,13 +4,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.Arm;
 import frc.robot.subsystems.ArmExtensionSubsystem;
-import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.WristSubsystem;
+import frc.robot.subsystems.ArmRotationSubsystem;
+import frc.robot.subsystems.ArmWristSubsystem;
 
 public class ResetArmCommand extends InstantCommand{
     
-    ArmSubsystem arm;
-    WristSubsystem wrist; 
+    ArmRotationSubsystem arm;
+    ArmWristSubsystem wrist; 
     ArmExtensionSubsystem extend;
     @Override
     public void execute() {
@@ -20,7 +20,7 @@ wrist.getCurrentCommand().cancel();
         extend.getCurrentCommand().cancel();
 
     }
-    public ResetArmCommand(ArmSubsystem arm, WristSubsystem wrist, ArmExtensionSubsystem extend) {
+    public ResetArmCommand(ArmRotationSubsystem arm, ArmWristSubsystem wrist, ArmExtensionSubsystem extend) {
         this.arm = arm;
 this.wrist = wrist;
         this.extend = extend;

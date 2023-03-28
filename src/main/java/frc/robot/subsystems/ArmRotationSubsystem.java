@@ -31,7 +31,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.Arm;
 
-public class ArmSubsystem extends SubsystemBase {
+public class ArmRotationSubsystem extends SubsystemBase {
 
     // How to calculate kF: %output*maxOutputNum(1023?)/(native units at desired
     // point)
@@ -64,7 +64,7 @@ public class ArmSubsystem extends SubsystemBase {
     {
         return rightMota.getSupplyCurrent();
     }
-    public ArmSubsystem(DigitalInput input) {
+    public ArmRotationSubsystem(DigitalInput input) {
         leftMota.configFactoryDefault();
         rightMota.configFactoryDefault();
 
@@ -265,56 +265,48 @@ double arbFF = maxGravityFF * cosineScalar; // todo get ff, depends on cosine
 
     }
 
-    public void rotateArmForDeploy() {
-        System.out.println("arm being moved sorta");
+    // public void rotateArmForDeploy() {
+    //     System.out.println("arm being moved sorta");
 
-        // #region Gravity ArbFF configurations
+    //     // #region Gravity ArbFF configurations
 
-        double target_sensorUnits = ConvertDegToFXEncoder(270);// intake //todo the setpoint, figure this out logically;
-                                                               // at the deploy end of the arm?
-        double maxGravityFF = .02; // todo; doesnt cover the extended compensation where it may matter most; 0.04
-                                   // was the value at extention
-        int kMeasuredPosHorizontal = Arm.ARM_ROTATION_HORIZONTAL_TICKS; // todo Position measured when arm is
-                                                                        // horizontal/give an offset to resting position
-        double kTicksPerDegree = 4096 / 360; // Sensor is 1:1 with arm rotation
-        double degrees = (GetRotation() - kMeasuredPosHorizontal) / kTicksPerDegree;
-        double radians = java.lang.Math.toRadians(degrees);
-        double cosineScalar = java.lang.Math.cos(radians); // todo get the cosine of the motor
+    //     double target_sensorUnits = ConvertDegToFXEncoder(270);// intake //todo the setpoint, figure this out logically;
+    //                                                            // at the deploy end of the arm?
+    //     double maxGravityFF = .02; // todo; doesnt cover the extended compensation where it may matter most; 0.04
+    //                                // was the value at extention
+    //     int kMeasuredPosHorizontal = Arm.ARM_ROTATION_HORIZONTAL_TICKS; // todo Position measured when arm is
+    //                                                                     // horizontal/give an offset to resting position
+    //     double kTicksPerDegree = 4096 / 360; // Sensor is 1:1 with arm rotation
+    //     double degrees = (GetRotation() - kMeasuredPosHorizontal) / kTicksPerDegree;
+    //     double radians = java.lang.Math.toRadians(degrees);
+    //     double cosineScalar = java.lang.Math.cos(radians); // todo get the cosine of the motor
 
-        // FF is measured as
+    //     // FF is measured as
 
-        double arbFF = maxGravityFF * cosineScalar; // todo get ff, depends on cosine
+    //     double arbFF = maxGravityFF * cosineScalar; // todo get ff, depends on cosine
 
-        // #endregion Gravity ArbFF configurations
+    //     // #endregion Gravity ArbFF configurations
 
-        // :Position mode may not be the right choice, as it assumes a close, updating
-        // position, rather than a final endpoint. It would likely be incompatible with
-        // an arb. FF with this approach
-        //// rightMota.set(TalonFXControlMode.Position,
-        // Arm.ARM_ROTATE_POSITION_DEPLOY, DemandType.ArbitraryFeedForward, arbFF);
-        rightMota.set(TalonFXControlMode.MotionMagic, target_sensorUnits);// no arb for now
-        // rightMota.set(TalonFXControlMode.MotionMagic, target_sensorUnits,
-        // DemandType.ArbitraryFeedForward, arbFF);
+    //     // :Position mode may not be the right choice, as it assumes a close, updating
+    //     // position, rather than a final endpoint. It would likely be incompatible with
+    //     // an arb. FF with this approach
+    //     //// rightMota.set(TalonFXControlMode.Position,
+    //     // Arm.ARM_ROTATE_POSITION_DEPLOY, DemandType.ArbitraryFeedForward, arbFF);
+    //     rightMota.set(TalonFXControlMode.MotionMagic, target_sensorUnits);// no arb for now
+    //     // rightMota.set(TalonFXControlMode.MotionMagic, target_sensorUnits,
+    //     // DemandType.ArbitraryFeedForward, arbFF);
 
-    }
+    // }
 
     /**
      * Use case scenario 1: Allow for a command to use any values for encoder
      * Use case scenarior 2: Use for incremental rotation, e.g. 10 ticks for every
      * button press
      **/
-    public void rotateArmManual() {
-
-    }
-
     public void ZeroArmEncoder() {
         // rightMota.setSelectedSensorPosition(this.ConvertDegToFXEncoder(
         // Arm.ARM_OFFSET_DEGREES));
         rightMota.setSelectedSensorPosition(-Math.abs(ConvertDegToFXEncoder(( Arm.ARM_OFFSET_DEGREES))));
     }
 
-    @Override
-    public void periodic() {
-
-    }
 }

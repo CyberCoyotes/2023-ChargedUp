@@ -31,7 +31,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.cgCubeLow_Taxi;
 import frc.robot.autos.cgCubeLow_Taxi_Dock;
 import frc.robot.Constants.Arm;
-import frc.robot.autos.ConeMidAuto;
 import frc.robot.autos.CubeMidTaxiV1;
 import frc.robot.autos.cgCubeMid_Taxi_Dock;
 import frc.robot.autos.cgCubeLow_Taxi_Engaged;
@@ -121,12 +120,12 @@ public class RobotContainer {
     // #region Subsystems
 
     private final ArmExtensionSubsystem armExtendSub = new ArmExtensionSubsystem();
-    private final ArmSubsystem armSub = new ArmSubsystem(limit);
+    private final ArmRotationSubsystem armSub = new ArmRotationSubsystem(limit);
     private final CANdle candleSub = new CANdle(Constants.CANDLE_ID);
     private final Vision visionSub = new Vision();
     private final static Swerve s_Swerve = new Swerve(); // changed to a static to work with PathPlanner
     private final IntakeSubsystem intakeSub = new IntakeSubsystem();
-    private final WristSubsystem wristSub = new WristSubsystem();
+    private final ArmWristSubsystem wristSub = new ArmWristSubsystem();
     // private final SensorsSubsystem m_ArmSwitch = new SensorsSubsystem();
 
     // #endregion
@@ -139,7 +138,7 @@ public class RobotContainer {
     ArmExtendToArg extendMiddle = new ArmExtendToArg(armExtendSub, () -> Arm.ARM_EXTEND_MIDDLE_ENCODER);//why is the ctor like this? whatever
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
 
-     ConeMidAuto coneMid = new ConeMidAuto(wristSub, armSub); 
+     ConeMid coneMid = new ConeMid(wristSub, armSub); 
 
 
     

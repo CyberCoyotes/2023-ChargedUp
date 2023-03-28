@@ -1,15 +1,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.SensorsSubsystem;
 
 public class ArmLimitReached extends CommandBase{
 
-    private final ArmSubsystem m_ArmSubsystem;
+    private final ArmRotationSubsystem m_ArmSubsystem;
     private final SensorsSubsystem m_SensorsSubsystem;
 
-    public ArmLimitReached(ArmSubsystem subsystem, SensorsSubsystem subsystem2) {
+    public ArmLimitReached(ArmRotationSubsystem subsystem, SensorsSubsystem subsystem2) {
         m_ArmSubsystem = subsystem;
         m_SensorsSubsystem = subsystem2;
     

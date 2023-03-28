@@ -2,8 +2,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmExtensionSubsystem;
-import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.WristSubsystem;
+import frc.robot.subsystems.ArmRotationSubsystem;
+import frc.robot.subsystems.ArmWristSubsystem;
 
 
 
@@ -15,8 +15,8 @@ import frc.robot.subsystems.WristSubsystem;
 public class StowArmCommand extends CommandBase {
 
     ArmExtensionSubsystem extendSubsystem;
-    ArmSubsystem rotateSubsystem;
-    WristSubsystem wristSubsystem;
+    ArmRotationSubsystem rotateSubsystem;
+    ArmWristSubsystem wristSubsystem;
     
 
     private int wrist, rot;
@@ -31,7 +31,7 @@ public class StowArmCommand extends CommandBase {
         System.out.println("wrist safe "  + (wristSubsystem.getWristPos() <= 6000 ));
     }
 
-    public StowArmCommand(ArmExtensionSubsystem m_extend, ArmSubsystem m_rotate, WristSubsystem m_wrist) 
+    public StowArmCommand(ArmExtensionSubsystem m_extend, ArmRotationSubsystem m_rotate, ArmWristSubsystem m_wrist) 
     {
         this.rotateSubsystem = m_rotate;
         this.extendSubsystem = m_extend;
@@ -72,7 +72,7 @@ public class StowArmCommand extends CommandBase {
         wrist = 2000;
         rot = 50;
 
-        this.wristSubsystem.SetWristToTickPosition(wrist);
+        this.wristSubsystem.setWristToPosition(wrist);
         this.rotateSubsystem.RotateArmToDeg(rot);
         // this.wristSubsystem.setWristHome();
         this.extendSubsystem.SetArmToTickPosition(2000);
@@ -89,7 +89,7 @@ public class StowArmCommand extends CommandBase {
         wrist = 2000;
         rot = 25;
 
-        this.wristSubsystem.SetWristToTickPosition(wrist);
+        this.wristSubsystem.setWristToPosition(wrist);
         this.rotateSubsystem.RotateArmToDeg(rot);
         System.out.println("RUNNING STAGE TWO TWO TWO");
 

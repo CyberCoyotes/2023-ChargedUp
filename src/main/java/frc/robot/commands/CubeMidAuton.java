@@ -7,9 +7,9 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.ArmExtensionSubsystem;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.WristSubsystem;
+import frc.robot.subsystems.ArmWristSubsystem;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class CubeMidAuton extends SequentialCommandGroup{
 
     public CubeMidAuton
-    (ArmSubsystem armSub, WristSubsystem wristSub, IntakeSubsystem intakeSub) {
+    (ArmRotationSubsystem armSub, ArmWristSubsystem wristSub, IntakeSubsystem intakeSub) {
         addCommands(
             new RotateArmToArg(armSub, 80).withTimeout(.75)
             , new WaitCommand(0.25)    

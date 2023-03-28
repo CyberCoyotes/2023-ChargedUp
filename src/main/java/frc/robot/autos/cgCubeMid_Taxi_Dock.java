@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.ArmExtensionSubsystem;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.Swerve;
-import frc.robot.subsystems.WristSubsystem;
+import frc.robot.subsystems.ArmWristSubsystem;
 
 
 public class cgCubeMid_Taxi_Dock extends SequentialCommandGroup
@@ -20,14 +20,14 @@ public class cgCubeMid_Taxi_Dock extends SequentialCommandGroup
 
 
     private Swerve m_swerve;
-    private ArmSubsystem m_arm;
+    private ArmRotationSubsystem m_arm;
     private ArmExtensionSubsystem m_extend;
     private IntakeSubsystem m_intake;
-    private WristSubsystem m_wrist;
+    private ArmWristSubsystem m_wrist;
 
 
 
-    public cgCubeMid_Taxi_Dock(Swerve s_Swerve, ArmExtensionSubsystem extend, ArmSubsystem arm, IntakeSubsystem intake, WristSubsystem wrist, BooleanSupplier robotCentric) {
+    public cgCubeMid_Taxi_Dock(Swerve s_Swerve, ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist, BooleanSupplier robotCentric) {
 
             this.m_swerve = s_Swerve; 
             this.m_arm = arm; 

@@ -4,22 +4,22 @@ import com.ctre.phoenix.motorcontrol.IFollower;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmExtensionSubsystem;
-import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.WristSubsystem;
+import frc.robot.subsystems.ArmRotationSubsystem;
+import frc.robot.subsystems.ArmWristSubsystem;
 
 public class StowArmStage extends CommandBase
 {
     
     ArmExtensionSubsystem extendSubsystem;
-    ArmSubsystem rotateSubsystem;
-    WristSubsystem wristSubsystem;
+    ArmRotationSubsystem rotateSubsystem;
+    ArmWristSubsystem wristSubsystem;
     
     int wristPoint, extendPoint, rotatePoint;
     private int wristAllowedError = 750, extendAllowedError = 100, rotateAllowedError = 3;
 
 
 
-    public StowArmStage(ArmExtensionSubsystem m_extend, ArmSubsystem m_rotate, WristSubsystem m_wrist, int extendPoint, int rotatePoint, int wristPoint) 
+    public StowArmStage(ArmExtensionSubsystem m_extend, ArmRotationSubsystem m_rotate, ArmWristSubsystem m_wrist, int extendPoint, int rotatePoint, int wristPoint) 
     {
         this.rotateSubsystem = m_rotate;
         this.extendSubsystem = m_extend;
@@ -45,7 +45,7 @@ public class StowArmStage extends CommandBase
     public void execute() {
         
 
-        this.wristSubsystem.SetWristToTickPosition(wristPoint);
+        this.wristSubsystem.setWristToPosition(wristPoint);
         this.rotateSubsystem.RotateArmToDeg(rotatePoint);
         this.extendSubsystem.SetArmToTickPosition(extendPoint);
         System.out.println("RUNNING STAGE ONE");

@@ -13,13 +13,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ArmRotationSubsystem;
 
 public class RotateArmToArg extends CommandBase {
       
-    private final ArmSubsystem m_armSubsystem;
+    private final ArmRotationSubsystem m_armSubsystem;
     private final int deg;
-    public RotateArmToArg(ArmSubsystem subsystem, int deg) {
+    public RotateArmToArg(ArmRotationSubsystem subsystem, int deg) {
      m_armSubsystem = subsystem;
      this.deg =deg;
      addRequirements(m_armSubsystem);
