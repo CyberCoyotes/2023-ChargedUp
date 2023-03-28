@@ -20,7 +20,7 @@ public class cgConeLow extends SequentialCommandGroup{
     public cgConeLow
     (ArmSubsystem armSub, ArmExtensionSubsystem armExtSub, WristSubsystem wristSub, IntakeSubsystem intakeSub) {
         addCommands(
-            new RotateArmArg(armSub, -30).withTimeout(1)
+            new RotateArmToArg(armSub, -30).withTimeout(1)
             , new WaitCommand(0.25)
             // Ideally the dead condition would be when the wrist achieves its angle
             , new ParallelDeadlineGroup( // Use ParallelRaceGroup if this doesn't work 

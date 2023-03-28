@@ -34,7 +34,7 @@ import frc.robot.Constants.Arm;
 public class ArmExtensionSubsystem extends SubsystemBase {
 
  
-    private TalonSRX m_motorController = new TalonSRX(Constants.ARM_EXTENDER_MOTOR_ID);
+    private TalonSRX m_motorController = new TalonSRX(Constants.Arm.ARM_EXTENDER_MOTOR_ID);
     
     // private Encoder m_Encoder = new Encoder(0, 0, 0)
 

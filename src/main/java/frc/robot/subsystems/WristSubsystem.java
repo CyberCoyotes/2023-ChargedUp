@@ -92,7 +92,7 @@ public class WristSubsystem extends SubsystemBase {
      * Wrist must be pointed down
      */
     public void setWristMidCone(double input) {
-        m_motorController.set(ControlMode.Position, Constants.WRIST_POS_MID);
+        m_motorController.set(ControlMode.Position, Constants.Arm.WRIST_POS_MID);
     }
 
     // Return the current encoder position of the Wrist

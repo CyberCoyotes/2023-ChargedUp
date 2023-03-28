@@ -19,7 +19,7 @@ public class cgCubeLow extends SequentialCommandGroup{
     public cgCubeLow
     (ArmSubsystem armSub, ArmExtensionSubsystem armExtSub, WristSubsystem wristSub, IntakeSubsystem intakeSub) {
         addCommands(
-            new RotateArmArg(armSub, 30).withTimeout(1)
+            new RotateArmToArg(armSub, 30).withTimeout(1)
             , new SetIntakeCone(intakeSub).withTimeout(1.5) // deploys a cube
             , new WaitCommand(0.2) 
         );

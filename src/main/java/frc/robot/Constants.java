@@ -31,39 +31,42 @@ public final class Constants {
      * but I don't think they an ID
      *  
      **/
-    public static final int ARM_RIGHT_ROT_MOTOR_ID = 9; // Connected to Falcon 500
-
-    public static final int ARM_LEFT_ROT_MOTOR_ID = 10; // Connected to Falcon 500
     
     public static final int CANDLE_ID = 26;
 
-    public static final int ARM_EXTENDER_MOTOR_ID = 27; // Connected to SRX and Neo
-
-    public static final int INTAKE_WHEELS_MOTOR_ID = 11; // Connected to Victor SPX
 
     // public static final int REV_CLAW_ID = 0; // REV Pneumatics Hub Single channel for Claw
     
     public static final double stickDeadband = 0.1;
 
-    public static int STOW_WRIST_POS = 2000;
-
-    public static int LEVEL_WRIST_POS = 19000;
-
-    /* First attempt 11000
-    * experimental range is probably between 9200 to 11200
-    */
-    public static int LOAD_WRIST_POS = 6000; 
     
-    /* First attempt 72250
-    * experimental range is probably between 9200 to 11200
-    */
-    public static int WRIST_POS_MID = 72250;
-
-     //#region arm   
-    public static final int ARM_EXTENT_LIMIT = 14500;//playing it safe
     public static final class Arm 
     {
+        /**The (estimated, cry abt it Michigan math) encoder reading at 360 degrees of rotation. Used ONLY for calculations, and if you get near this you did something sososososos<b>SO</b> wrong */
+        public static final int ARM_ROT_360_TICKS = 458752;
+        
+    public static final int ARM_RIGHT_ROT_MOTOR_ID = 9; // Connected to Falcon 500
 
+    public static final int ARM_LEFT_ROT_MOTOR_ID = 10; // Connected to Falcon 500
+    public static final int ARM_EXTENDER_MOTOR_ID = 27; // Connected to SRX and Neo
+
+    public static final int INTAKE_WHEELS_MOTOR_ID = 11; // Connected to Victor SPX
+        public static int STOW_WRIST_POS = 2000;
+
+        public static int LEVEL_WRIST_POS = 19000;
+    
+        /* First attempt 11000
+        * experimental range is probably between 9200 to 11200
+        */
+        public static int LOAD_WRIST_POS = 6000; 
+        
+        /* First attempt 72250
+        * experimental range is probably between 9200 to 11200
+        */
+        public static int WRIST_POS_MID = 72250;
+    
+         //#region arm   
+        public static final int ARM_EXTENT_LIMIT = 14500;//playing it safe
         // public static final int ARM_EXTENT_RANGE = //todo determine
 
 
@@ -71,9 +74,9 @@ public final class Constants {
         /**
          *Total encoder tick distance of the falcon500s on the arm, in encoder ticks of 224:1 * 2048
          */
-        public static final int ARM_ROTATION_HORIZONTAL_TICKS = 94505;//horizontaL
+        public static final int ARM_ROTATION_HORIZONTAL_TICKS = 94505;//horizontal
         // 314446
-        public static final int ARM_ROTATION_RANGE_TICKS = 458752;
+        
        
         public static final int ARM_INTAKE_PWM_PORT = 0;
        
@@ -81,8 +84,6 @@ public final class Constants {
          * The estimated encoder position at the resting  
          */
         // public final static double ARM_ROTATE_POSITION_REST = 79* (458752/360);
-        public final static double ARM_ROTATE_POSITION_DEPLOY = 1000; // TODO TBD experimentally
-        public final static double ARM_ROTATE_POSITION_INTAKE  = 8878; // approximate from testing; compare to the change in angle from rest to deploy
         // public final static double ARM_ROTATE_POSITION_DEPLOY_DEG =  220;//should be 260? TESTING
         public final static double EXTENSION_POSITION_OUT = 13000; //playing it safe for now; should be around -14000?
         public final static double EXTENSION_POSITION_IN  = -200;
@@ -91,18 +92,21 @@ public final class Constants {
         public static final double kP =  (0.50 * 1023) / 2048; //50% power at total error
         public static final double kI = 0;//may need tuning
         public static final double kD = 0; //may need tuning
-        public static final double kMaxVelocity = 11468/2; //currently so that the robot may go 1/16th rotation in a second
-        public static final double kMaxAcceletation = 11468/2; //tuning needed
+        public static final double kMaxArmRotVelocity = 11468/2; //currently so that the robot may go 1/16th rotation in a second
+        public static final double kMaxArmRotAcceletation = 11468/2; //tuning needed
+        //very important; this is the offset to make 90deg = true horizontal
         public static final int ARM_OFFSET_DEGREES = 20;
-        public static final double DEG_TO_mRAD = 17.4533;
+        //DON'T TOUCH (wihout first filing form ID10-T from HR(me(i am HR)))
         public static final double ARM_MAX_DEG = 110;
+        //obsolete but shhh
         public static final int ARM_STOW_ROTATION_DEG = 20;
         public static final int ARM_STOW_EXTENT_ENCODER = 200;
-        public static final int EXTENSTION_MID_ENCODER = 5500;
         // public static final int LimitDIO = 0;
 
         
         public static final int WRIST_TALONFX_ID = 12;
+        /**The encoder reading for a "mid" use this for a generally safe setpoint. */
+
         public static final int ARM_EXTEND_MIDDLE_ENCODER = 9500;
         public static final double WRIST_MIN = -2343;
         public static final double WRIST_MAX = 72000; 

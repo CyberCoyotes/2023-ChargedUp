@@ -48,8 +48,8 @@ public class ArmSubsystem extends SubsystemBase {
      * The right motor of the rotation of the arm, and follower of the left motor,
      * for the follower configuration.
      */
-    private WPI_TalonFX leftMota = new WPI_TalonFX(Constants.ARM_LEFT_ROT_MOTOR_ID);// integrated encoder, accessed via
-    private WPI_TalonFX rightMota = new WPI_TalonFX(Constants.ARM_RIGHT_ROT_MOTOR_ID);// integrated encoder, accessed via
+    private WPI_TalonFX leftMota = new WPI_TalonFX(Constants. Arm.ARM_LEFT_ROT_MOTOR_ID);// integrated encoder, accessed via
+    private WPI_TalonFX rightMota = new WPI_TalonFX(Constants.Arm.ARM_RIGHT_ROT_MOTOR_ID);// integrated encoder, accessed via
     
     private DigitalInput limitSwitch;
     
@@ -103,8 +103,8 @@ public class ArmSubsystem extends SubsystemBase {
         rightMota.config_kI(0, Arm.kI);
         rightMota.config_kD(0, Arm.kD);
 
-        rightMota.configMotionCruiseVelocity(Arm.kMaxVelocity);
-        rightMota.configMotionAcceleration(Arm.kMaxAcceletation);// max accel in units towards endgoal, in sensor
+        rightMota.configMotionCruiseVelocity(Arm.kMaxArmRotVelocity);
+        rightMota.configMotionAcceleration(Arm.kMaxArmRotAcceletation);// max accel in units towards endgoal, in sensor
                                                                     // units /0.1 seconds
                                                                     // rightMota.setSensorPhase(true);
 
@@ -187,7 +187,7 @@ double arbFF = maxGravityFF * cosineScalar; // todo get ff, depends on cosine
     public int ConvertDegToFXEncoder(double degs) {
         // 2pi = 2048
         // 2048 * 2pi/2pi
-        int maxEncoder = Arm.ARM_ROTATION_RANGE_TICKS;
+        int maxEncoder = Arm.ARM_ROT_360_TICKS;
         int maxDegree = 360;// trust the process
 
         return (int) (degs * maxEncoder / maxDegree);
@@ -195,7 +195,7 @@ double arbFF = maxGravityFF * cosineScalar; // todo get ff, depends on cosine
 
     public int ConvertFXEncodertoDeg(double ticks) {
 
-        int maxEncoder = Arm.ARM_ROTATION_RANGE_TICKS;
+        int maxEncoder = Arm.ARM_ROT_360_TICKS;
         int maxDegree = 360;// trust the process
 
         return (int) (ticks * maxDegree / maxEncoder);

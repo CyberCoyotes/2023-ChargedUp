@@ -20,7 +20,7 @@ public class CubeMidAuton extends SequentialCommandGroup{
     public CubeMidAuton
     (ArmSubsystem armSub, WristSubsystem wristSub, IntakeSubsystem intakeSub) {
         addCommands(
-            new RotateArmArg(armSub, 80).withTimeout(.75)
+            new RotateArmToArg(armSub, 80).withTimeout(.75)
             , new WaitCommand(0.25)    
             , new WristToArg(wristSub, 21000).withTimeout(.75)
             , new SetIntakeCone(intakeSub).withTimeout(.75)

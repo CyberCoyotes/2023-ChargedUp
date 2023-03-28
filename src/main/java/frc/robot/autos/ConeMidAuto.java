@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.RotateArmArg;
+import frc.robot.commands.RotateArmToArg;
 import frc.robot.commands.WristToArg;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.WristSubsystem;
@@ -21,7 +21,7 @@ public class ConeMidAuto extends SequentialCommandGroup {
     public ConeMidAuto(WristSubsystem wrist, ArmSubsystem armRot) {
 
         // WaitCommand deadline = new WaitCommand(5);
-        Command armCommand = new RotateArmArg(armRot, 95).withTimeout(1.5);
+        Command armCommand = new RotateArmToArg(armRot, 95).withTimeout(1.5);
 
         Command wristCommand = new WristToArg(wrist, 41558).withTimeout(1);
 

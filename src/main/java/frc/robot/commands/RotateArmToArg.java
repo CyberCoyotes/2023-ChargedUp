@@ -15,12 +15,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmSubsystem;
 
-public class RotateArm90 extends CommandBase {
+public class RotateArmToArg extends CommandBase {
       
     private final ArmSubsystem m_armSubsystem;
-   
-    public RotateArm90(ArmSubsystem subsystem) {
+    private final int deg;
+    public RotateArmToArg(ArmSubsystem subsystem, int deg) {
      m_armSubsystem = subsystem;
+     this.deg =deg;
      addRequirements(m_armSubsystem);
     }
 
@@ -32,7 +33,7 @@ public class RotateArm90 extends CommandBase {
     
     @Override
     public void execute() {
-        m_armSubsystem.RotateArmToDeg(90);
+        m_armSubsystem.RotateArmToDeg(this.deg);
     }
     @Override
     public boolean isFinished() {
