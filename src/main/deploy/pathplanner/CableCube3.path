@@ -149,8 +149,10 @@
       "isLocked": false,
       "isStopPoint": true,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
+        "names": [
+          "Arm"
+        ],
+        "executionBehavior": "sequential",
         "waitBehavior": "after",
         "waitTime": 2.0
       }
@@ -199,8 +201,10 @@
       "isLocked": false,
       "isStopPoint": true,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
+        "names": [
+          "Arm"
+        ],
+        "executionBehavior": "sequential",
         "waitBehavior": "minimum",
         "waitTime": 2.0
       }
@@ -236,12 +240,12 @@
         "y": 1.05
       },
       "prevControl": {
-        "x": 3.732715797246062,
-        "y": 1.0608212480203572
+        "x": 3.732776284217531,
+        "y": 1.05
       },
       "nextControl": {
-        "x": 2.1498906065993966,
-        "y": 1.0431258226152842
+        "x": 2.1498521823649126,
+        "y": 1.05
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -285,6 +289,12 @@
         "RotArmUp",
         "ExtArm",
         "IntakeCube"
+      ]
+    },
+    {
+      "position": 0.3,
+      "names": [
+        "StowArm"
       ]
     }
   ]

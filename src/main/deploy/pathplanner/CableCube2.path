@@ -73,7 +73,8 @@
       "isStopPoint": true,
       "stopEvent": {
         "names": [
-          "Extend Arm"
+          "CubePickup",
+          "Stow"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "after",
@@ -158,6 +159,18 @@
       "position": 0.0,
       "names": [
         "event"
+      ]
+    },
+    {
+      "position": 0.1,
+      "names": [
+        "event"
+      ]
+    },
+    {
+      "position": 2.05,
+      "names": [
+        "Stow"
       ]
     }
   ]

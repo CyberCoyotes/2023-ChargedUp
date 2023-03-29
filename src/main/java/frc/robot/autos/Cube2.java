@@ -16,7 +16,7 @@ import frc.robot.subsystems.Swerve;
 public class Cube2 extends SequentialCommandGroup {
     public Cube2() {
         List<PathPlannerTrajectory> pptList = PathPlanner.loadPathGroup(
-            "ppCableCube2", new PathConstraints(4, 3)
+            "CableCube2", new PathConstraints(4, 3)
             );
         
         addCommands(
