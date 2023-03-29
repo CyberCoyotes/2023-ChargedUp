@@ -26,7 +26,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.autos.PathPlannerTest;
 import frc.robot.autos.cgCubeLow_Taxi_Engaged;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -157,13 +156,13 @@ public class RobotContainer {
 
     // #endregion
 
-    // TODO Added from Bobcats
+    /* Added from Bobcats */
     public void displayGyro(){
         SmartDashboard.putNumber("pitch", s_Swerve.getPitch());
         SmartDashboard.putNumber("yaw", s_Swerve.getRoll());
     }
 
-    /* TODO Bobcat Example */
+    /* Bobcat Example */
     // private final SequentialCommandGroup chargestation = new MountAndBalance(s_Swerve);
     // private final Command align = new AlignToTarget(s_Swerve, m_Limelight).withInterruptBehavior(InterruptionBehavior.kCancelIncoming).repeatedly();
     private static SwerveAutoBuilder swerveAutonBuilder;
@@ -171,10 +170,6 @@ public class RobotContainer {
     /* SendableChooser */
     SendableChooser<List<PathPlannerTrajectory>> autonChooser = new SendableChooser<>();
     //     SendableChooser<List<PathPlannerTrajectory>> autonChooser = new SendableChooser<>();
-
-    // End Bobcat Example
-
-    
 
     public void DebugMethod() {
         
@@ -259,9 +254,8 @@ public class RobotContainer {
 
     }
 
-    // TODO Bobcat Code
+    /* Bobcat 177 Code */
     public static Command buildAuton(List<PathPlannerTrajectory> trajs) {
-        // public static Command buildAuton(List<PathPlannerTrajectory> trajs) {
 
         //s_Swerve.resetOdometry(trajs.get(0).getInitialHolonomicPose());
         swerveAutonBuilder = new SwerveAutoBuilder(
@@ -303,18 +297,25 @@ public class RobotContainer {
                 // new ArmExtendToArg(armExtendSub, () -> 9500));
     }
 
-    // TODO See Bobcat public void setUpAutos() {}
-    // Sendable Chooser Setup
-
+    /* See Bobcat public void setUpAutos() {} for analogous method*/
+    
+    /* Sendable Chooser Setup */
     private void configureAutonChooser() {
 
-        setUpEventMap(); // FIXME Bobcat code
+        /* Added from Bobcat 177 code example */
+        setUpEventMap();
+        
+        /* Bobcat 177 example
+        autonChooser.setDefaultOption("Score1HighCubeDirtyBalance", 
+            PathPlanner.loadPathGroup("Score1HighCubeRightBalance", 
+            new PathConstraints(4.5, 3)));
+        */
 
-        // autonChooser.setDefaultOption("Score1HighCubeDirtyBalance", 
-            // PathPlanner.loadPathGroup("Score1HighCubeRightBalance", 
-            // new PathConstraints(4.5, 3)));
-
-        // FIXME autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
+        // autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
+        
+        /* FIXME not sure why my version is asking for "List<PathPlannerTrajectory>"
+         * I think Shaun has this fixed with a Command instead
+        */
         autonChooser.setDefaultOption("Do nothing", (List<PathPlannerTrajectory>) new WaitCommand(1)); // "Drive Only" Command or Command Group
 
         // autonChooser.addOption("Low cube Taxi (Side pref.)", cubeLowTaxi); 
@@ -329,26 +330,29 @@ public class RobotContainer {
        
     }
 
-    /* TODO from Bobcat Auton */
+    /* Added from Bobcat 177 code example 
+     * We aren't currently using anything other than clear
+     * Probably stuff we would do at start of auton everytime?
+     * Cube Mid or Cube Low at start?
+    */
     public void setUpEventMap() {
         Constants.AutoConstants.eventMap.clear();
 
-        // Constants.AutoConstants.eventMap.put("chargeStation", new MountAndBalance(s_Swerve)); // <-- An auto command group goes here
-        
-        /* These are all Bobcat examples and should be deleted */
-  
-        // Constants.AutoConstants.eventMap.put("scoreCubeHigh", new SequentialCommandGroup(
-            // new InstantCommand(m_Wrist::wristSolenoidON),
-            // new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2.125)), 
-            // new InstantCommand(m_Wrist::wristSolenoidON),
-            // new WaitCommand(0.2),
-            // new IntakeOutFullSpeed(m_Intake), 
-            // new StartingConfig(m_Elevator, m_Arm, m_Wrist)
-            // )
-        // );
+         /* These are all Bobcat examples and should be deleted
+        Constants.AutoConstants.eventMap.put("chargeStation", new MountAndBalance(s_Swerve)); // <-- An auto command group goes here
+        Constants.AutoConstants.eventMap.put("scoreCubeHigh", new SequentialCommandGroup(
+            new InstantCommand(m_Wrist::wristSolenoidON),
+            new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2.125)), 
+            new InstantCommand(m_Wrist::wristSolenoidON),
+            new WaitCommand(0.2),
+            new IntakeOutFullSpeed(m_Intake), 
+            new StartingConfig(m_Elevator, m_Arm, m_Wrist)
+            )
+        );
+         */
    }
 
-    // TODO Added from Bobcat auton
+    /* Added from Bobcat 177 code example */
     public void printHashMap() {
         SmartDashboard.putString("eventMap", Constants.AutoConstants.eventMap.toString());
     }
@@ -364,21 +368,16 @@ public class RobotContainer {
     /* 3603 Original code */
     // return autonChooser.getSelected();
 
-    /* TODO Bobcat code */
+    /* Added from Bobcat 177 code example */
     return buildAuton(autonChooser.getSelected());
 
     }
 
-    public void DebugMethodSingle() 
-    {
-        
-  var tab = Shuffleboard.getTab("Driver Diagnostics");
-  tab.addNumber("Arm_Extent", () -> armExtendSub.ReadExtension());
-  tab.addNumber( "new gyro read", () -> s_Swerve.getYaw().getDegrees());
-  tab.addNumber( "Arm Rotation(°)", () -> (armSub.GetRotationInDeg()));
-
-
-
+    public void DebugMethodSingle() {
+        var tab = Shuffleboard.getTab("Driver Diagnostics");
+        tab.addNumber("Arm_Extent", () -> armExtendSub.ReadExtension());
+        tab.addNumber( "new gyro read", () -> s_Swerve.getYaw().getDegrees());
+        tab.addNumber( "Arm Rotation(°)", () -> (armSub.GetRotationInDeg()));
     }
 
 }

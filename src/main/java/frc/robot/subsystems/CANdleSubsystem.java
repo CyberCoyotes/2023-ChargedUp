@@ -19,7 +19,7 @@ import com.ctre.phoenix.led.TwinkleOffAnimation.TwinkleOffPercent;
 
 public class CANdleSubsystem {
     private final CANdle m_candle = new CANdle(Constants.CANDLE_ID);
-    private final int LedCount = 24; // TODO
+    private final int LedCount = 24; // Adjust for specific count
     private XboxController joystick;
 
     private Animation m_toAnimate = null;
@@ -195,5 +195,4 @@ public class CANdleSubsystem {
         }
         System.out.println("Changed to " + m_currentAnimation.toString());
     }
-
 }
