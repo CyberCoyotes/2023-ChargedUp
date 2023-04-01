@@ -15,13 +15,13 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ArmRotationSubsystem;
 
 public class RotateArmManual extends CommandBase {
 
-    private final ArmSubsystem m_armSubsystem;
+    private final ArmRotationSubsystem m_armSubsystem;
     private final DoubleSupplier input;
-    public RotateArmManual(ArmSubsystem subsystem, DoubleSupplier supplier) {
+    public RotateArmManual(ArmRotationSubsystem subsystem, DoubleSupplier supplier) {
      m_armSubsystem = subsystem;
      addRequirements(m_armSubsystem);
      this.input = supplier;

@@ -7,24 +7,22 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.ArmExtensionSubsystem;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.WristSubsystem;
+import frc.robot.subsystems.ArmWristSubsystem;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 
-public class cgCubeMid_ver3 extends SequentialCommandGroup{
+public class CubeMidAuton extends SequentialCommandGroup{
 
-    public cgCubeMid_ver3
-    (ArmSubsystem armSub, ArmExtensionSubsystem armExtSub, WristSubsystem wristSub, IntakeSubsystem intakeSub) {
+    public CubeMidAuton
+    (ArmRotationSubsystem armSub, ArmWristSubsystem wristSub, IntakeSubsystem intakeSub) {
         addCommands(
-            new RotateArmArg(armSub, 90).withTimeout(.75)
-            , new WaitCommand(0.25)
-            , new ArmExtendToArg(armExtSub, ()->(9500)).withTimeout(1.5)
-            , new WaitCommand(0.25)            
-            , new WristToArg(wristSub, 11000).withTimeout(.75)
+            new RotateArmToArg(armSub, 80).withTimeout(.75)
+            , new WaitCommand(0.25)    
+            , new WristToArg(wristSub, 21000).withTimeout(.75)
             , new SetIntakeCone(intakeSub).withTimeout(.75)
             , new WaitCommand(0.25) 
         );

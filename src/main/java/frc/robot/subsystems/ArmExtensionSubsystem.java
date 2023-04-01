@@ -34,7 +34,7 @@ import frc.robot.Constants.Arm;
 public class ArmExtensionSubsystem extends SubsystemBase {
 
  
-    private TalonSRX m_motorController = new TalonSRX(Constants.ARM_EXTENDER_MOTOR_ID);
+    private TalonSRX m_motorController = new TalonSRX(Constants.Arm.ARM_EXTENDER_MOTOR_ID);
     
     // private Encoder m_Encoder = new Encoder(0, 0, 0)
 
@@ -55,11 +55,6 @@ public class ArmExtensionSubsystem extends SubsystemBase {
 
         
 
-        m_motorController.config_kP(0,1);
-        m_motorController.config_kI(0,0);
-        m_motorController.config_kD(0,0);
-
-        m_motorController.selectProfileSlot(0, 0);
 
         m_motorController.setSelectedSensorPosition(0);
         
@@ -88,10 +83,10 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // TODO Auto-generated method stub
-        System.out.println(m_motorController.getSelectedSensorPosition());
+        // System.out.println(m_motorController.getSelectedSensorPosition());
 
     }
-    public void setArmOut() {
+    public void setArmMid() {
         m_motorController.set(TalonSRXControlMode.Position, 9500);
     }
     public void PercentOutputSupplierDrive(double input)

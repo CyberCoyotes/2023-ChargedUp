@@ -2,17 +2,36 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmExtensionSubsystem;
-import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.WristSubsystem;
+import frc.robot.subsystems.ArmRotationSubsystem;
+import frc.robot.subsystems.ArmWristSubsystem;
 
+
+
+/**
+ * Stows the arm asyncronously. <b>No built-in timeout</b>, so an arm cancel or decorating timeout is recommended. 
+ * @deprecated Doesn't play well with WPILib, and should be replaced by {@link StowArmCG}.
+ */
+@Deprecated
 public class StowArmCommand extends CommandBase {
 
     ArmExtensionSubsystem extendSubsystem;
-    ArmSubsystem rotateSubsystem;
-    WristSubsystem wristSubsystem;
+    ArmRotationSubsystem rotateSubsystem;
+    ArmWristSubsystem wristSubsystem;
     
 
-    public StowArmCommand(ArmExtensionSubsystem m_extend, ArmSubsystem m_rotate, WristSubsystem m_wrist) 
+    private int wrist, rot;
+
+    public boolean IsRunningStage1()
+    {
+        return (!((extendSubsystem.ReadExtension() <= 2000)) || !(wristSubsystem.getWristPos() <= 6000 )); 
+    }
+    public void GetData()
+    {    
+        System.out.println("extend safe " + ((extendSubsystem.ReadExtension() <= 2000)));
+        System.out.println("wrist safe "  + (wristSubsystem.getWristPos() <= 6000 ));
+    }
+
+    public StowArmCommand(ArmExtensionSubsystem m_extend, ArmRotationSubsystem m_rotate, ArmWristSubsystem m_wrist) 
     {
         this.rotateSubsystem = m_rotate;
         this.extendSubsystem = m_extend;
@@ -27,8 +46,16 @@ public class StowArmCommand extends CommandBase {
     
     @Override
     public void execute() {
+
+
+        boolean extendSafe = (extendSubsystem.ReadExtension() <= 2000);
+        boolean wristSafe = wristSubsystem.getWristPos() <= 6000 ;
+
+
+
+
         //if stage 1 isnt done
-        if (!(extendSubsystem.ReadExtension() <= 2000) && wristSubsystem.getWristPos() <= 6000 )
+        if (!extendSafe || !wristSafe )
         {
             Stage1();
         }
@@ -42,9 +69,14 @@ public class StowArmCommand extends CommandBase {
      */
     private void Stage1()
     {
-        this.wristSubsystem.SetWristToTickPosition(2000);
-        this.rotateSubsystem.RotateArmToDeg(50);
-        this.wristSubsystem.setWristHome();
+        wrist = 2000;
+        rot = 50;
+
+        this.wristSubsystem.setWristToPosition(wrist);
+        this.rotateSubsystem.RotateArmToDeg(rot);
+        // this.wristSubsystem.setWristHome();
+        this.extendSubsystem.SetArmToTickPosition(2000);
+        System.out.println("RUNNING STAGE ONE");
 
     }
     
@@ -54,8 +86,12 @@ public class StowArmCommand extends CommandBase {
     private void Stage2()
     {
 
-        this.wristSubsystem.SetWristToTickPosition(2000);
-        this.rotateSubsystem.RotateArmToDeg(25);
+        wrist = 2000;
+        rot = 25;
+
+        this.wristSubsystem.setWristToPosition(wrist);
+        this.rotateSubsystem.RotateArmToDeg(rot);
+        System.out.println("RUNNING STAGE TWO TWO TWO");
 
     }
     @Override
