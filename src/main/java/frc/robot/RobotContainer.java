@@ -168,8 +168,7 @@ public class RobotContainer {
     private static SwerveAutoBuilder swerveAutonBuilder;
 
     /* SendableChooser */
-    SendableChooser<List<PathPlannerTrajectory>> autonChooser = new SendableChooser<>();
-    //     SendableChooser<List<PathPlannerTrajectory>> autonChooser = new SendableChooser<>();
+    SendableChooser<Command> autonChooser = new SendableChooser<>();
 
     public void DebugMethod() {
         
@@ -305,18 +304,13 @@ public class RobotContainer {
         /* Added from Bobcat 177 code example */
         setUpEventMap();
         
-        /* Bobcat 177 example
-        autonChooser.setDefaultOption("Score1HighCubeDirtyBalance", 
-            PathPlanner.loadPathGroup("Score1HighCubeRightBalance", 
-            new PathConstraints(4.5, 3)));
-        */
 
         // autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
         
         /* FIXME not sure why my version is asking for "List<PathPlannerTrajectory>"
          * I think Shaun has this fixed with a Command instead
         */
-        autonChooser.setDefaultOption("Do nothing", (List<PathPlannerTrajectory>) new WaitCommand(1)); // "Drive Only" Command or Command Group
+        autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
 
         // autonChooser.addOption("Low cube Taxi (Side pref.)", cubeLowTaxi); 
         // autonChooser.addOption("0.02 Cube 2 Path Only (PP)", (Command) PathPlanner.loadPathGroup("ppCableCube2", new PathConstraints(4, 3)));
@@ -325,7 +319,7 @@ public class RobotContainer {
         // 3603 Original
         // autonChooser.addOption("Out and Turn v3.4", (Command) PathPlanner.loadPathGroup("TestOutAndTurn", new PathConstraints(4, 3)));
 
-        autonChooser.addOption("BETA 3.4 Out and Turn", (List<PathPlannerTrajectory>) PathPlanner.loadPathGroup("TestOutAndTurn", new PathConstraints(4, 3)));
+        // autonChooser.addOption("BETA 3.4 Out and Turn", (List<PathPlannerTrajectory>) PathPlanner.loadPathGroup("TestOutAndTurn", new PathConstraints(4, 3)));
 
        
     }
@@ -337,19 +331,6 @@ public class RobotContainer {
     */
     public void setUpEventMap() {
         Constants.AutoConstants.eventMap.clear();
-
-         /* These are all Bobcat examples and should be deleted
-        Constants.AutoConstants.eventMap.put("chargeStation", new MountAndBalance(s_Swerve)); // <-- An auto command group goes here
-        Constants.AutoConstants.eventMap.put("scoreCubeHigh", new SequentialCommandGroup(
-            new InstantCommand(m_Wrist::wristSolenoidON),
-            new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2.125)), 
-            new InstantCommand(m_Wrist::wristSolenoidON),
-            new WaitCommand(0.2),
-            new IntakeOutFullSpeed(m_Intake), 
-            new StartingConfig(m_Elevator, m_Arm, m_Wrist)
-            )
-        );
-         */
    }
 
     /* Added from Bobcat 177 code example */
@@ -369,7 +350,9 @@ public class RobotContainer {
     // return autonChooser.getSelected();
 
     /* Added from Bobcat 177 code example */
-    return buildAuton(autonChooser.getSelected());
+    // return buildAuton(autonChooser.getSelected());
+
+    return autonChooser.getSelected();
 
     }
 
