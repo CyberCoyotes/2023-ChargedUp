@@ -9,10 +9,10 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 
-public class ppCube2 extends SequentialCommandGroup {
-    public ppCube2() {
+public class CubeLowCube2 extends SequentialCommandGroup {
+    public CubeLowCube2() {
         List<PathPlannerTrajectory> pptList = PathPlanner.loadPathGroup(
-            "CableCube2", new PathConstraints(4, 3)
+            "CableCube3", new PathConstraints(4, 3)
             );
         
         addCommands(

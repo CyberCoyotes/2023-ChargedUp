@@ -10,10 +10,12 @@
 
 package frc.robot;
 
+import java.util.HashMap;
 import java.util.List;
 
 // import com.ctre.phoenix.led.CANdle;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
+import com.pathplanner.lib.commands.FollowPathWithEvents;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -26,6 +28,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.autos.ppCube2;
+import frc.robot.autos.ppCube3;
+import frc.robot.autos.CubeLowTaxiEngage;
 import frc.robot.autos.CubeLowTaxi;
 import frc.robot.Constants.Arm;
 import frc.robot.autos.CubeMidTaxi_version1;
@@ -35,6 +40,7 @@ import frc.robot.autos.ppTaxi4meters;
 import frc.robot.autos.CubeMidTaxiDock;
 import frc.robot.autos.CubeLowTaxiEngage;
 import frc.robot.commands.*;
+import frc.robot.nonProduction.GetTagID;
 import frc.robot.subsystems.*;
 /* PathPlanner */
 // import com.pathplanner.lib.PathConstraints;
@@ -157,7 +163,7 @@ public class RobotContainer {
     // Deploys a cone to middle level in auton
 
     Command coneLow = new ConeLow(armSub, armExtendSub, wristSub, intakeSub); // Deploys a cone to middle level in auton 
-    Command cubeMidTaxi = new CubeMidTaxi_version1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    // Command cubeMidTaxi = new CubeMidTaxi_version1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     Command cubeLowTaxi = new CubeLowTaxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     Command cubeMidTaxiDock = new CubeMidTaxiDock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     Command cubeMid = new CubeMid(armSub, wristSub, intakeSub);
