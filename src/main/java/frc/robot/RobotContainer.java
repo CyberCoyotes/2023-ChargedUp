@@ -291,7 +291,7 @@ public class RobotContainer {
     }
 
     private void configureDefaultCommands() {
-        visionSub.setDefaultCommand(new GetTagID(visionSub));
+        // visionSub.setDefaultCommand(new GetTagID(visionSub));
 
         armSub.setDefaultCommand(
                 new RotateArmManual(armSub, () -> operator.getRawAxis(translationAxis)));
