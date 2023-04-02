@@ -172,7 +172,9 @@ public class RobotContainer {
     /* PathPlanner based taxi out 4 meters */
     Command ppTaxi4meters = new ppTaxi4meters();
     Command ppCubeLowTaxi = new ppCubeLowTaxi(armExtendSub, armSub, intakeSub, wristSub, coneMidTEST);
-    Command ppCube2 = new ppCube2();    
+    Command ppCube2 = new ppCube2();
+    Command ppCube3 = new ppCube3();    
+
 
     // #endregion
 
@@ -335,9 +337,9 @@ public class RobotContainer {
         autonChooser.addOption("BETA Mid Cube", cubeMid); 
         autonChooser.addOption("BETA Low Cube + Taxi (Side)", cubeLowTaxi); 
         autonChooser.addOption("BETA Low Cube + Taxi (Side) PP", ppCubeLowTaxi); 
-        autonChooser.addOption("BETA Two Cube (Side)", cubeMidTaxiDock); 
         autonChooser.addOption("BETA Taxi + Dock (Middle)", cubeMidTaxiDock); 
-        autonChooser.addOption("BETA Cube 2 (Side)", ppCube2); 
+        autonChooser.addOption("BETA Cube 2 (Side)", ppCube2);
+        autonChooser.addOption("BETA Cube 3 (Side)", ppCube3); 
     }
 
     /* Added from Bobcat 177 code example 
