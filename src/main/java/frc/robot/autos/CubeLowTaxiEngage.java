@@ -39,11 +39,7 @@ public class CubeLowTaxiEngage extends SequentialCommandGroup {
     // : 40% in a single direction for 1 second: ~51 inches        
     final float input = (float) (polarity * power);
     Command driveCommand;
-<<<<<<< HEAD:src/main/java/frc/robot/autos/CubeLowTaxiEngaged.java
-    public CubeLowTaxiEngaged(Swerve s_Swerve, BooleanSupplier robotCentric) 
-=======
     public CubeLowTaxiEngage(Swerve s_Swerve, BooleanSupplier robotCentric) 
->>>>>>> main:src/main/java/frc/robot/autos/CubeLowTaxiEngage.java
     {
         
         addRequirements(s_Swerve);
