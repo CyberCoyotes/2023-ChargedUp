@@ -12,7 +12,7 @@ package frc.robot;
 
 import java.util.List;
 
-import com.ctre.phoenix.led.CANdle;
+// import com.ctre.phoenix.led.CANdle;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -122,7 +122,7 @@ public class RobotContainer {
     private final ArmExtensionSubsystem armExtendSub = new ArmExtensionSubsystem();
     private final ArmRotationSubsystem armSub = new ArmRotationSubsystem(limit);
     // private final CANdle candleSub = new CANdle(Constants.CANDLE_ID);
-    private final Vision visionSub = new Vision();
+    // private final Vision visionSub = new Vision();
     private final static Swerve s_Swerve = new Swerve(); // changed to a static to work with PathPlanner
     private final IntakeSubsystem intakeSub = new IntakeSubsystem();
     private final ArmWristSubsystem wristSub = new ArmWristSubsystem();
@@ -146,46 +146,27 @@ public class RobotContainer {
     StowArmStage stageOne = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
     StowArmStage stageTwo = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
     Command stowCommand = stageOne.andThen(stageTwo);
+
+        // Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);   
+    // StowArmCG _raw = new StowArmCG(armExtendSub, armSub, wristSub);
     
     /* Autonomous Commands */
-    Command autonDefault = new SetIntakeCone(intakeSub);
-    Command chargeStation = new CubeLowTaxiEngage(s_Swerve, robotCentric); // Drives out, and then back onto the Charge Station
+   // Drives out, and then back onto the Charge Station
+    Command chargeStation = new CubeLowTaxiEngage(s_Swerve, robotCentric);
+
+    // Deploys a cone to middle level in auton
+
     Command coneLow = new ConeLow(armSub, armExtendSub, wristSub, intakeSub); // Deploys a cone to middle level in auton 
     Command cubeMidTaxi = new CubeMidTaxi_version1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     Command cubeLowTaxi = new CubeLowTaxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-    // Command cubeLowTaxiDock = new cgCubeLow_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     Command cubeMidTaxiDock = new CubeMidTaxiDock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     Command cubeMid = new CubeMid(armSub, wristSub, intakeSub);
-    Command ppTaxi4meters = new ppTaxi4meters(); // PathPlanner Based
-    Command ppCubeLowTaxi = new ppCubeLowTaxi(armExtendSub, armSub, intakeSub, wristSub, coneMidTEST); // FIXME
-    Command ppCube2 = new ppCube2();
-
-    // Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);   
-    // StowArmCG _raw = new StowArmCG(armExtendSub, armSub, wristSub);
-    StowArmStage stageOne = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
-    StowArmStage stageTwo = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
-    Command stowCommand = stageOne.andThen(stageTwo);
-
-   /* 
-   * Autonomous Specific Commands 
-   */
-
-    // PathPlanner based taxi out 4 meters
-   Command taxi4meters = new ppTaxi4meters();
-
-   // Drives out, and then back onto the Charge Station
-   Command chargeStation = new CubeLowTaxiEngage(s_Swerve, robotCentric); 
-
-   // Deploys a cone to middle level in auton
-   Command coneLow = new ConeLow(armSub, armExtendSub, wristSub, intakeSub);
-   
-   Command cubeLowTaxi = new CubeLowTaxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-   Command cubeMidTaxi = new CubeMidTaxi_version1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-   Command cubeMid = new CubeMid(armSub, wristSub, intakeSub);
-   // Command cubeLowTaxiDock = new cgCubeLow_Taxi_Dock(s_Swerve, armExtendSub,
-   // armSub, intakeSub, wristSub, robotCentric);
-   Command cubeMidTaxiDock = new CubeMidTaxiDock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    // Command cubeLowTaxiDock = new cgCubeLow_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     
+    /* PathPlanner based taxi out 4 meters */
+    Command ppTaxi4meters = new ppTaxi4meters();
+    Command ppCubeLowTaxi = new ppCubeLowTaxi(armExtendSub, armSub, intakeSub, wristSub, coneMidTEST);
+    Command ppCube2 = new ppCube2();    
 
     // #endregion
 
@@ -215,7 +196,6 @@ public class RobotContainer {
         SmartDashboard.putNumber("pitch", (s_Swerve.GetPitch()));
         SmartDashboard.putBoolean("stage one", stageOne.isScheduled());
         SmartDashboard.putBoolean("stage two", stageTwo.isScheduled());
-        // SmartDashboard.putString("mode", (s_Swerve.GetPitch()));
         // SmartDashboard.putString("mode", (s_Swerve.GetPitch()));
         try {
             SmartDashboard.putString("command", s_Swerve.getCurrentCommand().getName());
@@ -345,13 +325,13 @@ public class RobotContainer {
         // TODO Verify that each of these works and then remove "β" from title
         // In theory nothing on "main" would have a "β" in title
         autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
-        autonChooser.addOption("β Taxi 4 meters PP", ppTaxi4meters);
-        autonChooser.addOption("β Mid Cube", cubeMid); 
-        autonChooser.addOption("β Low Cube + Taxi (Side)", cubeLowTaxi); 
-        autonChooser.addOption("β Low Cube + Taxi (Side) PP", ppCubeLowTaxi); 
-        autonChooser.addOption("β Two Cube (Side)", cubeMidTaxiDock); 
-        autonChooser.addOption("β Taxi + Dock (Middle)", cubeMidTaxiDock); 
-        autonChooser.addOption("β Cube 2 (Side)", ppCube2); 
+        autonChooser.addOption("Taxi 4 meters PP", ppTaxi4meters);
+        autonChooser.addOption("BETA Mid Cube", cubeMid); 
+        autonChooser.addOption("BETA Low Cube + Taxi (Side)", cubeLowTaxi); 
+        autonChooser.addOption("BETA Low Cube + Taxi (Side) PP", ppCubeLowTaxi); 
+        autonChooser.addOption("BETA Two Cube (Side)", cubeMidTaxiDock); 
+        autonChooser.addOption("BETA Taxi + Dock (Middle)", cubeMidTaxiDock); 
+        autonChooser.addOption("BETA Cube 2 (Side)", ppCube2); 
     }
 
     /* Added from Bobcat 177 code example 
