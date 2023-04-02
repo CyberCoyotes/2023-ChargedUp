@@ -14,7 +14,7 @@ public class Taxi extends SequentialCommandGroup {
 
         short polarity = 1;
         double power = .2;
-        double seconds = 2;// double seconds = inches * Constants.AutoConstants.AUTON_40_PERCENT_MULTIPLIER;
+        double seconds = 2.6;// double seconds = inches * Constants.AutoConstants.AUTON_40_PERCENT_MULTIPLIER;
         final float input = (float) (polarity * power);
         Command driveCommand = new TeleopSwerve(
             s_Swerve,

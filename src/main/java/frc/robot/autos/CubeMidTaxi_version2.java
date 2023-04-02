@@ -17,8 +17,26 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 
-public class exampleAuto extends SequentialCommandGroup {
-    public exampleAuto(Swerve s_Swerve){
+public class CubeMidTaxi_version2 extends SequentialCommandGroup {
+        // Move these to constants if it makes sense
+        double DRIVE_RATE = 52; // inches per second at 0.40 output
+        double STATION_DEPTH = 54; // approx inches
+        // COMMUNITY Depth ranges from 11 ft to 16 ft, 1 inch
+        double COMMUNITY_DEPTH = 193; // 16 ft *12 inches + 1 inch = 193 inches
+        double DRIVE_DISTANCE = (COMMUNITY_DEPTH - STATION_DEPTH); // approx 139 inches
+    
+        double DRIVE_TIME_CLEAR_ZONE = (DRIVE_DISTANCE / DRIVE_RATE); // should be approximately 2.67 seconds
+    
+    
+        /*
+         * Subtracting half the width of the CHARGE STATION and assumes no slippage.
+         * Should be 24 without slippage and ideal (?)
+         * Go shorter to engage and play safe?
+         */
+        double CHARGE_STATION_ADJ = 12;
+        double DRIVE_TIME_ENGAGE = ((DRIVE_DISTANCE - CHARGE_STATION_ADJ) / DRIVE_RATE);
+
+    public CubeMidTaxi_version2(Swerve s_Swerve){
         TrajectoryConfig config =
             new TrajectoryConfig(
                     Constants.AutoConstants.kMaxSpeedMetersPerSecond,
@@ -54,6 +72,7 @@ public class exampleAuto extends SequentialCommandGroup {
 
 
         addCommands(
+            // new cgCubeDeployMiddle(null, null, null),
             new InstantCommand(() -> s_Swerve.resetOdometry(exampleTrajectory.getInitialPose())),
             swerveControllerCommand
         );

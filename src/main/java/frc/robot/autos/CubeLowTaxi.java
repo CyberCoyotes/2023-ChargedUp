@@ -1,6 +1,8 @@
-/*
- * "CubeMidTaxi.java"
- */
+/* 
+ * 
+ * Original "CubeLowTaxi.java"
+ * 
+*/
 package frc.robot.autos;
 
 import java.util.function.BooleanSupplier;
@@ -8,7 +10,7 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.TeleopSwerve;
-import frc.robot.commands.CubeMidAuton;
+import frc.robot.commands.CubeLow;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -16,24 +18,25 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.ArmWristSubsystem;
 
 
-public class CubeMidTaxiV1 extends SequentialCommandGroup
+public class CubeLowTaxi extends SequentialCommandGroup
 {
 
 
     private Swerve m_swerve;
     private ArmRotationSubsystem m_arm;
+    private ArmExtensionSubsystem m_extend;
     private IntakeSubsystem m_intake;
     private ArmWristSubsystem m_wrist;
 
 
 
-    public CubeMidTaxiV1(Swerve s_Swerve, ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist, BooleanSupplier robotCentric) {
+    public CubeLowTaxi(Swerve s_Swerve, ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist, BooleanSupplier robotCentric) {
 
             this.m_swerve = s_Swerve; 
             this.m_arm = arm; 
-            this.m_wrist = wrist;
+            this.m_extend = extend; 
             this.m_intake = intake; 
-        // addRequirements(null);
+
 
 
         short polarity = 1;
@@ -43,7 +46,7 @@ public class CubeMidTaxiV1 extends SequentialCommandGroup
         final float input = (float) (polarity * power);
         Command driveCommand;
     
-            addRequirements(m_swerve, m_arm, m_intake);
+            addRequirements(m_swerve);
             
             driveCommand = new TeleopSwerve(
                 m_swerve,
@@ -55,9 +58,8 @@ public class CubeMidTaxiV1 extends SequentialCommandGroup
         
 
         addCommands(
-            //just in case
-            new CubeMidAuton(m_arm, m_wrist, m_intake ).withTimeout(7),
-            driveCommand
+            new CubeLow(m_arm, m_extend, m_wrist, m_intake ).withTimeout(7),
+            driveCommand.withTimeout(seconds)
 
         );
     }

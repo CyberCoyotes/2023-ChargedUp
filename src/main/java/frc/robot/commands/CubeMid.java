@@ -15,9 +15,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 
-public class CubeMidAuton extends SequentialCommandGroup{
+public class CubeMid extends SequentialCommandGroup{
 
-    public CubeMidAuton
+    public CubeMid
     (ArmRotationSubsystem armSub, ArmWristSubsystem wristSub, IntakeSubsystem intakeSub) {
         addCommands(
             new RotateArmToArg(armSub, 80).withTimeout(.75)

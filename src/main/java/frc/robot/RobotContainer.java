@@ -24,25 +24,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.autos.cgCubeLow_Taxi;
+import frc.robot.autos.CubeLowTaxi;
 import frc.robot.Constants.Arm;
-import frc.robot.autos.CubeMidTaxiV1;
-import frc.robot.autos.cgCubeMid_Taxi_Dock;
-import frc.robot.autos.cgCubeLow_Taxi_Engaged;
+import frc.robot.autos.CubeMidTaxi_version1;
+import frc.robot.autos.ppTaxi4meters;
+import frc.robot.autos.CubeMidTaxiDock;
+import frc.robot.autos.CubeLowTaxiEngage;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
+/* PathPlanner */
+// import com.pathplanner.lib.PathConstraints;
+// import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
+// import com.pathplanner.lib.PathConstraints;
+// import com.pathplanner.lib.PathPlanner;
+// import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
-import com.pathplanner.lib.auto.SwerveAutoBuilder;
+// import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
 // 94505//horizontaL
 // 314446 // serve
@@ -119,7 +119,7 @@ public class RobotContainer {
 
     private final ArmExtensionSubsystem armExtendSub = new ArmExtensionSubsystem();
     private final ArmRotationSubsystem armSub = new ArmRotationSubsystem(limit);
-    private final CANdle candleSub = new CANdle(Constants.CANDLE_ID);
+    // private final CANdle candleSub = new CANdle(Constants.CANDLE_ID);
     private final Vision visionSub = new Vision();
     private final static Swerve s_Swerve = new Swerve(); // changed to a static to work with PathPlanner
     private final IntakeSubsystem intakeSub = new IntakeSubsystem();
@@ -134,11 +134,11 @@ public class RobotContainer {
     RotateArmToArg rotTo90 = new RotateArmToArg(armSub, 90);
     MoveUntilSensor rotationMoveUntilSensor;
     MoveUntilSensor extentionMoveUntilSensor;
-    cgCubeLow_Taxi_Engaged autonCommand = new cgCubeLow_Taxi_Engaged(s_Swerve, robotCentric);
+    CubeLowTaxiEngage autonCommand = new CubeLowTaxiEngage(s_Swerve, robotCentric);
     ArmExtendToArg extendMiddle = new ArmExtendToArg(armExtendSub, () -> Arm.ARM_EXTEND_MIDDLE_ENCODER);//why is the ctor like this? whatever
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
 
-     ConeMid coneMid = new ConeMid(wristSub, armSub); 
+    ConeMid coneMid = new ConeMid(wristSub, armSub); 
 
 
     
@@ -153,16 +153,17 @@ public class RobotContainer {
     Command auton_Default = // TODO Set
         new SetIntakeCone(intakeSub); //
     Command auton_ChargeStation = // Drives out, and then back onto the Charge Station
-        new cgCubeLow_Taxi_Engaged(s_Swerve, robotCentric);
+        new CubeLowTaxiEngage(s_Swerve, robotCentric);
     Command auton_ConeLow = // Deploys a cone to middle level in auton
-        new cgConeLow(armSub, armExtendSub, wristSub, intakeSub); 
+        new ConeLow(armSub, armExtendSub, wristSub, intakeSub); 
         
    
-    Command cubeMidTaxi = new CubeMidTaxiV1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-    Command cubeLowTaxi = new cgCubeLow_Taxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    Command cubeMidTaxi = new CubeMidTaxi_version1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    Command cubeLowTaxi = new CubeLowTaxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     // Command cubeLowTaxiDock = new cgCubeLow_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-    Command cubeMidTaxiDock = new cgCubeMid_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-    Command midCubeAuto = new CubeMidAuton(armSub, wristSub, intakeSub);
+    Command cubeMidTaxiDock = new CubeMidTaxiDock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    Command cubeMid = new CubeMid(armSub, wristSub, intakeSub);
+    Command taxi4meters = new ppTaxi4meters();
 
     // #endregion
 
@@ -198,7 +199,7 @@ public class RobotContainer {
             SmartDashboard.putString("command", s_Swerve.getCurrentCommand().getName());
             
         } catch (Exception e) {
-            // TODO: handle exception
+            // handle exception
         }
         
 
@@ -207,7 +208,7 @@ public class RobotContainer {
         // System.out.println(("ex command " +  armExtendSub.getCurrentCommand().getName()));
             
         // } catch (Exception e) {
-        //     // TODO: handle exception
+        //     handle exception
         // }
 
         
@@ -319,36 +320,14 @@ public class RobotContainer {
         /* Added from Bobcat 177 code example */
         setUpEventMap();
         
-
-        // autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
-        
-        /* FIXME not sure why my version is asking for "List<PathPlannerTrajectory>"
-         * I think Shaun has this fixed with a Command instead
-        */
+        // TODO Verify that each of these works and then remove "β" from title
+        // In theory nothing on "main" would have a "β" in title
         autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
-
-        // autonChooser.addOption("Low cube Taxi (Side pref.)", cubeLowTaxi); 
-        // autonChooser.addOption("0.02 Cube 2 Path Only (PP)", (Command) PathPlanner.loadPathGroup("ppCableCube2", new PathConstraints(4, 3)));
+        autonChooser.addOption("β Taxi 4 meters", taxi4meters);
+        autonChooser.addOption("β Mid Cube", cubeMid); 
+        autonChooser.addOption("β Low Cube + Taxi (Side)", cubeLowTaxi); 
+        autonChooser.addOption("β Taxi + Dock (Middle)", cubeMidTaxiDock); 
         
-        // FIXME Test this auton with Path Planner implementation
-        // 3603 Original
-        // autonChooser.addOption("Out and Turn v3.4", (Command) PathPlanner.loadPathGroup("TestOutAndTurn", new PathConstraints(4, 3)));
-
-        // autonChooser.addOption("BETA 3.4 Out and Turn", (List<PathPlannerTrajectory>) PathPlanner.loadPathGroup("TestOutAndTurn", new PathConstraints(4, 3)));
-
-        autonChooser.addOption("Low cube Taxi (Side pref.)", cubeLowTaxi); 
-        // autonChooser.addOption("0.02 Cube 2 Path Only (PP)", (Command) PathPlanner.loadPathGroup("ppCableCube2", new PathConstraints(4, 3)));
-
-
-        // autonChooser.addOption("Mid cube Taxi (Side pref.)", cubeMidTaxi); 
-        // autonChooser.addOption("Low cube Taxi + dock (Mid pref.)", cubeLowTaxiDock);
-        autonChooser.addOption("Taxi + dock (Mid pref.)", cubeMidTaxiDock); 
-        autonChooser.addOption("Mid Cube Auto", midCubeAuto); 
-        // autonChooser.addOption("Test Cone Mid", coneMid); 
-        // autonChooser.addOption("Arm Extent Auto Test", extendMiddle); //! for testing; getting this command to work is a MUST
-        // autonChooser.addOption("Arm Rotate to 90 deg", rotTo90); //! for testing; getting this command to work is a MUST
-        // autonChooser.addOption("wristReceive", wristReceive);
-       
     }
 
     /* Added from Bobcat 177 code example 

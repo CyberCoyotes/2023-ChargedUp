@@ -170,7 +170,7 @@ double cosineScalar = java.lang.Math.cos(radians); // todo get the cosine of the
 
 // FF is measured as
 
-double arbFF = maxGravityFF * cosineScalar; // todo get ff, depends on cosine
+double arbFF = maxGravityFF * cosineScalar; // TODO get ff, depends on cosine
 
 //#endregion
         // DemandType.ArbitraryFeedForward, -0.01

@@ -14,7 +14,7 @@ import frc.robot.commands.SeekBeginofChargeStation;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.Swerve;
 
-public class cgCubeLow_Taxi_Engaged extends SequentialCommandGroup {
+public class CubeLowTaxiEngage extends SequentialCommandGroup {
 
     private double pTerm;
     private double dTerm;
@@ -39,7 +39,7 @@ public class cgCubeLow_Taxi_Engaged extends SequentialCommandGroup {
     // : 40% in a single direction for 1 second: ~51 inches        
     final float input = (float) (polarity * power);
     Command driveCommand;
-    public cgCubeLow_Taxi_Engaged(Swerve s_Swerve, BooleanSupplier robotCentric) 
+    public CubeLowTaxiEngage(Swerve s_Swerve, BooleanSupplier robotCentric) 
     {
         
         addRequirements(s_Swerve);
