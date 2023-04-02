@@ -28,10 +28,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.autos.Cube2;
-import frc.robot.autos.Cube3;
-import frc.robot.autos.PathPlannerTest;
-import frc.robot.autos.cgCubeLow_Taxi_Engaged;
+import frc.robot.autos.ppCube2;
+import frc.robot.autos.ppCube3;
+import frc.robot.autos.CubeLowTaxiEngaged;
 import frc.robot.commands.*;
 import frc.robot.nonProduction.GetTagID;
 import frc.robot.subsystems.*;
@@ -135,14 +134,14 @@ public class RobotContainer {
     RotateArm90 rotTo90 = new RotateArm90(armSub);
     MoveUntilSensor rotationMoveUntilSensor;
     MoveUntilSensor extentionMoveUntilSensor;
-    cgCubeLow_Taxi_Engaged autonCommand = new cgCubeLow_Taxi_Engaged(s_Swerve, robotCentric);
+    CubeLowTaxiEngaged autonCommand = new CubeLowTaxiEngaged(s_Swerve, robotCentric);
     ArmExtendMiddle extendMiddle = new ArmExtendMiddle(armExtendSub);
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
     Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);
     // private final SequentialCommandGroup chargestation = new MountAndBalance(s_Swerve); // Bobcats
     
-    Command CubeTwo = new Cube2(); // FIXME test
-    Command CubeThree = new Cube3(); // FIXME test
+    Command CubeTwo = new ppCube2(); // FIXME test
+    Command CubeThree = new ppCube3(); // FIXME test
 
     // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
     /* 

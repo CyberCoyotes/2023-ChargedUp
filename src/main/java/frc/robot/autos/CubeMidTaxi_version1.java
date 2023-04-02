@@ -16,7 +16,7 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.WristSubsystem;
 
 
-public class cgCubeMid_Taxi_ver1 extends SequentialCommandGroup
+public class CubeMidTaxi_version1 extends SequentialCommandGroup
 {
 
 
@@ -28,7 +28,7 @@ public class cgCubeMid_Taxi_ver1 extends SequentialCommandGroup
 
 
 
-    public cgCubeMid_Taxi_ver1(Swerve s_Swerve, ArmExtensionSubsystem extend, ArmSubsystem arm, IntakeSubsystem intake, WristSubsystem wrist, BooleanSupplier robotCentric) {
+    public CubeMidTaxi_version1(Swerve s_Swerve, ArmExtensionSubsystem extend, ArmSubsystem arm, IntakeSubsystem intake, WristSubsystem wrist, BooleanSupplier robotCentric) {
 
             this.m_swerve = s_Swerve; 
             this.m_arm = arm; 

@@ -1,8 +1,3 @@
-/* 
- * 
- * Original "CubeLowTaxi.java"
- * 
-*/
 package frc.robot.autos;
 
 import java.util.function.BooleanSupplier;
@@ -18,7 +13,7 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.WristSubsystem;
 
 
-public class cgCubeLow_Taxi extends SequentialCommandGroup
+public class CubeLowTaxiDock extends SequentialCommandGroup
 {
 
 
@@ -28,20 +23,16 @@ public class cgCubeLow_Taxi extends SequentialCommandGroup
     private IntakeSubsystem m_intake;
     private WristSubsystem m_wrist;
 
-
-
-    public cgCubeLow_Taxi(Swerve s_Swerve, ArmExtensionSubsystem extend, ArmSubsystem arm, IntakeSubsystem intake, WristSubsystem wrist, BooleanSupplier robotCentric) {
+    public CubeLowTaxiDock(Swerve s_Swerve, ArmExtensionSubsystem extend, ArmSubsystem arm, IntakeSubsystem intake, WristSubsystem wrist, BooleanSupplier robotCentric) {
 
             this.m_swerve = s_Swerve; 
             this.m_arm = arm; 
             this.m_extend = extend; 
             this.m_intake = intake; 
 
-
-
         short polarity = 1;
         double power = .4;
-        double seconds = 3;
+        double seconds = 5;
         // : 40% in a single direction for 1 second: ~51 inches        
         final float input = (float) (polarity * power);
         Command driveCommand;
@@ -55,11 +46,23 @@ public class cgCubeLow_Taxi extends SequentialCommandGroup
                 () -> 0,
                 () -> robotCentric.getAsBoolean(),
                 () -> false);
-        
+         
+                //Now trying to dock
+                Command driveCommandReverse = new TeleopSwerve(
+                    m_swerve,
+                    () -> input,
+                    () -> 0,
+                    () -> 0,
+                    () -> robotCentric.getAsBoolean(),
+                    () -> false);
+            
 
         addCommands(
-            new cgCubeLow(m_arm, m_extend, m_wrist, m_intake ).withTimeout(7),
-            driveCommand.withTimeout(seconds)
+            //just in case
+            new cgCubeLow(m_arm, m_extend, m_wrist, m_intake ).withTimeout(5),
+            driveCommand.withTimeout(seconds),
+            driveCommandReverse.withTimeout(seconds -2)
+
 
         );
     }
