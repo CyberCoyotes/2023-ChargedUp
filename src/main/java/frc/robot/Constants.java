@@ -263,7 +263,9 @@ public final class Constants {
                 kMaxAccelerationMetersPerSecondSquared, stickDeadband, kThetaControllerConstraints);
         public static final PIDController kThetaPIDController = new PIDController(kPThetaController, 0,0);
         
-        public static HashMap<String, Command> eventMap = new HashMap<>(); // added for PathPlanner
+        public static HashMap<String, Command> eventMap = new HashMap<>(); // TODO added for PathPlanner
+        // eventMap.put("marker1", new PrintCommand("Passed marker 1"));
+        // eventMap.put("intakeDown", new IntakeDown());
         
         }
 

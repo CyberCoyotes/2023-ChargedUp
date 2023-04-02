@@ -10,10 +10,12 @@
 
 package frc.robot;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.ctre.phoenix.led.CANdle;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
+import com.pathplanner.lib.commands.FollowPathWithEvents;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -26,6 +28,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.autos.Cube2;
+import frc.robot.autos.Cube3;
 import frc.robot.autos.PathPlannerTest;
 import frc.robot.autos.cgCubeLow_Taxi_Engaged;
 import frc.robot.commands.*;
@@ -135,7 +139,26 @@ public class RobotContainer {
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
     Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);
     // private final SequentialCommandGroup chargestation = new MountAndBalance(s_Swerve); // Bobcats
-    // private final PathPlannerTest pathPlannerTest = new PathPlannerTest();
+    
+    Command CubeTwo = new Cube2(); // FIXME test
+    Command CubeThree = new Cube3(); // FIXME test
+
+    // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
+    /* 
+PathPlannerTrajectory example3 = PathPlanner.loadPath("Cube3", new PathConstraints(4, 3));
+
+// This is just an example event map. It would be better to have a constant, global event map
+// in your code that will be used by all path following commands.
+HashMap<String, Command> eventMap = new HashMap<>();
+eventMap.put("marker1", new PrintCommand("Passed marker 1"));
+eventMap.put("intakeDown", new IntakeDown());
+
+FollowPathWithEvents command = new FollowPathWithEvents(
+    getPathFollowingCommand(example3),
+    example3.getMarkers(),
+    eventMap
+);
+*/
 
     // Command auton_Default = //
         // new SetIntakeCone(intakeSub); //
@@ -324,7 +347,10 @@ public class RobotContainer {
         // 3603 Original
         // autonChooser.addOption("Out and Turn v3.4", (Command) PathPlanner.loadPathGroup("TestOutAndTurn", new PathConstraints(4, 3)));
 
-        autonChooser.addOption("BETA 3.4 Out and Turn", (List<PathPlannerTrajectory>) PathPlanner.loadPathGroup("TestOutAndTurn", new PathConstraints(4, 3)));
+        autonChooser.addOption("BETA Cube 2", (List<PathPlannerTrajectory>) PathPlanner.loadPathGroup("Cube2", new PathConstraints(4, 3)));
+        autonChooser.addOption("BETA Cube 3", (List<PathPlannerTrajectory>) PathPlanner.loadPathGroup("Cube3", new PathConstraints(4, 3)));
+
+        // autonChooser.addOption("BETA Cube 3", (Command CubeThree) PathPlanner.loadPathGroup("Cube3", new PathConstraints(4, 3)));
 
        
     }
