@@ -5,12 +5,12 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.TeleopSwerve;
-import frc.robot.commands.cgCubeLow;
+import frc.robot.commands.CubeLow;
 import frc.robot.subsystems.ArmExtensionSubsystem;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.Swerve;
-import frc.robot.subsystems.WristSubsystem;
+import frc.robot.subsystems.ArmWristSubsystem;
 
 
 public class CubeLowTaxiDock extends SequentialCommandGroup
@@ -18,10 +18,10 @@ public class CubeLowTaxiDock extends SequentialCommandGroup
 
 
     private Swerve m_swerve;
-    private ArmSubsystem m_arm;
+    private ArmRotationSubsystem m_arm;
     private ArmExtensionSubsystem m_extend;
     private IntakeSubsystem m_intake;
-    private WristSubsystem m_wrist;
+    private ArmWristSubsystem m_wrist;
 
     public CubeLowTaxiDock(Swerve s_Swerve, ArmExtensionSubsystem extend, ArmSubsystem arm, IntakeSubsystem intake, WristSubsystem wrist, BooleanSupplier robotCentric) {
 
@@ -59,7 +59,7 @@ public class CubeLowTaxiDock extends SequentialCommandGroup
 
         addCommands(
             //just in case
-            new cgCubeLow(m_arm, m_extend, m_wrist, m_intake ).withTimeout(5),
+            new CubeLow(m_arm, m_extend, m_wrist, m_intake ).withTimeout(5),
             driveCommand.withTimeout(seconds),
             driveCommandReverse.withTimeout(seconds -2)
 

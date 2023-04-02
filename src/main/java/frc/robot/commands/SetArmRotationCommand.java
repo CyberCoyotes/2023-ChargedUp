@@ -1,11 +1,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ArmRotationSubsystem;
 
 public class SetArmRotationCommand extends CommandBase {
 
-    private final ArmSubsystem m_ArmSub;
+    private final ArmRotationSubsystem m_ArmSub;
 
     private int m_degrees;
 
@@ -22,7 +22,7 @@ public class SetArmRotationCommand extends CommandBase {
     public InterruptionBehavior getInterruptionBehavior() {
         return InterruptionBehavior.kCancelSelf;
     }
-    public SetArmRotationCommand(int degrees, ArmSubsystem subsystem) {
+    public SetArmRotationCommand(int degrees, ArmRotationSubsystem subsystem) {
         m_ArmSub = subsystem;
         this.m_degrees = degrees;
         

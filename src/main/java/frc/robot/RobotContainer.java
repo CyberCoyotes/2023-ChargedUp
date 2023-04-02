@@ -13,7 +13,7 @@ package frc.robot;
 import java.util.HashMap;
 import java.util.List;
 
-import com.ctre.phoenix.led.CANdle;
+// import com.ctre.phoenix.led.CANdle;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import com.pathplanner.lib.commands.FollowPathWithEvents;
 
@@ -30,18 +30,27 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.ppCube2;
 import frc.robot.autos.ppCube3;
-import frc.robot.autos.CubeLowTaxiEngaged;
+import frc.robot.autos.CubeLowTaxiEngage;
+import frc.robot.autos.CubeLowTaxi;
+import frc.robot.Constants.Arm;
+import frc.robot.autos.CubeMidTaxi_version1;
+import frc.robot.autos.ppCube2;
+import frc.robot.autos.ppCubeLowTaxi;
+import frc.robot.autos.ppTaxi4meters;
+import frc.robot.autos.CubeMidTaxiDock;
+import frc.robot.autos.CubeLowTaxiEngage;
 import frc.robot.commands.*;
 import frc.robot.nonProduction.GetTagID;
 import frc.robot.subsystems.*;
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
+/* PathPlanner */
+// import com.pathplanner.lib.PathConstraints;
+// import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
+// import com.pathplanner.lib.PathConstraints;
+// import com.pathplanner.lib.PathPlanner;
+// import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
-import com.pathplanner.lib.auto.SwerveAutoBuilder;
+// import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
 // 94505//horizontaL
 // 314446 // serve
@@ -87,7 +96,7 @@ public class RobotContainer {
     private final int RT = XboxController.Axis.kRightTrigger.value;
     // #endregion
     // #region Driver Buttons
-    /* A */private final JoystickButton RotateArmTEST = new JoystickButton(driver, XboxController.Button.kA.value);
+    /* A */private final JoystickButton coneMidTEST = new JoystickButton(driver, XboxController.Button.kA.value);
 
     /* START */private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
     /* LB */private final JoystickButton robotCentric = new JoystickButton(driver,
@@ -117,87 +126,69 @@ public class RobotContainer {
     // #region Subsystems
 
     private final ArmExtensionSubsystem armExtendSub = new ArmExtensionSubsystem();
-    private final ArmSubsystem armSub = new ArmSubsystem(limit);
-    private final CANdle candleSub = new CANdle(Constants.CANDLE_ID);
-    private final Vision visionSub = new Vision();
+    private final ArmRotationSubsystem armSub = new ArmRotationSubsystem(limit);
+    // private final CANdle candleSub = new CANdle(Constants.CANDLE_ID);
+    // private final Vision visionSub = new Vision();
     private final static Swerve s_Swerve = new Swerve(); // changed to a static to work with PathPlanner
     private final IntakeSubsystem intakeSub = new IntakeSubsystem();
-    private final WristSubsystem wristSub = new WristSubsystem();
+    private final ArmWristSubsystem wristSub = new ArmWristSubsystem();
     // private final SensorsSubsystem m_ArmSwitch = new SensorsSubsystem();
 
     // #endregion
     
+
+
     // #region Commands
     /* Commands */
     // ResetArmCommand resetArm = new ResetArmCommand(armSub, wristSub, armExtendSub);
-    RotateArmIntake intakeCommand = new RotateArmIntake(armSub);
-    RotateArm90 rotTo90 = new RotateArm90(armSub);
+    RotateArmToArg rotTo90 = new RotateArmToArg(armSub, 90);
     MoveUntilSensor rotationMoveUntilSensor;
     MoveUntilSensor extentionMoveUntilSensor;
-    CubeLowTaxiEngaged autonCommand = new CubeLowTaxiEngaged(s_Swerve, robotCentric);
-    ArmExtendMiddle extendMiddle = new ArmExtendMiddle(armExtendSub);
+    CubeLowTaxiEngage autonCommand = new CubeLowTaxiEngage(s_Swerve, robotCentric);
+    ArmExtendToArg extendMiddle = new ArmExtendToArg(armExtendSub, () -> Arm.ARM_EXTEND_MIDDLE_ENCODER);//why is the ctor like this? whatever
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
-    Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);
-    // private final SequentialCommandGroup chargestation = new MountAndBalance(s_Swerve); // Bobcats
+    ConeMid coneMid = new ConeMid(wristSub, armSub); 
+
+    StowArmStage stageOne = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
+    StowArmStage stageTwo = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
+    Command stowCommand = stageOne.andThen(stageTwo);
+
+        // Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);   
+    // StowArmCG _raw = new StowArmCG(armExtendSub, armSub, wristSub);
     
-    Command CubeTwo = new ppCube2(); // FIXME test
-    Command CubeThree = new ppCube3(); // FIXME test
+    /* Autonomous Commands */
+   // Drives out, and then back onto the Charge Station
+    Command chargeStation = new CubeLowTaxiEngage(s_Swerve, robotCentric);
 
-    // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
-    /* 
-PathPlannerTrajectory example3 = PathPlanner.loadPath("Cube3", new PathConstraints(4, 3));
+    // Deploys a cone to middle level in auton
 
-// This is just an example event map. It would be better to have a constant, global event map
-// in your code that will be used by all path following commands.
-HashMap<String, Command> eventMap = new HashMap<>();
-eventMap.put("marker1", new PrintCommand("Passed marker 1"));
-eventMap.put("intakeDown", new IntakeDown());
-
-FollowPathWithEvents command = new FollowPathWithEvents(
-    getPathFollowingCommand(example3),
-    example3.getMarkers(),
-    eventMap
-);
-*/
-
-    // Command auton_Default = //
-        // new SetIntakeCone(intakeSub); //
-    // Command auton_ChargeStation = // Drives out, and then back onto the Charge Station
-        // new cgCubeLow_Taxi_Engaged(s_Swerve, robotCentric);
-    // Command auton_ConeLow = // Deploys a cone to middle level in auton
-        // new cgConeLow(armSub, armExtendSub, wristSub, intakeSub); 
-        
-    // Command auton_ConeMiddle = // Deploys a cone to middle level in auton
-        // new cgConeMid(armSub, armExtendSub, wristSub, intakeSub); 
-    // Command auton_CubeMiddle = //Deploys a cube to middle level in auton
-        // new cgCubeMid_ver1(armSub, armExtendSub, wristSub, intakeSub); // 
-    // Command cubeMidTaxi = new cgCubeMid_Taxi_ver1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-    // Command cubeLowTaxi = new cgCubeLow_Taxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    Command coneLow = new ConeLow(armSub, armExtendSub, wristSub, intakeSub); // Deploys a cone to middle level in auton 
+    // Command cubeMidTaxi = new CubeMidTaxi_version1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    Command cubeLowTaxi = new CubeLowTaxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    Command cubeMidTaxiDock = new CubeMidTaxiDock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    Command cubeMid = new CubeMid(armSub, wristSub, intakeSub);
     // Command cubeLowTaxiDock = new cgCubeLow_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-    // Command cubeMidTaxiDock = new cgCubeMid_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-
-    // Command auton_cgCubeTop =  new cgCubeMid_ver3(armSub, armExtendSub, wristSub, intakeSub);
+    
+    /* PathPlanner based taxi out 4 meters */
+    Command ppTaxi4meters = new ppTaxi4meters();
+    Command ppCubeLowTaxi = new ppCubeLowTaxi(armExtendSub, armSub, intakeSub, wristSub, coneMidTEST);
+    Command ppCube2 = new ppCube2();    
 
     // #endregion
 
-    // TODO Added from Bobcats
+    /* Added from Bobcats */
     public void displayGyro(){
         SmartDashboard.putNumber("pitch", s_Swerve.getPitch());
         SmartDashboard.putNumber("yaw", s_Swerve.getRoll());
     }
 
-    /* TODO Bobcat Example */
+    /* Bobcat Example */
     // private final SequentialCommandGroup chargestation = new MountAndBalance(s_Swerve);
     // private final Command align = new AlignToTarget(s_Swerve, m_Limelight).withInterruptBehavior(InterruptionBehavior.kCancelIncoming).repeatedly();
     private static SwerveAutoBuilder swerveAutonBuilder;
 
     /* SendableChooser */
-    SendableChooser<List<PathPlannerTrajectory>> autonChooser = new SendableChooser<>();
-    //     SendableChooser<List<PathPlannerTrajectory>> autonChooser = new SendableChooser<>();
-
-    // End Bobcat Example
-
-    
+    SendableChooser<Command> autonChooser = new SendableChooser<>();
 
     public void DebugMethod() {
         
@@ -209,11 +200,14 @@ FollowPathWithEvents command = new FollowPathWithEvents(
         SmartDashboard.putNumber("Wrist Encoder", wristSub.getWristPos());
         SmartDashboard.putString("arm mode", armSub.GetMode());
         SmartDashboard.putNumber("pitch", (s_Swerve.GetPitch()));
+        SmartDashboard.putBoolean("stage one", stageOne.isScheduled());
+        SmartDashboard.putBoolean("stage two", stageTwo.isScheduled());
+        // SmartDashboard.putString("mode", (s_Swerve.GetPitch()));
         try {
             SmartDashboard.putString("command", s_Swerve.getCurrentCommand().getName());
             
         } catch (Exception e) {
-            // TODO: handle exception
+            // handle exception
         }
         
 
@@ -222,7 +216,7 @@ FollowPathWithEvents command = new FollowPathWithEvents(
         // System.out.println(("ex command " +  armExtendSub.getCurrentCommand().getName()));
             
         // } catch (Exception e) {
-        //     // TODO: handle exception
+        //     handle exception
         // }
 
         
@@ -263,6 +257,7 @@ FollowPathWithEvents command = new FollowPathWithEvents(
         
         /* Driver Button Bindings */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        coneMidTEST.whileTrue(coneMid);
         zeroArmEncoder.onTrue(new InstantCommand(() -> armSub.ZeroArmEncoder()));
         creepButton.onTrue(new InstantCommand(() -> SetCreepToggle(!GetCreepToggle())));// inverts creep when button
         stowArm.onTrue(stowCommand);
@@ -282,9 +277,8 @@ FollowPathWithEvents command = new FollowPathWithEvents(
 
     }
 
-    // TODO Bobcat Code
+    /* Bobcat 177 Code */
     public static Command buildAuton(List<PathPlannerTrajectory> trajs) {
-        // public static Command buildAuton(List<PathPlannerTrajectory> trajs) {
 
         //s_Swerve.resetOdometry(trajs.get(0).getInitialHolonomicPose());
         swerveAutonBuilder = new SwerveAutoBuilder(
@@ -303,7 +297,7 @@ FollowPathWithEvents command = new FollowPathWithEvents(
     }
 
     private void configureDefaultCommands() {
-        visionSub.setDefaultCommand(new GetTagID(visionSub));
+        // visionSub.setDefaultCommand(new GetTagID(visionSub));
 
         armSub.setDefaultCommand(
                 new RotateArmManual(armSub, () -> operator.getRawAxis(translationAxis)));
@@ -326,55 +320,36 @@ FollowPathWithEvents command = new FollowPathWithEvents(
                 // new ArmExtendToArg(armExtendSub, () -> 9500));
     }
 
-    // TODO See Bobcat public void setUpAutos() {}
-    // Sendable Chooser Setup
-
+    /* See Bobcat public void setUpAutos() {} for analogous method*/
+    
+    /* Sendable Chooser Setup */
     private void configureAutonChooser() {
 
-        setUpEventMap(); // FIXME Bobcat code
-
-        // autonChooser.setDefaultOption("Score1HighCubeDirtyBalance", 
-            // PathPlanner.loadPathGroup("Score1HighCubeRightBalance", 
-            // new PathConstraints(4.5, 3)));
-
-        // FIXME autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
-        autonChooser.setDefaultOption("Do nothing", (List<PathPlannerTrajectory>) new WaitCommand(1)); // "Drive Only" Command or Command Group
-
-        // autonChooser.addOption("Low cube Taxi (Side pref.)", cubeLowTaxi); 
-        // autonChooser.addOption("0.02 Cube 2 Path Only (PP)", (Command) PathPlanner.loadPathGroup("ppCableCube2", new PathConstraints(4, 3)));
+        /* Added from Bobcat 177 code example */
+        setUpEventMap();
         
-        // FIXME Test this auton with Path Planner implementation
-        // 3603 Original
-        // autonChooser.addOption("Out and Turn v3.4", (Command) PathPlanner.loadPathGroup("TestOutAndTurn", new PathConstraints(4, 3)));
-
-        autonChooser.addOption("BETA Cube 2", (List<PathPlannerTrajectory>) PathPlanner.loadPathGroup("Cube2", new PathConstraints(4, 3)));
-        autonChooser.addOption("BETA Cube 3", (List<PathPlannerTrajectory>) PathPlanner.loadPathGroup("Cube3", new PathConstraints(4, 3)));
-
-        // autonChooser.addOption("BETA Cube 3", (Command CubeThree) PathPlanner.loadPathGroup("Cube3", new PathConstraints(4, 3)));
-
-       
+        // TODO Verify that each of these works and then remove "β" from title
+        // In theory nothing on "main" would have a "β" in title
+        autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
+        autonChooser.addOption("Taxi 4 meters PP", ppTaxi4meters);
+        autonChooser.addOption("BETA Mid Cube", cubeMid); 
+        autonChooser.addOption("BETA Low Cube + Taxi (Side)", cubeLowTaxi); 
+        autonChooser.addOption("BETA Low Cube + Taxi (Side) PP", ppCubeLowTaxi); 
+        autonChooser.addOption("BETA Two Cube (Side)", cubeMidTaxiDock); 
+        autonChooser.addOption("BETA Taxi + Dock (Middle)", cubeMidTaxiDock); 
+        autonChooser.addOption("BETA Cube 2 (Side)", ppCube2); 
     }
 
-    /* TODO from Bobcat Auton */
+    /* Added from Bobcat 177 code example 
+     * We aren't currently using anything other than clear
+     * Probably stuff we would do at start of auton everytime?
+     * Cube Mid or Cube Low at start?
+    */
     public void setUpEventMap() {
         Constants.AutoConstants.eventMap.clear();
-
-        // Constants.AutoConstants.eventMap.put("chargeStation", new MountAndBalance(s_Swerve)); // <-- An auto command group goes here
-        
-        /* These are all Bobcat examples and should be deleted */
-  
-        // Constants.AutoConstants.eventMap.put("scoreCubeHigh", new SequentialCommandGroup(
-            // new InstantCommand(m_Wrist::wristSolenoidON),
-            // new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2.125)), 
-            // new InstantCommand(m_Wrist::wristSolenoidON),
-            // new WaitCommand(0.2),
-            // new IntakeOutFullSpeed(m_Intake), 
-            // new StartingConfig(m_Elevator, m_Arm, m_Wrist)
-            // )
-        // );
    }
 
-    // TODO Added from Bobcat auton
+    /* Added from Bobcat 177 code example */
     public void printHashMap() {
         SmartDashboard.putString("eventMap", Constants.AutoConstants.eventMap.toString());
     }
@@ -390,21 +365,18 @@ FollowPathWithEvents command = new FollowPathWithEvents(
     /* 3603 Original code */
     // return autonChooser.getSelected();
 
-    /* TODO Bobcat code */
-    return buildAuton(autonChooser.getSelected());
+    /* Added from Bobcat 177 code example */
+    // return buildAuton(autonChooser.getSelected());
+
+    return autonChooser.getSelected();
 
     }
 
-    public void DebugMethodSingle() 
-    {
-        
-  var tab = Shuffleboard.getTab("Driver Diagnostics");
-  tab.addNumber("Arm_Extent", () -> armExtendSub.ReadExtension());
-  tab.addNumber( "new gyro read", () -> s_Swerve.getYaw().getDegrees());
-  tab.addNumber( "Arm Rotation(°)", () -> (armSub.GetRotationInDeg()));
-
-
-
+    public void DebugMethodSingle() {
+        var tab = Shuffleboard.getTab("Driver Diagnostics");
+        tab.addNumber("Arm_Extent", () -> armExtendSub.ReadExtension());
+        tab.addNumber( "new gyro read", () -> s_Swerve.getYaw().getDegrees());
+        tab.addNumber( "Arm Rotation(°)", () -> (armSub.GetRotationInDeg()));
     }
 
 }

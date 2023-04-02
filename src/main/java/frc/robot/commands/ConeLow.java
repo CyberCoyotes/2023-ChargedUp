@@ -6,21 +6,21 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.ArmExtensionSubsystem;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.WristSubsystem;
+import frc.robot.subsystems.ArmWristSubsystem;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 
-public class cgConeLow extends SequentialCommandGroup{
+public class ConeLow extends SequentialCommandGroup{
 
-    public cgConeLow
-    (ArmSubsystem armSub, ArmExtensionSubsystem armExtSub, WristSubsystem wristSub, IntakeSubsystem intakeSub) {
+    public ConeLow
+    (ArmRotationSubsystem armSub, ArmExtensionSubsystem armExtSub, ArmWristSubsystem wristSub, IntakeSubsystem intakeSub) {
         addCommands(
-            new RotateArmArg(armSub, -30).withTimeout(1)
+            new RotateArmToArg(armSub, -30).withTimeout(1)
             , new WaitCommand(0.25)
             // Ideally the dead condition would be when the wrist achieves its angle
             , new ParallelDeadlineGroup( // Use ParallelRaceGroup if this doesn't work 
