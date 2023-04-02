@@ -1,6 +1,6 @@
 /* 
  * 
- * Original "CubeLowTaxi.java"
+ * PathPlanner based Auton, deploys low cube
  * 
 */
 package frc.robot.autos;
@@ -11,18 +11,13 @@ import java.util.function.BooleanSupplier;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
-
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.TeleopSwerve;
 import frc.robot.RobotContainer;
 import frc.robot.commands.CubeLow;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.ArmWristSubsystem;
-
 
 public class ppCubeLowTaxi extends SequentialCommandGroup
 {
