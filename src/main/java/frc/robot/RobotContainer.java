@@ -130,6 +130,8 @@ public class RobotContainer {
 
     // #endregion
     
+
+
     // #region Commands
     /* Commands */
     // ResetArmCommand resetArm = new ResetArmCommand(armSub, wristSub, armExtendSub);
@@ -140,6 +142,7 @@ public class RobotContainer {
     ArmExtendToArg extendMiddle = new ArmExtendToArg(armExtendSub, () -> Arm.ARM_EXTEND_MIDDLE_ENCODER);//why is the ctor like this? whatever
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
     ConeMid coneMid = new ConeMid(wristSub, armSub); 
+
     StowArmStage stageOne = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
     StowArmStage stageTwo = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
     Command stowCommand = stageOne.andThen(stageTwo);
@@ -156,6 +159,33 @@ public class RobotContainer {
     Command ppTaxi4meters = new ppTaxi4meters(); // PathPlanner Based
     Command ppCubeLowTaxi = new ppCubeLowTaxi(armExtendSub, armSub, intakeSub, wristSub, coneMidTEST); // FIXME
     Command ppCube2 = new ppCube2();
+
+    // Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);   
+    // StowArmCG _raw = new StowArmCG(armExtendSub, armSub, wristSub);
+    StowArmStage stageOne = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
+    StowArmStage stageTwo = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
+    Command stowCommand = stageOne.andThen(stageTwo);
+
+   /* 
+   * Autonomous Specific Commands 
+   */
+
+    // PathPlanner based taxi out 4 meters
+   Command taxi4meters = new ppTaxi4meters();
+
+   // Drives out, and then back onto the Charge Station
+   Command chargeStation = new CubeLowTaxiEngage(s_Swerve, robotCentric); 
+
+   // Deploys a cone to middle level in auton
+   Command coneLow = new ConeLow(armSub, armExtendSub, wristSub, intakeSub);
+   
+   Command cubeLowTaxi = new CubeLowTaxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+   Command cubeMidTaxi = new CubeMidTaxi_version1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+   Command cubeMid = new CubeMid(armSub, wristSub, intakeSub);
+   // Command cubeLowTaxiDock = new cgCubeLow_Taxi_Dock(s_Swerve, armExtendSub,
+   // armSub, intakeSub, wristSub, robotCentric);
+   Command cubeMidTaxiDock = new CubeMidTaxiDock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    
 
     // #endregion
 
@@ -281,7 +311,7 @@ public class RobotContainer {
     }
 
     private void configureDefaultCommands() {
-        visionSub.setDefaultCommand(new GetTagID(visionSub));
+        // visionSub.setDefaultCommand(new GetTagID(visionSub));
 
         armSub.setDefaultCommand(
                 new RotateArmManual(armSub, () -> operator.getRawAxis(translationAxis)));
