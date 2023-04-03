@@ -35,6 +35,7 @@ import frc.robot.autos.CubeLowTaxi;
 import frc.robot.Constants.Arm;
 import frc.robot.autos.CubeMidTaxi_version1;
 import frc.robot.autos.ppCube2;
+import frc.robot.autos.ppCube2_sum;
 import frc.robot.autos.ppCubeLowTaxi;
 import frc.robot.autos.ppTaxi4meters;
 import frc.robot.autos.CubeMidTaxiDock;
@@ -43,14 +44,11 @@ import frc.robot.commands.*;
 import frc.robot.nonProduction.GetTagID;
 import frc.robot.subsystems.*;
 /* PathPlanner */
-// import com.pathplanner.lib.PathConstraints;
-// import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
-// import com.pathplanner.lib.PathConstraints;
-// import com.pathplanner.lib.PathPlanner;
-// import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
-// import com.pathplanner.lib.auto.SwerveAutoBuilder;
+import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
 // 94505//horizontaL
 // 314446 // serve
@@ -153,6 +151,8 @@ public class RobotContainer {
     StowArmStage stageTwo = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
     Command stowCommand = stageOne.andThen(stageTwo);
 
+
+
         // Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);   
     // StowArmCG _raw = new StowArmCG(armExtendSub, armSub, wristSub);
     
@@ -172,7 +172,26 @@ public class RobotContainer {
     /* PathPlanner based taxi out 4 meters */
     Command ppTaxi4meters = new ppTaxi4meters();
     Command ppCubeLowTaxi = new ppCubeLowTaxi(armExtendSub, armSub, intakeSub, wristSub, coneMidTEST);
-    Command ppCube2 = new ppCube2();    
+    Command ppCube2 = new ppCube2();
+    Command ppCube3 = new ppCube3();
+    Command ppCube2_sum = new ppCube2_sum(armExtendSub, armSub, intakeSub, wristSub, coneMidTEST);
+    
+    /* 
+    // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
+    PathPlannerTrajectory cube2path = PathPlanner.loadPath("Cube2", new PathConstraints(4, 2));
+
+    // This is just an example event map. It would be better to have a constant, global event map
+    // in your code that will be used by all path following commands.
+    HashMap<String, Command> eventMap = new HashMap<>();
+    eventMap.put("marker1", new PrintCommand("Passed marker 1"));
+    eventMap.put("intakeDown", new IntakeDown());
+
+    FollowPathWithEvents cube2events = new FollowPathWithEvents(
+        getPathFollowingCommand(cube2path),
+        cube2path.getMarkers(),
+        eventMap
+    );
+    */
 
     // #endregion
 
@@ -335,9 +354,10 @@ public class RobotContainer {
         autonChooser.addOption("BETA Mid Cube", cubeMid); 
         autonChooser.addOption("BETA Low Cube + Taxi (Side)", cubeLowTaxi); 
         autonChooser.addOption("BETA Low Cube + Taxi (Side) PP", ppCubeLowTaxi); 
-        autonChooser.addOption("BETA Two Cube (Side)", cubeMidTaxiDock); 
         autonChooser.addOption("BETA Taxi + Dock (Middle)", cubeMidTaxiDock); 
-        autonChooser.addOption("BETA Cube 2 (Side)", ppCube2); 
+        autonChooser.addOption("BETA Cube 2 (Side) PP", ppCube2);
+        autonChooser.addOption("BETA Cube 3 (Side) PP", ppCube3); 
+        autonChooser.addOption("BETA Cube 2 PARTED PP", ppCube2_sum); 
     }
 
     /* Added from Bobcat 177 code example 
