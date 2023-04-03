@@ -10,12 +10,10 @@
 
 package frc.robot;
 
-import java.util.HashMap;
 import java.util.List;
 
 // import com.ctre.phoenix.led.CANdle;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
-import com.pathplanner.lib.commands.FollowPathWithEvents;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -33,22 +31,16 @@ import frc.robot.autos.ppCube3;
 import frc.robot.autos.CubeLowTaxiEngage;
 import frc.robot.autos.CubeLowTaxi;
 import frc.robot.Constants.Arm;
-import frc.robot.autos.CubeMidTaxi_version1;
-import frc.robot.autos.ppCube2;
 import frc.robot.autos.ppCube2_sum;
+import frc.robot.autos.ppCube3_sum;
 import frc.robot.autos.ppCubeLowTaxi;
 import frc.robot.autos.ppTaxi4meters;
 import frc.robot.autos.CubeMidTaxiDock;
-import frc.robot.autos.CubeLowTaxiEngage;
 import frc.robot.commands.*;
-import frc.robot.nonProduction.GetTagID;
 import frc.robot.subsystems.*;
 /* PathPlanner */
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
-import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
 // 94505//horizontaL
 // 314446 // serve
@@ -153,14 +145,12 @@ public class RobotContainer {
 
 
 
-        // Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);   
+    // Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);   
     // StowArmCG _raw = new StowArmCG(armExtendSub, armSub, wristSub);
     
     /* Autonomous Commands */
-   // Drives out, and then back onto the Charge Station
+    // Drives out, and then back onto the Charge Station
     Command chargeStation = new CubeLowTaxiEngage(s_Swerve, robotCentric);
-
-    // Deploys a cone to middle level in auton
 
     Command coneLow = new ConeLow(armSub, armExtendSub, wristSub, intakeSub); // Deploys a cone to middle level in auton 
     // Command cubeMidTaxi = new CubeMidTaxi_version1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
@@ -175,6 +165,7 @@ public class RobotContainer {
     Command ppCube2 = new ppCube2();
     Command ppCube3 = new ppCube3();
     Command ppCube2_sum = new ppCube2_sum(armExtendSub, armSub, intakeSub, wristSub, coneMidTEST);
+    Command ppCube3_sum = new ppCube3_sum(armExtendSub, armSub, intakeSub, wristSub, coneMidTEST);
     
     /* 
     // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
@@ -230,7 +221,6 @@ public class RobotContainer {
         }
         
 
-
         // try {
         // System.out.println(("ex command " +  armExtendSub.getCurrentCommand().getName()));
             
@@ -238,7 +228,6 @@ public class RobotContainer {
         //     handle exception
         // }
 
-        
     }
 
     /**
@@ -251,7 +240,7 @@ public class RobotContainer {
 
         Shuffleboard.getTab("Auton Chooser").add(autonChooser).withSize(2, 4); // Create an Auton "Tab"
 
-        Shuffleboard.getTab("Experimental Commands"); // Create an Auton "Tab"
+        Shuffleboard.getTab("Experimental Commands"); // Create an Experimental "Tab"
 
 
         configureButtonBindings();
@@ -348,16 +337,21 @@ public class RobotContainer {
         setUpEventMap();
         
         // TODO Verify that each of these works and then remove "β" from title
-        // In theory nothing on "main" would have a "β" in title
+        // In theory nothing on "main" would be BETA
         autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
         autonChooser.addOption("Taxi 4 meters PP", ppTaxi4meters);
         autonChooser.addOption("BETA Mid Cube", cubeMid); 
         autonChooser.addOption("BETA Low Cube + Taxi (Side)", cubeLowTaxi); 
         autonChooser.addOption("BETA Low Cube + Taxi (Side) PP", ppCubeLowTaxi); 
         autonChooser.addOption("BETA Taxi + Dock (Middle)", cubeMidTaxiDock); 
-        autonChooser.addOption("BETA Cube 2 (Side) PP", ppCube2);
-        autonChooser.addOption("BETA Cube 3 (Side) PP", ppCube3); 
-        autonChooser.addOption("BETA Cube 2 PARTED PP", ppCube2_sum); 
+        // autonChooser.addOption("BETA Cube 2 (Side) PP", ppCube2);
+        // autonChooser.addOption("BETA Cube 3 (Side) PP", ppCube3); 
+        
+        /* PathPlanner based option that places Cone 1 Mid, pickups up Cone 2, deposits low */
+        autonChooser.addOption("BETA Cube 2", ppCube2_sum); 
+        
+        /* PathPlanner based option that picks up Cone 3, deposits low */
+        autonChooser.addOption("BETA Cube 3 ", ppCube3_sum); 
     }
 
     /* Added from Bobcat 177 code example 

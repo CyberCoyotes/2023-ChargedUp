@@ -12,10 +12,10 @@ import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
 import frc.robot.commands.CubeLow;
 import frc.robot.commands.SetIntakeCone;
-import frc.robot.commands.SetIntakeCube;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -35,16 +35,15 @@ public class ppCube2_p2 extends SequentialCommandGroup
             this.m_extend = extend; 
             this.m_intake = intake; 
 
-        List<PathPlannerTrajectory> pathOut = PathPlanner.loadPathGroup("Cube2_pt1", new PathConstraints(4, 3));
         
-        List<PathPlannerTrajectory> pathBack = PathPlanner.loadPathGroup("Cube2_pt1", new PathConstraints(4, 3));
+        List<PathPlannerTrajectory> path2Back = PathPlanner.loadPathGroup("Cube2_p2", new PathConstraints(4, 3));
     
-            addRequirements();
+        addRequirements();
 
         addCommands(
-            // new CubeLow(m_arm, m_extend, m_wrist, m_intake ).withTimeout(2),
-            RobotContainer.buildAuton(pathBack),
-            new SetIntakeCube(m_intake).withTimeout(2)
+            RobotContainer.buildAuton(path2Back), // Path back to station
+            new SetIntakeCone(m_intake).withTimeout(1), // TODO Replace with Cube Low
+            new WaitCommand(0.25) // TODO Replace with Stow
 
         );
     }
