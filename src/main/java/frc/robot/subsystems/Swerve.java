@@ -9,7 +9,6 @@
 package frc.robot.subsystems;
 
 import frc.robot.SwerveModule;
-import frc.robot.Constants.Swerve.Mod0;
 import frc.robot.Constants;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -123,6 +122,13 @@ public class Swerve extends SubsystemBase {
         for (SwerveModule mod : mSwerveMods) {
             mod.resetToAbsolute();
         }
+    }
+
+    public double getPitch(){
+        return gyro.getPitch();
+    }
+    public double getRoll(){
+        return gyro.getRoll();
     }
 
     @Override

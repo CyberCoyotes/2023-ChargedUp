@@ -18,9 +18,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.InvertType;
-import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
+
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -172,7 +170,7 @@ double cosineScalar = java.lang.Math.cos(radians); // todo get the cosine of the
 
 // FF is measured as
 
-double arbFF = maxGravityFF * cosineScalar; // todo get ff, depends on cosine
+double arbFF = maxGravityFF * cosineScalar; // TODO get ff, depends on cosine
 
 //#endregion
         // DemandType.ArbitraryFeedForward, -0.01

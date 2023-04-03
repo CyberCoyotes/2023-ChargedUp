@@ -1,0 +1,38 @@
+package frc.robot.nonProduction;
+
+import java.util.List;
+
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.RobotContainer;
+
+public class PathWithEvents extends SequentialCommandGroup {
+    public PathWithEvents() {
+        List<PathPlannerTrajectory> pptList = PathPlanner.loadPathGroup(
+            "CableCube2", new PathConstraints(4, 3)
+            );
+        
+        addCommands(
+            RobotContainer.buildAuton(pptList)
+        );
+
+        // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
+PathPlannerTrajectory examplePath = PathPlanner.loadPath("Example Path", new PathConstraints(4, 3));
+
+// This is just an example event map. It would be better to have a constant, global event map
+// in your code that will be used by all path following commands.
+HashMap<String, Command> eventMap = new HashMap<>();
+eventMap.put("marker1", new PrintCommand("Passed marker 1"));
+eventMap.put("intakeDown", new IntakeDown());
+
+FollowPathWithEvents command = new FollowPathWithEvents(
+    getPathFollowingCommand(examplePath),
+    examplePath.getMarkers(),
+    eventMap
+);
+    }
+}
+
