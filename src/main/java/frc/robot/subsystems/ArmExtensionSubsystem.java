@@ -43,11 +43,11 @@ public class ArmExtensionSubsystem extends SubsystemBase {
      * 
      * @return The encoder reading of the motor
      */
-    public double ReadExtension()
+    public int ReadExtension()
     {
         
         //absolute quad mag encoder; Placed after the gearboxes (1:4, 1:9). Need to test if a single lap ()
-        return m_motorController.getSelectedSensorPosition();
+        return (int)m_motorController.getSelectedSensorPosition();
     }
 
     public void Setup()

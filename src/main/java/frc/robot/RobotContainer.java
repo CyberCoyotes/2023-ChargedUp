@@ -26,14 +26,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.autos.cgCubeLow_Taxi;
-import frc.robot.autos.cgCubeLow_Taxi_Dock;
+import frc.robot.autos.ppCube2;
 import frc.robot.Constants.Arm;
 import frc.robot.autos.ppCube2_sum;
+import frc.robot.autos.ppCube3;
 import frc.robot.autos.ppCube3_sum;
 import frc.robot.autos.ppCubeLowTaxi;
 import frc.robot.autos.ppTaxi4meters;
 import frc.robot.autos.ppTaxiFloorPickup;
+import frc.robot.autos.CubeLowTaxi;
 import frc.robot.autos.CubeLowTaxiEngage;
 import frc.robot.autos.CubeMidTaxiDock;
 import frc.robot.commands.*;
@@ -129,8 +130,6 @@ public class RobotContainer {
 
 
     // #region Commands
-    /* Commands */
-    // ResetArmCommand resetArm = new ResetArmCommand(armSub, wristSub, armExtendSub);
     RotateArmToArg rotTo90 = new RotateArmToArg(armSub, 90);
     MoveUntilSensor rotationMoveUntilSensor;
     MoveUntilSensor extentionMoveUntilSensor;
@@ -139,12 +138,18 @@ public class RobotContainer {
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
     ConeMid coneMid = new ConeMid(wristSub, armSub); 
 
-    StowArmStage stageOne = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
-    StowArmStage stageTwo = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
-    Command stowCommand = stageOne.andThen(stageTwo);
+    StowArmStage stowStageOne = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
+    StowArmStage stowStageTwo = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
+    Command stowCommand = stowStageOne.andThen(stowStageTwo);
 
-
-
+    /** Brings the arm to the ground, and then runs the cube intake. */
+    StowArmStage cubePickupStage1 = new StowArmStage(armExtendSub, armSub, wristSub, armExtendSub.ReadExtension(), 31, 20_000);
+    StowArmStage cubePickupStage2 = new StowArmStage(armExtendSub, armSub, wristSub, Arm.EXTENSION_POSITION_OUT, 31, 20_000);
+    // StowArmCG pickupDONTUSERAW = new StowArmCG(armExtendSub, armSub, wristSub, cubePickupStage1, cubePickupStage2);
+    LowCubePickup USETHISPICKUP = new LowCubePickup(armSub, wristSub, intakeSub, armExtendSub);
+    Command PickupCube = cubePickupStage1.andThen(cubePickupStage2).andThen((() -> intakeSub.SetDriveOutake()), intakeSub);
+    // Command PickupCubeDuplicateForTesting = pickupDONTUSERAW.andThen((() -> intakeSub.SetDriveOutake()), intakeSub);
+    
     // Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);   
     // StowArmCG _raw = new StowArmCG(armExtendSub, armSub, wristSub);
     
@@ -171,7 +176,7 @@ public class RobotContainer {
     * TODO For testing purposes. Arguments will need to be adjusted for your actual command
     * This command and variable references a 4 meter taxi + Floor Pickup (name TBD by you)
     */ 
-    Command ppTaxiFloorPickup = new ppTaxiFloorPickup(armExtendSub, armSub, intakeSub, wristSub, coneMidTEST); 
+    Command ppTaxiFloorPickup = new ppTaxiFloorPickup(armExtendSub, armSub, intakeSub, wristSub, robotCentric); 
     
     /* 
     // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
@@ -216,8 +221,8 @@ public class RobotContainer {
         SmartDashboard.putNumber("Wrist Encoder", wristSub.getWristPos());
         SmartDashboard.putString("arm mode", armSub.GetMode());
         SmartDashboard.putNumber("pitch", (s_Swerve.GetPitch()));
-        SmartDashboard.putBoolean("stage one", stageOne.isScheduled());
-        SmartDashboard.putBoolean("stage two", stageTwo.isScheduled());
+        SmartDashboard.putBoolean("stage one", cubePickupStage1.isScheduled());
+        SmartDashboard.putBoolean("stage two", cubePickupStage1.isScheduled());
         // SmartDashboard.putString("mode", (s_Swerve.GetPitch()));
         try {
             SmartDashboard.putString("command", s_Swerve.getCurrentCommand().getName());
@@ -271,11 +276,11 @@ public class RobotContainer {
         
         /* Driver Button Bindings */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        coneMidTEST.whileTrue(coneMid);
+        coneMidTEST.whileTrue(USETHISPICKUP);
         zeroArmEncoder.onTrue(new InstantCommand(() -> armSub.ZeroArmEncoder()));
         creepButton.onTrue(new InstantCommand(() -> SetCreepToggle(!GetCreepToggle())));// inverts creep when button
         stowArm.onTrue(stowCommand);
-        loadElement.whileTrue(wristReceive);
+        loadElement.onTrue(wristReceive);
 
         /* Operator Button Bindings */
         // stowArm.onTrue(new cgStow(armSub, armExtendSub, wristSub, intakeSub));

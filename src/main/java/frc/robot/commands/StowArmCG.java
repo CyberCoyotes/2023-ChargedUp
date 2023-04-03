@@ -1,5 +1,8 @@
 package frc.robot.commands;
 
+import java.util.ArrayList;
+
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
@@ -20,7 +23,8 @@ StowArmStage stageTwo;
         return string1 + " " + string2;
     }
 
-    public StowArmCG(ArmExtensionSubsystem m_extend, ArmRotationSubsystem m_rotate, ArmWristSubsystem m_wrist) 
+
+    public StowArmCG(ArmExtensionSubsystem m_extend, ArmRotationSubsystem m_rotate, ArmWristSubsystem m_wrist, StowArmStage... stages) 
     {
         this.rotateSubsystem = m_rotate;
         this.extendSubsystem = m_extend;
@@ -30,12 +34,9 @@ StowArmStage stageTwo;
          stageOne = new StowArmStage(m_extend, m_rotate, m_wrist, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
          stageTwo = new StowArmStage(m_extend, m_rotate, m_wrist, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
 
-
-        addCommands
-        (
-            stageOne, 
-            stageTwo
-        );
+        addRequirements(m_extend, m_rotate, m_wrist);
+       addCommands(stages);
+    
         
     }
     

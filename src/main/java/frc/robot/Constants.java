@@ -87,7 +87,7 @@ public final class Constants {
         // public final static double ARM_ROTATE_POSITION_DEPLOY = 1000; // TBD experimentally
         // public final static double ARM_ROTATE_POSITION_INTAKE  = 8878; // approximate from testing; compare to the change in angle from rest to deploy
         // public final static double ARM_ROTATE_POSITION_DEPLOY_DEG =  220;//should be 260? TESTING
-        public final static double EXTENSION_POSITION_OUT = 13000; //playing it safe for now; should be around -14000?
+        public final static int EXTENSION_POSITION_OUT = 13000; //playing it safe for now; should be around -14000?
         public final static double EXTENSION_POSITION_IN  = -200;
 
         public static final int PIDSlotIDx = 0; //keep this
@@ -98,6 +98,7 @@ public final class Constants {
         public static final double kMaxArmRotAcceletation = 11468/2; //tuning needed
         //very important; this is the offset to make 90deg = true horizontal
         public static final int ARM_OFFSET_DEGREES = 20;
+        
         //DON'T TOUCH (wihout first filing form ID10-T from HR(me(i am HR)))
         public static final double ARM_MAX_DEG = 110;
         //obsolete but shhh

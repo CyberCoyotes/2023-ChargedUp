@@ -11,9 +11,12 @@ import java.util.function.BooleanSupplier;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
+
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 import frc.robot.commands.CubeLow;
+import frc.robot.commands.LowCubePickup;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -41,9 +44,10 @@ public class ppTaxiFloorPickup extends SequentialCommandGroup
             /* TODO Replace with a "Floor Pickup" or some equiavent command and name
             * I have already added a variable and auton refence in Robot Container
             * Just needs the Shaun's magic
-            */ 
-            new CubeLow(m_arm, m_extend, m_wrist, m_intake ).withTimeout(7), 
-            RobotContainer.buildAuton(pptList)
+            */
+            RobotContainer.buildAuton(pptList), 
+            new LowCubePickup(arm, wrist, intake, extend)
+           
 
         );
     }
