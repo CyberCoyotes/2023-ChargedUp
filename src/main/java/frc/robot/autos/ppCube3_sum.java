@@ -5,6 +5,7 @@
 */
 package frc.robot.autos;
 
+
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -14,7 +15,7 @@ import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmWristSubsystem;
 
-public class ppCube2_sum extends SequentialCommandGroup
+public class ppCube3_sum extends SequentialCommandGroup
 {
     private ArmRotationSubsystem m_arm;
     private ArmExtensionSubsystem m_extend;
@@ -22,7 +23,7 @@ public class ppCube2_sum extends SequentialCommandGroup
     private ArmWristSubsystem m_wrist;
 
 
-    public ppCube2_sum(ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist, BooleanSupplier robotCentric) {
+    public ppCube3_sum(ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist, BooleanSupplier robotCentric) {
 
             this.m_arm = arm; 
             this.m_extend = extend; 
@@ -31,9 +32,11 @@ public class ppCube2_sum extends SequentialCommandGroup
             addRequirements();
 
         addCommands(
-            new ppCube2_p1(extend, arm, intake, wrist, robotCentric),
+            new ppCube3_p3(extend, arm, intake, wrist, robotCentric),
             new WaitCommand(0.25),
-            new ppCube2_p2(extend, arm, intake, wrist, robotCentric) 
+            new ppCube3_p4(extend, arm, intake, wrist, robotCentric),
+            new WaitCommand(0.25)  
+
         );
     }
 }
