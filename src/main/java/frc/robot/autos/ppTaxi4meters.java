@@ -1,0 +1,22 @@
+package frc.robot.autos;
+
+import java.util.List;
+
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.RobotContainer;
+
+public class ppTaxi4meters extends SequentialCommandGroup {
+    public ppTaxi4meters() {
+        List<PathPlannerTrajectory> pptList = PathPlanner.loadPathGroup(
+            "Taxi4meters", new PathConstraints(4, 3)
+            );
+        
+        addCommands(
+            RobotContainer.buildAuton(pptList)
+        );
+    }
+}
