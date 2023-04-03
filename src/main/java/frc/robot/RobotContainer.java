@@ -143,15 +143,10 @@ public class RobotContainer {
     Command stowCommand = stowStageOne.andThen(stowStageTwo);
 
     /** Brings the arm to the ground, and then runs the cube intake. */
-    StowArmStage cubePickupStage1 = new StowArmStage(armExtendSub, armSub, wristSub, armExtendSub.ReadExtension(), 31, 20_000);
-    StowArmStage cubePickupStage2 = new StowArmStage(armExtendSub, armSub, wristSub, Arm.EXTENSION_POSITION_OUT, 31, 20_000);
     // StowArmCG pickupDONTUSERAW = new StowArmCG(armExtendSub, armSub, wristSub, cubePickupStage1, cubePickupStage2);
-    LowCubePickup USETHISPICKUP = new LowCubePickup(armSub, wristSub, intakeSub, armExtendSub);
-    Command PickupCube = cubePickupStage1.andThen(cubePickupStage2).andThen((() -> intakeSub.SetDriveOutake()), intakeSub);
-    // Command PickupCubeDuplicateForTesting = pickupDONTUSERAW.andThen((() -> intakeSub.SetDriveOutake()), intakeSub);
+    // LowCubePickup CubePickupGround = new LowCubePickup(armSub, wristSub, intakeSub, armExtendSub);
     
     // Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);   
-    // StowArmCG _raw = new StowArmCG(armExtendSub, armSub, wristSub);
     
     /* Autonomous Commands */
     // Drives out, and then back onto the Charge Station
@@ -221,8 +216,6 @@ public class RobotContainer {
         SmartDashboard.putNumber("Wrist Encoder", wristSub.getWristPos());
         SmartDashboard.putString("arm mode", armSub.GetMode());
         SmartDashboard.putNumber("pitch", (s_Swerve.GetPitch()));
-        SmartDashboard.putBoolean("stage one", cubePickupStage1.isScheduled());
-        SmartDashboard.putBoolean("stage two", cubePickupStage1.isScheduled());
         // SmartDashboard.putString("mode", (s_Swerve.GetPitch()));
         try {
             SmartDashboard.putString("command", s_Swerve.getCurrentCommand().getName());
@@ -276,7 +269,7 @@ public class RobotContainer {
         
         /* Driver Button Bindings */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        coneMidTEST.whileTrue(USETHISPICKUP);
+        // coneMidTEST.whileTrue(USETHISPICKUP);
         zeroArmEncoder.onTrue(new InstantCommand(() -> armSub.ZeroArmEncoder()));
         creepButton.onTrue(new InstantCommand(() -> SetCreepToggle(!GetCreepToggle())));// inverts creep when button
         stowArm.onTrue(stowCommand);
