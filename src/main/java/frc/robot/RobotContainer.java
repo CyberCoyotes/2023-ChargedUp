@@ -35,6 +35,7 @@ import frc.robot.autos.ppCube2_sum;
 import frc.robot.autos.ppCube3_sum;
 import frc.robot.autos.ppCubeLowTaxi;
 import frc.robot.autos.ppTaxi4meters;
+import frc.robot.autos.ppTaxiFloorPickup;
 import frc.robot.autos.CubeMidTaxiDock;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -166,6 +167,12 @@ public class RobotContainer {
     Command ppCube3 = new ppCube3();
     Command ppCube2_sum = new ppCube2_sum(armExtendSub, armSub, intakeSub, wristSub, coneMidTEST);
     Command ppCube3_sum = new ppCube3_sum(armExtendSub, armSub, intakeSub, wristSub, coneMidTEST);
+
+    /*
+    * TODO For testing purposes. Arguments will need to be adjusted for your actual command
+    * This command and variable references a 4 meter taxi + Floor Pickup (name TBD by you)
+    */ 
+    Command ppTaxiFloorPickup = new ppTaxiFloorPickup(armExtendSub, armSub, intakeSub, wristSub, coneMidTEST); 
     
     /* 
     // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
@@ -339,11 +346,12 @@ public class RobotContainer {
         // TODO Verify that each of these works and then remove "β" from title
         // In theory nothing on "main" would be BETA
         autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
-        autonChooser.addOption("Taxi 4 meters PP", ppTaxi4meters);
-        autonChooser.addOption("BETA Mid Cube", cubeMid); 
-        autonChooser.addOption("BETA Low Cube + Taxi (Side)", cubeLowTaxi); 
-        autonChooser.addOption("BETA Low Cube + Taxi (Side) PP", ppCubeLowTaxi); 
-        autonChooser.addOption("BETA Taxi + Dock (Middle)", cubeMidTaxiDock); 
+        autonChooser.addOption("Taxi 4 meters only", ppTaxi4meters);
+        // autonChooser.addOption("BETA Mid Cube", cubeMid); 
+        // autonChooser.addOption("BETA Low Cube + Taxi (Side)", cubeLowTaxi); 
+        // autonChooser.addOption("BETA Low Cube + Taxi (Side) PP", ppCubeLowTaxi); 
+        // autonChooser.addOption("BETA Taxi + Dock (Middle)", cubeMidTaxiDock); 
+        autonChooser.addOption("BETA Taxi 4m + Floor Pickp", ppTaxiFloorPickup); // TODO Testing 
         // autonChooser.addOption("BETA Cube 2 (Side) PP", ppCube2);
         // autonChooser.addOption("BETA Cube 3 (Side) PP", ppCube3); 
         
