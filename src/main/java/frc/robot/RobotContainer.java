@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.cgCubeLow_Taxi;
-import frc.robot.autos.cgCubeLow_Taxi_Dock;
+// import frc.robot.autos.cgCubeLow_Taxi_Dock;
 import frc.robot.Constants.Arm;
 import frc.robot.autos.CubeMidTaxiV1;
 import frc.robot.autos.cgCubeMid_Taxi_Dock;
@@ -130,6 +130,7 @@ public class RobotContainer {
 
     // #endregion
     // #region Commands
+    ConeMid coneMid = new ConeMid(wristSub, armSub);
     // ResetArmCommand resetArm = new ResetArmCommand(armSub, wristSub, armExtendSub);
     RotateArmToArg rotTo90 = new RotateArmToArg(armSub, 90);
     MoveUntilSensor rotationMoveUntilSensor;
@@ -138,7 +139,6 @@ public class RobotContainer {
     ArmExtendToArg extendMiddle = new ArmExtendToArg(armExtendSub, () -> Arm.ARM_EXTEND_MIDDLE_ENCODER);//why is the ctor like this? whatever
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
 
-     ConeMid coneMid = new ConeMid(wristSub, armSub); 
 
 
     
@@ -160,7 +160,7 @@ public class RobotContainer {
    
     Command cubeMidTaxi = new CubeMidTaxiV1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     Command cubeLowTaxi = new cgCubeLow_Taxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-    Command cubeLowTaxiDock = new cgCubeLow_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    // Command cubeLowTaxiDock = new cgCubeLow_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     Command cubeMidTaxiDock = new cgCubeMid_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     Command midCubeAuto = new CubeMidAuton(armSub, wristSub, intakeSub);
 
