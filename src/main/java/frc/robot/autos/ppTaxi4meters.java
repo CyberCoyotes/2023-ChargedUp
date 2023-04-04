@@ -1,3 +1,5 @@
+/* Taxi out 4 meters in a straight line, no game element deposits; PathPlanner based drive */
+
 package frc.robot.autos;
 
 import java.util.List;
@@ -10,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 
 public class ppTaxi4meters extends SequentialCommandGroup {
+
     public ppTaxi4meters() {
         List<PathPlannerTrajectory> pptList = PathPlanner.loadPathGroup(
             "Taxi4meters", new PathConstraints(4, 3)

@@ -1,8 +1,5 @@
-/* 
- * 
- * PathPlanner based Auton, deploys low cube
- * 
-*/
+/* Deposits low cube and taxi out; PathPlanner based drive */
+
 package frc.robot.autos;
 
 import java.util.List;
@@ -27,7 +24,7 @@ public class ppCubeLowTaxi extends SequentialCommandGroup
     private ArmWristSubsystem m_wrist;
 
 
-    public ppCubeLowTaxi(ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist, BooleanSupplier robotCentric) {
+    public ppCubeLowTaxi(ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist) {
 
             this.m_arm = arm; 
             this.m_extend = extend; 

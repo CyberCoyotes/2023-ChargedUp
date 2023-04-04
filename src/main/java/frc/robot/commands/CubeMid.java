@@ -1,13 +1,14 @@
+/*--------------------------------------------------------
+*
+* Run Time: Original            2.75 = 0.75 + 0.25 + 0.75 + 0.75 + 0.25
+* Run Time:TODO Test Times      1.50 = 0.50 + 0.50 + 0.50
+* 
+*--------------------------------------------------------*/
+
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.AddressableLED;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.RepeatCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+package frc.robot.commands;
+
 import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.ArmWristSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -43,10 +44,10 @@ public class CubeMid extends CommandBase {
     @Override
     public boolean isFinished() {
         return false;
+
     }
     @Override
     public InterruptionBehavior getInterruptionBehavior() {
         return InterruptionBehavior.kCancelSelf;
     }
-
 }

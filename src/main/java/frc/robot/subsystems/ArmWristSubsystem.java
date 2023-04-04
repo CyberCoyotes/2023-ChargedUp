@@ -6,7 +6,6 @@ import frc.robot.Constants.*;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 /*
@@ -28,9 +27,9 @@ public class ArmWristSubsystem extends SubsystemBase {
     /* If ARM ROTATION = 10 or less, then setWristHome() */
     /*
      * 
-     * TODO test encoder values 
+     * test encoder values 
      * (direction of sensors relative to positive motor input), limits
-     * TODO Find comfortable input value, create virtual speed limiter
+     * Find comfortable input value, create virtual speed limiter
      * 
      */
     public ArmWristSubsystem() {

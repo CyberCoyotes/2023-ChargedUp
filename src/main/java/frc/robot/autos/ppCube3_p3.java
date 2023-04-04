@@ -28,11 +28,12 @@ public class ppCube3_p3 extends SequentialCommandGroup
     private ArmWristSubsystem m_wrist;
 
 
-    public ppCube3_p3(ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist, BooleanSupplier robotCentric) {
+    public ppCube3_p3(ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist) {
 
             this.m_arm = arm; 
             this.m_extend = extend; 
-            this.m_intake = intake; 
+            this.m_intake = intake;
+            this.m_wrist = wrist;
 
         List<PathPlannerTrajectory> path3Out = PathPlanner.loadPathGroup("Cube3_p3", new PathConstraints(4, 3));
         

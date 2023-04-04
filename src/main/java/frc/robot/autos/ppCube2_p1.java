@@ -6,7 +6,6 @@
 package frc.robot.autos;
 
 import java.util.List;
-import java.util.function.BooleanSupplier;
 
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
@@ -14,7 +13,7 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
-import frc.robot.commands.CubeMidAuton;
+import frc.robot.commands.CubeMid;
 import frc.robot.commands.SetIntakeCone;
 import frc.robot.commands.SetIntakeCube;
 import frc.robot.subsystems.ArmExtensionSubsystem;
@@ -30,11 +29,13 @@ public class ppCube2_p1 extends SequentialCommandGroup
     private ArmWristSubsystem m_wrist;
 
 
-    public ppCube2_p1(ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist, BooleanSupplier robotCentric) {
+    public ppCube2_p1(ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist) {
 
             this.m_arm = arm; 
             this.m_extend = extend; 
-            this.m_intake = intake; 
+            this.m_intake = intake;
+            this.m_wrist = wrist;
+
 
         List<PathPlannerTrajectory> path1Out = PathPlanner.loadPathGroup("Cube2_p1", new PathConstraints(4, 3));
         
