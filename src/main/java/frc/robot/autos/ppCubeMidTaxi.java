@@ -10,6 +10,7 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 import frc.robot.commands.CubeMid;
+import frc.robot.commands.CubeMidOld;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -34,7 +35,7 @@ public class ppCubeMidTaxi extends SequentialCommandGroup
             addRequirements();
 
         addCommands(
-            new CubeMid(m_arm, m_wrist, m_intake).withTimeout(1),
+            new CubeMid(arm, wrist, intake).withTimeout(1),
             RobotContainer.buildAuton(pptList)
 
         );

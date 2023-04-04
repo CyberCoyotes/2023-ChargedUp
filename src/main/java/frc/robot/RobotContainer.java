@@ -144,8 +144,11 @@ public class RobotContainer {
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
     ConeMid coneMid = new ConeMid(wristSub, armSub);
     ConeLow coneLow = new ConeLow(armSub, armExtendSub, wristSub, intakeSub);
+
     CubeMid cubeMid = new CubeMid(armSub, wristSub, intakeSub);
- 
+    // CubeMidOld cubeMidOld = new CubeMidOld(armSub, wristSub, intakeSub); // Deprecated
+
+    
     StowArmStage stageOne = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
     StowArmStage stageTwo = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
     Command stowCommand = stageOne.andThen(stageTwo);
@@ -183,8 +186,8 @@ public class RobotContainer {
 
 
     Command ppTaxiFloorPickup = new ppTaxiFloorPickup(armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-    private CommandCycle coneCargoCycle = new CommandCycle(coneLow, coneMid);
-    private CommandCycle exampleCommandCycle = new CommandCycle(fooToTerminal, barToTerminal);
+    // private CommandCycle coneCargoCycle = new CommandCycle(coneLow, coneMid);
+    // private CommandCycle exampleCommandCycle = new CommandCycle(fooToTerminal, barToTerminal);
     // private Supplier<Command> coneCargoCommandSupplier = () ->
     // coneCargoCycle.Get();
 
@@ -310,6 +313,8 @@ public class RobotContainer {
         // coneCargoCycle.Get().getRequirements().toArray(new
         // Subsystem[0])//KAKEROOOOOOOOOOOT
         // ));
+
+        /* 
         operatorA.onTrue(new InstantCommand(() -> exampleCommandCycle.Increment()));
         // Runs the command currently ran.
         operatorB.whileTrue(
@@ -318,7 +323,7 @@ public class RobotContainer {
                         //magic that turns a collection into an ellipsies argument
                         exampleCommandCycle.Get().getRequirements().toArray(new Subsystem[0])
                 ));
-
+        */
     }
 
     /* Bobcat 177 Code */
