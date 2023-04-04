@@ -187,7 +187,7 @@ public class RobotContainer {
 
     Command ppTaxiFloorPickup = new ppTaxiFloorPickup(armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     // private CommandCycle coneCargoCycle = new CommandCycle(coneLow, coneMid);
-    // private CommandCycle exampleCommandCycle = new CommandCycle(fooToTerminal, barToTerminal);
+    private CommandCycle exampleCommandCycle = new CommandCycle(fooToTerminal, barToTerminal);
     // private Supplier<Command> coneCargoCommandSupplier = () ->
     // coneCargoCycle.Get();
 
@@ -314,7 +314,7 @@ public class RobotContainer {
         // Subsystem[0])//KAKEROOOOOOOOOOOT
         // ));
 
-        /* 
+        
         operatorA.onTrue(new InstantCommand(() -> exampleCommandCycle.Increment()));
         // Runs the command currently ran.
         operatorB.whileTrue(
@@ -323,7 +323,7 @@ public class RobotContainer {
                         //magic that turns a collection into an ellipsies argument
                         exampleCommandCycle.Get().getRequirements().toArray(new Subsystem[0])
                 ));
-        */
+        
     }
 
     /* Bobcat 177 Code */
