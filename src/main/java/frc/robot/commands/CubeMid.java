@@ -7,25 +7,44 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmRotationSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmWristSubsystem;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.subsystems.IntakeSubsystem;
 
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+public class CubeMid extends CommandBase {
 
+    // lesson learned: command groups aren't always the answer
+    // Lol, I don't doubt it. Curious to learn more!
 
-public class CubeMid extends SequentialCommandGroup{
+    // somewhere in a magical text file i have the values we like. To get them,
+    //// solve my riddles three
 
-    public CubeMid
-    (ArmRotationSubsystem armSub, ArmWristSubsystem wristSub, IntakeSubsystem intakeSub) {
-        addCommands(
-            new RotateArmToArg(armSub, 80).withTimeout(0.50) // TODO 0.75 Test this time
-            // , new WaitCommand(0.10) // TODO Test this time    
-            , new WristToArg(wristSub, 21000).withTimeout(0.50) // TODO Test this time
-            , new SetIntakeCone(intakeSub).withTimeout(0.50) // TODO Test this time
-            // , new WaitCommand(0.25) 
-        );
+    private ArmRotationSubsystem arm;
+    private ArmWristSubsystem wrist;
+    private IntakeSubsystem intake;
+
+    /** Intended for macro usage. */
+    public CubeMid( ArmRotationSubsystem armRot,ArmWristSubsystem wrist, IntakeSubsystem intakeSub) {
+
+        this.arm = armRot;
+        this.wrist = wrist;
+        this.intake = intakeSub;
+        addRequirements(arm, wrist);
+    }
+
+    @Override
+    public void execute() {
+
+        arm.RotateArmToDeg(80);
+        wrist.setWristToPosition(21000);
+        intake.SetDriveIntake();
+
+    }
+    @Override
+    public boolean isFinished() {
+        return false;
+
     }
     @Override
     public InterruptionBehavior getInterruptionBehavior() {
