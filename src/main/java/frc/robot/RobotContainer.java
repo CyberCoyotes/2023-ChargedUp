@@ -151,6 +151,7 @@ public class RobotContainer {
     
     StowArmStage stageOne = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
     StowArmStage stageTwo = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
+    Command stowCommandAlternate = new StowArmCG(armExtendSub, armSub, wristSub, stageOne, stageTwo);
     Command stowCommand = stageOne.andThen(stageTwo);
 
 
