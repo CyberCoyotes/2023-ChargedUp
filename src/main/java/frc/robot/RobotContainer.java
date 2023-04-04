@@ -134,11 +134,12 @@ public class RobotContainer {
     RotateArmToArg rotTo90 = new RotateArmToArg(armSub, 90);
     MoveUntilSensor rotationMoveUntilSensor;
     MoveUntilSensor extentionMoveUntilSensor;
-    CubeLowTaxiEngage autonCommand = new CubeLowTaxiEngage(s_Swerve, robotCentric);
     ArmExtendToArg extendMiddle = new ArmExtendToArg(armExtendSub, () -> Arm.ARM_EXTEND_MIDDLE_ENCODER);//why is the ctor like this? whatever
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
-    ConeMid coneMid = new ConeMid(wristSub, armSub); 
-
+    ConeMid coneMid = new ConeMid(wristSub, armSub);
+    ConeLow coneLow = new ConeLow(armSub, armExtendSub, wristSub, intakeSub);
+    CubeMid cubeMid = new CubeMid(armSub, wristSub, intakeSub);
+ 
     StowArmStage stageOne = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
     StowArmStage stageTwo = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
     Command stowCommand = stageOne.andThen(stageTwo);
@@ -148,15 +149,13 @@ public class RobotContainer {
     // Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);   
     // StowArmCG _raw = new StowArmCG(armExtendSub, armSub, wristSub);
     
-    /* Autonomous Commands */
+    /* Autonomous Only Commands */
     // Drives out, and then back onto the Charge Station
     Command chargeStation = new CubeLowTaxiEngage(s_Swerve, robotCentric);
-
-    Command coneLow = new ConeLow(armSub, armExtendSub, wristSub, intakeSub); // Deploys a cone to middle level in auton 
-    // Command cubeMidTaxi = new CubeMidTaxi_version1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     Command cubeLowTaxi = new CubeLowTaxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    CubeLowTaxiEngage autonCommand = new CubeLowTaxiEngage(s_Swerve, robotCentric);
     Command cubeMidTaxiDock = new CubeMidTaxiDock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-    Command cubeMid = new CubeMid(armSub, wristSub, intakeSub);
+    // Command cubeMidTaxi = new CubeMidTaxi_version1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     // Command cubeLowTaxiDock = new cgCubeLow_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     
     /* PathPlanner based taxi out 4 meters */
@@ -165,15 +164,14 @@ public class RobotContainer {
     Command ppCubeMidTaxi = new ppCubeMidTaxi(armExtendSub, armSub, intakeSub, wristSub);
     Command ppCubeMidTaxiDock = new ppCubeMidTaxiDock(armExtendSub, armSub, intakeSub, wristSub);
 
+    /* Primary Autons */
+    Command ppCube2_sum = new ppCube2_sum(armExtendSub, armSub, intakeSub, wristSub);
+    Command ppCube3_sum = new ppCube3_sum(armExtendSub, armSub, intakeSub, wristSub);
 
     /* Idealized "complete" autons but alas */
     // Command ppCube2 = new ppCube2();
     // Command ppCube3 = new ppCube3();
     
-    /* Primary Autons */
-    Command ppCube2_sum = new ppCube2_sum(armExtendSub, armSub, intakeSub, wristSub);
-    Command ppCube3_sum = new ppCube3_sum(armExtendSub, armSub, intakeSub, wristSub);
-
 
     // #endregion
 
@@ -231,7 +229,6 @@ public class RobotContainer {
 
         Shuffleboard.getTab("Experimental Commands"); // Create an Experimental "Tab"
 
-
         configureButtonBindings();
         configureDefaultCommands();
         configureAutonChooser();
@@ -250,7 +247,6 @@ public class RobotContainer {
 
         // SmartDashboard.putData("Stow Arm", new cgStow(armSub, armExtendSub, wristSub, intakeSub));
         // SmartDashboard.putData("Load Element", new cgLoad(armSub, armExtendSub, wristSub, intakeSub));
-
         
         /* Driver Button Bindings */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
@@ -335,7 +331,6 @@ public class RobotContainer {
         /* Deposits a cube to the mid shelf, no drive */
         autonChooser.addOption("BETA Mid Cube (no drive)", cubeMid); 
 
-        
         /* Deposits low cube and taxi out; timed based drive  */
         // autonChooser.addOption("BETA Low Cube + Taxi (Side)", cubeLowTaxi); 
 
@@ -344,7 +339,6 @@ public class RobotContainer {
         
         /* Deposits mid cube and taxi out; PathPlanner based drive */
         autonChooser.addOption("BETA Mid Cube + Taxi (Side)", ppCubeMidTaxi); 
-
 
         /* Taxi and Dock; timed based drive */
         autonChooser.addOption("BETA Mid Cube + Taxi + Dock (Middle)", cubeMidTaxiDock); 
@@ -376,7 +370,6 @@ public class RobotContainer {
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
-     *
      * @return the command to run in autonomous
      */
 
@@ -395,13 +388,4 @@ public class RobotContainer {
         tab.addNumber( "new gyro read", () -> s_Swerve.getYaw().getDegrees());
         tab.addNumber( "Arm Rotation(°)", () -> (armSub.GetRotationInDeg()));
     }
-
 }
-
-/**
- * 
- * Buttons
- * https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/wpilibj/XboxController.html
- * 
- * https://first.wpi.edu/wpilib/allwpilib/docs/release/java/src-html/edu/wpi/first/wpilibj/XboxController.html
- */

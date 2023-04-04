@@ -1,8 +1,5 @@
-/* 
- * 
- * PathPlanner based Auton, deploys low cube
- * 
-*/
+/* Runs Cone 2, and then picks up Cone 3, deposits low; PathPlanner based drive */
+
 package frc.robot.autos;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;

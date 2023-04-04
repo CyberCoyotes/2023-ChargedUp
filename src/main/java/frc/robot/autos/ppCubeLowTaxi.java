@@ -1,8 +1,5 @@
-/* 
- * 
- * PathPlanner based Auton, deploys low cube
- * 
-*/
+/* Deposits low cube and taxi out; PathPlanner based drive */
+
 package frc.robot.autos;
 
 import java.util.List;

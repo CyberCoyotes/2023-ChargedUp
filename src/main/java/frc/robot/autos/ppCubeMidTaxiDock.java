@@ -1,8 +1,5 @@
-/* 
- * 
- * PathPlanner based Auton, deploys low cube
- * 
-*/
+/* Taxi and Dock; PathPlanner based drive */
+
 package frc.robot.autos;
 
 import java.util.List;
