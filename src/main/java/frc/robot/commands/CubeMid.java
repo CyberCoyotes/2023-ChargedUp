@@ -30,7 +30,7 @@ public class CubeMid extends CommandBase {
         this.arm = armRot;
         this.wrist = wrist;
         this.intake = intakeSub;
-        addRequirements(arm, wrist);
+        addRequirements(arm, wrist, intake);
     }
 
     @Override
