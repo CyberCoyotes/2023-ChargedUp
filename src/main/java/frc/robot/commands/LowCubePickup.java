@@ -21,8 +21,8 @@ public class LowCubePickup extends SequentialCommandGroup{
         addCommands(
             new RotateArmToArg(armSub, 36).withTimeout(.25),
             new WristToArg(wristSub, 23703).withTimeout(.75),
-            new ArmExtendToArg(extend, () -> 7000).withTimeout(1.6),
-            new SetIntakeCube(intakeSub).withTimeout(1)
+            new ArmExtendToArg(extend, () -> 8220).withTimeout(1.6),
+            new SetIntakeCube(intakeSub).withTimeout(0.5)
 
         );
     }

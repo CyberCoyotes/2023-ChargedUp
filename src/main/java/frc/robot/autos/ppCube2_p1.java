@@ -10,17 +10,21 @@ import java.util.List;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
+
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
+import frc.robot.commands.CubeLow;
 import frc.robot.commands.CubeMid;
+import frc.robot.commands.CubeMidOld;
 import frc.robot.commands.LowCubePickup;
 import frc.robot.commands.SetIntakeCone;
-import frc.robot.commands.SetIntakeCube;
+import frc.robot.commands.StowArmCG;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmWristSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+
 
 public class ppCube2_p1 extends SequentialCommandGroup
 {
@@ -38,20 +42,18 @@ public class ppCube2_p1 extends SequentialCommandGroup
             this.m_wrist = wrist;
 
 
-        List<PathPlannerTrajectory> path1Out = PathPlanner.loadPathGroup("Cube2_p1", new PathConstraints(4, 3));
+        List<PathPlannerTrajectory> path1Out = PathPlanner.loadPathGroup("Cube2_p1", new PathConstraints(4, 1));
         
         addRequirements();
 
         addCommands(
-            new SetIntakeCone(m_intake ).withTimeout(1) // TODO Replace with Cube Mid Auton
-            , new WaitCommand(0.25) // TODO Replace with Stow command
+            new CubeLow(arm, extend, wrist, intake).withTimeout(1) // TODO Replace with Cube Mid Auton
+            ,new WaitCommand(0.25) // TODO Replace with Stow command
             
             , RobotContainer.buildAuton(path1Out) // Path to Cube 2
-            
-            // new SetIntakeCube(m_intake).withTimeout(1), // Place holder
             , new LowCubePickup(arm, wrist, intake, extend)
-
-            , new WaitCommand(0.25) // TODO Replace woth Stow command
+            // , new StowArmCG(m_extend, m_rotate, m_wrist, stages)
+            // , new WaitCommand(0.25) // TODO Replace woth Stow command
         );
     }
 }

@@ -33,6 +33,7 @@ import frc.robot.autos.CubeLowTaxiEngage;
 import frc.robot.autos.CubeLowTaxi;
 import frc.robot.autos.CubeMidTaxiDock;
 import frc.robot.Constants.Arm;
+import frc.robot.autos.ppCube2_p1;
 import frc.robot.autos.ppCube2_sum;
 import frc.robot.autos.ppCube3_sum;
 import frc.robot.autos.ppCubeLowTaxi;
@@ -176,8 +177,11 @@ public class RobotContainer {
     Command ppCubeMidTaxiDock = new ppCubeMidTaxiDock(armExtendSub, armSub, intakeSub, wristSub);
 
     /* Primary Autons */
+    Command ppCube2_p1 = new ppCube2_p1(armExtendSub, armSub, intakeSub, wristSub);
+
     Command ppCube2_sum = new ppCube2_sum(armExtendSub, armSub, intakeSub, wristSub);
     Command ppCube3_sum = new ppCube3_sum(armExtendSub, armSub, intakeSub, wristSub);
+
 
     /* Idealized "complete" autons but alas */
     // Command ppCube2 = new ppCube2();
@@ -401,6 +405,9 @@ public class RobotContainer {
     
         /* Taxi and Dock; PathPlanner based drive */
         autonChooser.addOption("BETA Mid Cube + Taxi + Dock (Middle)", ppCubeMidTaxiDock); 
+        
+        /* Deposits Cone 1 Mid, pickups up Cone 2, deposits low; PathPlanner based drive */
+        autonChooser.addOption("BETA Cube 2 Part 1", ppCube2_p1); 
         
         /* Deposits Cone 1 Mid, pickups up Cone 2, deposits low; PathPlanner based drive */
         autonChooser.addOption("BETA Cube 2 (Cable Side Only)", ppCube2_sum); 
