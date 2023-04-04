@@ -1,11 +1,6 @@
-/* 
- * 
- * PathPlanner based Auton, deploys low cube
- * 
-*/
-package frc.robot.autos;
+/* Deposits Cone 1 Mid, pickups up Cone 2, deposits low; PathPlanner based drive */
 
-import java.util.function.BooleanSupplier;
+package frc.robot.autos;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;

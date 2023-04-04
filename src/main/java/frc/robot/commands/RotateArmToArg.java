@@ -27,7 +27,6 @@ public class RotateArmToArg extends CommandBase {
 
     @Override
     public void initialize() {
-        // TODO Auto-generated method stub
         super.initialize();
     }
     

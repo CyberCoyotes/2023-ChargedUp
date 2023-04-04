@@ -1,19 +1,15 @@
-/* 
- * 
- * PathPlanner based Auton, deploys low cube
- * 
-*/
+/* Deposits mid cube and taxi out; PathPlanner based drive */
+
 package frc.robot.autos;
 
 import java.util.List;
-import java.util.function.BooleanSupplier;
 
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
-import frc.robot.commands.CubeMidAuton;
+import frc.robot.commands.CubeMid;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -38,7 +34,7 @@ public class ppCubeMidTaxi extends SequentialCommandGroup
             addRequirements();
 
         addCommands(
-            new CubeMidAuton(m_arm, m_wrist, m_intake).withTimeout(1),
+            new CubeMid(m_arm, m_wrist, m_intake).withTimeout(1),
             RobotContainer.buildAuton(pptList)
 
         );
