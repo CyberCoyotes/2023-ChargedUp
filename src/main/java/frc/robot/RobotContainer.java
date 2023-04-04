@@ -34,15 +34,12 @@ import frc.robot.autos.CubeLowTaxi;
 import frc.robot.autos.CubeMidTaxiDock;
 import frc.robot.Constants.Arm;
 import frc.robot.autos.ppCube2_sum;
-import frc.robot.autos.ppCube3;
 import frc.robot.autos.ppCube3_sum;
 import frc.robot.autos.ppCubeLowTaxi;
 import frc.robot.autos.ppCubeMidTaxi;
 import frc.robot.autos.ppTaxi4meters;
 import frc.robot.autos.ppTaxiFloorPickup;
-import frc.robot.autos.CubeLowTaxi;
-import frc.robot.autos.CubeLowTaxiEngage;
-import frc.robot.autos.CubeMidTaxiDock;
+import frc.robot.autos.ppCubeMidTaxiDock;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 /* PathPlanner */
@@ -183,6 +180,34 @@ public class RobotContainer {
     // Command ppCube2 = new ppCube2();
     // Command ppCube3 = new ppCube3();
     
+
+
+    Command ppTaxiFloorPickup = new ppTaxiFloorPickup(armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    private CommandCycle coneCargoCycle = new CommandCycle(coneLow, coneMid);
+    private CommandCycle exampleCommandCycle = new CommandCycle(fooToTerminal, barToTerminal);
+    // private Supplier<Command> coneCargoCommandSupplier = () ->
+    // coneCargoCycle.Get();
+
+    /*
+     * // This will load the file "Example Path.path" and generate it with a max
+     * velocity of 4 m/s and a max acceleration of 3 m/s^2
+     * PathPlannerTrajectory cube2path = PathPlanner.loadPath("Cube2", new
+     * PathConstraints(4, 2));
+     * 
+     * // This is just an example event map. It would be better to have a constant,
+     * global event map
+     * // in your code that will be used by all path following commands.
+     * HashMap<String, Command> eventMap = new HashMap<>();
+     * eventMap.put("marker1", new PrintCommand("Passed marker 1"));
+     * eventMap.put("intakeDown", new IntakeDown());
+     * 
+     * FollowPathWithEvents cube2events = new FollowPathWithEvents(
+     * getPathFollowingCommand(cube2path),
+     * cube2path.getMarkers(),
+     * eventMap
+     * );
+     */
+
     // #endregion
 
     /* Added from Bobcats */
