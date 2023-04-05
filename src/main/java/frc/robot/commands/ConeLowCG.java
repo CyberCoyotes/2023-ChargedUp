@@ -16,9 +16,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 
-public class ConeLow extends SequentialCommandGroup{
+public class ConeLowCG extends SequentialCommandGroup{
 
-    public ConeLow
+    public ConeLowCG
     (ArmRotationSubsystem armSub, ArmExtensionSubsystem armExtSub, ArmWristSubsystem wristSub, IntakeSubsystem intakeSub) {
         addCommands(
             new RotateArmToArg(armSub, -30).withTimeout(1)

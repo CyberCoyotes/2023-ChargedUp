@@ -10,14 +10,13 @@ import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
-import frc.robot.commands.CubeMid;
-import frc.robot.commands.CubeMidOld;
+import frc.robot.commands.CubeLowCG;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmWristSubsystem;
 
-public class ppCubeMidTaxiDock extends SequentialCommandGroup
+public class ppCubeTaxiDock extends SequentialCommandGroup
 {
     private ArmRotationSubsystem m_arm;
     private ArmExtensionSubsystem m_extend;
@@ -25,7 +24,7 @@ public class ppCubeMidTaxiDock extends SequentialCommandGroup
     private ArmWristSubsystem m_wrist;
 
 
-    public ppCubeMidTaxiDock(ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist) {
+    public ppCubeTaxiDock(ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist) {
 
             this.m_arm = arm; 
             this.m_extend = extend; 
@@ -36,7 +35,7 @@ public class ppCubeMidTaxiDock extends SequentialCommandGroup
             addRequirements();
 
         addCommands(
-            new CubeMid(arm, wrist, intake).withTimeout(1),
+            new CubeLowCG(arm, extend, wrist, intake).withTimeout(1),
             RobotContainer.buildAuton(pptList)
 
         );

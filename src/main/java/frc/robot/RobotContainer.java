@@ -11,7 +11,6 @@
 package frc.robot;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 // import com.ctre.phoenix.led.CANdle;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
@@ -29,19 +28,17 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.autos.CubeLowTaxiEngage;
+import frc.robot.autos.CubeTaxiEngage;
 import frc.robot.autos.CubeLowTaxi;
 import frc.robot.autos.CubeMidTaxiDock;
-import frc.robot.Constants.Arm;
-import frc.robot.autos.ppCube2_p1;
-import frc.robot.autos.ppCube2_sum;
-import frc.robot.autos.ppCube3_sum;
-import frc.robot.autos.ppCubeLowTaxi;
+import frc.robot.autos.ppCubeTaxi;
 import frc.robot.autos.ppCubeMidTaxi;
 import frc.robot.autos.ppTaxi4meters;
-import frc.robot.autos.ppTaxiFloorPickup;
-import frc.robot.autos.ppCubeMidTaxiDock;
+import frc.robot.autos.ppCube2;
+// import frc.robot.autos.ppCube3;
+import frc.robot.autos.ppCubeTaxiDock;
 import frc.robot.commands.*;
+import frc.robot.Constants.Arm;
 import frc.robot.subsystems.*;
 /* PathPlanner */
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -90,7 +87,7 @@ public class RobotContainer {
     private final int RT = XboxController.Axis.kRightTrigger.value;
     // #endregion
     // #region Driver Buttons
-    /* A */private final JoystickButton coneMidTEST = new JoystickButton(driver, XboxController.Button.kA.value);
+    // /* A */private final JoystickButton coneMidTEST = new JoystickButton(driver, XboxController.Button.kA.value);
 
     /* START */private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
     /* LB */private final JoystickButton robotCentric = new JoystickButton(driver,
@@ -144,14 +141,14 @@ public class RobotContainer {
     ArmExtendToArg extendMiddle = new ArmExtendToArg(armExtendSub, () -> Arm.ARM_EXTEND_MIDDLE_ENCODER);//why is the ctor like this? whatever
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
     ConeMid coneMid = new ConeMid(wristSub, armSub);
-    ConeLow coneLow = new ConeLow(armSub, armExtendSub, wristSub, intakeSub);
+    ConeLowCG coneLow = new ConeLowCG(armSub, armExtendSub, wristSub, intakeSub);
 
     CubeMid cubeMid = new CubeMid(armSub, wristSub, intakeSub);
-    // CubeMidOld cubeMidOld = new CubeMidOld(armSub, wristSub, intakeSub); // Deprecated
+    CubeMidCG cubeMidCG = new CubeMidCG(armSub, wristSub, intakeSub); // It will be deprecated when new Cube Mid is fully working
 
-    
     StowArmStage stageOne = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
     StowArmStage stageTwo = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
+    Command stowCommandAlternate = new StowArmCG(armExtendSub, armSub, wristSub, stageOne, stageTwo);
     Command stowCommand = stageOne.andThen(stageTwo);
 
 
@@ -161,10 +158,9 @@ public class RobotContainer {
     
     /* Autonomous Only Commands */
     // Drives out, and then back onto the Charge Station
-    Command chargeStation = new CubeLowTaxiEngage(s_Swerve, robotCentric);
-
+    Command chargeStation = new CubeTaxiEngage(s_Swerve, robotCentric);
     Command cubeLowTaxi = new CubeLowTaxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-    CubeLowTaxiEngage autonCommand = new CubeLowTaxiEngage(s_Swerve, robotCentric);
+    CubeTaxiEngage autonCommand = new CubeTaxiEngage(s_Swerve, robotCentric);
     Command cubeMidTaxiDock = new CubeMidTaxiDock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
 
     // Command cubeMidTaxi = new CubeMidTaxi_version1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
@@ -172,24 +168,11 @@ public class RobotContainer {
     
     /* PathPlanner based taxi out 4 meters */
     Command ppTaxi4meters = new ppTaxi4meters();
-    Command ppCubeLowTaxi = new ppCubeLowTaxi(armExtendSub, armSub, intakeSub, wristSub);
+    Command ppCubeLowTaxi = new ppCubeTaxi(armExtendSub, armSub, intakeSub, wristSub);
     Command ppCubeMidTaxi = new ppCubeMidTaxi(armExtendSub, armSub, intakeSub, wristSub);
-    Command ppCubeMidTaxiDock = new ppCubeMidTaxiDock(armExtendSub, armSub, intakeSub, wristSub);
-
-    /* Primary Autons */
-    Command ppCube2_p1 = new ppCube2_p1(armExtendSub, armSub, intakeSub, wristSub);
-
-    Command ppCube2_sum = new ppCube2_sum(armExtendSub, armSub, intakeSub, wristSub);
-    Command ppCube3_sum = new ppCube3_sum(armExtendSub, armSub, intakeSub, wristSub);
-
-
-    /* Idealized "complete" autons but alas */
-    // Command ppCube2 = new ppCube2();
-    // Command ppCube3 = new ppCube3();
+    Command ppCubeMidTaxiDock = new ppCubeTaxiDock(armExtendSub, armSub, intakeSub, wristSub);
+    Command ppCube2 = new ppCube2(armExtendSub, armSub, intakeSub, wristSub);
     
-
-
-    Command ppTaxiFloorPickup = new ppTaxiFloorPickup(armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     // private CommandCycle coneCargoCycle = new CommandCycle(coneLow, coneMid);
     private CommandCycle exampleCommandCycle = new CommandCycle(fooToTerminal, barToTerminal);
     // private Supplier<Command> coneCargoCommandSupplier = () ->
@@ -380,7 +363,6 @@ public class RobotContainer {
         /* Added from Bobcat 177 code example */
         setUpEventMap();
 
-        // TODO Verify that each of these works and then remove "β" from title
         // In theory nothing on "main" would be BETA
         autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
 
@@ -395,10 +377,10 @@ public class RobotContainer {
         // autonChooser.addOption("BETA Low Cube + Taxi (Side)", cubeLowTaxi); 
 
         /* Deposits low cube and taxi out; PathPlanner based drive */
-        autonChooser.addOption("BETA Low Cube + Taxi (Side)", ppCubeLowTaxi); 
+        autonChooser.addOption("Cube + Taxi (Side)", ppCubeLowTaxi); 
         
         /* Deposits mid cube and taxi out; PathPlanner based drive */
-        autonChooser.addOption("BETA Mid Cube + Taxi (Side)", ppCubeMidTaxi); 
+        // autonChooser.addOption("BETA Mid Cube + Taxi (Side)", ppCubeMidTaxi); 
 
         /* Taxi and Dock; timed based drive */
         autonChooser.addOption("BETA Mid Cube + Taxi + Dock (Middle)", cubeMidTaxiDock); 
@@ -407,13 +389,10 @@ public class RobotContainer {
         autonChooser.addOption("BETA Mid Cube + Taxi + Dock (Middle)", ppCubeMidTaxiDock); 
         
         /* Deposits Cone 1 Mid, pickups up Cone 2, deposits low; PathPlanner based drive */
-        autonChooser.addOption("BETA Cube 2 Part 1", ppCube2_p1); 
-        
-        /* Deposits Cone 1 Mid, pickups up Cone 2, deposits low; PathPlanner based drive */
-        autonChooser.addOption("BETA Cube 2 (Cable Side Only)", ppCube2_sum); 
+        autonChooser.addOption("Cube 2 (Cable Side Only)", ppCube2); 
         
         /* Runs Cone 2, and then picks up Cone 3, deposits low; PathPlanner based drive */
-        autonChooser.addOption("BETA Cube 3 (Cable Side Only)", ppCube3_sum); 
+        // autonChooser.addOption("BETA Cube 3 (Cable Side Only)", ppCube3); 
 
     }
 

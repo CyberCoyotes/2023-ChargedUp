@@ -1,7 +1,5 @@
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.IFollower;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
@@ -36,11 +34,13 @@ public class StowArmStage extends CommandBase
     
     }
 
+    /* 
     private void ConfigureAllowedErrors()
     {
         return; //lazy
     }
-
+    */
+    
     @Override
     public void execute() {
         

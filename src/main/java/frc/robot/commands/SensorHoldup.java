@@ -1,6 +1,6 @@
 package frc.robot.commands;
 
-import java.util.function.DoubleConsumer;
+// import java.util.function.DoubleConsumer;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  * 
  */
 public class SensorHoldup extends CommandBase {
-    //TODO get this to work    
+    // get this to work    
     private DoubleSupplier positionSupplier;
     
     private double desiredPosition;
 
-    private double inputStep;
-    private DoubleConsumer inputGlutton;
+    // private double inputStep;
+    // private DoubleConsumer inputGlutton;
     public SensorHoldup(DoubleSupplier sensorPositionSupplier, double desiredPosition) {
         
         
