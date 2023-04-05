@@ -31,12 +31,23 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.CubeTaxiEngage;
 import frc.robot.autos.CubeTaxi;
 import frc.robot.autos.CubeMidTaxiDock;
+<<<<<<< HEAD
+import frc.robot.Constants.Arm;
+import frc.robot.autos.path1;
+import frc.robot.autos.Cube2;
+import frc.robot.autos.ppCube3_sum;
+import frc.robot.autos.ppCubeLowTaxi;
+import frc.robot.autos.ppCubeMidTaxi;
+import frc.robot.autos.ppTaxi4meters;
+import frc.robot.autos.ppCubeMidTaxiDock;
+=======
 import frc.robot.autos.ppCubeTaxi;
 import frc.robot.autos.ppCubeMidTaxi;
 import frc.robot.autos.ppTaxi4meters;
 import frc.robot.autos.ppCube2;
 // import frc.robot.autos.ppCube3;
 import frc.robot.autos.ppCubeTaxiDock;
+>>>>>>> main
 import frc.robot.commands.*;
 import frc.robot.Constants.Arm;
 import frc.robot.subsystems.*;
@@ -168,9 +179,28 @@ public class RobotContainer {
     Command ppTaxi4meters = new ppTaxi4meters();
     Command ppCubeLowTaxi = new ppCubeTaxi(armExtendSub, armSub, intakeSub, wristSub);
     Command ppCubeMidTaxi = new ppCubeMidTaxi(armExtendSub, armSub, intakeSub, wristSub);
+<<<<<<< HEAD
+    Command ppCubeMidTaxiDock = new ppCubeMidTaxiDock(armExtendSub, armSub, intakeSub, wristSub);
+
+    /* Primary Autons */
+    Command Cube2 = new Cube2(armExtendSub, armSub, intakeSub, wristSub);
+
+    // Command ppCube2_sum = new Cube2(armExtendSub, armSub, intakeSub, wristSub);
+    // Command ppCube3_sum = new ppCube3_sum(armExtendSub, armSub, intakeSub, wristSub);
+
+
+    /* Idealized "complete" autons but alas */
+    // Command ppCube2 = new ppCube2();
+    // Command ppCube3 = new ppCube3();
+    
+
+
+    // Command ppTaxiFloorPickup = new ppTaxiFloorPickup(armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+=======
     Command ppCubeMidTaxiDock = new ppCubeTaxiDock(armExtendSub, armSub, intakeSub, wristSub);
     Command ppCube2 = new ppCube2(armExtendSub, armSub, intakeSub, wristSub);
     
+>>>>>>> main
     // private CommandCycle coneCargoCycle = new CommandCycle(coneLow, coneMid);
     private CommandCycle exampleCommandCycle = new CommandCycle(fooToTerminal, barToTerminal);
     // private Supplier<Command> coneCargoCommandSupplier = () ->
@@ -366,11 +396,16 @@ public class RobotContainer {
         autonChooser.addOption("BETA Mid Cube + Taxi + Dock (Middle)", ppCubeMidTaxiDock); 
         
         /* Deposits Cone 1 Mid, pickups up Cone 2, deposits low; PathPlanner based drive */
+<<<<<<< HEAD
+        autonChooser.addOption("BETA Cube 2 (Cable Side Only)", Cube2); 
+        
+=======
         autonChooser.addOption("Cube 2 (Cable Side Only)", ppCube2); 
         
         /* Runs Cone 2, and then picks up Cone 3, deposits low; PathPlanner based drive */
         // autonChooser.addOption("BETA Cube 3 (Cable Side Only)", ppCube3); 
 
+>>>>>>> main
     }
   
     public void setUpEventMap() {

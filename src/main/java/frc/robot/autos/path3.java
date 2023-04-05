@@ -14,10 +14,10 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 
-public class ppCube2_p2 extends SequentialCommandGroup
+public class path3 extends SequentialCommandGroup
 {
 
-    public ppCube2_p2() {
+    public path3() {
 
         List<PathPlannerTrajectory> path2 = PathPlanner.loadPathGroup("Cube2_p2", new PathConstraints(4, 2));
     

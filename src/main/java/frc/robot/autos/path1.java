@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 
 
-public class ppCube2_p1 extends SequentialCommandGroup
+public class path1 extends SequentialCommandGroup
 {
     /*
         private ArmRotationSubsystem m_arm;
@@ -25,7 +25,7 @@ public class ppCube2_p1 extends SequentialCommandGroup
     public ppCube2_p1(ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist) {
     */
 
-    public ppCube2_p1() {
+    public path1() {
         /* 
             this.m_arm = arm; 
             this.m_extend = extend; 

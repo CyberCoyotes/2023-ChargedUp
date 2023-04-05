@@ -10,7 +10,7 @@ import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmWristSubsystem;
 
-public class ppCube2 extends SequentialCommandGroup
+public class Cube2 extends SequentialCommandGroup
 {
     private ArmRotationSubsystem m_arm;
     private ArmExtensionSubsystem m_extend;
@@ -18,7 +18,7 @@ public class ppCube2 extends SequentialCommandGroup
     private ArmWristSubsystem m_wrist;
 
 
-    public ppCube2(ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist) {
+    public Cube2(ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist) {
 
             this.m_arm = arm; 
             this.m_extend = extend; 
@@ -29,10 +29,10 @@ public class ppCube2 extends SequentialCommandGroup
 
         addCommands(
             new CubeLowCG(arm, extend, wrist, intake).withTimeout(1), // time = 1 (s)
-            new ppCube2_p1(),                                               // If v = 4, a = 2: time = 3.34 (s)
-            new ppCube2_p2(),                                               // If v = 4, a = 1: time = 1.89 (s)
+            new path1(),                                               // If v = 4, a = 2: time = 3.34 (s)
+            new path2(),                                               // If v = 4, a = 1: time = 1.89 (s)
             new PickupGroundCube(arm, wrist, intake, extend),               // time = 3.00 (s)
-            new ppCube2_p3(),                                               // If v = 4,a = 2: time = 3.26 (s)
+            new path3(),                                               // If v = 4,a = 2: time = 3.26 (s)
             new CubeLowCG(arm, extend, wrist, m_intake).withTimeout(1) // time = 1 (s)
              
         );
