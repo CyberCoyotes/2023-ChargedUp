@@ -21,17 +21,23 @@ import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmWristSubsystem;
 
-public class path2 extends SequentialCommandGroup
+public class path3 extends SequentialCommandGroup
 {
-    public path2() {
+    private ArmRotationSubsystem m_arm;
+    private ArmExtensionSubsystem m_extend;
+    private IntakeSubsystem m_intake;
+    private ArmWristSubsystem m_wrist;
 
-        
-        List<PathPlannerTrajectory> path2 = PathPlanner.loadPathGroup("Cube2_p2", new PathConstraints(4, 3));
+
+    public path3() {
+
+        List<PathPlannerTrajectory> path3 = PathPlanner.loadPathGroup("Cube2_p3", new PathConstraints(4, 2));
     
         addRequirements();
 
         addCommands(
-            RobotContainer.buildAuton(path2)
+            RobotContainer.buildAuton(path3) // Path back to station
+    
         );
     }
 }

@@ -39,7 +39,6 @@ import frc.robot.autos.ppCube3_sum;
 import frc.robot.autos.ppCubeLowTaxi;
 import frc.robot.autos.ppCubeMidTaxi;
 import frc.robot.autos.ppTaxi4meters;
-import frc.robot.autos.ppTaxiFloorPickup;
 import frc.robot.autos.ppCubeMidTaxiDock;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -177,10 +176,10 @@ public class RobotContainer {
     Command ppCubeMidTaxiDock = new ppCubeMidTaxiDock(armExtendSub, armSub, intakeSub, wristSub);
 
     /* Primary Autons */
-    Command ppCube2_p1 = new path1(armExtendSub, armSub, intakeSub, wristSub);
+    Command Cube2 = new Cube2(armExtendSub, armSub, intakeSub, wristSub);
 
-    Command ppCube2_sum = new Cube2(armExtendSub, armSub, intakeSub, wristSub);
-    Command ppCube3_sum = new ppCube3_sum(armExtendSub, armSub, intakeSub, wristSub);
+    // Command ppCube2_sum = new Cube2(armExtendSub, armSub, intakeSub, wristSub);
+    // Command ppCube3_sum = new ppCube3_sum(armExtendSub, armSub, intakeSub, wristSub);
 
 
     /* Idealized "complete" autons but alas */
@@ -189,7 +188,7 @@ public class RobotContainer {
     
 
 
-    Command ppTaxiFloorPickup = new ppTaxiFloorPickup(armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    // Command ppTaxiFloorPickup = new ppTaxiFloorPickup(armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     // private CommandCycle coneCargoCycle = new CommandCycle(coneLow, coneMid);
     private CommandCycle exampleCommandCycle = new CommandCycle(fooToTerminal, barToTerminal);
     // private Supplier<Command> coneCargoCommandSupplier = () ->
@@ -407,14 +406,8 @@ public class RobotContainer {
         autonChooser.addOption("BETA Mid Cube + Taxi + Dock (Middle)", ppCubeMidTaxiDock); 
         
         /* Deposits Cone 1 Mid, pickups up Cone 2, deposits low; PathPlanner based drive */
-        autonChooser.addOption("BETA Cube 2 Part 1", ppCube2_p1); 
+        autonChooser.addOption("BETA Cube 2 (Cable Side Only)", Cube2); 
         
-        /* Deposits Cone 1 Mid, pickups up Cone 2, deposits low; PathPlanner based drive */
-        autonChooser.addOption("BETA Cube 2 (Cable Side Only)", ppCube2_sum); 
-        
-        /* Runs Cone 2, and then picks up Cone 3, deposits low; PathPlanner based drive */
-        autonChooser.addOption("BETA Cube 3 (Cable Side Only)", ppCube3_sum); 
-
     }
 
     /*
