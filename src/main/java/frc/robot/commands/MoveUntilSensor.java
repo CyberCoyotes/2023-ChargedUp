@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  * 
  */
 public class MoveUntilSensor extends CommandBase {
-    //TODO get this to work    
+    // get this to work    
     private DoubleSupplier positionSupplier;
     
     private double desiredPosition;

@@ -79,7 +79,7 @@ public class ArmRotationSubsystem extends SubsystemBase {
 
 
         // roughly 20 degree offset
-        rightMota.configReverseSoftLimitThreshold(ConvertDegToFXEncoder(-Arm.ARM_MAX_DEG));// TODO verify accuracy
+        rightMota.configReverseSoftLimitThreshold(ConvertDegToFXEncoder(-Arm.ARM_MAX_DEG));// verify accuracy
 
         rightMota.configReverseSoftLimitEnable(true, 0);
 
@@ -170,7 +170,7 @@ double cosineScalar = java.lang.Math.cos(radians); // todo get the cosine of the
 
 // FF is measured as
 
-double arbFF = maxGravityFF * cosineScalar; // TODO get ff, depends on cosine
+double arbFF = maxGravityFF * cosineScalar; // get ff, depends on cosine
 
 //#endregion
         // DemandType.ArbitraryFeedForward, -0.01

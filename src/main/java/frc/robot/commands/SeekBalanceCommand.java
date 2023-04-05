@@ -4,7 +4,7 @@ import frc.lib.math.CLAWTransform;
 
 import java.util.function.DoubleSupplier;
 
-import javax.swing.DebugGraphics;
+// import javax.swing.DebugGraphics;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.Debouncer;
@@ -108,6 +108,7 @@ private static DoubleSupplier dSupplier;
         else return dStarter;
     }
 
+    /* 
     private double GetPVal() {
         if(pSupplier != null)
         {
@@ -115,6 +116,7 @@ private static DoubleSupplier dSupplier;
         }
         else return pStarter;
     }
+    */
 
     @Override
     public void end (boolean interrupted) {

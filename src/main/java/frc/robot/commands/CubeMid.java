@@ -1,10 +1,3 @@
-/*--------------------------------------------------------
-*
-* Run Time: Original            2.75 = 0.75 + 0.25 + 0.75 + 0.75 + 0.25
-* Run Time:TODO Test Times      1.50 = 0.50 + 0.50 + 0.50
-* 
-*--------------------------------------------------------*/
-
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;

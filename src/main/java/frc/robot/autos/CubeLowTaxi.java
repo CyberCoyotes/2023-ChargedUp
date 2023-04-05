@@ -10,7 +10,7 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.TeleopSwerve;
-import frc.robot.commands.CubeLow;
+import frc.robot.commands.CubeLowCG;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -58,11 +58,11 @@ public class CubeLowTaxi extends SequentialCommandGroup
         
 
         addCommands(
-            new CubeLow(m_arm, m_extend, m_wrist, m_intake ).withTimeout(7),
+            new CubeLowCG(m_arm, m_extend, m_wrist, m_intake ).withTimeout(7),
             driveCommand.withTimeout(seconds)
 
         );
     }
 }
 
-//! TODO THE AUTO TUNER 
+//! THE AUTO TUNER 
