@@ -11,7 +11,6 @@
 package frc.robot;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 // import com.ctre.phoenix.led.CANdle;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
@@ -29,9 +28,10 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.autos.CubeLowTaxiEngage;
-import frc.robot.autos.CubeLowTaxi;
+import frc.robot.autos.CubeTaxiEngage;
+import frc.robot.autos.CubeTaxi;
 import frc.robot.autos.CubeMidTaxiDock;
+<<<<<<< HEAD
 import frc.robot.Constants.Arm;
 import frc.robot.autos.path1;
 import frc.robot.autos.Cube2;
@@ -40,7 +40,16 @@ import frc.robot.autos.ppCubeLowTaxi;
 import frc.robot.autos.ppCubeMidTaxi;
 import frc.robot.autos.ppTaxi4meters;
 import frc.robot.autos.ppCubeMidTaxiDock;
+=======
+import frc.robot.autos.ppCubeTaxi;
+import frc.robot.autos.ppCubeMidTaxi;
+import frc.robot.autos.ppTaxi4meters;
+import frc.robot.autos.ppCube2;
+// import frc.robot.autos.ppCube3;
+import frc.robot.autos.ppCubeTaxiDock;
+>>>>>>> main
 import frc.robot.commands.*;
+import frc.robot.Constants.Arm;
 import frc.robot.subsystems.*;
 /* PathPlanner */
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -89,7 +98,8 @@ public class RobotContainer {
     private final int RT = XboxController.Axis.kRightTrigger.value;
     // #endregion
     // #region Driver Buttons
-    /* A */private final JoystickButton coneMidTEST = new JoystickButton(driver, XboxController.Button.kA.value);
+    
+    // /* A */private final JoystickButton coneMidTEST = new JoystickButton(driver, XboxController.Button.kA.value);
 
     /* START */private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
     /* LB */private final JoystickButton robotCentric = new JoystickButton(driver,
@@ -109,7 +119,9 @@ public class RobotContainer {
 
     /* X */private final JoystickButton intakeCone = new JoystickButton(operator, XboxController.Button.kY.value);
     // Intake Cone is same as Outtake Cube
+    
     /* Y */private final JoystickButton intakeCube = new JoystickButton(operator, XboxController.Button.kX.value);
+    
     // /* A */private final JoystickButton resetArmCommand = new
     // JoystickButton(operator, XboxController.Button.kA.value);
     // Intake Cube is same as OuttakeCone
@@ -122,12 +134,9 @@ public class RobotContainer {
 
     private final ArmExtensionSubsystem armExtendSub = new ArmExtensionSubsystem();
     private final ArmRotationSubsystem armSub = new ArmRotationSubsystem(limit);
-    // private final CANdle candleSub = new CANdle(Constants.CANDLE_ID);
-    // private final Vision visionSub = new Vision();
     private final static Swerve s_Swerve = new Swerve(); // changed to a static to work with PathPlanner
     private final IntakeSubsystem intakeSub = new IntakeSubsystem();
     private final ArmWristSubsystem wristSub = new ArmWristSubsystem();
-    // private final SensorsSubsystem m_ArmSwitch = new SensorsSubsystem();
 
     // #endregion
 
@@ -143,27 +152,24 @@ public class RobotContainer {
     ArmExtendToArg extendMiddle = new ArmExtendToArg(armExtendSub, () -> Arm.ARM_EXTEND_MIDDLE_ENCODER);//why is the ctor like this? whatever
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
     ConeMid coneMid = new ConeMid(wristSub, armSub);
-    ConeLow coneLow = new ConeLow(armSub, armExtendSub, wristSub, intakeSub);
+    ConeLowCG coneLow = new ConeLowCG(armSub, armExtendSub, wristSub, intakeSub);
 
     CubeMid cubeMid = new CubeMid(armSub, wristSub, intakeSub);
-    // CubeMidOld cubeMidOld = new CubeMidOld(armSub, wristSub, intakeSub); // Deprecated
+    CubeMidCG cubeMidCG = new CubeMidCG(armSub, wristSub, intakeSub); // It will be deprecated when new Cube Mid is fully working
 
-    
     StowArmStage stageOne = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
     StowArmStage stageTwo = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
+    Command stowCommandAlternate = new StowArmCG(armExtendSub, armSub, wristSub, stageOne, stageTwo);
     Command stowCommand = stageOne.andThen(stageTwo);
-
-
 
     // Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);   
     // StowArmCG _raw = new StowArmCG(armExtendSub, armSub, wristSub);
     
     /* Autonomous Only Commands */
     // Drives out, and then back onto the Charge Station
-    Command chargeStation = new CubeLowTaxiEngage(s_Swerve, robotCentric);
-
-    Command cubeLowTaxi = new CubeLowTaxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-    CubeLowTaxiEngage autonCommand = new CubeLowTaxiEngage(s_Swerve, robotCentric);
+    Command chargeStation = new CubeTaxiEngage(s_Swerve, robotCentric);
+    Command cubeLowTaxi = new CubeTaxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    CubeTaxiEngage autonCommand = new CubeTaxiEngage(s_Swerve, robotCentric);
     Command cubeMidTaxiDock = new CubeMidTaxiDock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
 
     // Command cubeMidTaxi = new CubeMidTaxi_version1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
@@ -171,8 +177,9 @@ public class RobotContainer {
     
     /* PathPlanner based taxi out 4 meters */
     Command ppTaxi4meters = new ppTaxi4meters();
-    Command ppCubeLowTaxi = new ppCubeLowTaxi(armExtendSub, armSub, intakeSub, wristSub);
+    Command ppCubeLowTaxi = new ppCubeTaxi(armExtendSub, armSub, intakeSub, wristSub);
     Command ppCubeMidTaxi = new ppCubeMidTaxi(armExtendSub, armSub, intakeSub, wristSub);
+<<<<<<< HEAD
     Command ppCubeMidTaxiDock = new ppCubeMidTaxiDock(armExtendSub, armSub, intakeSub, wristSub);
 
     /* Primary Autons */
@@ -189,30 +196,15 @@ public class RobotContainer {
 
 
     // Command ppTaxiFloorPickup = new ppTaxiFloorPickup(armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+=======
+    Command ppCubeMidTaxiDock = new ppCubeTaxiDock(armExtendSub, armSub, intakeSub, wristSub);
+    Command ppCube2 = new ppCube2(armExtendSub, armSub, intakeSub, wristSub);
+    
+>>>>>>> main
     // private CommandCycle coneCargoCycle = new CommandCycle(coneLow, coneMid);
     private CommandCycle exampleCommandCycle = new CommandCycle(fooToTerminal, barToTerminal);
     // private Supplier<Command> coneCargoCommandSupplier = () ->
     // coneCargoCycle.Get();
-
-    /*
-     * // This will load the file "Example Path.path" and generate it with a max
-     * velocity of 4 m/s and a max acceleration of 3 m/s^2
-     * PathPlannerTrajectory cube2path = PathPlanner.loadPath("Cube2", new
-     * PathConstraints(4, 2));
-     * 
-     * // This is just an example event map. It would be better to have a constant,
-     * global event map
-     * // in your code that will be used by all path following commands.
-     * HashMap<String, Command> eventMap = new HashMap<>();
-     * eventMap.put("marker1", new PrintCommand("Passed marker 1"));
-     * eventMap.put("intakeDown", new IntakeDown());
-     * 
-     * FollowPathWithEvents cube2events = new FollowPathWithEvents(
-     * getPathFollowingCommand(cube2path),
-     * cube2path.getMarkers(),
-     * eventMap
-     * );
-     */
 
     // #endregion
 
@@ -277,7 +269,6 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-
 
         // SmartDashboard.putData("Stow Arm", new cgStow(armSub, armExtendSub, wristSub,
         // intakeSub));
@@ -371,16 +362,15 @@ public class RobotContainer {
         // new ArmExtendToArg(armExtendSub, () -> 9500));
     }
 
-    /* See Bobcat public void setUpAutos() {} for analogous method */
-
     /* Sendable Chooser Setup */
     private void configureAutonChooser() {
 
         /* Added from Bobcat 177 code example */
         setUpEventMap();
 
-        // TODO Verify that each of these works and then remove "β" from title
         // In theory nothing on "main" would be BETA
+
+
         autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
 
         
@@ -394,10 +384,10 @@ public class RobotContainer {
         // autonChooser.addOption("BETA Low Cube + Taxi (Side)", cubeLowTaxi); 
 
         /* Deposits low cube and taxi out; PathPlanner based drive */
-        autonChooser.addOption("BETA Low Cube + Taxi (Side)", ppCubeLowTaxi); 
+        autonChooser.addOption("Cube + Taxi (Side)", ppCubeLowTaxi); 
         
         /* Deposits mid cube and taxi out; PathPlanner based drive */
-        autonChooser.addOption("BETA Mid Cube + Taxi (Side)", ppCubeMidTaxi); 
+        // autonChooser.addOption("BETA Mid Cube + Taxi (Side)", ppCubeMidTaxi); 
 
         /* Taxi and Dock; timed based drive */
         autonChooser.addOption("BETA Mid Cube + Taxi + Dock (Middle)", cubeMidTaxiDock); 
@@ -406,26 +396,21 @@ public class RobotContainer {
         autonChooser.addOption("BETA Mid Cube + Taxi + Dock (Middle)", ppCubeMidTaxiDock); 
         
         /* Deposits Cone 1 Mid, pickups up Cone 2, deposits low; PathPlanner based drive */
+<<<<<<< HEAD
         autonChooser.addOption("BETA Cube 2 (Cable Side Only)", Cube2); 
         
-    }
+=======
+        autonChooser.addOption("Cube 2 (Cable Side Only)", ppCube2); 
+        
+        /* Runs Cone 2, and then picks up Cone 3, deposits low; PathPlanner based drive */
+        // autonChooser.addOption("BETA Cube 3 (Cable Side Only)", ppCube3); 
 
-    /*
-     * Added from Bobcat 177 code example
-     * We aren't currently using anything other than clear
-     * Probably stuff we would do at start of auton everytime?
-    */
+>>>>>>> main
+    }
   
     public void setUpEventMap() {
         Constants.AutoConstants.eventMap.clear();
     }
-
-    /* Added from Bobcat 177 code example */
-    /* Not currently in use. Only for PathPlanner AutonBuilder with events?
-    public void printHashMap() {
-        SmartDashboard.putString("eventMap", Constants.AutoConstants.eventMap.toString());
-    }
-    */
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -433,9 +418,6 @@ public class RobotContainer {
      */
 
     public Command getAutonomousCommand() {
-
-    /* Added from Bobcat 177 code example */
-    // return buildAuton(autonChooser.getSelected());
 
       return autonChooser.getSelected();
 

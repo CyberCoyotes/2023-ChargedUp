@@ -14,9 +14,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class GroundCubePickup extends SequentialCommandGroup{
+public class PickupGroundCube extends SequentialCommandGroup{
 
-    public GroundCubePickup
+    public PickupGroundCube
     (ArmRotationSubsystem armSub, ArmWristSubsystem wristSub, IntakeSubsystem intakeSub, ArmExtensionSubsystem extend) {
         addCommands(
             new RotateArmToArg(armSub, 36).withTimeout(.25), //TODO Test

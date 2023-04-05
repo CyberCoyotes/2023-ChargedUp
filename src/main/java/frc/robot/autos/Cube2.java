@@ -2,14 +2,13 @@
 
 package frc.robot.autos;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.CubeLow;
-import frc.robot.commands.GroundCubePickup;
+import frc.robot.commands.CubeLowCG;
+import frc.robot.commands.PickupGroundCube;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
-import frc.robot.subsystems.ArmWristSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ArmWristSubsystem;
 
 public class Cube2 extends SequentialCommandGroup
 {
@@ -29,14 +28,13 @@ public class Cube2 extends SequentialCommandGroup
             addRequirements();
 
         addCommands(
-            new CubeLow(arm, extend, wrist, intake).withTimeout(1),
-            new path1(),
-            new path2(),
-            new GroundCubePickup(arm, wrist, intake, extend),
-            new path3(),
-            new CubeLow(arm, extend, wrist, intake).withTimeout(1) // TODO Replace with Cube Low
-
-            
+            new CubeLowCG(arm, extend, wrist, intake).withTimeout(1), // time = 1 (s)
+            new path1(),                                               // If v = 4, a = 2: time = 3.34 (s)
+            new path2(),                                               // If v = 4, a = 1: time = 1.89 (s)
+            new PickupGroundCube(arm, wrist, intake, extend),               // time = 3.00 (s)
+            new path3(),                                               // If v = 4,a = 2: time = 3.26 (s)
+            new CubeLowCG(arm, extend, wrist, m_intake).withTimeout(1) // time = 1 (s)
+             
         );
     }
 }

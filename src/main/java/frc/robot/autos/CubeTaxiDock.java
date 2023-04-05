@@ -5,7 +5,7 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.TeleopSwerve;
-import frc.robot.commands.CubeLow;
+import frc.robot.commands.CubeLowCG;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -13,7 +13,7 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.ArmWristSubsystem;
 
 
-public class CubeLowTaxiDock extends SequentialCommandGroup
+public class CubeTaxiDock extends SequentialCommandGroup
 {
 
 
@@ -23,7 +23,7 @@ public class CubeLowTaxiDock extends SequentialCommandGroup
     private IntakeSubsystem m_intake;
     private ArmWristSubsystem m_wrist;
 
-    public CubeLowTaxiDock(Swerve s_Swerve, ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist, BooleanSupplier robotCentric) {
+    public CubeTaxiDock(Swerve s_Swerve, ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist, BooleanSupplier robotCentric) {
 
             this.m_swerve = s_Swerve; 
             this.m_arm = arm; 
@@ -59,7 +59,7 @@ public class CubeLowTaxiDock extends SequentialCommandGroup
 
         addCommands(
             //just in case
-            new CubeLow(m_arm, m_extend, m_wrist, m_intake ).withTimeout(5),
+            new CubeLowCG(m_arm, m_extend, m_wrist, m_intake ).withTimeout(5),
             driveCommand.withTimeout(seconds),
             driveCommandReverse.withTimeout(seconds -2)
 
@@ -68,4 +68,4 @@ public class CubeLowTaxiDock extends SequentialCommandGroup
     }
 }
 
-//! TODO THE AUTO TUNER 
+//! THE AUTO TUNER 
