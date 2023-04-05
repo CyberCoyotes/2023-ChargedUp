@@ -18,7 +18,7 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.ArmWristSubsystem;
 
 
-public class CubeLowTaxi extends SequentialCommandGroup
+public class CubeTaxi extends SequentialCommandGroup
 {
 
 
@@ -30,7 +30,7 @@ public class CubeLowTaxi extends SequentialCommandGroup
 
 
 
-    public CubeLowTaxi(Swerve s_Swerve, ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist, BooleanSupplier robotCentric) {
+    public CubeTaxi(Swerve s_Swerve, ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist, BooleanSupplier robotCentric) {
 
             this.m_swerve = s_Swerve; 
             this.m_arm = arm; 
