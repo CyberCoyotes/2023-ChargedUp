@@ -33,8 +33,8 @@ import frc.robot.autos.CubeLowTaxiEngage;
 import frc.robot.autos.CubeLowTaxi;
 import frc.robot.autos.CubeMidTaxiDock;
 import frc.robot.Constants.Arm;
-import frc.robot.autos.ppCube2_p1;
-import frc.robot.autos.ppCube2_sum;
+import frc.robot.autos.path1;
+import frc.robot.autos.Cube2;
 import frc.robot.autos.ppCube3_sum;
 import frc.robot.autos.ppCubeLowTaxi;
 import frc.robot.autos.ppCubeMidTaxi;
@@ -177,9 +177,9 @@ public class RobotContainer {
     Command ppCubeMidTaxiDock = new ppCubeMidTaxiDock(armExtendSub, armSub, intakeSub, wristSub);
 
     /* Primary Autons */
-    Command ppCube2_p1 = new ppCube2_p1(armExtendSub, armSub, intakeSub, wristSub);
+    Command ppCube2_p1 = new path1(armExtendSub, armSub, intakeSub, wristSub);
 
-    Command ppCube2_sum = new ppCube2_sum(armExtendSub, armSub, intakeSub, wristSub);
+    Command ppCube2_sum = new Cube2(armExtendSub, armSub, intakeSub, wristSub);
     Command ppCube3_sum = new ppCube3_sum(armExtendSub, armSub, intakeSub, wristSub);
 
 

@@ -9,7 +9,7 @@ import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmWristSubsystem;
 
-public class ppCube2_sum extends SequentialCommandGroup
+public class Cube2 extends SequentialCommandGroup
 {
     private ArmRotationSubsystem m_arm;
     private ArmExtensionSubsystem m_extend;
@@ -17,7 +17,7 @@ public class ppCube2_sum extends SequentialCommandGroup
     private ArmWristSubsystem m_wrist;
 
 
-    public ppCube2_sum(ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist) {
+    public Cube2(ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist) {
 
             this.m_arm = arm; 
             this.m_extend = extend; 
@@ -27,9 +27,9 @@ public class ppCube2_sum extends SequentialCommandGroup
             addRequirements();
 
         addCommands(
-            new ppCube2_p1(extend, arm, intake, wrist),
+            new path1(extend, arm, intake, wrist),
             new WaitCommand(0.25),
-            new ppCube2_p2(extend, arm, intake, wrist) 
+            new path2(extend, arm, intake, wrist) 
         );
     }
 }

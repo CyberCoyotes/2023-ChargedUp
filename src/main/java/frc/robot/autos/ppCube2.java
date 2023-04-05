@@ -12,7 +12,7 @@ import frc.robot.RobotContainer;
 public class ppCube2 extends SequentialCommandGroup {
     public ppCube2() {
         List<PathPlannerTrajectory> pptList = PathPlanner.loadPathGroup(
-            "CableCube2", new PathConstraints(4, 3)
+            "path1", new PathConstraints(4, 2)
             );
         
         addCommands(

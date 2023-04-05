@@ -27,7 +27,7 @@ public class ppCube3_sum extends SequentialCommandGroup
             addRequirements();
 
         addCommands(
-            new ppCube2_sum(extend, arm, intake, wrist),
+            new Cube2(extend, arm, intake, wrist),
             new ppCube3_p3(extend, arm, intake, wrist),
             new WaitCommand(0.25),
             new ppCube3_p4(extend, arm, intake, wrist),
