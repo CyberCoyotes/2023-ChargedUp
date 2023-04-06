@@ -86,7 +86,6 @@ public class RobotContainer {
     private final int RT = XboxController.Axis.kRightTrigger.value;
     // #endregion
     // #region Driver Buttons
-    // /* A */private final JoystickButton placeConeMid = new JoystickButton(driver, XboxController.Button.kA.value);
 
     /* START */private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
     /* LB */private final JoystickButton robotCentric = new JoystickButton(driver,
@@ -111,11 +110,10 @@ public class RobotContainer {
     // JoystickButton(operator, XboxController.Button.kA.value);
     // Intake Cube is same as OuttakeCone
 
-    /* A */private final JoystickButton operatorA = new JoystickButton(operator, XboxController.Button.kA.value);
+    // /* A */private final JoystickButton  = new JoystickButton(operator, XboxController.Button.kA.value);
     /* B */private final JoystickButton operatorB = new JoystickButton(operator, XboxController.Button.kB.value);
     
-    // /* A */private final JoystickButton operatorA = new JoystickButton(operator, XboxController.Button.kA.value);
-    // /* B */private final JoystickButton operatorB = new JoystickButton(operator, XboxController.Button.kB.value);
+    /* A */private final JoystickButton operatorA = new JoystickButton(operator, XboxController.Button.kA.value);
 
     // #endregion Operator Buttons
     // #region Subsystems
@@ -136,16 +134,18 @@ public class RobotContainer {
     // Command fooToTerminal = new InstantCommand(() -> System.out.println("FOO")).repeatedly();
     // Command barToTerminal = new InstantCommand(() -> System.out.println("BAR")).repeatedly();
 
+    ConeMid coneMid = new ConeMid(wristSub, armSub);
+    CubeMid cubeMid = new CubeMid(wristSub, armSub);
+
     RotateArmToArg rotTo90 = new RotateArmToArg(armSub, 90);
     MoveUntilSensor rotationMoveUntilSensor;
     MoveUntilSensor extentionMoveUntilSensor;
 
     ArmExtendToArg extendMiddle = new ArmExtendToArg(armExtendSub, () -> Arm.ARM_EXTEND_MIDDLE_ENCODER);//why is the ctor like this? whatever
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
-    ConeMid coneMid = new ConeMid(wristSub, armSub); // TODO Does this work?
+    // ConeMid coneMid = new ConeMid(wristSub, armSub); 
     ConeLowCG coneLow = new ConeLowCG(armSub, armExtendSub, wristSub, intakeSub); // TODO Does this work?
 
-    CubeMid cubeMid = new CubeMid(armSub, wristSub, intakeSub);
     // CubeMidOld cubeMidOld = new CubeMidOld(armSub, wristSub, intakeSub); // Deprecated
 
     
@@ -161,6 +161,8 @@ public class RobotContainer {
     /* Autonomous Only Commands */
     // Drives out, and then back onto the Charge Station
     Command chargeStation = new CubeTaxiEngage(s_Swerve, robotCentric);
+
+    Command cubeLow = new CubeLowCG(armSub, armExtendSub, wristSub, intakeSub);
 
     Command cubeLowTaxi = new CubeTaxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     CubeTaxiEngage autonCommand = new CubeTaxiEngage(s_Swerve, robotCentric);
@@ -294,6 +296,8 @@ public class RobotContainer {
         creepButton.onTrue(new InstantCommand(() -> SetCreepToggle(!GetCreepToggle())));// inverts creep when button
         stowArm.onTrue(stowCommand);
         loadElement.onTrue(wristReceive);
+        operatorB.whileTrue(coneMid);
+        operatorA.whileTrue(cubeMid);
 
         /* Operator Button Bindings */
         // stowArm.onTrue(new cgStow(armSub, armExtendSub, wristSub, intakeSub));
@@ -383,30 +387,29 @@ public class RobotContainer {
         // In theory nothing on "main" would be BETA
         autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
 
-        
         /* Taxi out 4 meters in a straight line, no game element deposits; PathPlanner based drive */
-        autonChooser.addOption("Taxi 4 meters only", ppTaxi4meters);
+        // autonChooser.addOption("Taxi 4 meters only", ppTaxi4meters);
         
         /* Deposits a cube to the mid shelf, no drive */
-        autonChooser.addOption("BETA Mid Cube (no drive)", cubeMid); 
+        // autonChooser.addOption("Low Cube (no drive)", cubeLow); 
 
         /* Deposits low cube and taxi out; timed based drive  */
         // autonChooser.addOption("BETA Low Cube + Taxi (Side)", cubeLowTaxi); 
 
         /* Deposits low cube and taxi out; PathPlanner based drive */
-        autonChooser.addOption("BETA Low Cube + Taxi (Side)", ppCubeLowTaxi); 
+        autonChooser.addOption("Low Cube + Taxi", ppCubeLowTaxi); 
         
         /* Deposits mid cube and taxi out; PathPlanner based drive */
-        autonChooser.addOption("BETA Mid Cube + Taxi (Side)", ppCubeMidTaxi); 
+        // autonChooser.addOption("BETA Mid Cube + Taxi (Side)", ppCubeMidTaxi); 
 
         /* Taxi and Dock; timed based drive */
-        autonChooser.addOption("BETA Mid Cube + Taxi + Dock (Middle)", cubeMidTaxiDock); 
+        // autonChooser.addOption("BETA Mid Cube + Taxi + Dock (Middle)", cubeMidTaxiDock); 
     
         /* Taxi and Dock; PathPlanner based drive */
-        autonChooser.addOption("BETA Mid Cube + Taxi + Dock (Middle)", ppCubeMidTaxiDock); 
+        // autonChooser.addOption("BETA Mid Cube + Taxi + Dock (Middle)", ppCubeMidTaxiDock); 
         
         /* Deposits Cone 1 Mid, pickups up Cone 2, deposits low; PathPlanner based drive */
-        autonChooser.addOption("BETA Cube 2 (Cable Side Only)", Cube2); 
+        autonChooser.addOption("Score 2 Cubes (Cable Side Only)", Cube2); 
         
     }
 

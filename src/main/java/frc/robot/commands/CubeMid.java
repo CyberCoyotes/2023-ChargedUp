@@ -15,15 +15,13 @@ public class CubeMid extends CommandBase {
 
     private ArmRotationSubsystem arm;
     private ArmWristSubsystem wrist;
-    private IntakeSubsystem intake;
 
     /** Intended for macro usage. */
-    public CubeMid( ArmRotationSubsystem armRot,ArmWristSubsystem wrist, IntakeSubsystem intakeSub) {
+    public CubeMid( ArmWristSubsystem wrist, ArmRotationSubsystem armRot) {
 
         this.arm = armRot;
         this.wrist = wrist;
-        this.intake = intakeSub;
-        addRequirements(arm, wrist, intake);
+        addRequirements(arm, wrist);
     }
 
     @Override
@@ -31,7 +29,6 @@ public class CubeMid extends CommandBase {
 
         arm.RotateArmToDeg(80);
         wrist.setWristToPosition(21000);
-        intake.SetDriveIntake();
 
     }
     @Override

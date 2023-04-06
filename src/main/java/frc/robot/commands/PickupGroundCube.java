@@ -19,7 +19,8 @@ public class PickupGroundCube extends SequentialCommandGroup{
         addCommands(
             new RotateArmToArg(armSub, 36).withTimeout(0.20),     // TODO 0.25 -> 0.20 Test
             new WristToArg(wristSub, 23703).withTimeout(0.50), //TODO 0.75 -> 0.50 Test
-            new ArmExtendToArg(extend, () -> 8220).withTimeout(1.60), // TODO Test 1.6 --> 1.5
+            //added 1200 ~ 1 inch after second practice match
+            new ArmExtendToArg(extend, () -> 8220 + 1200).withTimeout(1.60), // TODO Test 1.6 --> 1.5
             new SetIntakeCube(intakeSub).withTimeout(0.5)       // TODO Test 0.50
                                                                         // Total time = 3 (s)
 

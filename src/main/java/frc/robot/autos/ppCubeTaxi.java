@@ -34,7 +34,7 @@ public class ppCubeTaxi extends SequentialCommandGroup
             addRequirements();
 
         addCommands(
-            new CubeLowCG(m_arm, m_extend, m_wrist, m_intake ).withTimeout(7),
+            new CubeLowCG(m_arm, m_extend, m_wrist, m_intake ).withTimeout(2),
             RobotContainer.buildAuton(taxi4Meters)
 
         );
