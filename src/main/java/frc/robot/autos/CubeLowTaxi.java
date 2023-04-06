@@ -58,11 +58,11 @@ public class CubeLowTaxi extends SequentialCommandGroup
         
 
         addCommands(
-            new CubeLow(m_arm, m_extend, m_wrist, m_intake ).withTimeout(7),
+            new CubeLow(m_arm, m_extend, m_wrist, m_intake ).withTimeout(1),
             driveCommand.withTimeout(seconds)
 
         );
     }
 }
 
-//! TODO THE AUTO TUNER 
+//! THE AUTO TUNER 

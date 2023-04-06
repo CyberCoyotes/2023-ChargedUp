@@ -3,7 +3,6 @@
 package frc.robot.autos;
 
 import java.util.List;
-import java.util.function.BooleanSupplier;
 
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
@@ -30,13 +29,13 @@ public class ppCubeLowTaxi extends SequentialCommandGroup
             this.m_extend = extend; 
             this.m_intake = intake; 
 
-        List<PathPlannerTrajectory> pptList = PathPlanner.loadPathGroup("Taxi4meters", new PathConstraints(4, 3));
+        List<PathPlannerTrajectory> taxi4Meters = PathPlanner.loadPathGroup("Taxi4meters", new PathConstraints(4, 3));
     
             addRequirements();
 
         addCommands(
             new CubeLow(m_arm, m_extend, m_wrist, m_intake ).withTimeout(7),
-            RobotContainer.buildAuton(pptList)
+            RobotContainer.buildAuton(taxi4Meters)
 
         );
     }

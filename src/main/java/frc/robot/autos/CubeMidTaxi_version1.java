@@ -56,7 +56,7 @@ public class CubeMidTaxi_version1 extends SequentialCommandGroup
 
         addCommands(
             //just in case
-            new CubeMid(arm, wrist, intake).withTimeout(7),
+            new CubeMid(arm, wrist, intake).withTimeout(2),
             driveCommand
 
         );

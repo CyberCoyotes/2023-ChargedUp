@@ -79,7 +79,7 @@ public class ArmRotationSubsystem extends SubsystemBase {
 
 
         // roughly 20 degree offset
-        rightMota.configReverseSoftLimitThreshold(ConvertDegToFXEncoder(-Arm.ARM_MAX_DEG));// TODO verify accuracy
+        rightMota.configReverseSoftLimitThreshold(ConvertDegToFXEncoder(-Arm.ARM_MAX_DEG));// verify accuracy
 
         rightMota.configReverseSoftLimitEnable(true, 0);
 

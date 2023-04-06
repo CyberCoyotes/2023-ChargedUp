@@ -1,9 +1,10 @@
 /* Runs Cone 2, and then picks up Cone 3, deposits low; PathPlanner based drive */
 
-package frc.robot.autos;
+package frc.robot.nonProduction;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.autos.Cube2;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -28,9 +29,9 @@ public class ppCube3_sum extends SequentialCommandGroup
 
         addCommands(
             new Cube2(extend, arm, intake, wrist),
-            new ppCube3_p3(extend, arm, intake, wrist),
+            new ppCube3_p3(),
             new WaitCommand(0.25),
-            new ppCube3_p4(extend, arm, intake, wrist),
+            new ppCube3_p4(),
             new WaitCommand(0.25)  
 
         );
