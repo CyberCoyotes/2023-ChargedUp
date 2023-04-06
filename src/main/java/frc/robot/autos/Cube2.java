@@ -4,7 +4,7 @@ package frc.robot.autos;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.CubeLowCG;
-import frc.robot.commands.GroundCubePickup;
+import frc.robot.commands.PickupGroundCube;
 import frc.robot.commands.StowArmStage;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
@@ -31,7 +31,7 @@ public class Cube2 extends SequentialCommandGroup
         addCommands(
             new CubeLowCG(arm, extend, wrist, intake).withTimeout(1),
             new path1(), // Path to Cube 2
-            new GroundCubePickup(arm, wrist, intake, extend),
+            new PickupGroundCube(arm, wrist, intake, extend), // 3 (s) is current run time
             new StowArmStage(m_extend, m_arm, wrist, 2000, 50, 500),
             new StowArmStage(m_extend, m_arm, wrist, 2000, 30, 500),
             new path3(), // Path back to deposit Cube 2
