@@ -86,7 +86,7 @@ public class RobotContainer {
     private final int RT = XboxController.Axis.kRightTrigger.value;
     // #endregion
     // #region Driver Buttons
-    /* A */private final JoystickButton coneMidTEST = new JoystickButton(driver, XboxController.Button.kA.value);
+    // /* A */private final JoystickButton placeConeMid = new JoystickButton(driver, XboxController.Button.kA.value);
 
     /* START */private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
     /* LB */private final JoystickButton robotCentric = new JoystickButton(driver,
@@ -113,6 +113,9 @@ public class RobotContainer {
 
     /* A */private final JoystickButton operatorA = new JoystickButton(operator, XboxController.Button.kA.value);
     /* B */private final JoystickButton operatorB = new JoystickButton(operator, XboxController.Button.kB.value);
+    
+    // /* A */private final JoystickButton operatorA = new JoystickButton(operator, XboxController.Button.kA.value);
+    // /* B */private final JoystickButton operatorB = new JoystickButton(operator, XboxController.Button.kB.value);
 
     // #endregion Operator Buttons
     // #region Subsystems
@@ -130,8 +133,8 @@ public class RobotContainer {
 
     // #region Commands
 
-    Command fooToTerminal = new InstantCommand(() -> System.out.println("FOO")).repeatedly();
-    Command barToTerminal = new InstantCommand(() -> System.out.println("BAR")).repeatedly();
+    // Command fooToTerminal = new InstantCommand(() -> System.out.println("FOO")).repeatedly();
+    // Command barToTerminal = new InstantCommand(() -> System.out.println("BAR")).repeatedly();
 
     RotateArmToArg rotTo90 = new RotateArmToArg(armSub, 90);
     MoveUntilSensor rotationMoveUntilSensor;
@@ -139,8 +142,8 @@ public class RobotContainer {
 
     ArmExtendToArg extendMiddle = new ArmExtendToArg(armExtendSub, () -> Arm.ARM_EXTEND_MIDDLE_ENCODER);//why is the ctor like this? whatever
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
-    ConeMid coneMid = new ConeMid(wristSub, armSub);
-    ConeLow coneLow = new ConeLow(armSub, armExtendSub, wristSub, intakeSub);
+    ConeMid coneMid = new ConeMid(wristSub, armSub); // TODO Does this work?
+    ConeLow coneLow = new ConeLow(armSub, armExtendSub, wristSub, intakeSub); // TODO Does this work?
 
     CubeMid cubeMid = new CubeMid(armSub, wristSub, intakeSub);
     // CubeMidOld cubeMidOld = new CubeMidOld(armSub, wristSub, intakeSub); // Deprecated
@@ -187,7 +190,7 @@ public class RobotContainer {
 
     // Command ppTaxiFloorPickup = new ppTaxiFloorPickup(armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     // private CommandCycle coneCargoCycle = new CommandCycle(coneLow, coneMid);
-    private CommandCycle exampleCommandCycle = new CommandCycle(fooToTerminal, barToTerminal);
+    // private CommandCycle exampleCommandCycle = new CommandCycle(fooToTerminal, barToTerminal);
     // private Supplier<Command> coneCargoCommandSupplier = () ->
     // coneCargoCycle.Get();
 
@@ -286,7 +289,7 @@ public class RobotContainer {
 
         /* Driver Button Bindings */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        // coneMidTEST.whileTrue(USETHISPICKUP);
+        // placeConeMid.whileTrue(USETHISPICKUP);
         zeroArmEncoder.onTrue(new InstantCommand(() -> armSub.ZeroArmEncoder()));
         creepButton.onTrue(new InstantCommand(() -> SetCreepToggle(!GetCreepToggle())));// inverts creep when button
         stowArm.onTrue(stowCommand);
@@ -314,7 +317,7 @@ public class RobotContainer {
         // Subsystem[0])//KAKEROOOOOOOOOOOT
         // ));
 
-        
+        /* 
         operatorA.onTrue(new InstantCommand(() -> exampleCommandCycle.Increment()));
         // Runs the command currently ran.
         operatorB.whileTrue(
@@ -323,7 +326,7 @@ public class RobotContainer {
                         //magic that turns a collection into an ellipsies argument
                         exampleCommandCycle.Get().getRequirements().toArray(new Subsystem[0])
                 ));
-        
+        */
     }
 
     /* Bobcat 177 Code */
