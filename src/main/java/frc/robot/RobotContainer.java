@@ -28,12 +28,12 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.autos.CubeLowTaxiEngage;
-import frc.robot.autos.CubeLowTaxi;
+import frc.robot.autos.CubeTaxiEngage;
+import frc.robot.autos.CubeTaxi;
 import frc.robot.autos.CubeMidTaxiDock;
 import frc.robot.Constants.Arm;
 import frc.robot.autos.Cube2;
-import frc.robot.autos.ppCubeLowTaxi;
+import frc.robot.autos.ppCubeTaxi;
 import frc.robot.autos.ppCubeMidTaxi;
 import frc.robot.autos.ppTaxi4meters;
 import frc.robot.autos.ppCubeTaxiDock;
@@ -143,7 +143,7 @@ public class RobotContainer {
     ArmExtendToArg extendMiddle = new ArmExtendToArg(armExtendSub, () -> Arm.ARM_EXTEND_MIDDLE_ENCODER);//why is the ctor like this? whatever
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
     ConeMid coneMid = new ConeMid(wristSub, armSub); // TODO Does this work?
-    ConeLow coneLow = new ConeLow(armSub, armExtendSub, wristSub, intakeSub); // TODO Does this work?
+    ConeLowCG coneLow = new ConeLowCG(armSub, armExtendSub, wristSub, intakeSub); // TODO Does this work?
 
     CubeMid cubeMid = new CubeMid(armSub, wristSub, intakeSub);
     // CubeMidOld cubeMidOld = new CubeMidOld(armSub, wristSub, intakeSub); // Deprecated
@@ -160,10 +160,10 @@ public class RobotContainer {
     
     /* Autonomous Only Commands */
     // Drives out, and then back onto the Charge Station
-    Command chargeStation = new CubeLowTaxiEngage(s_Swerve, robotCentric);
+    Command chargeStation = new CubeTaxiEngage(s_Swerve, robotCentric);
 
-    Command cubeLowTaxi = new CubeLowTaxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-    CubeLowTaxiEngage autonCommand = new CubeLowTaxiEngage(s_Swerve, robotCentric);
+    Command cubeLowTaxi = new CubeTaxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
+    CubeTaxiEngage autonCommand = new CubeTaxiEngage(s_Swerve, robotCentric);
     Command cubeMidTaxiDock = new CubeMidTaxiDock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
 
     // Command cubeMidTaxi = new CubeMidTaxi_version1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
@@ -171,7 +171,7 @@ public class RobotContainer {
     
     /* PathPlanner based taxi out 4 meters */
     Command ppTaxi4meters = new ppTaxi4meters();
-    Command ppCubeLowTaxi = new ppCubeLowTaxi(armExtendSub, armSub, intakeSub, wristSub);
+    Command ppCubeLowTaxi = new ppCubeTaxi(armExtendSub, armSub, intakeSub, wristSub);
     Command ppCubeMidTaxi = new ppCubeMidTaxi(armExtendSub, armSub, intakeSub, wristSub);
     Command ppCubeMidTaxiDock = new ppCubeTaxiDock(armExtendSub, armSub, intakeSub, wristSub);
 
