@@ -29,12 +29,6 @@ public class path1 extends SequentialCommandGroup
     // public path1(ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist) {
 
     public path1() {
-        /* 
-            this.m_arm = arm; 
-            this.m_extend = extend; 
-            this.m_intake = intake;
-            this.m_wrist = wrist;
-        */
 
         List<PathPlannerTrajectory> path1 = PathPlanner.loadPathGroup("Cube2_p1", new PathConstraints(4, 2));
         
@@ -42,8 +36,6 @@ public class path1 extends SequentialCommandGroup
 
         addCommands(
             RobotContainer.buildAuton(path1) // Path to Cube 2
-            // , new StowArmCG(m_extend, m_rotate, m_wrist, stages)
-            // , new WaitCommand(0.25) // TODO Replace woth Stow command
         );
     }
 }

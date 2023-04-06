@@ -11,7 +11,6 @@
 package frc.robot;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 // import com.ctre.phoenix.led.CANdle;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
@@ -33,13 +32,11 @@ import frc.robot.autos.CubeLowTaxiEngage;
 import frc.robot.autos.CubeLowTaxi;
 import frc.robot.autos.CubeMidTaxiDock;
 import frc.robot.Constants.Arm;
-import frc.robot.autos.path1;
 import frc.robot.autos.Cube2;
-import frc.robot.autos.ppCube3_sum;
 import frc.robot.autos.ppCubeLowTaxi;
 import frc.robot.autos.ppCubeMidTaxi;
 import frc.robot.autos.ppTaxi4meters;
-import frc.robot.autos.ppCubeMidTaxiDock;
+import frc.robot.autos.ppCubeTaxiDock;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 /* PathPlanner */
@@ -173,7 +170,7 @@ public class RobotContainer {
     Command ppTaxi4meters = new ppTaxi4meters();
     Command ppCubeLowTaxi = new ppCubeLowTaxi(armExtendSub, armSub, intakeSub, wristSub);
     Command ppCubeMidTaxi = new ppCubeMidTaxi(armExtendSub, armSub, intakeSub, wristSub);
-    Command ppCubeMidTaxiDock = new ppCubeMidTaxiDock(armExtendSub, armSub, intakeSub, wristSub);
+    Command ppCubeMidTaxiDock = new ppCubeTaxiDock(armExtendSub, armSub, intakeSub, wristSub);
 
     /* Primary Autons */
     Command Cube2 = new Cube2(armExtendSub, armSub, intakeSub, wristSub);
