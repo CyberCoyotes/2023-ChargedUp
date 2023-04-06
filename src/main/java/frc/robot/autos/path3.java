@@ -1,12 +1,11 @@
 /* 
  * 
- * PathPlanner based Auton, deploys low cube
+ * PathPlanner based Auton
  * 
 */
 package frc.robot.autos;
 
 import java.util.List;
-// import java.util.function.BooleanSupplier;
 
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
@@ -19,12 +18,13 @@ public class path3 extends SequentialCommandGroup
 
     public path3() {
 
-        List<PathPlannerTrajectory> path2 = PathPlanner.loadPathGroup("Cube2_p2", new PathConstraints(4, 2));
+        List<PathPlannerTrajectory> path3 = PathPlanner.loadPathGroup("Cube2_p3", new PathConstraints(4, 2));
     
         addRequirements();
 
         addCommands(
-            RobotContainer.buildAuton(path2) // mini path to cube
+            RobotContainer.buildAuton(path3) // Path back to station
+    
         );
     }
 }

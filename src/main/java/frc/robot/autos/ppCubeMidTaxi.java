@@ -9,8 +9,7 @@ import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
-import frc.robot.commands.CubeMid;
-import frc.robot.commands.CubeMidCG;
+import frc.robot.commands.CubeLow;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -35,7 +34,7 @@ public class ppCubeMidTaxi extends SequentialCommandGroup
             addRequirements();
 
         addCommands(
-            new CubeMidCG(arm, wrist, intake).withTimeout(1),
+            new CubeLow(arm, extend, wrist, intake).withTimeout(1),
             RobotContainer.buildAuton(pptList)
 
         );

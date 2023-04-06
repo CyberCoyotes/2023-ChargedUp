@@ -1,6 +1,6 @@
 /*--------------------------------------------------------
 *
-* "cgCubeTop.java"
+* Pickup a Cube from the Floor
 * 
 *--------------------------------------------------------*/
 
@@ -12,19 +12,15 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmWristSubsystem;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-
 public class GroundCubePickup extends SequentialCommandGroup{
 
     public GroundCubePickup
     (ArmRotationSubsystem armSub, ArmWristSubsystem wristSub, IntakeSubsystem intakeSub, ArmExtensionSubsystem extend) {
         addCommands(
-            new RotateArmToArg(armSub, 36).withTimeout(.25), //TODO Test
-            new WristToArg(wristSub, 23703).withTimeout(.75), //TODO Test
-            new ArmExtendToArg(extend, () -> 8220).withTimeout(1.5), // TODO Test 1.6 --> 1.5
-            new SetIntakeCube(intakeSub).withTimeout(0.5) // TODO Test
-            // Total time = 3 (s)
-
+            new RotateArmToArg(armSub, 36).withTimeout(.25),
+            new WristToArg(wristSub, 23703).withTimeout(.7),
+            new ArmExtendToArg(extend, () -> 8220).withTimeout(1.6),
+            new SetIntakeCube(intakeSub).withTimeout(0.5)
         );
     }
     @Override

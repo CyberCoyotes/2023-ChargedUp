@@ -1,0 +1,33 @@
+/* 
+ * 
+ * PathPlanner based Auton, deploys low cube
+ * 
+*/
+package frc.robot.nonProduction;
+
+import java.util.List;
+
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.RobotContainer;
+
+public class ppCube3_p4 extends SequentialCommandGroup
+{
+
+
+
+    public ppCube3_p4() {
+
+        List<PathPlannerTrajectory> path4Back = PathPlanner.loadPathGroup("Cube3_p4", new PathConstraints(4, 3));
+    
+        addRequirements();
+
+        addCommands(
+            RobotContainer.buildAuton(path4Back) // Path back to station
+            // new SetIntakeCube(m_intake).withTimeout(1) // Replace with Cube Low
+
+        );
+    }
+}

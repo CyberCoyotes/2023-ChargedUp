@@ -10,7 +10,7 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.TeleopSwerve;
-import frc.robot.commands.CubeLowCG;
+import frc.robot.commands.CubeLow;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -18,7 +18,7 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.ArmWristSubsystem;
 
 
-public class CubeTaxi extends SequentialCommandGroup
+public class CubeLowTaxi extends SequentialCommandGroup
 {
 
 
@@ -30,7 +30,7 @@ public class CubeTaxi extends SequentialCommandGroup
 
 
 
-    public CubeTaxi(Swerve s_Swerve, ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist, BooleanSupplier robotCentric) {
+    public CubeLowTaxi(Swerve s_Swerve, ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist, BooleanSupplier robotCentric) {
 
             this.m_swerve = s_Swerve; 
             this.m_arm = arm; 
@@ -58,7 +58,7 @@ public class CubeTaxi extends SequentialCommandGroup
         
 
         addCommands(
-            new CubeLowCG(m_arm, m_extend, m_wrist, m_intake ).withTimeout(7),
+            new CubeLow(m_arm, m_extend, m_wrist, m_intake ).withTimeout(1),
             driveCommand.withTimeout(seconds)
 
         );

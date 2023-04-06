@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.CubeMid;
-// import frc.robot.commands.CubeMidCG;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -57,7 +56,7 @@ public class CubeMidTaxi_version1 extends SequentialCommandGroup
 
         addCommands(
             //just in case
-            new CubeMid(arm, wrist, intake).withTimeout(7),
+            new CubeMid(arm, wrist, intake).withTimeout(2),
             driveCommand
 
         );
