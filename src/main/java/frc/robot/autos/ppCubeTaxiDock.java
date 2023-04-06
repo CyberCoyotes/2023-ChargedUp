@@ -9,7 +9,7 @@ import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
-import frc.robot.commands.CubeLow;
+import frc.robot.commands.CubeLowCG;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -34,7 +34,7 @@ public class ppCubeTaxiDock extends SequentialCommandGroup
             addRequirements();
 
         addCommands(
-            new CubeLow(arm, extend, wrist, intake).withTimeout(1),
+            new CubeLowCG(arm, extend, wrist, intake).withTimeout(1),
             
             RobotContainer.buildAuton(taxiDock)
 
