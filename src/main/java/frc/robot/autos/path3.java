@@ -1,6 +1,6 @@
 /* 
  * 
- * PathPlanner based Auton, deploys low cube
+ * PathPlanner based Auton
  * 
 */
 package frc.robot.autos;
@@ -12,18 +12,9 @@ import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.ArmExtensionSubsystem;
-import frc.robot.subsystems.ArmRotationSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ArmWristSubsystem;
 
 public class path3 extends SequentialCommandGroup
 {
-    private ArmRotationSubsystem m_arm;
-    private ArmExtensionSubsystem m_extend;
-    private IntakeSubsystem m_intake;
-    private ArmWristSubsystem m_wrist;
-
 
     public path3() {
 
