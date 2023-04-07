@@ -294,8 +294,8 @@ public class RobotContainer {
         // placeConeMid.whileTrue(USETHISPICKUP);
         zeroArmEncoder.onTrue(new InstantCommand(() -> armSub.ZeroArmEncoder()));
         creepButton.onTrue(new InstantCommand(() -> SetCreepToggle(!GetCreepToggle())));// inverts creep when button
-        stowArm.onTrue(stowCommand);
-        loadElement.onTrue(wristReceive);
+        stowArm.whileTrue(stowCommand);
+        loadElement.whileTrue(wristReceive);
         operatorB.whileTrue(coneMid);
         operatorA.whileTrue(cubeMid);
 
@@ -351,6 +351,7 @@ public class RobotContainer {
         return swerveAutonBuilder.fullAuto(trajs);
     }
 
+    
     private void configureDefaultCommands() {
         // visionSub.setDefaultCommand(new GetTagID(visionSub));
 
@@ -450,4 +451,6 @@ public class RobotContainer {
         tab.addNumber("new gyro read", () -> s_Swerve.getYaw().getDegrees());
         tab.addNumber("Arm Rotation(°)", () -> (armSub.GetRotationInDeg()));
     }
+
+ 
 }
