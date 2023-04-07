@@ -1,4 +1,4 @@
-/* Deposits Cone 1 Mid, pickups up Cone 2, deposits low; PathPlanner based drive *on cable side* */
+/* Deposits Cone 1 Mid, pickups up Cone 2, deposits low; PathPlanner based drive *on non-cable side* */
 
 package frc.robot.autos;
 
@@ -11,7 +11,7 @@ import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.ArmWristSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class Cube2 extends SequentialCommandGroup
+public class Cube2II extends SequentialCommandGroup
 {
     private ArmRotationSubsystem m_arm;
     private ArmExtensionSubsystem m_extend;
@@ -19,7 +19,7 @@ public class Cube2 extends SequentialCommandGroup
     private ArmWristSubsystem m_wrist;
 
 
-    public Cube2(ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist) {
+    public Cube2II(ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist) {
 
             this.m_arm = arm; 
             this.m_extend = extend; 
@@ -30,11 +30,11 @@ public class Cube2 extends SequentialCommandGroup
 
         addCommands(
             new CubeLowCG(arm, extend, wrist, intake).withTimeout(1),
-            new path1(), // Path to Cube 2
+            new pathA(), // Path to Cube 2 on non-cable side
             new PickupGroundCube(arm, wrist, intake, extend), // 3 (s) is current run time
             new StowArmStage(m_extend, m_arm, wrist, 2000, 50, 500),
             new StowArmStage(m_extend, m_arm, wrist, 2000, 30, 500),
-            new path3(), // Path back to deposit Cube 2
+            new pathB(), // Path back to deposit Cube 2 on non-cable side
             new CubeLowCG(arm, extend, wrist, intake).withTimeout(1)
             
         );
