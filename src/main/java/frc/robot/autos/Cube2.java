@@ -34,7 +34,7 @@ public class Cube2 extends SequentialCommandGroup
             new PickupGroundCube(arm, wrist, intake, extend), // 3 (s) is current run time
             new StowArmStage(m_extend, m_arm, wrist, 2000, 50, 500),
             new StowArmStage(m_extend, m_arm, wrist, 2000, 30, 500),
-            new path3(), // Path back to deposit Cube 2
+            new path2(), // Path back to deposit Cube 2
             new CubeLowCG(arm, extend, wrist, intake).withTimeout(1)
             
         );
