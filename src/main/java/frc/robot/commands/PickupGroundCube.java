@@ -24,7 +24,7 @@ public class PickupGroundCube extends SequentialCommandGroup{
             // TODO Test 1.6 --> 1.5
             // 8220+1200 = 9420
 
-            new SetIntakeCube(intakeSub).withTimeout(0.5)       // TODO Test 0.50
+            new SetIntakeCube(intakeSub).withTimeout(0.5 + .5)//1       // TODO Test 0.50
                                                                         // Total time = 3 (s)
 
         );
