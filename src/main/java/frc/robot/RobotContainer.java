@@ -24,8 +24,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.CubeTaxiEngage;
@@ -33,8 +31,8 @@ import frc.robot.autos.CubeTaxi;
 import frc.robot.autos.CubeMidTaxiDock;
 import frc.robot.Constants.Arm;
 import frc.robot.autos.Cube2;
+import frc.robot.autos.Cube2II;
 import frc.robot.autos.ppCubeTaxi;
-import frc.robot.autos.ppCubeMidTaxi;
 import frc.robot.autos.ppTaxi4meters;
 import frc.robot.autos.ppCubeTaxiDock;
 import frc.robot.commands.*;
@@ -174,20 +172,10 @@ public class RobotContainer {
     /* PathPlanner based taxi out 4 meters */
     Command ppTaxi4meters = new ppTaxi4meters();
     Command ppCubeLowTaxi = new ppCubeTaxi(armExtendSub, armSub, intakeSub, wristSub);
-    Command ppCubeMidTaxi = new ppCubeMidTaxi(armExtendSub, armSub, intakeSub, wristSub);
-    Command ppCubeMidTaxiDock = new ppCubeTaxiDock(armExtendSub, armSub, intakeSub, wristSub);
-
-    /* Primary Autons */
-    Command Cube2 = new Cube2(armExtendSub, armSub, intakeSub, wristSub);
-
-    // Command ppCube2_sum = new Cube2(armExtendSub, armSub, intakeSub, wristSub);
-    // Command ppCube3_sum = new ppCube3_sum(armExtendSub, armSub, intakeSub, wristSub);
-
-
-    /* Idealized "complete" autons but alas */
-    // Command ppCube2 = new ppCube2();
-    // Command ppCube3 = new ppCube3();
-    
+    // Command ppCubeMidTaxi = new ppCubeMidTaxi(armExtendSub, armSub, intakeSub, wristSub);
+    Command ppCubeTaxiDock = new ppCubeTaxiDock(armExtendSub, armSub, intakeSub, wristSub);
+    Command Cube2 = new Cube2(armExtendSub, armSub, intakeSub, wristSub);    
+    Command Cube2II = new Cube2II(armExtendSub, armSub, intakeSub, wristSub);    
 
 
     // Command ppTaxiFloorPickup = new ppTaxiFloorPickup(armExtendSub, armSub, intakeSub, wristSub, robotCentric);
@@ -195,26 +183,6 @@ public class RobotContainer {
     // private CommandCycle exampleCommandCycle = new CommandCycle(fooToTerminal, barToTerminal);
     // private Supplier<Command> coneCargoCommandSupplier = () ->
     // coneCargoCycle.Get();
-
-    /*
-     * // This will load the file "Example Path.path" and generate it with a max
-     * velocity of 4 m/s and a max acceleration of 3 m/s^2
-     * PathPlannerTrajectory cube2path = PathPlanner.loadPath("Cube2", new
-     * PathConstraints(4, 2));
-     * 
-     * // This is just an example event map. It would be better to have a constant,
-     * global event map
-     * // in your code that will be used by all path following commands.
-     * HashMap<String, Command> eventMap = new HashMap<>();
-     * eventMap.put("marker1", new PrintCommand("Passed marker 1"));
-     * eventMap.put("intakeDown", new IntakeDown());
-     * 
-     * FollowPathWithEvents cube2events = new FollowPathWithEvents(
-     * getPathFollowingCommand(cube2path),
-     * cube2path.getMarkers(),
-     * eventMap
-     * );
-     */
 
     // #endregion
 
@@ -404,14 +372,17 @@ public class RobotContainer {
         // autonChooser.addOption("BETA Mid Cube + Taxi (Side)", ppCubeMidTaxi); 
 
         /* Taxi and Dock; timed based drive */
-        // autonChooser.addOption("BETA Mid Cube + Taxi + Dock (Middle)", cubeMidTaxiDock); 
-    
-        /* Taxi and Dock; PathPlanner based drive */
-        // autonChooser.addOption("BETA Mid Cube + Taxi + Dock (Middle)", ppCubeMidTaxiDock); 
+        // autonChooser.addOption("BETA Cube + Taxi + Dock (Middle)", cubeMidTaxiDock); 
         
         /* Deposits Cone 1 Mid, pickups up Cone 2, deposits low; PathPlanner based drive */
-        autonChooser.addOption("Score 2 Cubes (Cable Side Only)", Cube2); 
+        autonChooser.addOption("Score 2 Cubes (Cable Side)", Cube2); 
         
+        /* Deposits Cone 1 Mid, pickups up Cone 2, deposits low; PathPlanner based drive */
+        autonChooser.addOption("BETA Score 2 Cubes (NON Cable)", Cube2II); 
+
+        /* Taxi and Dock; PathPlanner based drive */
+        autonChooser.addOption("BETA Cube + Taxi + Dock", ppCubeTaxiDock); 
+
     }
 
     /*
