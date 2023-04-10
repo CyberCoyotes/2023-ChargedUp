@@ -25,26 +25,44 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXSimCollection;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXSimCollection;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.simulation.EncoderSim;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.Constants.Arm;
+import frc.robot.ctre.PhysicsSim;
 
 public class ArmExtensionSubsystem extends SubsystemBase {
 
  
-    private TalonSRX m_motorController = new TalonSRX(Constants.Arm.ARM_EXTENDER_MOTOR_ID);
-    
+    private WPI_TalonSRX m_motorController = new WPI_TalonSRX(Constants.Arm.ARM_EXTENDER_MOTOR_ID);
+    private TalonSRXSimCollection talonSim = m_motorController.getSimCollection();
     // private Encoder m_Encoder = new Encoder(0, 0, 0)
-
-   
+     
     /**
      * 
      * @return The encoder reading of the motor
      */
+    
+    
+	public void simulationInit() {
+		PhysicsSim.getInstance().addTalonSRX(m_motorController, 0.75, 5100, false);
+	}
+	public void simulationPeriodic() {
+		PhysicsSim.getInstance().run();
+	}
     public int ReadExtension()
     {
+        
         
         //absolute quad mag encoder; Placed after the gearboxes (1:4, 1:9). Need to test if a single lap ()
         return (int)m_motorController.getSelectedSensorPosition();
@@ -75,7 +93,18 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     }
     public ArmExtensionSubsystem() {
       Setup();
+      if (Robot.isSimulation()) 
+      {
+        SetupSimulated();
+      }
     }
+    private void SetupSimulated() 
+    {
+        Shuffleboard.getTab("simulation").addNumber("extension", () -> this.ReadExtension());
+        
+        
+    }
+
     public void setArmIn() {
         m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_POSITION_IN);    
     }
@@ -83,7 +112,6 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // System.out.println(m_motorController.getSelectedSensorPosition());
-
     }
     public void setArmMid() {
         m_motorController.set(TalonSRXControlMode.Position, 9500);
@@ -91,6 +119,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     public void PercentOutputSupplierDrive(double input)
     {
         m_motorController.set(ControlMode.PercentOutput, input);
+        // talonSim.setAnalogVelocity(2222);
     }
     
     /**

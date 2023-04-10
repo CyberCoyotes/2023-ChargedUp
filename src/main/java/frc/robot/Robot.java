@@ -76,6 +76,14 @@ public class Robot extends TimedRobot {
       
     }
   }
+  @Override
+  public void simulationPeriodic() {
+    m_robotContainer.SimulationPeriodic();
+  }
+  @Override
+  public void simulationInit() {
+      m_robotContainer.SimulationInit();
+  }
 
   /** This function is called periodically during autonomous. */
   @Override

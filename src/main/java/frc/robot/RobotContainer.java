@@ -12,6 +12,8 @@ package frc.robot;
 
 import java.util.List;
 
+import javax.swing.plaf.synth.Region;
+
 // import com.ctre.phoenix.led.CANdle;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
@@ -20,6 +22,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.simulation.RoboRioSim;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -36,7 +40,10 @@ import frc.robot.autos.ppCubeTaxi;
 import frc.robot.autos.ppTaxi4meters;
 import frc.robot.autos.ppCubeTaxiDock;
 import frc.robot.commands.*;
+import frc.robot.ctre.PhysicsSim;
 import frc.robot.subsystems.*;
+
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 /* PathPlanner */
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
@@ -57,7 +64,7 @@ public class RobotContainer {
     // #region Misc
 
     private boolean creepMode;
-
+    private TalonSRX simulationTestingTalon;
     private void SetCreepToggle(boolean toggle) {
         creepMode = toggle;
     }
@@ -67,6 +74,9 @@ public class RobotContainer {
     }
 
     private final DigitalInput limit = new DigitalInput(Constants.LIMIT_SWITCH_ARM_PORT);
+
+    Field2d field = new Field2d();
+    
 
     // #endregion
     // #region Controllers
@@ -80,6 +90,7 @@ public class RobotContainer {
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
 
+    
     private final int LT = XboxController.Axis.kLeftTrigger.value;
     private final int RT = XboxController.Axis.kRightTrigger.value;
     // #endregion
@@ -186,6 +197,7 @@ public class RobotContainer {
 
     // #endregion
 
+    
     /* Added from Bobcats */
     public void displayGyro() {
         SmartDashboard.putNumber("pitch", s_Swerve.getPitch());
@@ -223,8 +235,33 @@ public class RobotContainer {
     /**
      * Runs relevant code for any non-CAN sensors
      */
-    public void SensorPeriodic() {
+    public void SensorPeriodic() 
+    {
+    
     }
+    public void SimulationPeriodic()
+    {
+        field.setRobotPose(s_Swerve.getPose());
+        // System.out.println(s_Swerve.getPose().getX());
+        System.out.println(s_Swerve.getCurrentCommand());
+
+    }
+    public void SimulationInit()
+    {
+        //#region drivetrain
+
+        // SmartDashboard.putData(field);
+        // Shuffleboard.getTab("simulation").add("Field", field);
+        // Shuffleboard.getTab("simulation").add("Robot X", s_Swerve.getPose().getX());
+        // Shuffleboard.getTab("simulation").add("Robot Y", s_Swerve.getPose().getY());
+        
+        //#endregion 
+
+        
+
+    }
+
+
 
     public RobotContainer() {
 
@@ -300,6 +337,8 @@ public class RobotContainer {
                 ));
         */
     }
+
+
 
     /* Bobcat 177 Code */
     public static Command buildAuton(List<PathPlannerTrajectory> trajs) {
