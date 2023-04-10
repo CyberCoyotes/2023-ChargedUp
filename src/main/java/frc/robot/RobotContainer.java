@@ -232,6 +232,10 @@ public class RobotContainer {
 
         Shuffleboard.getTab("Experimental Commands"); // Create an Experimental "Tab"
 
+        SmartDashboard.putData("Pickup Ground Cube", new PickupGroundCube(armSub, wristSub, intakeSub, armExtendSub));
+
+
+
         configureButtonBindings();
         configureDefaultCommands();
         configureAutonChooser();
