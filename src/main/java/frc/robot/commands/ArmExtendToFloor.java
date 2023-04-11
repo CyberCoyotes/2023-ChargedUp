@@ -13,7 +13,7 @@ import frc.robot.subsystems.ArmExtensionSubsystem;
 
 
 public class ArmExtendToFloor extends CommandBase {
-   
+
     private final ArmExtensionSubsystem m_armExtensionSubsystem;
     private final double position;
     
