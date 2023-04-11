@@ -15,13 +15,13 @@ import frc.robot.subsystems.ArmExtensionSubsystem;
 public class ArmExtendToFloor extends CommandBase {
 
     private final ArmExtensionSubsystem m_armExtensionSubsystem;
-    private final double position;
+
     
-    public ArmExtendToFloor(ArmExtensionSubsystem subsystem, double position) {
+    public ArmExtendToFloor(ArmExtensionSubsystem subsystem) {
 
      m_armExtensionSubsystem = subsystem;
      
-     this.position = position;
+
     
      addRequirements(m_armExtensionSubsystem);
     
@@ -34,15 +34,15 @@ public class ArmExtendToFloor extends CommandBase {
     
     @Override
     public void execute() {
-        // VanScoyoc shot in the dark
-        m_armExtensionSubsystem.getExtensionPosition();
+        // TODO VanScoyoc shot in the dark
+        m_armExtensionSubsystem.getExtensionPosition(); // Reads the current extension encoder position
         m_armExtensionSubsystem.pickupFloorCube();
     }
 
 
     @Override
     public boolean isFinished() {
-        // VanScoyoc shot in the dark
+        // TODO VanScoyoc shot in the dark
         if (m_armExtensionSubsystem.getExtensionPosition() > 2000) { // FIXME Should be a constant around 9500 but using short extension for testing
             return true;
         } else {

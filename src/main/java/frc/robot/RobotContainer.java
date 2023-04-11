@@ -232,8 +232,9 @@ public class RobotContainer {
 
         Shuffleboard.getTab("Experimental Commands"); // Create an Experimental "Tab"
 
-        SmartDashboard.putData("Pickup Ground Cube", new PickupGroundCube(armSub, wristSub, intakeSub, armExtendSub));
+        // SmartDashboard.putData("Pickup Ground Cube", new PickupGroundCube(armSub, wristSub, intakeSub, armExtendSub)); // VanScoyoc test
 
+        SmartDashboard.putData("Extend to Floor", new ArmExtendToFloor(armExtendSub)); // TODO VanScoyoc test
 
 
         configureButtonBindings();
