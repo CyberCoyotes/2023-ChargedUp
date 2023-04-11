@@ -107,4 +107,19 @@ public class ArmExtensionSubsystem extends SubsystemBase {
 
     }
 
+    // VanScoyoc attempt
+    public double getExtensionPosition()
+    {
+        //absolute quad mag encoder; Placed after the gearboxes (1:4, 1:9). Need to test if a single lap ()
+        double extensionPosition = m_motorController.getSelectedSensorPosition();
+
+        return extensionPosition;
+    }
+
+    // VanScoyoc attempt
+    int EXTENSION_FLOOR = 9500;
+    public void pickupFloorCube() {
+        m_motorController.set(TalonSRXControlMode.Position, EXTENSION_FLOOR);
+    }
+
 }
