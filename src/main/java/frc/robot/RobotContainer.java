@@ -15,6 +15,7 @@ import java.util.List;
 // import com.ctre.phoenix.led.CANdle;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -206,6 +207,15 @@ public class RobotContainer {
         SmartDashboard.putBoolean("Limit Switch", limit.get());
         SmartDashboard.putNumber("Wrist Encoder", wristSub.getWristPos());
         SmartDashboard.putString("arm mode", armSub.GetMode());
+
+        for (int i = 0; i < s_Swerve.getModuleStates().length; i++) 
+        {
+         
+            SmartDashboard.putNumber("thing " + i,s_Swerve.getModuleStates()[i].angle.getDegrees() % 360);
+
+        }
+
+
         // SmartDashboard.putString("Current Cone cargo commmand", coneCargoCommandSupplier.get().getName());
         SmartDashboard.putNumber("pitch", (s_Swerve.GetPitch()));
         // SmartDashboard.putString("mode", (s_Swerve.GetPitch()));
@@ -421,6 +431,8 @@ public class RobotContainer {
         tab.addNumber("Arm_Extent", () -> armExtendSub.ReadExtension());
         tab.addNumber("new gyro read", () -> s_Swerve.getYaw().getDegrees());
         tab.addNumber("Arm Rotation(°)", () -> (armSub.GetRotationInDeg()));
+
+       
     }
 
  
