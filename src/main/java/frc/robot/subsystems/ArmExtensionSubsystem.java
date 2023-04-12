@@ -55,7 +55,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         public double getExtensionPosition()
         {
             //absolute quad mag encoder; Placed after the gearboxes (1:4, 1:9). Need to test if a single lap ()
-            double extensionPosition = m_motorController.getSelectedSensorPosition();
+            double extensionPosition = m_motorController.getSelectedSensorPosition(0);
     
             return extensionPosition;
         }
@@ -123,7 +123,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     public void extendToFloorCube() {
         m_motorController.configPeakOutputForward(0.2);
         m_motorController.configPeakOutputReverse(-0.2);
-        m_motorController.set(TalonSRXControlMode.Position, 750); //Arm.EXTENSION_FLOOR_POS
+        m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_FLOOR_POS); //Arm.EXTENSION_FLOOR_POS
     }
 
 }
