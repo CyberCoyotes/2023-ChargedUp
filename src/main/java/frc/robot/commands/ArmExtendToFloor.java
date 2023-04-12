@@ -43,7 +43,7 @@ public class ArmExtendToFloor extends CommandBase {
     @Override
     public boolean isFinished() {
         // TODO VanScoyoc shot in the dark
-        if (m_armExtensionSubsystem.getExtensionPosition() > 2000) { // FIXME Should be a constant around 9500 but using short extension for testing
+        if (m_armExtensionSubsystem.getExtensionPosition() > 500) { // FIXME Should be a constant around 9500 but using short extension for testing
             return true;
         } else {
             return false;
