@@ -199,7 +199,7 @@ public class RobotContainer {
 
     public void DebugMethod() {
 
-        SmartDashboard.putNumber("Arm_Extent", armExtendSub.getExtensionPosition()); // .ReadExtension
+        SmartDashboard.putNumber("Arm_Extent", armExtendSub.ReadExtension()); // .ReadExtension
         SmartDashboard.putNumber("new gyro read", s_Swerve.getYaw().getDegrees());
         SmartDashboard.putNumber("Arm Rotation(°)", (armSub.GetRotationInDeg()));
         SmartDashboard.putNumber("Arm Rotation(Ticks)", (armSub.GetRotation()));

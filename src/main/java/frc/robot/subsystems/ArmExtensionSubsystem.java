@@ -56,7 +56,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         
 
 
-        m_motorController.setSelectedSensorPosition(0);
+        // m_motorController.setSelectedSensorPosition(0);
         
         m_motorController.config_kP(0,1);
         m_motorController.config_kI(0,0);
@@ -74,7 +74,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     
     }
     public ArmExtensionSubsystem() {
-      Setup();
+    //    Setup();
     }
     public void setArmIn() {
         m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_POSITION_IN);    
