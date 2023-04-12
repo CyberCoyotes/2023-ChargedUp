@@ -35,8 +35,9 @@ public class ArmExtendToFloor extends CommandBase {
     @Override
     public void execute() {
         // TODO VanScoyoc shot in the dark
-        m_armExtensionSubsystem.getExtensionPosition(); // Reads the current extension encoder position
-        m_armExtensionSubsystem.pickupFloorCube();
+        // m_armExtensionSubsystem.getExtensionPosition(); // Reads the current extension encoder position
+
+        m_armExtensionSubsystem.extendToFloorCube();
     }
 
 
