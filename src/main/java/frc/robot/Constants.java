@@ -212,7 +212,7 @@ public final class Constants {
             public static final int driveMotorID = 1; // Team 3603
             public static final int angleMotorID = 2; // Team 3603
             public static final int canCoderID = 21; // Team 3603
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(67.49 + 180); // Team 3603 added 180 to make the robot align with "front"
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0); // Team 3603 added 180 to make the robot align with "front" 67.49 + 180
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
                     canCoderID, angleOffset);
         }
@@ -222,7 +222,7 @@ public final class Constants {
             public static final int driveMotorID = 3; // Team 3603
             public static final int angleMotorID = 4; // Team 3603
             public static final int canCoderID = 22; // Team3 603
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(79.35 + 180);//invert
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);//invert 79.35 + 180
             // removing 180 
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
                     canCoderID, angleOffset);
@@ -233,7 +233,7 @@ public final class Constants {
             public static final int driveMotorID = 5; // Team 3603
             public static final int angleMotorID = 6; // Team 3603
             public static final int canCoderID = 23; // Team 3603
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-33.94 + 180);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0); // -33.94 + 180
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
                     canCoderID, angleOffset);
         }
@@ -244,7 +244,7 @@ public final class Constants {
             public static final int driveMotorID = 7; // Team 3603
             public static final int angleMotorID = 8; // Team 3603
             public static final int canCoderID = 24; // Team 3603
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(361.07 + 180);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0); //361.07 + 180
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
                     canCoderID, angleOffset);
         }
