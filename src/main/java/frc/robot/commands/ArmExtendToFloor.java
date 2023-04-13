@@ -45,13 +45,11 @@ public class ArmExtendToFloor extends CommandBase {
     public boolean isFinished() {
         // TODO VanScoyoc shot in the dark
         // Attempting to use a conditional check against encoder value vs desired value w/o using fancy PID
-        // if (m_armExtensionSubsystem.ReadExtension()  <= Arm.EXTENSION_FLOOR_POS) { // FIXME Should be a constant around 9500 but using short extension for testing
-            // return true;
-        // } else {
-            // return true; // Runs without stopping
-        // }
-
-        return false;
+        if (m_armExtensionSubsystem.ReadExtension()  <= -5000) { // FIXME Should be a constant around 9500 but using short extension for testing
+            return true;
+        } else {
+            return false; // Runs without stopping
+        }
     
     }
 
