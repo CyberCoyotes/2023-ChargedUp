@@ -58,9 +58,9 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         
 
 
-        m_motorController.setSelectedSensorPosition(0);
-
+        m_motorController.configFactoryDefault();
         m_motorController.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
+        m_motorController.setSelectedSensorPosition(0);
         
         m_motorController.config_kP(0,1);
         m_motorController.config_kI(0,0);
@@ -74,7 +74,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         m_motorController.configForwardSoftLimitEnable(true, 0);
         m_motorController.configForwardSoftLimitThreshold(Arm.EXTENSION_POSITION_OUT + m_motorController.getSelectedSensorPosition());
         m_motorController.configReverseSoftLimitEnable(true, 0);
-        m_motorController.setSensorPhase(false);
+        m_motorController.setSensorPhase(true);
     
     }
     public ArmExtensionSubsystem() {
