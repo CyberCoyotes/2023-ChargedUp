@@ -13,17 +13,18 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 
-public class path2 extends SequentialCommandGroup
+public class pathNonCableSide_B extends SequentialCommandGroup
 {
 
-    public path2() {
+    public pathNonCableSide_B() {
 
-        List<PathPlannerTrajectory> path2 = PathPlanner.loadPathGroup("Cube2_p2", new PathConstraints(4, 2));
+        List<PathPlannerTrajectory> pathB = PathPlanner.loadPathGroup("Cube2_pB", new PathConstraints(4, 3));
     
         addRequirements();
 
         addCommands(
-            RobotContainer.buildAuton(path2) // Path back to station
+            RobotContainer.buildAuton(pathB) // Path back to station on non-cable side
+
     
         );
     }
