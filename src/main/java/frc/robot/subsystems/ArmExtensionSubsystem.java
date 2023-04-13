@@ -123,7 +123,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     public void extendToFloorCube() {
         m_motorController.configPeakOutputForward(0.25);
         m_motorController.configPeakOutputReverse(-0.25);
-        m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_FLOOR_POS); // FIXME Test value currently being used
+        m_motorController.set(TalonSRXControlMode.Position, -4000); // FIXME Test value currently being used Arm.EXTENSION_FLOOR_POS
     }
 
 }
