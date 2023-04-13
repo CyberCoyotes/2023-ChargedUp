@@ -199,6 +199,11 @@ public class RobotContainer {
 
     public void DebugMethod() {
 
+        SmartDashboard.putNumber("Module Rotation0",s_Swerve.mSwerveMods[0].getState().angle.getDegrees()   % 360);
+        SmartDashboard.putNumber("Module Rotation1",s_Swerve.mSwerveMods[1].getState().angle.getDegrees()   % 360);
+        SmartDashboard.putNumber("Module Rotation2",s_Swerve.mSwerveMods[2].getState().angle.getDegrees()   % 360);
+        SmartDashboard.putNumber("Module Rotation3",s_Swerve.mSwerveMods[3].getState().angle.getDegrees()   % 360);
+
         SmartDashboard.putNumber("Arm_Extent", armExtendSub.ReadExtension()); // .ReadExtension
         SmartDashboard.putNumber("new gyro read", s_Swerve.getYaw().getDegrees());
         SmartDashboard.putNumber("Arm Rotation(°)", (armSub.GetRotationInDeg()));
