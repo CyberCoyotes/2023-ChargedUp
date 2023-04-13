@@ -121,9 +121,9 @@ public class ArmExtensionSubsystem extends SubsystemBase {
 
     // TODO Test VanScoyoc attempt
     public void extendToFloorCube() {
-        m_motorController.configPeakOutputForward(0.2);
-        m_motorController.configPeakOutputReverse(-0.2);
-        m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_FLOOR_POS); //Arm.EXTENSION_FLOOR_POS
+        m_motorController.configPeakOutputForward(0.25);
+        m_motorController.configPeakOutputReverse(-0.25);
+        m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_FLOOR_POS); // FIXME Test value currently being used
     }
 
 }
