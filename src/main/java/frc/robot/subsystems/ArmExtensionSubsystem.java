@@ -42,7 +42,18 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     {
         //absolute quad mag encoder; Placed after the gearboxes (1:4, 1:9). Need to test if a single lap ()
         return (int)m_motorController.getSelectedSensorPosition();
+        
     }
+
+        // VanScoyoc attempt
+        public double getExtensionPosition()
+        {
+            //absolute quad mag encoder; Placed after the gearboxes (1:4, 1:9). Need to test if a single lap ()
+            double extensionPosition = m_motorController.getSelectedSensorPosition(0);
+    
+            return extensionPosition;
+        }
+    
 
     public void Setup()
     {
@@ -62,7 +73,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         m_motorController.setSensorPhase(true);
     }
     public ArmExtensionSubsystem() {
-      Setup();
+    //    Setup();
     }
     public void setArmIn() {
         m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_POSITION_IN);    
@@ -89,8 +100,8 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     
         double target = (double)input;
         // System.out.println();
-        m_motorController.configPeakOutputForward(0.4);
-        m_motorController.configPeakOutputReverse(-0.4);
+        m_motorController.configPeakOutputForward(0.8);
+        m_motorController.configPeakOutputReverse(-0.8);
         m_motorController.set(ControlMode.Position, target);
 
     }

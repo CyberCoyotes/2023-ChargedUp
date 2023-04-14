@@ -199,7 +199,12 @@ public class RobotContainer {
 
     public void DebugMethod() {
 
-        SmartDashboard.putNumber("Arm_Extent", armExtendSub.ReadExtension());
+        // SmartDashboard.putNumber("Module Rotation0",s_Swerve.mSwerveMods[0].getState().angle.getDegrees());
+        // SmartDashboard.putNumber("Module Rotation1",s_Swerve.mSwerveMods[1].getState().angle.getDegrees());
+        SmartDashboard.putNumber("Module Rotation2",s_Swerve.mSwerveMods[2].getState().angle.getDegrees());
+        SmartDashboard.putNumber("Module Rotation3",s_Swerve.mSwerveMods[3].getState().angle.getDegrees()   % 360);
+
+        SmartDashboard.putNumber("Arm_Extent", armExtendSub.ReadExtension()); // .ReadExtension
         SmartDashboard.putNumber("new gyro read", s_Swerve.getYaw().getDegrees());
         SmartDashboard.putNumber("Arm Rotation(°)", (armSub.GetRotationInDeg()));
         SmartDashboard.putNumber("Arm Rotation(Ticks)", (armSub.GetRotation()));
@@ -231,6 +236,11 @@ public class RobotContainer {
         Shuffleboard.getTab("Auton Chooser").add(autonChooser).withSize(2, 4); // Create an Auton "Tab"
 
         Shuffleboard.getTab("Experimental Commands"); // Create an Experimental "Tab"
+
+        // SmartDashboard.putData("Pickup Ground Cube", new PickupGroundCube(armSub, wristSub, intakeSub, armExtendSub)); // VanScoyoc test
+
+        SmartDashboard.putData("Extend to Floor", new ExtendToFloor(armExtendSub)); // TODO VanScoyoc test
+
 
         configureButtonBindings();
         configureDefaultCommands();
