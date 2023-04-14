@@ -67,6 +67,8 @@ public final class Constants {
     
          //#region arm   
         public static final int ARM_EXTENT_LIMIT = -14500;//playing it safe
+        public static final int ARM_EXTENT_LIMIT_UPPER = 200;//playing it safe
+
         // public static final int ARM_EXTENT_RANGE = //todo determine
 
 
