@@ -239,7 +239,7 @@ public class RobotContainer {
 
         // SmartDashboard.putData("Pickup Ground Cube", new PickupGroundCube(armSub, wristSub, intakeSub, armExtendSub)); // VanScoyoc test
 
-        SmartDashboard.putData("Extend to Floor", new ArmExtendToFloor(armExtendSub)); // TODO VanScoyoc test
+        SmartDashboard.putData("Extend to Floor", new ExtendToFloor(armExtendSub)); // TODO VanScoyoc test
 
 
         configureButtonBindings();
