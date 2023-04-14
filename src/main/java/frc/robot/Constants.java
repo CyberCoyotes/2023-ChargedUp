@@ -93,7 +93,7 @@ public final class Constants {
         public final static double EXTENSION_POSITION_IN  = -200;
         // public final static int EXTENSION_FLOOR_POS = -9450; // Scoy's attempt
 
-        public final static int EXTENSION_FLOOR_POS = -1000; // Scoy's TEST attempt
+        public final static int EXTENSION_FLOOR_POS = 5000; // Scoy's TEST attempt
 
         public static final int PIDSlotIDx = 0; //keep this
         public static final double kP =  (0.50 * 1023) / 2048; //50% power at total error

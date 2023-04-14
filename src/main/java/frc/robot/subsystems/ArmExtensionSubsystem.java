@@ -105,4 +105,10 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         m_motorController.set(ControlMode.Position, target);
 
     }
+    public void extendToFloorCube() {
+        m_motorController.configPeakOutputForward(0.25);
+        m_motorController.configPeakOutputReverse(-0.25);
+        m_motorController.set(TalonSRXControlMode.Position,2000); // FIXME use the Arm.EXTENSION_FLOOR_POS once tested
+
+    }
 }
