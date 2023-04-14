@@ -13,12 +13,12 @@ import frc.robot.Constants.Arm;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 
 
-public class ArmExtendToFloor extends CommandBase {
+public class ExtendToFloor_version3 extends CommandBase {
 
     private final ArmExtensionSubsystem m_armExtensionSubsystem;
 
     
-    public ArmExtendToFloor(ArmExtensionSubsystem subsystem) {
+    public ExtendToFloor_version3(ArmExtensionSubsystem subsystem) {
 
      m_armExtensionSubsystem = subsystem;
      
@@ -30,7 +30,6 @@ public class ArmExtendToFloor extends CommandBase {
   
     @Override
     public void initialize() {
-        super.initialize();
     }
     
     @Override
@@ -44,14 +43,13 @@ public class ArmExtendToFloor extends CommandBase {
     @Override
     public boolean isFinished() {
         // TODO VanScoyoc shot in the dark
-        // Attempting to use a conditional check against encoder value vs desired value w/o using fancy PID
-        // if (m_armExtensionSubsystem.ReadExtension()  <= Arm.EXTENSION_FLOOR_POS) { // FIXME Should be a constant around 9500 but using short extension for testing
-            // return true;
-        // } else {
-            // return true; // Runs without stopping
-        // }
 
-        return false;
+        // Attempting to use a conditional check against encoder value vs desired value w/o using fancy PID
+        if (m_armExtensionSubsystem.ReadExtension()  <= -5000) { // FIXME Should be a constant around 9500 but using short extension for testing
+            return true;
+        } else {
+            return false; // Runs without stopping
+        }
     
     }
 
