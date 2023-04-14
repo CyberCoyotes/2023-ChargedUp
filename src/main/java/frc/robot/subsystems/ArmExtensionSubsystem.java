@@ -6,9 +6,6 @@
  * 
  * Pro 775 + TalonSRX
  * 
---------------------------------------------------------*/
-
-/*
  * Using a PID to smoothly move the PID, with a seperate FF for fighting gravity.
  * The FeedForward may be reperesented with cos * ff
  * Cosine - typical math cosine of representing x value
@@ -33,11 +30,9 @@ import frc.robot.Constants.Arm;
 
 public class ArmExtensionSubsystem extends SubsystemBase {
 
- 
     private TalonSRX m_motorController = new TalonSRX(Constants.Arm.ARM_EXTENDER_MOTOR_ID);
     
     // private Encoder m_Encoder = new Encoder(0, 0, 0)
-
    
     /**
      * 
@@ -45,7 +40,6 @@ public class ArmExtensionSubsystem extends SubsystemBase {
      */
     public int ReadExtension()
     {
-        
         //absolute quad mag encoder; Placed after the gearboxes (1:4, 1:9). Need to test if a single lap ()
         return (int)m_motorController.getSelectedSensorPosition();
         
@@ -63,26 +57,20 @@ public class ArmExtensionSubsystem extends SubsystemBase {
 
     public void Setup()
     {
-
-        
-
-
-        // m_motorController.setSelectedSensorPosition(0);
+        m_motorController.setSelectedSensorPosition(0);
         
         m_motorController.config_kP(0,1);
         m_motorController.config_kI(0,0);
         m_motorController.config_kD(0,0);
 
         m_motorController.selectProfileSlot(0, 0);
-        
-        
+           
         m_motorController.setNeutralMode(NeutralMode.Brake);
         m_motorController.configReverseSoftLimitThreshold(Arm.EXTENSION_POSITION_IN + m_motorController.getSelectedSensorPosition());
         m_motorController.configForwardSoftLimitEnable(true, 0);
         m_motorController.configForwardSoftLimitThreshold(Arm.EXTENSION_POSITION_OUT + m_motorController.getSelectedSensorPosition());
         m_motorController.configReverseSoftLimitEnable(true, 0);
         m_motorController.setSensorPhase(true);
-    
     }
     public ArmExtensionSubsystem() {
     //    Setup();
@@ -109,21 +97,12 @@ public class ArmExtensionSubsystem extends SubsystemBase {
      */
     public void SetArmToTickPosition(int input)
     {
-        
+    
         double target = (double)input;
         // System.out.println();
-        m_motorController.configPeakOutputForward(0.4);
-        m_motorController.configPeakOutputReverse(-0.4);
+        m_motorController.configPeakOutputForward(0.8);
+        m_motorController.configPeakOutputReverse(-0.8);
         m_motorController.set(ControlMode.Position, target);
 
     }
-
-
-    // TODO Test VanScoyoc attempt
-    public void extendToFloorCube() {
-        m_motorController.configPeakOutputForward(0.80);
-        m_motorController.configPeakOutputReverse(-0.80);
-        m_motorController.set(TalonSRXControlMode.Position, 2000); // FIXME Test value currently being used Arm.EXTENSION_FLOOR_POS
-    }
-
 }

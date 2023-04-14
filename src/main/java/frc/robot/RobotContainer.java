@@ -31,9 +31,9 @@ import frc.robot.autos.CubeTaxi;
 import frc.robot.autos.CubeMidTaxiDock;
 import frc.robot.Constants.Arm;
 import frc.robot.autos.Cube2;
-import frc.robot.autos.Cube2II;
+import frc.robot.autos.Cube2NonCableSide;
 import frc.robot.autos.ppCubeTaxi;
-import frc.robot.autos.ppTaxi4meters;
+import frc.robot.autos.pathTaxi4meters;
 import frc.robot.autos.ppCubeTaxiDock;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -170,12 +170,12 @@ public class RobotContainer {
     // Command cubeLowTaxiDock = new cgCubeLow_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     
     /* PathPlanner based taxi out 4 meters */
-    Command ppTaxi4meters = new ppTaxi4meters();
+    Command ppTaxi4meters = new pathTaxi4meters();
     Command ppCubeLowTaxi = new ppCubeTaxi(armExtendSub, armSub, intakeSub, wristSub);
     // Command ppCubeMidTaxi = new ppCubeMidTaxi(armExtendSub, armSub, intakeSub, wristSub);
     Command ppCubeTaxiDock = new ppCubeTaxiDock(armExtendSub, armSub, intakeSub, wristSub);
     Command Cube2 = new Cube2(armExtendSub, armSub, intakeSub, wristSub);    
-    Command Cube2II = new Cube2II(armExtendSub, armSub, intakeSub, wristSub);    
+    Command Cube2II = new Cube2NonCableSide(armExtendSub, armSub, intakeSub, wristSub);    
 
 
     // Command ppTaxiFloorPickup = new ppTaxiFloorPickup(armExtendSub, armSub, intakeSub, wristSub, robotCentric);
