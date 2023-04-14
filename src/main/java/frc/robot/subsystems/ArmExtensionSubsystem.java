@@ -100,15 +100,15 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     
         double target = (double)input;
         // System.out.println();
-        m_motorController.configPeakOutputForward(0.8);
-        m_motorController.configPeakOutputReverse(-0.8);
+        m_motorController.configPeakOutputForward(0.4); // TODO Try faster speeds
+        m_motorController.configPeakOutputReverse(-0.4);
         m_motorController.set(ControlMode.Position, target);
 
     }
     public void extendToFloorCube() {
         m_motorController.configPeakOutputForward(0.25);
         m_motorController.configPeakOutputReverse(-0.25);
-        m_motorController.set(TalonSRXControlMode.Position,2000); // FIXME use the Arm.EXTENSION_FLOOR_POS once tested
+        m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_FLOOR_POS); // FIXME use the Arm.EXTENSION_FLOOR_POS once tested
 
     }
 }
