@@ -66,7 +66,7 @@ public final class Constants {
         public static int WRIST_POS_MID = 72250;
     
          //#region arm   
-        public static final int ARM_EXTENT_LIMIT = 14500;//playing it safe
+        public static final int ARM_EXTENT_LIMIT = -14500;//playing it safe
         // public static final int ARM_EXTENT_RANGE = //todo determine
 
 
