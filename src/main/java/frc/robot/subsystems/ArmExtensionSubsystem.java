@@ -67,9 +67,9 @@ public class ArmExtensionSubsystem extends SubsystemBase {
            
         m_motorController.setNeutralMode(NeutralMode.Brake);
         m_motorController.configReverseSoftLimitThreshold(Arm.EXTENSION_POSITION_IN + m_motorController.getSelectedSensorPosition());
-        m_motorController.configForwardSoftLimitEnable(true, 0);
+        m_motorController.configForwardSoftLimitEnable(true, 0); // TODO These were enable and stopping arm from retracting
         m_motorController.configForwardSoftLimitThreshold(Arm.EXTENSION_POSITION_OUT + m_motorController.getSelectedSensorPosition());
-        m_motorController.configReverseSoftLimitEnable(true, 0);
+        m_motorController.configReverseSoftLimitEnable(true, 0); // TODO These were enable and stopping arm from retracting
         m_motorController.setSensorPhase(true);
     }
     public ArmExtensionSubsystem() {
