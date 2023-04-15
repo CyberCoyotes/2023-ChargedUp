@@ -10,8 +10,8 @@ import frc.robot.subsystems.ArmWristSubsystem;
 
 public class StowArmCG extends SequentialCommandGroup {
 
-    StowArmStageV2 stageOne;
-StowArmStageV2 stageTwo;
+    ArmSetpoint stageOne;
+ArmSetpoint stageTwo;
     ArmExtensionSubsystem extendSubsystem;
     ArmRotationSubsystem rotateSubsystem;
     ArmWristSubsystem wristSubsystem;
@@ -24,15 +24,15 @@ StowArmStageV2 stageTwo;
     }
 
 
-    public StowArmCG(ArmExtensionSubsystem m_extend, ArmRotationSubsystem m_rotate, ArmWristSubsystem m_wrist, StowArmStageV2... stages) 
+    public StowArmCG(ArmExtensionSubsystem m_extend, ArmRotationSubsystem m_rotate, ArmWristSubsystem m_wrist, ArmSetpoint... stages) 
     {
         this.rotateSubsystem = m_rotate;
         this.extendSubsystem = m_extend;
         this.wristSubsystem = m_wrist;
 
         //holy constructor batman
-         stageOne = new StowArmStageV2(m_extend, m_rotate, m_wrist, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
-         stageTwo = new StowArmStageV2(m_extend, m_rotate, m_wrist, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
+         stageOne = new ArmSetpoint(m_extend, m_rotate, m_wrist, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
+         stageTwo = new ArmSetpoint(m_extend, m_rotate, m_wrist, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
 
         addRequirements(m_extend, m_rotate, m_wrist);
        addCommands(stages);

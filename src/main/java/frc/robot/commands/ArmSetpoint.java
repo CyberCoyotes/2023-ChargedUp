@@ -64,21 +64,20 @@ public class ArmSetpoint extends CommandBase
     public void execute() {
         
 
-        this.wristSubsystem.setWristToPosition(wristPoint);
+        this.wristSubsystem.SetToPosition(wristPoint);
         this.rotateSubsystem.RotateArmToDeg(rotatePoint);
-        this.extendSubsystem.SetArmToTickPosition(extendPoint);
-        System.out.println("RUNNING STAGE ONE");
+        this.extendSubsystem.SetToPosition(extendPoint);
 
     }
     @Override
     public boolean isFinished() {
 
-        //V2 as of 4-10 5-ish; now judges actual error, rather than "if really less then its done"
+        //V2 as of 4-10 5-ish; now judges actual error, rather than "if really less: done"
 
         boolean fin = 
-        Math.abs(wristPoint  - wristSubsystem.getWristPos() )<=wristAllowedError  &&
+        Math.abs(wristPoint  - wristSubsystem.GetPosition() )<=wristAllowedError  &&
         Math.abs(rotatePoint -  rotateSubsystem.GetRotationInDeg()) <=rotateAllowedError &&
-        Math.abs(extendPoint - extendSubsystem.ReadExtension() ) <=extendAllowedError ;
+        Math.abs(extendPoint - extendSubsystem.GetPosition() ) <=extendAllowedError ;
 
         if(fin)
         {

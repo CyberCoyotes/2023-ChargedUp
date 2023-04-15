@@ -20,7 +20,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
  * -90  | 72,250    | Position to deploy mid level cone. Also needs full extension
  */
 
-public class ArmWristSubsystem extends SubsystemBase {
+public class ArmWristSubsystem extends SubsystemBase implements IArmSubsystem {
 
     private TalonFX m_motorController = new TalonFX(Arm.WRIST_TALONFX_ID);
 
@@ -69,7 +69,8 @@ public class ArmWristSubsystem extends SubsystemBase {
      * when the arm rotation is approximately zero
     */
 
-    public void setWristToPosition(int encoder) {
+    @Override
+    public void SetToPosition(int encoder) {
     
         // m_motorController.configPeakOutputForward(0.8);
         // m_motorController.configPeakOutputReverse(-0.8);
@@ -91,10 +92,13 @@ public class ArmWristSubsystem extends SubsystemBase {
     
 
     // Return the current encoder position of the Wrist
-    public double getWristPos() {
-        return m_motorController.getSelectedSensorPosition();
+   
+    @Override
+    public int GetPosition() {
+        return (int)m_motorController.getSelectedSensorPosition();
         // return 0; // leaving for the LOLs. It wasn't returning an encoder value :P
     }
+
 
        /**
      * @param input the encoder degrees to set the arm at. Note the arm extends to roughly 0 at rest, and 14500 units maximum. 

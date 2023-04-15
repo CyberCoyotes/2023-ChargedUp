@@ -31,7 +31,7 @@ public class ArmExtendToArg extends CommandBase {
     
     @Override
     public void execute() {
-        m_armExtensionSubsystem.SetArmToTickPosition((int)this.target.getAsDouble());
+        m_armExtensionSubsystem.SetToPosition((int)this.target.getAsDouble());
     }
     @Override
     public boolean isFinished() {

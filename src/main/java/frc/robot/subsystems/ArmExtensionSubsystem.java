@@ -32,7 +32,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.Arm;
 
-public class ArmExtensionSubsystem extends SubsystemBase {
+public class ArmExtensionSubsystem extends SubsystemBase implements IArmSubsystem {
 
  
     private TalonSRX m_motorController = new TalonSRX(Constants.Arm.ARM_EXTENDER_MOTOR_ID);
@@ -44,7 +44,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
      * 
      * @return The encoder reading of the motor
      */
-    public int ReadExtension()
+    public int GetPosition()
     {
         
         //absolute quad mag encoder; Placed after the gearboxes (1:4, 1:9). Need to test if a single lap ()
@@ -74,10 +74,11 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         m_motorController.configForwardSoftLimitEnable(true, 0);
         m_motorController.configForwardSoftLimitThreshold(Arm.EXTENSION_POSITION_OUT + m_motorController.getSelectedSensorPosition());
         m_motorController.configReverseSoftLimitEnable(true, 0);
-        m_motorController.setSensorPhase(true);
+        m_motorController.setSensorPhase(true);//set to true for both PWM encoder and quad mag 
     
     }
-    public ArmExtensionSubsystem() {
+    public ArmExtensionSubsystem() 
+    {
       Setup();
     }
     public void setArmIn() {
@@ -97,18 +98,23 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         m_motorController.set(ControlMode.PercentOutput, input);
     }
     
+    @Override
     /**
      * @param input the encoder degrees to set the arm at. Note the arm extends to roughly 0 at rest, and 14500 units maximum. 
      */
-    public void SetArmToTickPosition(int input)
+    public void SetToPosition(int input)
     {
         
         double target = (double)input;
         // System.out.println();
-        m_motorController.configPeakOutputForward(0.4);
-        m_motorController.configPeakOutputReverse(-0.4);
+        m_motorController.configPeakOutputForward(0.7);
+        m_motorController.configPeakOutputReverse(-0.7);
         m_motorController.set(ControlMode.Position, target);
 
     }
+
+ 
+
+   
 
 }

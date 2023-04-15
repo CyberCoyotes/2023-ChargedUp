@@ -17,12 +17,10 @@ public class PickupGroundCubeV2 extends SequentialCommandGroup{
 
         addCommands
         (
-            new ArmSetpoint(extend, armSub, wristSub,   extend.ReadExtension(), 32, 24130/2)
-                .WithAllowedErrors(10, 1,50),
+            new ArmSetpoint(extend, armSub, wristSub,   extend.GetPosition(), 32, 24130/2)
+                .WithAllowedErrors(100, 2,2000),
             new ArmSetpoint(extend, armSub, wristSub,   9420, 36, 24130),
             new SetIntakeCube(intakeSub).withTimeout(1)
- 
-
         );
     }
     @Override

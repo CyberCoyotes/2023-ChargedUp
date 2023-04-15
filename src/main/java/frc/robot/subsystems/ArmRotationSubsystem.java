@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.Arm;
 
-public class ArmRotationSubsystem extends SubsystemBase {
+public class ArmRotationSubsystem extends SubsystemBase implements IArmSubsystem{
 
     // How to calculate kF: %output*maxOutputNum(1023?)/(native units at desired
     // point)
@@ -110,6 +110,19 @@ public class ArmRotationSubsystem extends SubsystemBase {
 
     }
 
+
+@Override
+public void periodic() 
+{
+
+    //manual guard. Interruption behaviour cannot stop this, either
+
+    if (GetRotationInDeg() > Arm.ARM_MAX_DEG) {
+        // TODO Auto-generated method stub
+        this.getCurrentCommand().cancel();
+    }
+}
+
     /***
      * Gets the rotation of the system in encoder ticks.
      *
@@ -130,7 +143,7 @@ public class ArmRotationSubsystem extends SubsystemBase {
      *         straight down.
      */
     
-    public double GetRotationInDeg() {
+    public int GetRotationInDeg() {
         return -ConvertFXEncodertoDeg((rightMota.getSelectedSensorPosition()));
         
     }
@@ -305,6 +318,22 @@ double arbFF = maxGravityFF * cosineScalar; // get ff, depends on cosine
         // rightMota.setSelectedSensorPosition(this.ConvertDegToFXEncoder(
         // Arm.ARM_OFFSET_DEGREES));
         rightMota.setSelectedSensorPosition(-Math.abs(ConvertDegToFXEncoder(( Arm.ARM_OFFSET_DEGREES))));
+    }
+    /**
+     * Made for compatability with interface
+     * 
+     */
+    @Override
+    public void SetToPosition(int setPoint) {
+       this.RotateArmToDeg(setPoint);
+    }
+    /**
+     * Made for compatability with interface
+     * @return The rotation in degrees.
+     */
+    @Override
+    public int GetPosition() {
+         return GetRotationInDeg();
     }
 
 }

@@ -91,6 +91,7 @@ public class RobotContainer {
             XboxController.Button.kLeftBumper.value);
 
     /* B */private final JoystickButton creepButton = new JoystickButton(driver, XboxController.Button.kB.value);
+    // /* B */private final JoystickButton driverTestButton = new JoystickButton(driver, XboxController.Button.kA.value);
     // #endregion
     // #region Operator Buttons
 
@@ -148,10 +149,10 @@ public class RobotContainer {
     // CubeMidOld cubeMidOld = new CubeMidOld(armSub, wristSub, intakeSub); // Deprecated
 
     
-    StowArmStageV2 stageOne = new StowArmStageV2(armExtendSub, armSub, wristSub, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
-    StowArmStageV2 stageTwo = new StowArmStageV2(armExtendSub, armSub, wristSub, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
+    ArmSetpoint stageOne = new ArmSetpoint(armExtendSub, armSub, wristSub, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
+    ArmSetpoint stageTwo = new ArmSetpoint(armExtendSub, armSub, wristSub, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
     Command stowCommand = stageOne.andThen(stageTwo);
-
+    ArmSetpoint testSetpoint = new ArmSetpoint(armExtendSub, armSub, wristSub, 7000, 30, 200 );
 
 
     // Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);   
@@ -209,12 +210,12 @@ public class RobotContainer {
 
 
 
-        SmartDashboard.putNumber("Arm_Extent", armExtendSub.ReadExtension());
+        SmartDashboard.putNumber("Arm_Extent", armExtendSub.GetPosition());
         SmartDashboard.putNumber("new gyro read", s_Swerve.getYaw().getDegrees());
         SmartDashboard.putNumber("Arm Rotation(°)", (armSub.GetRotationInDeg()));
         SmartDashboard.putNumber("Arm Rotation(Ticks)", (armSub.GetRotation()));
         SmartDashboard.putBoolean("Limit Switch", limit.get());
-        SmartDashboard.putNumber("Wrist Encoder", wristSub.getWristPos());
+        SmartDashboard.putNumber("Wrist Encoder", wristSub.GetPosition());
         SmartDashboard.putString("arm mode", armSub.GetMode());
 
         for (int i = 0; i < s_Swerve.getModuleStates().length; i++) 
@@ -284,7 +285,7 @@ public class RobotContainer {
         stowArm.whileTrue(stowCommand);
         loadElement.whileTrue(wristReceive);
         operatorB.whileTrue(coneMid);
-        operatorA.whileTrue(cubeMid);
+        operatorA.whileTrue(cubeMid);//FIXME
 
         /* Operator Button Bindings */
         // stowArm.onTrue(new cgStow(armSub, armExtendSub, wristSub, intakeSub));
@@ -437,7 +438,7 @@ public class RobotContainer {
 
     public void DebugMethodSingle() {
         var tab = Shuffleboard.getTab("Driver Diagnostics");
-        tab.addNumber("Arm_Extent", () -> armExtendSub.ReadExtension());
+        tab.addNumber("Arm_Extent", () -> armExtendSub.GetPosition());
         tab.addNumber("new gyro read", () -> s_Swerve.getYaw().getDegrees());
         tab.addNumber("Arm Rotation(°)", () -> (armSub.GetRotationInDeg()));
 

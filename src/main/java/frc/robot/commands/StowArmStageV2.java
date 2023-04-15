@@ -7,6 +7,7 @@ import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.ArmWristSubsystem;
 
+@Deprecated
 public class StowArmStageV2 extends CommandBase
 {
     
@@ -50,9 +51,9 @@ public class StowArmStageV2 extends CommandBase
     public void execute() {
         
 
-        this.wristSubsystem.setWristToPosition(wristPoint);
+        this.wristSubsystem.SetToPosition(wristPoint);
         this.rotateSubsystem.RotateArmToDeg(rotatePoint);
-        this.extendSubsystem.SetArmToTickPosition(extendPoint);
+        this.extendSubsystem.SetToPosition(extendPoint);
         System.out.println("RUNNING STAGE ONE");
 
     }
@@ -60,9 +61,9 @@ public class StowArmStageV2 extends CommandBase
     public boolean isFinished() {
 
         boolean fin = 
-        this.wristSubsystem.getWristPos() <= wristPoint + wristAllowedError &&
+        this.wristSubsystem.GetPosition() <= wristPoint + wristAllowedError &&
         this.rotateSubsystem.GetRotationInDeg() <= rotatePoint + rotateAllowedError &&
-        this.extendSubsystem.ReadExtension() <= extendPoint + extendAllowedError;
+        this.extendSubsystem.GetPosition() <= extendPoint + extendAllowedError;
 
         if(fin)
         {

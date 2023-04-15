@@ -34,7 +34,7 @@ public class WristToArg extends CommandBase {
     
     @Override
     public void execute() {
-        m_wristSubsystem.setWristToPosition(target);
+        m_wristSubsystem.SetToPosition(target);
     }
     @Override
     public InterruptionBehavior getInterruptionBehavior() {
