@@ -10,11 +10,13 @@
 
 package frc.robot;
 
+import java.lang.ModuleLayer.Controller;
 import java.util.List;
 
 // import com.ctre.phoenix.led.CANdle;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -133,6 +135,9 @@ public class RobotContainer {
 
     // Command fooToTerminal = new InstantCommand(() -> System.out.println("FOO")).repeatedly();
     // Command barToTerminal = new InstantCommand(() -> System.out.println("BAR")).repeatedly();
+
+PIDController controller = new PIDController(.025, 0, 0);
+
 
     ConeMid coneMid = new ConeMid(wristSub, armSub);
     CubeMid cubeMid = new CubeMid(wristSub, armSub);
@@ -390,7 +395,15 @@ public class RobotContainer {
         
         /* Deposits mid cube and taxi out; PathPlanner based drive */
         // autonChooser.addOption("BETA Mid Cube + Taxi (Side)", ppCubeMidTaxi); 
-
+controller.setSetpoint(0);
+        TeleopSwerve comm = new TeleopSwerve(
+            s_Swerve,
+            () -> controller.calculate(s_Swerve.getPitch()),
+            () -> 0,
+            () -> 0,
+            () -> robotCentric.getAsBoolean(),
+            () -> GetCreepToggle());
+            autonChooser.addOption("Cube + Taxi + Dock (Order 66)", ppCubeTaxiDock.andThen(comm)); 
         /* Taxi and Dock; timed based drive */
         // autonChooser.addOption("BETA Cube + Taxi + Dock (Middle)", cubeMidTaxiDock); 
         
@@ -401,7 +414,7 @@ public class RobotContainer {
         autonChooser.addOption("BETA Score 2 Cubes (NON Cable)", Cube2II); 
 
         /* Taxi and Dock; PathPlanner based drive */
-        autonChooser.addOption("BETA Cube + Taxi + Dock", ppCubeTaxiDock); 
+        // autonChooser.addOption("BETA Cube + Taxi + Dock", ppCubeTaxiDock); 
 
     }
 
