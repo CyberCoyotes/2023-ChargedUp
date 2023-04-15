@@ -9,12 +9,12 @@
 // but wanting to use in sequential command groups
 
 package frc.robot;
-
 import java.util.List;
 
 // import com.ctre.phoenix.led.CANdle;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -67,7 +67,9 @@ public class RobotContainer {
         return creepMode;
     }
 
+    private double powerCoef = .7;
     private final DigitalInput limit = new DigitalInput(Constants.LIMIT_SWITCH_ARM_PORT);
+    private PIDController controller = new PIDController(powerCoef, 0, 0);
 
     // #endregion
     // #region Controllers
@@ -394,8 +396,19 @@ public class RobotContainer {
         /* Taxi and Dock; timed based drive */
         // autonChooser.addOption("BETA Cube + Taxi + Dock (Middle)", cubeMidTaxiDock); 
         
+        TeleopSwerve comm = new TeleopSwerve(
+            s_Swerve,
+            () -> controller.calculate(s_Swerve.getPitch()),
+            () -> 0,
+            () -> 0,
+            () -> robotCentric.getAsBoolean(),
+            () -> GetCreepToggle());
+
+        
+
         /* Deposits Cone 1 Mid, pickups up Cone 2, deposits low; PathPlanner based drive */
         autonChooser.addOption("Score 2 Cubes (Cable Side)", Cube2); 
+        autonChooser.addOption("Score 2 Cubes (Cable Side)", OntoStation.andThen(comm)); 
         
         /* Deposits Cone 1 Mid, pickups up Cone 2, deposits low; PathPlanner based drive */
         autonChooser.addOption("BETA Score 2 Cubes (NON Cable)", Cube2II); 

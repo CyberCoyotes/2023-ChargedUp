@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.ArmWristSubsystem;
@@ -29,6 +30,7 @@ public class whyme extends SequentialCommandGroup
    addCommands
    (
     //effectively covers putting the arm into position and then bringing it back into stow
+    new WaitCommand(2),
     new PickupGroundCubeV2(arm, wrist, intake, extend), // 3 (s) is current run time
     new ArmSetpoint(m_extend, m_arm, wrist, 2000, 50, 500),
     new ArmSetpoint(m_extend, m_arm, wrist, 2000, 30, 500) 
