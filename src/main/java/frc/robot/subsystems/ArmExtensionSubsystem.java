@@ -31,6 +31,7 @@ import frc.robot.Constants.Arm;
 public class ArmExtensionSubsystem extends SubsystemBase {
 
     private TalonSRX m_motorController = new TalonSRX(Constants.Arm.ARM_EXTENDER_MOTOR_ID);
+    int extensionPosition = 0;
     
     // private Encoder m_Encoder = new Encoder(0, 0, 0)
    
@@ -73,7 +74,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         m_motorController.setSensorPhase(true);
     }
     public ArmExtensionSubsystem() {
-    //    Setup();
+        Setup();
     }
     public void setArmIn() {
         m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_POSITION_IN);    
@@ -111,4 +112,16 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_FLOOR_POS); // FIXME use the Arm.EXTENSION_FLOOR_POS once tested
 
     }
+
+    public void extendToFloor_v4() {
+        m_motorController.configPeakOutputForward(0.25);
+        m_motorController.configPeakOutputReverse(-0.25);
+        m_motorController.set(TalonSRXControlMode.Position, 5000); // FIXME use the Arm.EXTENSION_FLOOR_POS once tested
+    }
+
+    
+   public void stopExtension() {
+        m_motorController.set(ControlMode.PercentOutput, 0);
+   }
+
 }

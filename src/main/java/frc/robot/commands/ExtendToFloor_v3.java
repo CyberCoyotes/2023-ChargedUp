@@ -13,12 +13,12 @@ import frc.robot.Constants.Arm;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 
 
-public class ExtendToFloor_version3 extends CommandBase {
+public class ExtendToFloor_v3 extends CommandBase {
 
     private final ArmExtensionSubsystem m_armExtensionSubsystem;
 
     
-    public ExtendToFloor_version3(ArmExtensionSubsystem subsystem) {
+    public ExtendToFloor_v3(ArmExtensionSubsystem subsystem) {
 
      m_armExtensionSubsystem = subsystem;
      
