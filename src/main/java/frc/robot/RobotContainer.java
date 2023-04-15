@@ -398,17 +398,17 @@ public class RobotContainer {
         
         TeleopSwerve comm = new TeleopSwerve(
             s_Swerve,
-            () -> controller.calculate(s_Swerve.getPitch()),
+            () -> -controller.calculate(s_Swerve.getPitch()),
             () -> 0,
             () -> 0,
             () -> robotCentric.getAsBoolean(),
             () -> GetCreepToggle());
+            autonChooser.addOption("BETA Taxi + Auto Dock)", ppCubeTaxiDock.andThen(comm)); 
 
         
 
         /* Deposits Cone 1 Mid, pickups up Cone 2, deposits low; PathPlanner based drive */
         autonChooser.addOption("Score 2 Cubes (Cable Side)", Cube2); 
-        autonChooser.addOption("Score 2 Cubes (Cable Side)", OntoStation.andThen(comm)); 
         
         /* Deposits Cone 1 Mid, pickups up Cone 2, deposits low; PathPlanner based drive */
         autonChooser.addOption("BETA Score 2 Cubes (NON Cable)", Cube2II); 
