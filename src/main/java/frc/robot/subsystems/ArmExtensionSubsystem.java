@@ -73,7 +73,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
         m_motorController.setSensorPhase(true);
     }
     public ArmExtensionSubsystem() {
-    //    Setup();
+       Setup();
     }
     public void setArmIn() {
         m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_POSITION_IN);    
@@ -108,7 +108,7 @@ public class ArmExtensionSubsystem extends SubsystemBase {
     public void extendToFloorCube() {
         m_motorController.configPeakOutputForward(0.25);
         m_motorController.configPeakOutputReverse(-0.25);
-        m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_FLOOR_POS); // FIXME use the Arm.EXTENSION_FLOOR_POS once tested
+        m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_FLOOR_POS); // TODO Using testing numbers at the moment
 
     }
 }
