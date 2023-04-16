@@ -30,11 +30,11 @@ public class Cube2 extends SequentialCommandGroup
 
         addCommands(
             new CubeLowCG(arm, extend, wrist, intake).withTimeout(1),
-            new path1(), // Path to Cube 2
+            new pathCableSide_1(), // Path to Cube 2
             new PickupGroundCubeV2(arm, wrist, intake, extend), // 3 (s) is current run time
             new ArmSetpoint(m_extend, m_arm, wrist, 2000, 50, 500),
             new ArmSetpoint(m_extend, m_arm, wrist, 2000, 30, 500),
-            new path2(), // Path back to deposit Cube 2
+            new pathCableSide_2(), // Path back to deposit Cube 2
             new CubeLowCG(arm, extend, wrist, intake).withTimeout(1)
             
         );

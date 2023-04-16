@@ -29,9 +29,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.autos.CubeTaxiEngage;
-import frc.robot.autos.CubeTaxi;
-import frc.robot.autos.CubeMidTaxiDock;
 import frc.robot.Constants.Arm;
 import frc.robot.autos.Cube2;
 import frc.robot.autos.Cube2NonCableSide;
@@ -39,6 +36,10 @@ import frc.robot.autos.ppCubeTaxi;
 import frc.robot.autos.pathTaxi4meters;
 import frc.robot.autos.ppCubeTaxiDock;
 import frc.robot.commands.*;
+import frc.robot.nonProduction.CubeMidTaxiDock;
+import frc.robot.nonProduction.CubeTaxi;
+import frc.robot.nonProduction.CubeTaxiEngage;
+import frc.robot.nonProduction.PickupGroundCubeV1;
 import frc.robot.subsystems.*;
 /* PathPlanner */
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -259,7 +260,7 @@ PIDController controller = new PIDController(.025, 0, 0);
 
         // SmartDashboard.putData("Pickup Ground Cube", new PickupGroundCube(armSub, wristSub, intakeSub, armExtendSub)); // VanScoyoc test
 
-        SmartDashboard.putData("Extend to Floor", new PickupGroundCube(armSub, wristSub, intakeSub, armExtendSub)); // TODO VanScoyoc test
+        SmartDashboard.putData("Extend to Floor", new PickupGroundCubeV1(armSub, wristSub, intakeSub, armExtendSub)); // TODO VanScoyoc test
 
 
         configureButtonBindings();

@@ -1,6 +1,6 @@
 /* Deposits low cube and taxi out; PathPlanner based drive */
 
-package frc.robot.autos;
+package frc.robot.nonProduction;
 
 import java.util.List;
 
@@ -8,9 +8,6 @@ import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.RobotContainer;
-import frc.robot.commands.CubeLowCG;
-import frc.robot.commands.ExtendToFloor;
 import frc.robot.subsystems.ArmExtensionSubsystem;
 import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;

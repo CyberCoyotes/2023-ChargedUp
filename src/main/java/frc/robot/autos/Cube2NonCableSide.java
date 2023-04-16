@@ -30,11 +30,11 @@ public class Cube2NonCableSide extends SequentialCommandGroup
 
         addCommands(
             new CubeLowCG(arm, extend, wrist, intake).withTimeout(1),
-            new pathA(), // Path to Cube 2 on non-cable side
+            new pathNonCableSide_A(), // Path to Cube 2 on non-cable side
             new PickupGroundCubeV2(arm, wrist, intake, extend), // 3 (s) is current run time
             new ArmSetpoint(m_extend, m_arm, wrist, 2000, 50, 500),
             new ArmSetpoint(m_extend, m_arm, wrist, 2000, 30, 500),
-            new pathB(), // Path back to deposit Cube 2 on non-cable side
+            new pathNonCableSide_B(), // Path back to deposit Cube 2 on non-cable side
             new CubeLowCG(arm, extend, wrist, intake).withTimeout(1)
             
         );

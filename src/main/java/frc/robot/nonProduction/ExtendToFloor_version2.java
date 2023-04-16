@@ -6,7 +6,7 @@
  * Function: BETA 
  * 
 --------------------------------------------------------*/
-package frc.robot.commands;
+package frc.robot.nonProduction;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.Arm;
@@ -36,11 +36,11 @@ public class ExtendToFloor_version2 extends CommandBase {
     @Override
     public void execute() {
         // TODO VanScoyoc shot in the dark #2
-        m_armExtensionSubsystem.ReadExtension(); // Reads the current extension encoder position
+        m_armExtensionSubsystem.GetPosition(); // Reads the current extension encoder position
         m_armExtensionSubsystem.extendToFloorCube(); // Extends to a set encoder value. Testing with a shorter value and slower speed
         
-        if ((m_armExtensionSubsystem.ReadExtension()  >= (Arm.EXTENSION_FLOOR_POS*0.95) && (m_armExtensionSubsystem.ReadExtension() <= (Arm.EXTENSION_FLOOR_POS*1.05)))) { 
-        if ((m_armExtensionSubsystem.ReadExtension()  <= -700) && (m_armExtensionSubsystem.ReadExtension() >= -1500)) { 
+        if ((m_armExtensionSubsystem.GetPosition()  >= (Arm.EXTENSION_FLOOR_POS*0.95) && (m_armExtensionSubsystem.GetPosition() <= (Arm.EXTENSION_FLOOR_POS*1.05)))) { 
+        if ((m_armExtensionSubsystem.GetPosition()  <= -700) && (m_armExtensionSubsystem.GetPosition() >= -1500)) { 
             // FIXME Should be a constant around 9500 but using short extension for testing
             position = true;
         }

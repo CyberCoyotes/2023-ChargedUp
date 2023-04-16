@@ -58,11 +58,6 @@ public class ArmExtensionSubsystem extends SubsystemBase implements IArmSubsyste
 
     public void Setup()
     {
-        
-        
-        
-
-
         m_motorController.configFactoryDefault();
         m_motorController.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
         m_motorController.setSelectedSensorPosition(0);
