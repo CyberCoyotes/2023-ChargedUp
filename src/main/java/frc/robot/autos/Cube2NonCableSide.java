@@ -11,7 +11,7 @@ import frc.robot.subsystems.ArmRotationSubsystem;
 import frc.robot.subsystems.ArmWristSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class Cube2II extends SequentialCommandGroup
+public class Cube2NonCableSide extends SequentialCommandGroup
 {
     private ArmRotationSubsystem m_arm;
     private ArmExtensionSubsystem m_extend;
@@ -19,7 +19,7 @@ public class Cube2II extends SequentialCommandGroup
     private ArmWristSubsystem m_wrist;
 
 
-    public Cube2II(ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist) {
+    public Cube2NonCableSide(ArmExtensionSubsystem extend, ArmRotationSubsystem arm, IntakeSubsystem intake, ArmWristSubsystem wrist) {
 
             this.m_arm = arm; 
             this.m_extend = extend; 

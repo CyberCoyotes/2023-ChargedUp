@@ -6,9 +6,6 @@
  * 
  * Pro 775 + TalonSRX
  * 
---------------------------------------------------------*/
-
-/*
  * Using a PID to smoothly move the PID, with a seperate FF for fighting gravity.
  * The FeedForward may be reperesented with cos * ff
  * Cosine - typical math cosine of representing x value
@@ -34,11 +31,9 @@ import frc.robot.Constants.Arm;
 
 public class ArmExtensionSubsystem extends SubsystemBase implements IArmSubsystem {
 
- 
     private TalonSRX m_motorController = new TalonSRX(Constants.Arm.ARM_EXTENDER_MOTOR_ID);
     
     // private Encoder m_Encoder = new Encoder(0, 0, 0)
-
    
     /**
      * 
@@ -46,10 +41,20 @@ public class ArmExtensionSubsystem extends SubsystemBase implements IArmSubsyste
      */
     public int GetPosition()
     {
-        
         //absolute quad mag encoder; Placed after the gearboxes (1:4, 1:9). Need to test if a single lap ()
         return (int)m_motorController.getSelectedSensorPosition();
+        
     }
+
+        // VanScoyoc attempt
+        public double getExtensionPosition()
+        {
+            //absolute quad mag encoder; Placed after the gearboxes (1:4, 1:9). Need to test if a single lap ()
+            double extensionPosition = m_motorController.getSelectedSensorPosition(0);
+    
+            return extensionPosition;
+        }
+    
 
     public void Setup()
     {
@@ -67,11 +72,10 @@ public class ArmExtensionSubsystem extends SubsystemBase implements IArmSubsyste
         m_motorController.config_kD(0,0);
 
         m_motorController.selectProfileSlot(0, 0);
-        
-        
+           
         m_motorController.setNeutralMode(NeutralMode.Brake);
         m_motorController.configReverseSoftLimitThreshold(Arm.EXTENSION_POSITION_IN + m_motorController.getSelectedSensorPosition());
-        m_motorController.configForwardSoftLimitEnable(true, 0);
+        m_motorController.configForwardSoftLimitEnable(true, 0); // TODO These were enable and stopping arm from retracting
         m_motorController.configForwardSoftLimitThreshold(Arm.EXTENSION_POSITION_OUT + m_motorController.getSelectedSensorPosition());
         m_motorController.configReverseSoftLimitEnable(true, 0);
         m_motorController.setSensorPhase(true);//set to true for both PWM encoder and quad mag 
@@ -104,7 +108,7 @@ public class ArmExtensionSubsystem extends SubsystemBase implements IArmSubsyste
      */
     public void SetToPosition(int input)
     {
-        
+    
         double target = (double)input;
         // System.out.println();
         m_motorController.configPeakOutputForward(0.7);
@@ -112,9 +116,10 @@ public class ArmExtensionSubsystem extends SubsystemBase implements IArmSubsyste
         m_motorController.set(ControlMode.Position, target);
 
     }
-
- 
-
-   
-
+    public void extendToFloorCube() {
+        m_motorController.configPeakOutputForward(0.25);
+        m_motorController.configPeakOutputReverse(-0.25);
+        m_motorController.set(TalonSRXControlMode.Position, Arm.EXTENSION_FLOOR_POS); // TODO Using testing numbers at the moment
+    }
+    
 }

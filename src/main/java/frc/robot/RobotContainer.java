@@ -34,9 +34,9 @@ import frc.robot.autos.CubeTaxi;
 import frc.robot.autos.CubeMidTaxiDock;
 import frc.robot.Constants.Arm;
 import frc.robot.autos.Cube2;
-import frc.robot.autos.Cube2II;
+import frc.robot.autos.Cube2NonCableSide;
 import frc.robot.autos.ppCubeTaxi;
-import frc.robot.autos.ppTaxi4meters;
+import frc.robot.autos.pathTaxi4meters;
 import frc.robot.autos.ppCubeTaxiDock;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -177,12 +177,12 @@ PIDController controller = new PIDController(.025, 0, 0);
     // Command cubeLowTaxiDock = new cgCubeLow_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     
     /* PathPlanner based taxi out 4 meters */
-    Command ppTaxi4meters = new ppTaxi4meters();
+    Command ppTaxi4meters = new pathTaxi4meters();
     Command ppCubeLowTaxi = new ppCubeTaxi(armExtendSub, armSub, intakeSub, wristSub);
     // Command ppCubeMidTaxi = new ppCubeMidTaxi(armExtendSub, armSub, intakeSub, wristSub);
     Command ppCubeTaxiDock = new ppCubeTaxiDock(armExtendSub, armSub, intakeSub, wristSub);
     Command Cube2 = new Cube2(armExtendSub, armSub, intakeSub, wristSub);    
-    Command Cube2II = new Cube2II(armExtendSub, armSub, intakeSub, wristSub);    
+    Command Cube2II = new Cube2NonCableSide(armExtendSub, armSub, intakeSub, wristSub);    
 
 
     // Command ppTaxiFloorPickup = new ppTaxiFloorPickup(armExtendSub, armSub, intakeSub, wristSub, robotCentric);
@@ -208,7 +208,7 @@ PIDController controller = new PIDController(.025, 0, 0);
 
 
 
- SmartDashboard.putNumber("Module Rotation0",s_Swerve.mSwerveMods[0].getState().angle.getDegrees()          % 360);
+        SmartDashboard.putNumber("Module Rotation0",s_Swerve.mSwerveMods[0].getState().angle.getDegrees()          % 360);
         SmartDashboard.putNumber("Module Rotation1",s_Swerve.mSwerveMods[1].getState().angle.getDegrees()   % 360);
         SmartDashboard.putNumber("Module Rotation2",s_Swerve.mSwerveMods[2].getState().angle.getDegrees()   % 360);
         SmartDashboard.putNumber("Module Rotation3",s_Swerve.mSwerveMods[3].getState().angle.getDegrees()   % 360);
@@ -256,6 +256,11 @@ PIDController controller = new PIDController(.025, 0, 0);
         Shuffleboard.getTab("Auton Chooser").add(autonChooser).withSize(2, 4); // Create an Auton "Tab"
 
         Shuffleboard.getTab("Experimental Commands"); // Create an Experimental "Tab"
+
+        // SmartDashboard.putData("Pickup Ground Cube", new PickupGroundCube(armSub, wristSub, intakeSub, armExtendSub)); // VanScoyoc test
+
+        SmartDashboard.putData("Extend to Floor", new PickupGroundCube(armSub, wristSub, intakeSub, armExtendSub)); // TODO VanScoyoc test
+
 
         configureButtonBindings();
         configureDefaultCommands();

@@ -11,9 +11,9 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 
-public class ppTaxi4meters extends SequentialCommandGroup {
+public class pathTaxi4meters extends SequentialCommandGroup {
 
-    public ppTaxi4meters() {
+    public pathTaxi4meters() {
         List<PathPlannerTrajectory> pptList = PathPlanner.loadPathGroup(
             "Taxi4meters", new PathConstraints(4, 3)
             );
