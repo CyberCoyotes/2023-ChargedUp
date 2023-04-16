@@ -17,7 +17,7 @@ import java.util.List;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
+// import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -387,13 +387,19 @@ PIDController controller = new PIDController(.025, 0, 0);
         // In theory nothing on "main" would be BETA
         autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
 
-        /* Taxi out 4 meters in a straight line, no game element deposits; PathPlanner based drive */
+        /* Taxi out 4 meters in a straight line, no game element deposits; PathPlanner based drive 
+         * Should never need unless arm broken
+        */
         // autonChooser.addOption("Taxi 4 meters only", ppTaxi4meters);
         
-        /* Deposits a cube to the mid shelf, no drive */
+        /* Deposits a cube to the Low, no drive 
+         * Should never need unless drivetrain issues for auton
+        */
         // autonChooser.addOption("Low Cube (no drive)", cubeLow); 
 
-        /* Deposits low cube and taxi out; timed based drive  */
+        /* Deposits low cube and taxi out; timed based drive  
+         * Should never need as PathPlanner is dialed in
+        */
         // autonChooser.addOption("BETA Low Cube + Taxi (Side)", cubeLowTaxi); 
 
         /* Deposits low cube and taxi out; PathPlanner based drive */
@@ -401,7 +407,9 @@ PIDController controller = new PIDController(.025, 0, 0);
         
         /* Deposits mid cube and taxi out; PathPlanner based drive */
         // autonChooser.addOption("BETA Mid Cube + Taxi (Side)", ppCubeMidTaxi); 
-controller.setSetpoint(0);
+
+        /* Autonomous docking to finish auton*/
+        controller.setSetpoint(0);
         TeleopSwerve comm = new TeleopSwerve(
             s_Swerve,
             () -> controller.calculate(s_Swerve.getPitch()),
@@ -409,37 +417,20 @@ controller.setSetpoint(0);
             () -> 0,
             () -> robotCentric.getAsBoolean(),
             () -> GetCreepToggle());
-            autonChooser.addOption("Cube + Taxi + Dock (Order 66)", ppCubeTaxiDock.andThen(comm)); 
-        /* Taxi and Dock; timed based drive */
-        // autonChooser.addOption("BETA Cube + Taxi + Dock (Middle)", cubeMidTaxiDock); 
         
-        /* Deposits Cone 1 Mid, pickups up Cone 2, deposits low; PathPlanner based drive */
+        autonChooser.addOption("Cube + Taxi + Dock (Order 66)", ppCubeTaxiDock.andThen(comm)); 
+        
+        /* Deposits Cone 1 Low, pickups up Cone 2, deposits low; PathPlanner based drive */
         autonChooser.addOption("Score 2 Cubes (Cable Side)", Cube2); 
         
-        /* Deposits Cone 1 Mid, pickups up Cone 2, deposits low; PathPlanner based drive */
+        /* Deposits Cone 1 Low, pickups up Cone 2, deposits low; PathPlanner based drive */
         autonChooser.addOption("BETA Score 2 Cubes (NON Cable)", Cube2II); 
 
-        /* Taxi and Dock; PathPlanner based drive */
-        // autonChooser.addOption("BETA Cube + Taxi + Dock", ppCubeTaxiDock); 
-
     }
-
-    /*
-     * Added from Bobcat 177 code example
-     * We aren't currently using anything other than clear
-     * Probably stuff we would do at start of auton everytime?
-    */
   
     public void setUpEventMap() {
         Constants.AutoConstants.eventMap.clear();
     }
-
-    /* Added from Bobcat 177 code example */
-    /* Not currently in use. Only for PathPlanner AutonBuilder with events?
-    public void printHashMap() {
-        SmartDashboard.putString("eventMap", Constants.AutoConstants.eventMap.toString());
-    }
-    */
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -447,9 +438,6 @@ controller.setSetpoint(0);
      */
 
     public Command getAutonomousCommand() {
-
-    /* Added from Bobcat 177 code example */
-    // return buildAuton(autonChooser.getSelected());
 
       return autonChooser.getSelected();
 
@@ -465,4 +453,4 @@ controller.setSetpoint(0);
     }
 
  
-}
+} // end
