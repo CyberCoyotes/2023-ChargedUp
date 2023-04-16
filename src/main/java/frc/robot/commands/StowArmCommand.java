@@ -23,12 +23,12 @@ public class StowArmCommand extends CommandBase {
 
     public boolean IsRunningStage1()
     {
-        return (!((extendSubsystem.ReadExtension() <= 2000)) || !(wristSubsystem.getWristPos() <= 6000 )); 
+        return (!((extendSubsystem.GetPosition() <= 2000)) || !(wristSubsystem.GetPosition() <= 6000 )); 
     }
     public void GetData()
     {    
-        System.out.println("extend safe " + ((extendSubsystem.ReadExtension() <= 2000)));
-        System.out.println("wrist safe "  + (wristSubsystem.getWristPos() <= 6000 ));
+        System.out.println("extend safe " + ((extendSubsystem.GetPosition() <= 2000)));
+        System.out.println("wrist safe "  + (wristSubsystem.GetPosition() <= 6000 ));
     }
 
     public StowArmCommand(ArmExtensionSubsystem m_extend, ArmRotationSubsystem m_rotate, ArmWristSubsystem m_wrist) 
@@ -48,8 +48,8 @@ public class StowArmCommand extends CommandBase {
     public void execute() {
 
 
-        boolean extendSafe = (extendSubsystem.ReadExtension() <= 2000);
-        boolean wristSafe = wristSubsystem.getWristPos() <= 6000 ;
+        boolean extendSafe = (extendSubsystem.GetPosition() <= 2000);
+        boolean wristSafe = wristSubsystem.GetPosition() <= 6000 ;
 
 
 
@@ -72,10 +72,10 @@ public class StowArmCommand extends CommandBase {
         wrist = 2000;
         rot = 50;
 
-        this.wristSubsystem.setWristToPosition(wrist);
+        this.wristSubsystem.SetToPosition(wrist);
         this.rotateSubsystem.RotateArmToDeg(rot);
         // this.wristSubsystem.setWristHome();
-        this.extendSubsystem.SetArmToTickPosition(2000);
+        this.extendSubsystem.SetToPosition(2000);
         System.out.println("RUNNING STAGE ONE");
 
     }
@@ -89,7 +89,7 @@ public class StowArmCommand extends CommandBase {
         wrist = 2000;
         rot = 25;
 
-        this.wristSubsystem.setWristToPosition(wrist);
+        this.wristSubsystem.SetToPosition(wrist);
         this.rotateSubsystem.RotateArmToDeg(rot);
         System.out.println("RUNNING STAGE TWO TWO TWO");
 
@@ -98,8 +98,8 @@ public class StowArmCommand extends CommandBase {
     public boolean isFinished() {
         return 
             rotateSubsystem.GetRotationInDeg() < 22 
-        &&  wristSubsystem.getWristPos() < 2200
-        &&  extendSubsystem.ReadExtension() < 2200;
+        &&  wristSubsystem.GetPosition() < 2200
+        &&  extendSubsystem.GetPosition() < 2200;
              
 
     }

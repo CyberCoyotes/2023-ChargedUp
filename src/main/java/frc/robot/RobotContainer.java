@@ -10,11 +10,14 @@
 
 package frc.robot;
 
+import java.lang.ModuleLayer.Controller;
 import java.util.List;
 
 // import com.ctre.phoenix.led.CANdle;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -90,6 +93,7 @@ public class RobotContainer {
             XboxController.Button.kLeftBumper.value);
 
     /* B */private final JoystickButton creepButton = new JoystickButton(driver, XboxController.Button.kB.value);
+    // /* B */private final JoystickButton driverTestButton = new JoystickButton(driver, XboxController.Button.kA.value);
     // #endregion
     // #region Operator Buttons
 
@@ -132,6 +136,9 @@ public class RobotContainer {
     // Command fooToTerminal = new InstantCommand(() -> System.out.println("FOO")).repeatedly();
     // Command barToTerminal = new InstantCommand(() -> System.out.println("BAR")).repeatedly();
 
+PIDController controller = new PIDController(.025, 0, 0);
+
+
     ConeMid coneMid = new ConeMid(wristSub, armSub);
     CubeMid cubeMid = new CubeMid(wristSub, armSub);
 
@@ -147,10 +154,10 @@ public class RobotContainer {
     // CubeMidOld cubeMidOld = new CubeMidOld(armSub, wristSub, intakeSub); // Deprecated
 
     
-    StowArmStage stageOne = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
-    StowArmStage stageTwo = new StowArmStage(armExtendSub, armSub, wristSub, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
+    ArmSetpoint stageOne = new ArmSetpoint(armExtendSub, armSub, wristSub, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
+    ArmSetpoint stageTwo = new ArmSetpoint(armExtendSub, armSub, wristSub, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
     Command stowCommand = stageOne.andThen(stageTwo);
-
+    ArmSetpoint testSetpoint = new ArmSetpoint(armExtendSub, armSub, wristSub, 7000, 30, 200 );
 
 
     // Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);   
@@ -199,18 +206,31 @@ public class RobotContainer {
 
     public void DebugMethod() {
 
-        // SmartDashboard.putNumber("Module Rotation0",s_Swerve.mSwerveMods[0].getState().angle.getDegrees());
-        // SmartDashboard.putNumber("Module Rotation1",s_Swerve.mSwerveMods[1].getState().angle.getDegrees());
-        SmartDashboard.putNumber("Module Rotation2",s_Swerve.mSwerveMods[2].getState().angle.getDegrees());
+
+
+        SmartDashboard.putNumber("Module Rotation0",s_Swerve.mSwerveMods[0].getState().angle.getDegrees()          % 360);
+        SmartDashboard.putNumber("Module Rotation1",s_Swerve.mSwerveMods[1].getState().angle.getDegrees()   % 360);
+        SmartDashboard.putNumber("Module Rotation2",s_Swerve.mSwerveMods[2].getState().angle.getDegrees()   % 360);
         SmartDashboard.putNumber("Module Rotation3",s_Swerve.mSwerveMods[3].getState().angle.getDegrees()   % 360);
 
-        SmartDashboard.putNumber("Arm_Extent", armExtendSub.ReadExtension()); // .ReadExtension
+
+
+        SmartDashboard.putNumber("Arm_Extent", armExtendSub.GetPosition());
         SmartDashboard.putNumber("new gyro read", s_Swerve.getYaw().getDegrees());
         SmartDashboard.putNumber("Arm Rotation(°)", (armSub.GetRotationInDeg()));
         SmartDashboard.putNumber("Arm Rotation(Ticks)", (armSub.GetRotation()));
         SmartDashboard.putBoolean("Limit Switch", limit.get());
-        SmartDashboard.putNumber("Wrist Encoder", wristSub.getWristPos());
+        SmartDashboard.putNumber("Wrist Encoder", wristSub.GetPosition());
         SmartDashboard.putString("arm mode", armSub.GetMode());
+
+        for (int i = 0; i < s_Swerve.getModuleStates().length; i++) 
+        {
+         
+            SmartDashboard.putNumber("thing " + i,s_Swerve.getModuleStates()[i].angle.getDegrees() % 360);
+
+        }
+
+
         // SmartDashboard.putString("Current Cone cargo commmand", coneCargoCommandSupplier.get().getName());
         SmartDashboard.putNumber("pitch", (s_Swerve.GetPitch()));
         // SmartDashboard.putString("mode", (s_Swerve.GetPitch()));
@@ -275,7 +295,7 @@ public class RobotContainer {
         stowArm.whileTrue(stowCommand);
         loadElement.whileTrue(wristReceive);
         operatorB.whileTrue(coneMid);
-        operatorA.whileTrue(cubeMid);
+        operatorA.whileTrue(cubeMid);//FIXME
 
         /* Operator Button Bindings */
         // stowArm.onTrue(new cgStow(armSub, armExtendSub, wristSub, intakeSub));
@@ -380,7 +400,15 @@ public class RobotContainer {
         
         /* Deposits mid cube and taxi out; PathPlanner based drive */
         // autonChooser.addOption("BETA Mid Cube + Taxi (Side)", ppCubeMidTaxi); 
-
+controller.setSetpoint(0);
+        TeleopSwerve comm = new TeleopSwerve(
+            s_Swerve,
+            () -> controller.calculate(s_Swerve.getPitch()),
+            () -> 0,
+            () -> 0,
+            () -> robotCentric.getAsBoolean(),
+            () -> GetCreepToggle());
+            autonChooser.addOption("Cube + Taxi + Dock (Order 66)", ppCubeTaxiDock.andThen(comm)); 
         /* Taxi and Dock; timed based drive */
         // autonChooser.addOption("BETA Cube + Taxi + Dock (Middle)", cubeMidTaxiDock); 
         
@@ -391,7 +419,7 @@ public class RobotContainer {
         autonChooser.addOption("BETA Score 2 Cubes (NON Cable)", Cube2II); 
 
         /* Taxi and Dock; PathPlanner based drive */
-        autonChooser.addOption("BETA Cube + Taxi + Dock", ppCubeTaxiDock); 
+        // autonChooser.addOption("BETA Cube + Taxi + Dock", ppCubeTaxiDock); 
 
     }
 
@@ -428,9 +456,11 @@ public class RobotContainer {
 
     public void DebugMethodSingle() {
         var tab = Shuffleboard.getTab("Driver Diagnostics");
-        tab.addNumber("Arm_Extent", () -> armExtendSub.ReadExtension());
+        tab.addNumber("Arm_Extent", () -> armExtendSub.GetPosition());
         tab.addNumber("new gyro read", () -> s_Swerve.getYaw().getDegrees());
         tab.addNumber("Arm Rotation(°)", () -> (armSub.GetRotationInDeg()));
+
+       
     }
 
  

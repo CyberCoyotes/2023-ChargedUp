@@ -29,12 +29,12 @@ public class ppCubeTaxiDock extends SequentialCommandGroup
             this.m_extend = extend; 
             this.m_intake = intake; 
 
-        List<PathPlannerTrajectory> taxiDock = PathPlanner.loadPathGroup("TaxiDock", new PathConstraints(4, 3));
+        List<PathPlannerTrajectory> taxiDock = PathPlanner.loadPathGroup("TaxiDock", new PathConstraints(4, 1));
     
             addRequirements();
 
         addCommands(
-            new CubeLowCG(arm, extend, wrist, intake).withTimeout(1),
+            new CubeLowCG(arm, extend, wrist, intake).withTimeout(1.0),
             
             RobotContainer.buildAuton(taxiDock)
 

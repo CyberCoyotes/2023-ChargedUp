@@ -15,7 +15,7 @@ public class SetArmExtentCommand extends CommandBase
     }    
     @Override
     public void execute() {
-        subsystem.SetArmToTickPosition(position);
+        subsystem.SetToPosition(position);
     }
     @Override
     public boolean isFinished() {
