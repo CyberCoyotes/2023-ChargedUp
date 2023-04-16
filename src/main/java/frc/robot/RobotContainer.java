@@ -375,7 +375,6 @@ PIDController controller = new PIDController(.025, 0, 0);
         // new ArmExtendToArg(armExtendSub, () -> 9500));
     }
 
-    /* See Bobcat public void setUpAutos() {} for analogous method */
 
     /* Sendable Chooser Setup */
     private void configureAutonChooser() {
