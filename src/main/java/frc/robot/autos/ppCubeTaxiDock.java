@@ -34,7 +34,7 @@ public class ppCubeTaxiDock extends SequentialCommandGroup
             addRequirements();
 
         addCommands(
-            new CubeLowCG(arm, extend, wrist, intake).withTimeout(0.5),
+            new CubeLowCG(arm, extend, wrist, intake).withTimeout(1.0),
             
             RobotContainer.buildAuton(taxiDock)
 
