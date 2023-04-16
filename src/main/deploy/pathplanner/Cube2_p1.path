@@ -16,11 +16,7 @@
       "isLocked": true,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [
-          "RotArmUp",
-          "CubeOut",
-          "RotArmDown"
-        ],
+        "names": [],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
