@@ -20,7 +20,7 @@ public class StowArmCommand extends CommandBase {
     
 
     private int wrist, rot;
-
+//  Extension is out too far
     public boolean IsRunningStage1()
     {
         return (!((extendSubsystem.GetPosition() <= 2000)) || !(wristSubsystem.GetPosition() <= 6000 )); 
