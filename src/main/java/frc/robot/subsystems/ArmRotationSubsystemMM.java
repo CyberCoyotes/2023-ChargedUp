@@ -14,6 +14,12 @@
  *
  * Math stuff from 5 yrs ago
  * https://youtu.be/RLrZzSpHP4E
+ * 
+ * 
+ * https://www.youtube.com/watch?v=VQIgdLslU_E
+ * https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages 
+ * https://docs.google.com/presentation/d/1zzMI3DW-elButNH0QLFdYnDyaIapeI-zZnv9CAC6WY8/edit#slide=id.g5595b853ce_0_24 
+ * https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages/blob/master/Java%20Talon%20FX%20(Falcon%20500)/MotionMagic_ArbFeedForward/src/main/java/frc/robot/Robot.java
 --------------------------------------------------------*/
 
 /*
