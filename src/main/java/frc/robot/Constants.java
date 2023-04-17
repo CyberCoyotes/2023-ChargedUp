@@ -90,7 +90,7 @@ public final class Constants {
         // public final static double ARM_ROTATE_POSITION_INTAKE  = 8878; // approximate from testing; compare to the change in angle from rest to deploy
         // public final static double ARM_ROTATE_POSITION_DEPLOY_DEG =  220;//should be 260? TESTING
         public final static int EXTENSION_POSITION_OUT = 13000; //playing it safe for now; should be around -14000?
-        public final static double EXTENSION_POSITION_IN  = -200;
+        public final static double EXTENSION_POSITION_IN  = 200;
         // public final static int EXTENSION_FLOOR_POS = -9450; // Scoy's attempt
 
         public final static int EXTENSION_FLOOR_POS = 5000; // Scoy's TEST attempt

@@ -106,8 +106,8 @@ public class ArmExtensionSubsystem extends SubsystemBase implements IArmSubsyste
     
         double target = (double)input;
         // System.out.println();
-        m_motorController.configPeakOutputForward(0.7);
-        m_motorController.configPeakOutputReverse(-0.7);
+        m_motorController.configPeakOutputForward(0.90); // TODO Set to 1.0 or 0.7
+        m_motorController.configPeakOutputReverse(-0.90); // TODO Set to -1.0 or -0.7
         m_motorController.set(ControlMode.Position, target);
 
     }
