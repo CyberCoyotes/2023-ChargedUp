@@ -32,7 +32,7 @@ public class autoExtendToFloor extends SequentialCommandGroup
             addRequirements();
 
         addCommands(
-            new ExtendToFloor(extend)
+            // new ExtendToFloor(extend)
             //RobotContainer.buildAuton(taxi4Meters)
 
         );
