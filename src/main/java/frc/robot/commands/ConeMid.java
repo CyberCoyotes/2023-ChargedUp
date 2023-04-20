@@ -25,7 +25,7 @@ public class ConeMid extends CommandBase {
     @Override
     public void execute() {
 
-        arm.RotateArmToDeg(110 );
+        arm.RotateArmToDeg(125 ); // Previously 110; drive team requested an increase
         wrist.SetToPosition(57558 - 2500); //51558 was alright, but we wanted it up
 
     }
