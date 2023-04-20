@@ -33,7 +33,7 @@ ArmSetpoint stageTwo;
         //holy constructor batman
         //  change extension from 2000 to 200
          stageOne = new ArmSetpoint(m_extend, m_rotate, m_wrist, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
-         stageTwo = new ArmSetpoint(m_extend, m_rotate, m_wrist, 2000, 30, 500).WithAllowedErrors(50, 1, 2000); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
+         stageTwo = new ArmSetpoint(m_extend, m_rotate, m_wrist, 2000, 30, 500); // .WithAllowedErrors(50, 1, 2000); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
 
         addRequirements(m_extend, m_rotate, m_wrist);
        addCommands(stages);

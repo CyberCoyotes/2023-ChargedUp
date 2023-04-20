@@ -28,6 +28,8 @@ public class ppCubeTaxiDock extends SequentialCommandGroup
             this.m_arm = arm; 
             this.m_extend = extend; 
             this.m_intake = intake; 
+            this.m_wrist = wrist; // Was missing at practice field and in GR!
+
 
         List<PathPlannerTrajectory> taxiDock = PathPlanner.loadPathGroup("TaxiDock", new PathConstraints(4, 1));
     
