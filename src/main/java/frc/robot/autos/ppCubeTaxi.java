@@ -28,6 +28,7 @@ public class ppCubeTaxi extends SequentialCommandGroup
             this.m_arm = arm; 
             this.m_extend = extend; 
             this.m_intake = intake; 
+            this.m_wrist = wrist; 
 
         List<PathPlannerTrajectory> taxi4Meters = PathPlanner.loadPathGroup("Taxi4meters", new PathConstraints(4, 3));
     
