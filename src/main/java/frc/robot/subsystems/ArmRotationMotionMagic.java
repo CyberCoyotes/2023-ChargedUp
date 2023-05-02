@@ -172,15 +172,18 @@ public class ArmRotationMotionMagic extends SubsystemBase {
 
     public ArmRotationMotionMagic() {
 
-        leftMotor.configFactoryDefault();
+        // leftMotor.configFactoryDefault();
         rightMotor.configFactoryDefault();
 
         rightMotor.setInverted(true);
         rightMotor.setSensorPhase(true);
-
         rightMotor.setNeutralMode(NeutralMode.Brake);
+        
+        // leftMotor.setInverted(true);
+        // leftMotor.setSensorPhase(true);
+        // leftMotor.setNeutralMode(NeutralMode.Brake);
 
-        leftMotor.set(TalonFXControlMode.Follower, rightMotor.getDeviceID());
+        // leftMotor.set(TalonFXControlMode.Follower, rightMotor.getDeviceID());
 
     }
 

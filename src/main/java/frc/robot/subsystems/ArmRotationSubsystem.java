@@ -335,5 +335,5 @@ double arbFF = maxGravityFF * cosineScalar; // get ff, depends on cosine
     public int GetPosition() {
          return GetRotationInDeg();
     }
-
+ 
 }
