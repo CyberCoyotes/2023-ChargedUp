@@ -175,9 +175,9 @@ public class ArmRotationMotionMagic extends SubsystemBase {
         // leftMotor.configFactoryDefault();
         rightMotor.configFactoryDefault();
 
-        rightMotor.setInverted(true);
-        rightMotor.setSensorPhase(true);
-        rightMotor.setNeutralMode(NeutralMode.Brake);
+        // rightMotor.setInverted(true);
+        // rightMotor.setSensorPhase(true);
+        // rightMotor.setNeutralMode(NeutralMode.Brake);
         
         // leftMotor.setInverted(true);
         // leftMotor.setSensorPhase(true);
