@@ -10,7 +10,6 @@
 
 package frc.robot;
 
-import java.lang.ModuleLayer.Controller;
 import java.util.List;
 
 // import com.ctre.phoenix.led.CANdle;
@@ -30,16 +29,10 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.Arm;
-import frc.robot.autos.Cube2;
-import frc.robot.autos.Cube2NonCableSide;
-import frc.robot.autos.ppCubeTaxi;
+
 import frc.robot.autos.pathTaxi4meters;
-import frc.robot.autos.ppCubeTaxiDock;
 import frc.robot.commands.*;
-import frc.robot.nonProduction.CubeMidTaxiDock;
-import frc.robot.nonProduction.CubeTaxi;
 import frc.robot.nonProduction.CubeTaxiEngage;
-import frc.robot.nonProduction.PickupGroundCubeV1;
 import frc.robot.subsystems.*;
 /* PathPlanner */
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -122,7 +115,6 @@ public class RobotContainer {
     // #region Subsystems
 
     private final ArmExtensionSubsystem armExtendSub = new ArmExtensionSubsystem();
-    private final ArmRotationSubsystem armSub = new ArmRotationSubsystem(limit);
     // private final CANdle candleSub = new CANdle(Constants.CANDLE_ID);
     // private final Vision visionSub = new Vision();
     private final static Swerve s_Swerve = new Swerve(); // changed to a static to work with PathPlanner
@@ -140,25 +132,15 @@ public class RobotContainer {
 PIDController controller = new PIDController(.025, 0, 0);
 
 
-    ConeMid coneMid = new ConeMid(wristSub, armSub);
-    CubeMid cubeMid = new CubeMid(wristSub, armSub);
 
-    RotateArmToArg rotTo90 = new RotateArmToArg(armSub, 90);
     MoveUntilSensor rotationMoveUntilSensor;
     MoveUntilSensor extentionMoveUntilSensor;
 
     ArmExtendToArg extendMiddle = new ArmExtendToArg(armExtendSub, () -> Arm.ARM_EXTEND_MIDDLE_ENCODER);//why is the ctor like this? whatever
     ReadyForCargoCommand wristReceive = new ReadyForCargoCommand(wristSub);
     // ConeMid coneMid = new ConeMid(wristSub, armSub); 
-    ConeLowCG coneLow = new ConeLowCG(armSub, armExtendSub, wristSub, intakeSub); // TODO Does this work?
 
     // CubeMidOld cubeMidOld = new CubeMidOld(armSub, wristSub, intakeSub); // Deprecated
-
-    
-    ArmSetpoint stageOne = new ArmSetpoint(armExtendSub, armSub, wristSub, 2000, 50, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
-    ArmSetpoint stageTwo = new ArmSetpoint(armExtendSub, armSub, wristSub, 2000, 30, 500); //Can make it one stage if it makes mentors happy (though i still really don't recommend even trying)
-    Command stowCommand = stageOne.andThen(stageTwo);
-    ArmSetpoint testSetpoint = new ArmSetpoint(armExtendSub, armSub, wristSub, 7000, 30, 200 );
 
 
     // Command stowCommand = new StowArmCommand(armExtendSub, armSub, wristSub).withTimeout(2);   
@@ -168,23 +150,11 @@ PIDController controller = new PIDController(.025, 0, 0);
     // Drives out, and then back onto the Charge Station
     Command chargeStation = new CubeTaxiEngage(s_Swerve, robotCentric);
 
-    Command cubeLow = new CubeLowCG(armSub, armExtendSub, wristSub, intakeSub);
 
-    Command cubeLowTaxi = new CubeTaxi(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     CubeTaxiEngage autonCommand = new CubeTaxiEngage(s_Swerve, robotCentric);
-    Command cubeMidTaxiDock = new CubeMidTaxiDock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
 
     // Command cubeMidTaxi = new CubeMidTaxi_version1(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     // Command cubeLowTaxiDock = new cgCubeLow_Taxi_Dock(s_Swerve, armExtendSub, armSub, intakeSub, wristSub, robotCentric);
-    
-    /* PathPlanner based taxi out 4 meters */
-    Command ppTaxi4meters = new pathTaxi4meters();
-    Command ppCubeLowTaxi = new ppCubeTaxi(armExtendSub, armSub, intakeSub, wristSub);
-    // Command ppCubeMidTaxi = new ppCubeMidTaxi(armExtendSub, armSub, intakeSub, wristSub);
-    Command ppCubeTaxiDock = new ppCubeTaxiDock(armExtendSub, armSub, intakeSub, wristSub);
-    Command Cube2 = new Cube2(armExtendSub, armSub, intakeSub, wristSub);    
-    Command Cube2II = new Cube2NonCableSide(armExtendSub, armSub, intakeSub, wristSub);    
-
 
     // Command ppTaxiFloorPickup = new ppTaxiFloorPickup(armExtendSub, armSub, intakeSub, wristSub, robotCentric);
     // private CommandCycle coneCargoCycle = new CommandCycle(coneLow, coneMid);
@@ -218,11 +188,8 @@ PIDController controller = new PIDController(.025, 0, 0);
 
         SmartDashboard.putNumber("Arm_Extent", armExtendSub.GetPosition());
         SmartDashboard.putNumber("new gyro read", s_Swerve.getYaw().getDegrees());
-        SmartDashboard.putNumber("Arm Rotation(°)", (armSub.GetRotationInDeg()));
-        SmartDashboard.putNumber("Arm Rotation(Ticks)", (armSub.GetRotation()));
         SmartDashboard.putBoolean("Limit Switch", limit.get());
         SmartDashboard.putNumber("Wrist Encoder", wristSub.GetPosition());
-        SmartDashboard.putString("arm mode", armSub.GetMode());
 
         for (int i = 0; i < s_Swerve.getModuleStates().length; i++) 
         {
@@ -260,8 +227,6 @@ PIDController controller = new PIDController(.025, 0, 0);
 
         // SmartDashboard.putData("Pickup Ground Cube", new PickupGroundCube(armSub, wristSub, intakeSub, armExtendSub)); // VanScoyoc test
 
-        SmartDashboard.putData("Extend to Floor", new PickupGroundCubeV1(armSub, wristSub, intakeSub, armExtendSub)); // TODO VanScoyoc test
-
 
         configureButtonBindings();
         configureDefaultCommands();
@@ -291,12 +256,9 @@ PIDController controller = new PIDController(.025, 0, 0);
         /* Driver Button Bindings */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         // placeConeMid.whileTrue(USETHISPICKUP);
-        zeroArmEncoder.onTrue(new InstantCommand(() -> armSub.ZeroArmEncoder()));
         creepButton.onTrue(new InstantCommand(() -> SetCreepToggle(!GetCreepToggle())));// inverts creep when button
-        stowArm.whileTrue(stowCommand);
         loadElement.whileTrue(wristReceive);
-        operatorB.whileTrue(coneMid);
-        operatorA.whileTrue(cubeMid);//FIXME
+       
 
         /* Operator Button Bindings */
         // stowArm.onTrue(new cgStow(armSub, armExtendSub, wristSub, intakeSub));
@@ -354,8 +316,6 @@ PIDController controller = new PIDController(.025, 0, 0);
     private void configureDefaultCommands() {
         // visionSub.setDefaultCommand(new GetTagID(visionSub));
 
-        armSub.setDefaultCommand(
-                new RotateArmManual(armSub, () -> operator.getRawAxis(translationAxis)));
 
         wristSub.setDefaultCommand(new MoveWristManual(wristSub, () -> .25 * operator.getRawAxis(rightControllerY)));
 
@@ -382,7 +342,6 @@ PIDController controller = new PIDController(.025, 0, 0);
         /* Added from Bobcat 177 code example */
         setUpEventMap();
 
-        // TODO Verify that each of these works and then remove "β" from title
         // In theory nothing on "main" would be BETA
         autonChooser.setDefaultOption("Do nothing", new WaitCommand(1)); // "Drive Only" Command or Command Group
 
@@ -402,8 +361,6 @@ PIDController controller = new PIDController(.025, 0, 0);
         // autonChooser.addOption("BETA Low Cube + Taxi (Side)", cubeLowTaxi); 
 
         /* Deposits low cube and taxi out; PathPlanner based drive */
-        autonChooser.addOption("Low Cube + Taxi", ppCubeLowTaxi); 
-        
         /* Deposits mid cube and taxi out; PathPlanner based drive */
         // autonChooser.addOption("BETA Mid Cube + Taxi (Side)", ppCubeMidTaxi); 
 
@@ -417,13 +374,10 @@ PIDController controller = new PIDController(.025, 0, 0);
             () -> robotCentric.getAsBoolean(),
             () -> GetCreepToggle());
         
-        autonChooser.addOption("Cube + Taxi + Dock (Order 66)", ppCubeTaxiDock.andThen(comm)); 
         
         /* Deposits Cone 1 Low, pickups up Cone 2, deposits low; PathPlanner based drive */
-        autonChooser.addOption("Score 2 Cubes (Cable Side)", Cube2); 
         
         /* Deposits Cone 1 Low, pickups up Cone 2, deposits low; PathPlanner based drive */
-        autonChooser.addOption("BETA Score 2 Cubes (NON Cable)", Cube2II); 
 
     }
   
@@ -446,8 +400,6 @@ PIDController controller = new PIDController(.025, 0, 0);
         var tab = Shuffleboard.getTab("Driver Diagnostics");
         tab.addNumber("Arm_Extent", () -> armExtendSub.GetPosition());
         tab.addNumber("new gyro read", () -> s_Swerve.getYaw().getDegrees());
-        tab.addNumber("Arm Rotation(°)", () -> (armSub.GetRotationInDeg()));
-
        
     }
 
