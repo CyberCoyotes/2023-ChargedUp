@@ -131,6 +131,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
@@ -172,17 +173,23 @@ public class ArmRotationMotionMagic extends SubsystemBase {
 
     public ArmRotationMotionMagic() {
 
-        leftMotor.configFactoryDefault();
-        rightMotor.configFactoryDefault();
+        double speed = 0.25;
 
+        /* Right Side Motor */
+        // rightMotor.configFactoryDefault(); // Move to init?
         rightMotor.setInverted(true);
+        // rightMotor.set(TalonFXInvertType.Clockwise, 0.1);
+
         rightMotor.setSensorPhase(true);
         rightMotor.setNeutralMode(NeutralMode.Brake);
-        
-        
+        // rightMotor.set(ControlMode.Position, 0.25);
+
+        // leftMotor.configFactoryDefault(); // Move to init?        
         leftMotor.setInverted(true);
         leftMotor.setSensorPhase(true);
         leftMotor.setNeutralMode(NeutralMode.Brake);
+        // leftMotor.set(TalonFXControlMode.Position, 0.5); // or generic control mode?
+
 
         // leftMotor.set(TalonFXControlMode.Follower, rightMotor.getDeviceID());
 
