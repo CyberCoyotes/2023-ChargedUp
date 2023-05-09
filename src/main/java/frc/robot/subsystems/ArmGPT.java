@@ -4,12 +4,12 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import frc.robot.Constants;
 
 public class ArmGPT {
-  private TalonSRX rightMotor;
+  private TalonFX rightMotor;
 
   // Constants for motion magic control
   private final int kTimeoutMs = 30;
@@ -20,14 +20,14 @@ public class ArmGPT {
   private final double kF = 0.0;
 
   // Constants for arm motion
-  private final double kMaxVelocity = 1000.0; // degrees per second
-  private final double kMaxAcceleration = 2000.0; // degrees per second squared
+  private final double kMaxVelocity = 9000; // degrees per second
+  private final double kMaxAcceleration = 9000; // degrees per second squared
 
 
 //   public ArmGPT(int ARM_RIGHT_ROT_MOTOR_ID) {
 
   public ArmGPT() {
-    rightMotor = new TalonSRX(Constants.Arm.ARM_EXTENDER_MOTOR_ID);
+    rightMotor = new TalonFX(Constants.Arm.ARM_EXTENDER_MOTOR_ID);
 
     // Set up feedback device
     rightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kTimeoutMs, kTimeoutMs);
@@ -56,6 +56,7 @@ public class ArmGPT {
     int position = (int)(degrees * 4096.0 / 360.0);
     rightMotor.set(ControlMode.MotionMagic, position);
   }
+  
 }
 
 /*

@@ -45,12 +45,14 @@ public final class Constants {
         /**The (estimated, cry abt it Michigan math) encoder reading at 360 degrees of rotation. Used ONLY for calculations, and if you get near this you did something sososososos<b>SO</b> wrong */
         public static final int ARM_ROT_360_TICKS = 458752;
         
-    public static final int ARM_RIGHT_ROT_MOTOR_ID = 9; // Connected to Falcon 500
+        public static final int ARM_RIGHT_ROT_MOTOR_ID = 9; // Connected to Falcon 500
 
-    public static final int ARM_LEFT_ROT_MOTOR_ID = 10; // Connected to Falcon 500
-    public static final int ARM_EXTENDER_MOTOR_ID = 27; // Connected to SRX and Neo
+        public static final int ARM_LEFT_ROT_MOTOR_ID = 10; // Connected to Falcon 500
 
-    public static final int INTAKE_WHEELS_MOTOR_ID = 11; // Connected to Victor SPX
+        public static final int INTAKE_WHEELS_MOTOR_ID = 11; // Connected to Victor SPX
+
+        public static final int ARM_EXTENDER_MOTOR_ID = 27; // Connected to SRX and Neo
+
         public static int STOW_WRIST_POS = 2000;
 
         public static int LEVEL_WRIST_POS = 19000;
@@ -68,11 +70,9 @@ public final class Constants {
          //#region arm   
         // public static final int ARM_EXTENT_LIMIT = -14500;//playing it safe
         // public static final int ARM_EXTENT_LIMIT_UPPER = 200;//playing it safe
-
         // public static final int ARM_EXTENT_RANGE = //todo determine
 
 
-        
         /**
          *Total encoder tick distance of the falcon500s on the arm, in encoder ticks of 224:1 * 2048
          */
@@ -103,6 +103,19 @@ public final class Constants {
         public static final double kMaxArmRotAcceletation = 11468/2; //tuning needed
         //very important; this is the offset to make 90deg = true horizontal
         public static final int ARM_OFFSET_DEGREES = 20;
+
+        /* Mimic Drive Motor PID Values for arm*/
+        public static final double armKP = 0.2;
+        public static final double armKI = 0.0;
+        public static final double armkD = 0.1;
+        public static final double armKF = 0.0;
+        
+        // Shaun's
+        // public static final double kMaxArmRotVelocity = 11468/2; //currently so that the robot may go 1/16th rotation in a second
+        // public static final double kMaxArmRotAcceletation = 11468/2; //tuning needed
+
+        // public static final PIDController xPIDController = new PIDController(driveKP, 0, 0);
+        // public static final PIDController yPIDController = new PIDController(driveKP, 0, 0);
         
         //DON'T TOUCH (wihout first filing form ID10-T from HR(me(i am HR)))
         public static final double ARM_MAX_DEG = 110;
@@ -110,6 +123,7 @@ public final class Constants {
         public static final int ARM_STOW_ROTATION_DEG = 20;
         public static final int ARM_STOW_EXTENT_ENCODER = 200;
         // public static final int LimitDIO = 0;
+
 
         
         public static final int WRIST_TALONFX_ID = 12;
