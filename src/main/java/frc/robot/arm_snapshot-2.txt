@@ -1,0 +1,50 @@
+    LeftArmRotation   |   CAN ID is 10
+This device is on the roboRIO's native CAN Bus
+Device enabled
+Motor Type: Brushless
+Mode:7:Motion Magic | Output:4.00% [0.45 V]
+Inverted: T  |  Drive Direction:clockwise (positive).
+Brake during neutral
+VCompEn:F CurrLimited:F
+
+PID0 (primary)
+  Feedback: Integrated Sensor
+  Pos: 79672u   |   Vel: 0u/100ms
+  Slot Select: 0
+  Err: 341 u   |   iacc: 3733824 u-ms   |   derr: 0 u/ms
+
+PID1 (aux)
+  Feedback: Integrated Sensor
+  Pos: -79659u   |   Vel: 0u/100ms
+  Slot Select: 0
+  Err: 0 u   |   iacc: 0 u-ms   |   derr: 0 u/ms
+
+Motion Profile (primary)
+  Targets:Pos: 80000u   |   Vel: 0u/100ms
+  ArbFeedFwd:0.00%
+  Valid:F
+
+Limit Switches
+  Forward:Open
+  Reverse:Open
+
+Integrated Sensor
+  Position:-79659.000 units
+  Velocity:0.000 units per 100ms
+  Absolute Position (unsigned):1907.000 units
+  On power cycle, sensor position resets to zero.
+  Units Per Rotation: 2048
+
+Auto Zero Position Feature are disabled
+
+I-Supply: 0.39A   |   I-Stator: 12.13A   |   Bus: 11.30V    |    Device Temp: 31C    |    CPU Temp: 36C
+
+Configurations
+  Nominal Output: [0.00, 0.00]   |   Peak Output: [-1.00, 1.00]
+
+FRC Locked:1
+
+"Blink / Clear Faults" clears sticky faults.
+
+Build:Feb 17 2023 19:51:43
+Press "Refresh" to close.
